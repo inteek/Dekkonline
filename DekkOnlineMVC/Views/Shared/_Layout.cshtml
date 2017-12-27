@@ -1,0 +1,91 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DekkOnline</title>
+
+
+    <link href="~/Scripts/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Scripts/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/css/Site.css" rel="stylesheet" />
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="/Scripts/imgs/mbfavicon.ico" />
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3pN4K2y47Ta_rkII0WsPOFvCUut8u98w" type="text/javascript"></script>
+
+</head>
+<body>
+    <form runat="server">
+        @Styles.Render("~/Scripts/proyecto/jsLayout.js")
+        <div id="principalDiv" runat="server" class="prDiv" style="">
+            <div class="prMask">
+            </div>
+            <div class="prLogo link" onclick="goHome()">
+                <img src="/Scripts/imgs/logo.png" />
+            </div>
+        </div>
+        <div class="prMenu">
+            <div class="prLogin">
+                <table class="tableLogin">
+                    <tr>
+                        <td>
+                            <div ID="HeadLoginView" runat="server" EnableViewState="false">
+                                <AnonymousTemplate>
+                                    <a href="javascript:openLogin()" id="HeadLoginStatus" runat="server">
+                                        <label ID="LabelLogin" runat="server" Text="log in"></label>
+                                    </a>
+                                </AnonymousTemplate>
+                                <LoggedInTemplate>
+                                    Hei! <span class="bold">
+                                        <label ID="HeadLoginName" runat="server" />
+                                    </span>!
+                                    &nbsp;
+                                    <label ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="log out" OnLoggingOut="Unnamed_LoggingOut" LogoutPageUrl="~/" />
+                                    |
+                                    <label ID="HyperLinkToAdmin" runat="server" NavigateUrl="~/Account/Manage" Text="My Page"></label>
+                                </LoggedInTemplate>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="prMenuClosed" onclick="openMenu()"></div>
+            <div class="prMenuOpen" onclick="closeMenu()"></div>
+            <div class="prMenuItems" runat="server" id="menu">
+                <div class="prMenuCI prItemDekk"><a href="/Dekk">DEKK</a></div>
+                <div class="prMenuCI"><a href="/FELGER">FELGER</a></div>
+                <div class="prMenuCI"><a href="/REKVISITA">REKVISITA</a></div>
+                <div class="prMenuCI"><a href="/MOTORSPORT">MOTORSPORT</a></div>
+                <div class="prMenuCI"><a href="/TIRE GUIDE">TIRE GUIDE</a></div>
+                <div class="prMenuCI"><a href="/KONTAKT">KONTAKT</a></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="homeContainDiv" runat="server" class="prContain">
+            @*@RenderSection("HomeContent", required: false)*@
+            @*@RenderPage("~/Views/Default/Default.cshtml")*@
+            @*<asp:ContentPlaceHolder ID="HomeContent" runat="server">
+            </asp:ContentPlaceHolder>*@
+        </div>
+        <div class="clearfix"></div>
+        <div class="spacer20 visible-xs visible-sm"></div>
+        <div class="clearfix"></div>
+
+
+
+        <div class="">
+            <input type="text" id="txtCZC" />
+        </div>
+    </form>
+    @*@RenderSection("scripts", required: false)*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <div class="content-container" id="content">
+        @RenderBody()
+    </div>
+</body>
+</html>

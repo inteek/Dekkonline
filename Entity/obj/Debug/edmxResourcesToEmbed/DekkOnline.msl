@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dekkOnlineModelStoreContainer" CdmEntityContainer="dekkOnlineEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="dekkOnlineModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="dekkOnlineModel.AspNetRoles">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUserClaims">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUserLogins">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="brands">
+      <EntityTypeMapping TypeName="dekkOnlineModel.brands">
+        <MappingFragment StoreEntitySet="brands">
+          <ScalarProperty Name="braId" ColumnName="braId" />
+          <ScalarProperty Name="braName" ColumnName="braName" />
+          <ScalarProperty Name="braNameDP" ColumnName="braNameDP" />
+          <ScalarProperty Name="braCodeDP" ColumnName="braCodeDP" />
+          <ScalarProperty Name="barDescriptionDP" ColumnName="barDescriptionDP" />
+          <ScalarProperty Name="braDescription" ColumnName="braDescription" />
+          <ScalarProperty Name="braCode" ColumnName="braCode" />
+          <ScalarProperty Name="braImage" ColumnName="braImage" />
+          <ScalarProperty Name="braEdited" ColumnName="braEdited" />
+          <ScalarProperty Name="braPercent" ColumnName="braPercent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="dekkOnlineModel.categories">
+        <MappingFragment StoreEntitySet="categories">
+          <ScalarProperty Name="catId" ColumnName="catId" />
+          <ScalarProperty Name="catName" ColumnName="catName" />
+          <ScalarProperty Name="catDescription" ColumnName="catDescription" />
+          <ScalarProperty Name="catImage" ColumnName="catImage" />
+          <ScalarProperty Name="catStatus" ColumnName="catStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categoriesDP">
+      <EntityTypeMapping TypeName="dekkOnlineModel.categoriesDP">
+        <MappingFragment StoreEntitySet="categoriesDP">
+          <ScalarProperty Name="cdpId" ColumnName="cdpId" />
+          <ScalarProperty Name="cdpNameDP" ColumnName="cdpNameDP" />
+          <ScalarProperty Name="cdpDescriptionDP" ColumnName="cdpDescriptionDP" />
+          <ScalarProperty Name="cdpName" ColumnName="cdpName" />
+          <ScalarProperty Name="cdpDescription" ColumnName="cdpDescription" />
+          <ScalarProperty Name="cdpImage" ColumnName="cdpImage" />
+          <ScalarProperty Name="cdpParentId" ColumnName="cdpParentId" />
+          <ScalarProperty Name="cdpStatus" ColumnName="cdpStatus" />
+          <ScalarProperty Name="cdpEdited" ColumnName="cdpEdited" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="products">
+      <EntityTypeMapping TypeName="dekkOnlineModel.products">
+        <MappingFragment StoreEntitySet="products">
+          <ScalarProperty Name="proId" ColumnName="proId" />
+          <ScalarProperty Name="proUUID" ColumnName="proUUID" />
+          <ScalarProperty Name="braId" ColumnName="braId" />
+          <ScalarProperty Name="cdpId" ColumnName="cdpId" />
+          <ScalarProperty Name="proSkuId" ColumnName="proSkuId" />
+          <ScalarProperty Name="proSkuDP" ColumnName="proSkuDP" />
+          <ScalarProperty Name="proNameDP" ColumnName="proNameDP" />
+          <ScalarProperty Name="proDescriptionDP" ColumnName="proDescriptionDP" />
+          <ScalarProperty Name="proCodeDP" ColumnName="proCodeDP" />
+          <ScalarProperty Name="proDimensionProfileDP" ColumnName="proDimensionProfileDP" />
+          <ScalarProperty Name="proDimensionWidthDP" ColumnName="proDimensionWidthDP" />
+          <ScalarProperty Name="proDimensionDiameterDP" ColumnName="proDimensionDiameterDP" />
+          <ScalarProperty Name="proCoverPriceDP" ColumnName="proCoverPriceDP" />
+          <ScalarProperty Name="proSuggestedPriceDP" ColumnName="proSuggestedPriceDP" />
+          <ScalarProperty Name="proRCRDP" ColumnName="proRCRDP" />
+          <ScalarProperty Name="proLoadIndexDP" ColumnName="proLoadIndexDP" />
+          <ScalarProperty Name="proSpeedDP" ColumnName="proSpeedDP" />
+          <ScalarProperty Name="proProductCodeDP" ColumnName="proProductCodeDP" />
+          <ScalarProperty Name="proFuelDP" ColumnName="proFuelDP" />
+          <ScalarProperty Name="proWetDP" ColumnName="proWetDP" />
+          <ScalarProperty Name="proNoiseDP" ColumnName="proNoiseDP" />
+          <ScalarProperty Name="proTyreSizeDP" ColumnName="proTyreSizeDP" />
+          <ScalarProperty Name="proSku" ColumnName="proSku" />
+          <ScalarProperty Name="proName" ColumnName="proName" />
+          <ScalarProperty Name="proDescription" ColumnName="proDescription" />
+          <ScalarProperty Name="proCode" ColumnName="proCode" />
+          <ScalarProperty Name="proDimensionProfile" ColumnName="proDimensionProfile" />
+          <ScalarProperty Name="proDimensionWidth" ColumnName="proDimensionWidth" />
+          <ScalarProperty Name="proDimensionDiameter" ColumnName="proDimensionDiameter" />
+          <ScalarProperty Name="proCoverPrice" ColumnName="proCoverPrice" />
+          <ScalarProperty Name="proSuggestedPrice" ColumnName="proSuggestedPrice" />
+          <ScalarProperty Name="proInventory" ColumnName="proInventory" />
+          <ScalarProperty Name="proRCR" ColumnName="proRCR" />
+          <ScalarProperty Name="proLoadIndex" ColumnName="proLoadIndex" />
+          <ScalarProperty Name="proSpeed" ColumnName="proSpeed" />
+          <ScalarProperty Name="proProductCode" ColumnName="proProductCode" />
+          <ScalarProperty Name="proFuel" ColumnName="proFuel" />
+          <ScalarProperty Name="proWet" ColumnName="proWet" />
+          <ScalarProperty Name="proNoise" ColumnName="proNoise" />
+          <ScalarProperty Name="proTyreSize" ColumnName="proTyreSize" />
+          <ScalarProperty Name="proEdited" ColumnName="proEdited" />
+          <ScalarProperty Name="proImage" ColumnName="proImage" />
+          <ScalarProperty Name="proStatus" ColumnName="proStatus" />
+          <ScalarProperty Name="catId" ColumnName="catId" />
+          <ScalarProperty Name="proLastUpdateDP" ColumnName="proLastUpdateDP" />
+          <ScalarProperty Name="proLastUpdate" ColumnName="proLastUpdate" />
+          <ScalarProperty Name="proDiscount" ColumnName="proDiscount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tokens">
+      <EntityTypeMapping TypeName="dekkOnlineModel.tokens">
+        <MappingFragment StoreEntitySet="tokens">
+          <ScalarProperty Name="tokId" ColumnName="tokId" />
+          <ScalarProperty Name="tokDate" ColumnName="tokDate" />
+          <ScalarProperty Name="tokData" ColumnName="tokData" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="dekkOnlineModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

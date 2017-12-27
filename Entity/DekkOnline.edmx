@@ -1,0 +1,770 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dekkOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="brands">
+          <Key>
+            <PropertyRef Name="braId" />
+          </Key>
+          <Property Name="braId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="braName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="braNameDP" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="braCodeDP" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="barDescriptionDP" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="braDescription" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="braCode" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="braImage" Type="nvarchar" MaxLength="500" />
+          <Property Name="braEdited" Type="bit" Nullable="false" />
+          <Property Name="braPercent" Type="int" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="catId" />
+          </Key>
+          <Property Name="catId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="catDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="catImage" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="catStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categoriesDP">
+          <Key>
+            <PropertyRef Name="cdpId" />
+          </Key>
+          <Property Name="cdpId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="cdpNameDP" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="cdpDescriptionDP" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="cdpName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="cdpDescription" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="cdpImage" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="cdpParentId" Type="uniqueidentifier" />
+          <Property Name="cdpStatus" Type="bit" Nullable="false" />
+          <Property Name="cdpEdited" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="proId" />
+          </Key>
+          <Property Name="proId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="proUUID" Type="uniqueidentifier" />
+          <Property Name="braId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="cdpId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="proSkuId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="proSkuDP" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="proNameDP" Type="nvarchar" MaxLength="200" />
+          <Property Name="proDescriptionDP" Type="nvarchar" MaxLength="2000" />
+          <Property Name="proCodeDP" Type="nvarchar" MaxLength="50" />
+          <Property Name="proDimensionProfileDP" Type="int" />
+          <Property Name="proDimensionWidthDP" Type="int" />
+          <Property Name="proDimensionDiameterDP" Type="int" />
+          <Property Name="proCoverPriceDP" Type="money" />
+          <Property Name="proSuggestedPriceDP" Type="money" />
+          <Property Name="proRCRDP" Type="int" />
+          <Property Name="proLoadIndexDP" Type="nvarchar" MaxLength="50" />
+          <Property Name="proSpeedDP" Type="nvarchar" MaxLength="50" />
+          <Property Name="proProductCodeDP" Type="nvarchar" MaxLength="50" />
+          <Property Name="proFuelDP" Type="nvarchar" MaxLength="5" />
+          <Property Name="proWetDP" Type="nvarchar" MaxLength="5" />
+          <Property Name="proNoiseDP" Type="nvarchar" MaxLength="5" />
+          <Property Name="proTyreSizeDP" Type="nvarchar" MaxLength="50" />
+          <Property Name="proSku" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="proName" Type="nvarchar" MaxLength="200" />
+          <Property Name="proDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="proCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="proDimensionProfile" Type="int" />
+          <Property Name="proDimensionWidth" Type="int" />
+          <Property Name="proDimensionDiameter" Type="int" />
+          <Property Name="proCoverPrice" Type="money" />
+          <Property Name="proSuggestedPrice" Type="money" />
+          <Property Name="proInventory" Type="int" />
+          <Property Name="proRCR" Type="int" />
+          <Property Name="proLoadIndex" Type="nvarchar" MaxLength="50" />
+          <Property Name="proSpeed" Type="nvarchar" MaxLength="50" />
+          <Property Name="proProductCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="proFuel" Type="nvarchar" MaxLength="5" />
+          <Property Name="proWet" Type="nvarchar" MaxLength="5" />
+          <Property Name="proNoise" Type="nvarchar" MaxLength="5" />
+          <Property Name="proTyreSize" Type="nvarchar" MaxLength="50" />
+          <Property Name="proEdited" Type="bit" Nullable="false" />
+          <Property Name="proImage" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="proStatus" Type="bit" Nullable="false" />
+          <Property Name="catId" Type="int" />
+          <Property Name="proLastUpdateDP" Type="datetime" Nullable="false" />
+          <Property Name="proLastUpdate" Type="datetime" />
+          <Property Name="proDiscount" Type="money" />
+        </EntityType>
+        <EntityType Name="tokens">
+          <Key>
+            <PropertyRef Name="tokId" />
+          </Key>
+          <Property Name="tokId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tokDate" Type="datetime" Nullable="false" />
+          <Property Name="tokData" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_brands">
+          <End Role="brands" Type="Self.brands" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brands">
+              <PropertyRef Name="braId" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="braId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="catId" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="catId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_categoriesDP">
+          <End Role="categoriesDP" Type="Self.categoriesDP" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoriesDP">
+              <PropertyRef Name="cdpId" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="cdpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dekkOnlineModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="brands" EntityType="Self.brands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tokens" EntityType="Self.tokens" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_brands" Association="Self.FK_products_brands">
+            <End Role="brands" EntitySet="brands" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_categories" Association="Self.FK_products_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_categoriesDP" Association="Self.FK_products_categoriesDP">
+            <End Role="categoriesDP" EntitySet="categoriesDP" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dekkOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="brands">
+          <Key>
+            <PropertyRef Name="braId" />
+          </Key>
+          <Property Name="braId" Type="Guid" Nullable="false" />
+          <Property Name="braName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="braNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="braCodeDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="barDescriptionDP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="braDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="braCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="braImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="braEdited" Type="Boolean" Nullable="false" />
+          <Property Name="braPercent" Type="Int32" />
+          <NavigationProperty Name="products" Relationship="Self.FK_products_brands" FromRole="brands" ToRole="products" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="catId" />
+          </Key>
+          <Property Name="catId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="catDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="catImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="catStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="products" Relationship="Self.FK_products_categories" FromRole="categories" ToRole="products" />
+        </EntityType>
+        <EntityType Name="categoriesDP">
+          <Key>
+            <PropertyRef Name="cdpId" />
+          </Key>
+          <Property Name="cdpId" Type="Guid" Nullable="false" />
+          <Property Name="cdpNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cdpDescriptionDP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cdpName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cdpDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cdpImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cdpParentId" Type="Guid" />
+          <Property Name="cdpStatus" Type="Boolean" Nullable="false" />
+          <Property Name="cdpEdited" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="products" Relationship="Self.FK_products_categoriesDP" FromRole="categoriesDP" ToRole="products" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="proId" />
+          </Key>
+          <Property Name="proId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proUUID" Type="Guid" />
+          <Property Name="braId" Type="Guid" Nullable="false" />
+          <Property Name="cdpId" Type="Guid" Nullable="false" />
+          <Property Name="proSkuId" Type="Guid" Nullable="false" />
+          <Property Name="proSkuDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="proNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="proDescriptionDP" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="proCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proDimensionProfileDP" Type="Int32" />
+          <Property Name="proDimensionWidthDP" Type="Int32" />
+          <Property Name="proDimensionDiameterDP" Type="Int32" />
+          <Property Name="proCoverPriceDP" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="proSuggestedPriceDP" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="proRCRDP" Type="Int32" />
+          <Property Name="proLoadIndexDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proSpeedDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proProductCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proFuelDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="proWetDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="proNoiseDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="proTyreSizeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proSku" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="proName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="proDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="proCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proDimensionProfile" Type="Int32" />
+          <Property Name="proDimensionWidth" Type="Int32" />
+          <Property Name="proDimensionDiameter" Type="Int32" />
+          <Property Name="proCoverPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="proSuggestedPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="proInventory" Type="Int32" />
+          <Property Name="proRCR" Type="Int32" />
+          <Property Name="proLoadIndex" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proSpeed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proFuel" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="proWet" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="proNoise" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="proTyreSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="proEdited" Type="Boolean" Nullable="false" />
+          <Property Name="proImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="proStatus" Type="Boolean" Nullable="false" />
+          <Property Name="catId" Type="Int32" />
+          <Property Name="proLastUpdateDP" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="proLastUpdate" Type="DateTime" Precision="3" />
+          <Property Name="proDiscount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="brands" Relationship="Self.FK_products_brands" FromRole="products" ToRole="brands" />
+          <NavigationProperty Name="categories" Relationship="Self.FK_products_categories" FromRole="products" ToRole="categories" />
+          <NavigationProperty Name="categoriesDP" Relationship="Self.FK_products_categoriesDP" FromRole="products" ToRole="categoriesDP" />
+        </EntityType>
+        <EntityType Name="tokens">
+          <Key>
+            <PropertyRef Name="tokId" />
+          </Key>
+          <Property Name="tokId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tokDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="tokData" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_brands">
+          <End Role="brands" Type="Self.brands" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="brands">
+              <PropertyRef Name="braId" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="braId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_categories">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="catId" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="catId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_categoriesDP">
+          <End Role="categoriesDP" Type="Self.categoriesDP" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoriesDP">
+              <PropertyRef Name="cdpId" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="cdpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="dekkOnlineEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="brands" EntityType="Self.brands" />
+          <EntitySet Name="categories" EntityType="Self.categories" />
+          <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" />
+          <EntitySet Name="products" EntityType="Self.products" />
+          <EntitySet Name="tokens" EntityType="Self.tokens" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_brands" Association="Self.FK_products_brands">
+            <End Role="brands" EntitySet="brands" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_categories" Association="Self.FK_products_categories">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_categoriesDP" Association="Self.FK_products_categoriesDP">
+            <End Role="categoriesDP" EntitySet="categoriesDP" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dekkOnlineModelStoreContainer" CdmEntityContainer="dekkOnlineEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="dekkOnlineModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="dekkOnlineModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="brands">
+            <EntityTypeMapping TypeName="dekkOnlineModel.brands">
+              <MappingFragment StoreEntitySet="brands">
+                <ScalarProperty Name="braId" ColumnName="braId" />
+                <ScalarProperty Name="braName" ColumnName="braName" />
+                <ScalarProperty Name="braNameDP" ColumnName="braNameDP" />
+                <ScalarProperty Name="braCodeDP" ColumnName="braCodeDP" />
+                <ScalarProperty Name="barDescriptionDP" ColumnName="barDescriptionDP" />
+                <ScalarProperty Name="braDescription" ColumnName="braDescription" />
+                <ScalarProperty Name="braCode" ColumnName="braCode" />
+                <ScalarProperty Name="braImage" ColumnName="braImage" />
+                <ScalarProperty Name="braEdited" ColumnName="braEdited" />
+                <ScalarProperty Name="braPercent" ColumnName="braPercent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="dekkOnlineModel.categories">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="catId" ColumnName="catId" />
+                <ScalarProperty Name="catName" ColumnName="catName" />
+                <ScalarProperty Name="catDescription" ColumnName="catDescription" />
+                <ScalarProperty Name="catImage" ColumnName="catImage" />
+                <ScalarProperty Name="catStatus" ColumnName="catStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoriesDP">
+            <EntityTypeMapping TypeName="dekkOnlineModel.categoriesDP">
+              <MappingFragment StoreEntitySet="categoriesDP">
+                <ScalarProperty Name="cdpId" ColumnName="cdpId" />
+                <ScalarProperty Name="cdpNameDP" ColumnName="cdpNameDP" />
+                <ScalarProperty Name="cdpDescriptionDP" ColumnName="cdpDescriptionDP" />
+                <ScalarProperty Name="cdpName" ColumnName="cdpName" />
+                <ScalarProperty Name="cdpDescription" ColumnName="cdpDescription" />
+                <ScalarProperty Name="cdpImage" ColumnName="cdpImage" />
+                <ScalarProperty Name="cdpParentId" ColumnName="cdpParentId" />
+                <ScalarProperty Name="cdpStatus" ColumnName="cdpStatus" />
+                <ScalarProperty Name="cdpEdited" ColumnName="cdpEdited" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="dekkOnlineModel.products">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="proId" ColumnName="proId" />
+                <ScalarProperty Name="proUUID" ColumnName="proUUID" />
+                <ScalarProperty Name="braId" ColumnName="braId" />
+                <ScalarProperty Name="cdpId" ColumnName="cdpId" />
+                <ScalarProperty Name="proSkuId" ColumnName="proSkuId" />
+                <ScalarProperty Name="proSkuDP" ColumnName="proSkuDP" />
+                <ScalarProperty Name="proNameDP" ColumnName="proNameDP" />
+                <ScalarProperty Name="proDescriptionDP" ColumnName="proDescriptionDP" />
+                <ScalarProperty Name="proCodeDP" ColumnName="proCodeDP" />
+                <ScalarProperty Name="proDimensionProfileDP" ColumnName="proDimensionProfileDP" />
+                <ScalarProperty Name="proDimensionWidthDP" ColumnName="proDimensionWidthDP" />
+                <ScalarProperty Name="proDimensionDiameterDP" ColumnName="proDimensionDiameterDP" />
+                <ScalarProperty Name="proCoverPriceDP" ColumnName="proCoverPriceDP" />
+                <ScalarProperty Name="proSuggestedPriceDP" ColumnName="proSuggestedPriceDP" />
+                <ScalarProperty Name="proRCRDP" ColumnName="proRCRDP" />
+                <ScalarProperty Name="proLoadIndexDP" ColumnName="proLoadIndexDP" />
+                <ScalarProperty Name="proSpeedDP" ColumnName="proSpeedDP" />
+                <ScalarProperty Name="proProductCodeDP" ColumnName="proProductCodeDP" />
+                <ScalarProperty Name="proFuelDP" ColumnName="proFuelDP" />
+                <ScalarProperty Name="proWetDP" ColumnName="proWetDP" />
+                <ScalarProperty Name="proNoiseDP" ColumnName="proNoiseDP" />
+                <ScalarProperty Name="proTyreSizeDP" ColumnName="proTyreSizeDP" />
+                <ScalarProperty Name="proSku" ColumnName="proSku" />
+                <ScalarProperty Name="proName" ColumnName="proName" />
+                <ScalarProperty Name="proDescription" ColumnName="proDescription" />
+                <ScalarProperty Name="proCode" ColumnName="proCode" />
+                <ScalarProperty Name="proDimensionProfile" ColumnName="proDimensionProfile" />
+                <ScalarProperty Name="proDimensionWidth" ColumnName="proDimensionWidth" />
+                <ScalarProperty Name="proDimensionDiameter" ColumnName="proDimensionDiameter" />
+                <ScalarProperty Name="proCoverPrice" ColumnName="proCoverPrice" />
+                <ScalarProperty Name="proSuggestedPrice" ColumnName="proSuggestedPrice" />
+                <ScalarProperty Name="proInventory" ColumnName="proInventory" />
+                <ScalarProperty Name="proRCR" ColumnName="proRCR" />
+                <ScalarProperty Name="proLoadIndex" ColumnName="proLoadIndex" />
+                <ScalarProperty Name="proSpeed" ColumnName="proSpeed" />
+                <ScalarProperty Name="proProductCode" ColumnName="proProductCode" />
+                <ScalarProperty Name="proFuel" ColumnName="proFuel" />
+                <ScalarProperty Name="proWet" ColumnName="proWet" />
+                <ScalarProperty Name="proNoise" ColumnName="proNoise" />
+                <ScalarProperty Name="proTyreSize" ColumnName="proTyreSize" />
+                <ScalarProperty Name="proEdited" ColumnName="proEdited" />
+                <ScalarProperty Name="proImage" ColumnName="proImage" />
+                <ScalarProperty Name="proStatus" ColumnName="proStatus" />
+                <ScalarProperty Name="catId" ColumnName="catId" />
+                <ScalarProperty Name="proLastUpdateDP" ColumnName="proLastUpdateDP" />
+                <ScalarProperty Name="proLastUpdate" ColumnName="proLastUpdate" />
+                <ScalarProperty Name="proDiscount" ColumnName="proDiscount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tokens">
+            <EntityTypeMapping TypeName="dekkOnlineModel.tokens">
+              <MappingFragment StoreEntitySet="tokens">
+                <ScalarProperty Name="tokId" ColumnName="tokId" />
+                <ScalarProperty Name="tokDate" ColumnName="tokDate" />
+                <ScalarProperty Name="tokData" ColumnName="tokData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="dekkOnlineModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

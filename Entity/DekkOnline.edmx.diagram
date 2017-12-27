@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c86f85539e0b484daf1a1ee2b93ead14" Name="Diagram1">
+        <EntityTypeShape EntityType="dekkOnlineModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.AspNetRoles" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.AspNetUserClaims" Width="1.5" PointX="10.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.AspNetUserLogins" Width="1.5" PointX="10.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.AspNetUsers" Width="1.5" PointX="8" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.brands" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.categories" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.categoriesDP" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.products" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dekkOnlineModel.tokens" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="dekkOnlineModel.FK_products_brands" ManuallyRouted="false" />
+        <AssociationConnector Association="dekkOnlineModel.FK_products_categories" ManuallyRouted="false" />
+        <AssociationConnector Association="dekkOnlineModel.FK_products_categoriesDP" ManuallyRouted="false" />
+        <AssociationConnector Association="dekkOnlineModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

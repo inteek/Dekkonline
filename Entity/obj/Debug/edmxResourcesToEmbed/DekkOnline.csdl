@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dekkOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="brands">
+    <Key>
+      <PropertyRef Name="braId" />
+    </Key>
+    <Property Name="braId" Type="Guid" Nullable="false" />
+    <Property Name="braName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="braNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="braCodeDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="barDescriptionDP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="braDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="braCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="braImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="braEdited" Type="Boolean" Nullable="false" />
+    <Property Name="braPercent" Type="Int32" />
+    <NavigationProperty Name="products" Relationship="Self.FK_products_brands" FromRole="brands" ToRole="products" />
+  </EntityType>
+  <EntityType Name="categories">
+    <Key>
+      <PropertyRef Name="catId" />
+    </Key>
+    <Property Name="catId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="catName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="catDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="catImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="catStatus" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="products" Relationship="Self.FK_products_categories" FromRole="categories" ToRole="products" />
+  </EntityType>
+  <EntityType Name="categoriesDP">
+    <Key>
+      <PropertyRef Name="cdpId" />
+    </Key>
+    <Property Name="cdpId" Type="Guid" Nullable="false" />
+    <Property Name="cdpNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cdpDescriptionDP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cdpName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cdpDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cdpImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cdpParentId" Type="Guid" />
+    <Property Name="cdpStatus" Type="Boolean" Nullable="false" />
+    <Property Name="cdpEdited" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="products" Relationship="Self.FK_products_categoriesDP" FromRole="categoriesDP" ToRole="products" />
+  </EntityType>
+  <EntityType Name="products">
+    <Key>
+      <PropertyRef Name="proId" />
+    </Key>
+    <Property Name="proId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="proUUID" Type="Guid" />
+    <Property Name="braId" Type="Guid" Nullable="false" />
+    <Property Name="cdpId" Type="Guid" Nullable="false" />
+    <Property Name="proSkuId" Type="Guid" Nullable="false" />
+    <Property Name="proSkuDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="proNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="proDescriptionDP" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="proCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proDimensionProfileDP" Type="Int32" />
+    <Property Name="proDimensionWidthDP" Type="Int32" />
+    <Property Name="proDimensionDiameterDP" Type="Int32" />
+    <Property Name="proCoverPriceDP" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proSuggestedPriceDP" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proRCRDP" Type="Int32" />
+    <Property Name="proLoadIndexDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proSpeedDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proProductCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proFuelDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proWetDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proNoiseDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proTyreSizeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proSku" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="proName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="proDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="proCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proDimensionProfile" Type="Int32" />
+    <Property Name="proDimensionWidth" Type="Int32" />
+    <Property Name="proDimensionDiameter" Type="Int32" />
+    <Property Name="proCoverPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proSuggestedPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proInventory" Type="Int32" />
+    <Property Name="proRCR" Type="Int32" />
+    <Property Name="proLoadIndex" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proSpeed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proFuel" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proWet" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proNoise" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proTyreSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proEdited" Type="Boolean" Nullable="false" />
+    <Property Name="proImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="proStatus" Type="Boolean" Nullable="false" />
+    <Property Name="catId" Type="Int32" />
+    <Property Name="proLastUpdateDP" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="proLastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="proDiscount" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="brands" Relationship="Self.FK_products_brands" FromRole="products" ToRole="brands" />
+    <NavigationProperty Name="categories" Relationship="Self.FK_products_categories" FromRole="products" ToRole="categories" />
+    <NavigationProperty Name="categoriesDP" Relationship="Self.FK_products_categoriesDP" FromRole="products" ToRole="categoriesDP" />
+  </EntityType>
+  <EntityType Name="tokens">
+    <Key>
+      <PropertyRef Name="tokId" />
+    </Key>
+    <Property Name="tokId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tokDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="tokData" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_products_brands">
+    <End Role="brands" Type="Self.brands" Multiplicity="1" />
+    <End Role="products" Type="Self.products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="brands">
+        <PropertyRef Name="braId" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="braId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_products_categories">
+    <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+    <End Role="products" Type="Self.products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="catId" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="catId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_products_categoriesDP">
+    <End Role="categoriesDP" Type="Self.categoriesDP" Multiplicity="1" />
+    <End Role="products" Type="Self.products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoriesDP">
+        <PropertyRef Name="cdpId" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="cdpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="dekkOnlineEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+    <EntitySet Name="brands" EntityType="Self.brands" />
+    <EntitySet Name="categories" EntityType="Self.categories" />
+    <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" />
+    <EntitySet Name="products" EntityType="Self.products" />
+    <EntitySet Name="tokens" EntityType="Self.tokens" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_products_brands" Association="Self.FK_products_brands">
+      <End Role="brands" EntitySet="brands" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_products_categories" Association="Self.FK_products_categories">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_products_categoriesDP" Association="Self.FK_products_categoriesDP">
+      <End Role="categoriesDP" EntitySet="categoriesDP" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,5 @@
+C:\SVN\Dekkonline\Framework\bin\Debug\Framework.dll
+C:\SVN\Dekkonline\Framework\bin\Debug\Framework.pdb
+C:\SVN\Dekkonline\Framework\obj\Debug\Framework.csprojResolveAssemblyReference.cache
+C:\SVN\Dekkonline\Framework\obj\Debug\Framework.dll
+C:\SVN\Dekkonline\Framework\obj\Debug\Framework.pdb

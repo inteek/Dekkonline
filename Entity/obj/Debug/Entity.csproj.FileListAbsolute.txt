@@ -1,0 +1,10 @@
+C:\SVN\Dekkonline\Entity\bin\Debug\Entity.dll.config
+C:\SVN\Dekkonline\Entity\bin\Debug\Entity.dll
+C:\SVN\Dekkonline\Entity\bin\Debug\Entity.pdb
+C:\SVN\Dekkonline\Entity\bin\Debug\EntityFramework.dll
+C:\SVN\Dekkonline\Entity\bin\Debug\EntityFramework.SqlServer.dll
+C:\SVN\Dekkonline\Entity\bin\Debug\EntityFramework.xml
+C:\SVN\Dekkonline\Entity\bin\Debug\EntityFramework.SqlServer.xml
+C:\SVN\Dekkonline\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
+C:\SVN\Dekkonline\Entity\obj\Debug\Entity.dll
+C:\SVN\Dekkonline\Entity\obj\Debug\Entity.pdb
