@@ -9,9 +9,6 @@ namespace Framework
 {
     public class Articles
     {
-        public void loadBrands()
-        {
 
-        }
     }
 }

@@ -3,3 +3,15 @@ C:\SVN\Dekkonline\Framework\bin\Debug\Framework.pdb
 C:\SVN\Dekkonline\Framework\obj\Debug\Framework.csprojResolveAssemblyReference.cache
 C:\SVN\Dekkonline\Framework\obj\Debug\Framework.dll
 C:\SVN\Dekkonline\Framework\obj\Debug\Framework.pdb
+C:\DekkOnline\Framework\bin\Debug\Framework.dll.config
+C:\DekkOnline\Framework\bin\Debug\Framework.dll
+C:\DekkOnline\Framework\bin\Debug\Framework.pdb
+C:\DekkOnline\Framework\bin\Debug\Entity.dll
+C:\DekkOnline\Framework\bin\Debug\EntityFramework.dll
+C:\DekkOnline\Framework\bin\Debug\EntityFramework.SqlServer.dll
+C:\DekkOnline\Framework\bin\Debug\Entity.pdb
+C:\DekkOnline\Framework\bin\Debug\EntityFramework.xml
+C:\DekkOnline\Framework\bin\Debug\EntityFramework.SqlServer.xml
+C:\DekkOnline\Framework\obj\Debug\Framework.csprojResolveAssemblyReference.cache
+C:\DekkOnline\Framework\obj\Debug\Framework.dll
+C:\DekkOnline\Framework\obj\Debug\Framework.pdb

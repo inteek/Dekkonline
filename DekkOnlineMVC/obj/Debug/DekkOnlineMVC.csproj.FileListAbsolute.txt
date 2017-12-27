@@ -121,3 +121,7 @@ C:\DekkOnline\DekkOnlineMVC\bin\Microsoft.AI.Web.xml
 C:\DekkOnline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csprojResolveAssemblyReference.cache
 C:\DekkOnline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.dll
 C:\DekkOnline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.pdb
+C:\DekkOnline\DekkOnlineMVC\bin\EntityFramework.dll
+C:\DekkOnline\DekkOnlineMVC\bin\EntityFramework.SqlServer.dll
+C:\DekkOnline\DekkOnlineMVC\bin\EntityFramework.xml
+C:\DekkOnline\DekkOnlineMVC\bin\EntityFramework.SqlServer.xml
