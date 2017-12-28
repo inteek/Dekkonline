@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="dekkOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="dekkOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -157,6 +157,15 @@
           <Property Name="proLastUpdate" Type="datetime" />
           <Property Name="proDiscount" Type="money" />
         </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+          <Property Name="proId" Type="int" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
         <EntityType Name="tokens">
           <Key>
             <PropertyRef Name="tokId" />
@@ -221,6 +230,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_product">
+          <End Role="products" Type="Self.products" Multiplicity="0..1" />
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="proId" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="proId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_products_brands">
           <End Role="brands" Type="Self.brands" Multiplicity="1" />
           <End Role="products" Type="Self.products" Multiplicity="*" />
@@ -257,6 +278,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_user">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="dekkOnlineModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -268,6 +301,7 @@
           <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tokens" EntityType="Self.tokens" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -285,6 +319,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="fk_product" Association="Self.fk_product">
+            <End Role="products" EntitySet="products" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
           <AssociationSet Name="FK_products_brands" Association="Self.FK_products_brands">
             <End Role="brands" EntitySet="brands" />
             <End Role="products" EntitySet="products" />
@@ -297,9 +335,12 @@
             <End Role="categoriesDP" EntitySet="categoriesDP" />
             <End Role="products" EntitySet="products" />
           </AssociationSet>
+          <AssociationSet Name="fk_user" Association="Self.fk_user">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="dekkOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -361,6 +402,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="ShoppingCart" Relationship="dekkOnlineModel.fk_user" FromRole="AspNetUsers" ToRole="ShoppingCart" />
         </EntityType>
         <EntityType Name="brands">
           <Key>
@@ -458,6 +500,7 @@
           <NavigationProperty Name="brands" Relationship="Self.FK_products_brands" FromRole="products" ToRole="brands" />
           <NavigationProperty Name="categories" Relationship="Self.FK_products_categories" FromRole="products" ToRole="categories" />
           <NavigationProperty Name="categoriesDP" Relationship="Self.FK_products_categoriesDP" FromRole="products" ToRole="categoriesDP" />
+          <NavigationProperty Name="ShoppingCart" Relationship="dekkOnlineModel.fk_product" FromRole="products" ToRole="ShoppingCart" />
         </EntityType>
         <EntityType Name="tokens">
           <Key>
@@ -570,7 +613,51 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="ShoppingCart" EntityType="dekkOnlineModel.ShoppingCart" />
+          <AssociationSet Name="fk_user" Association="dekkOnlineModel.fk_user">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
+          <AssociationSet Name="fk_product" Association="dekkOnlineModel.fk_product">
+            <End Role="products" EntitySet="products" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="proId" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_user" FromRole="ShoppingCart" ToRole="AspNetUsers" />
+          <NavigationProperty Name="products" Relationship="dekkOnlineModel.fk_product" FromRole="ShoppingCart" ToRole="products" />
+        </EntityType>
+        <Association Name="fk_user">
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_product">
+          <End Type="dekkOnlineModel.products" Role="products" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="proId" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="proId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -744,6 +831,16 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ShoppingCart">
+            <EntityTypeMapping TypeName="dekkOnlineModel.ShoppingCart">
+              <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="proId" ColumnName="proId" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -21,6 +21,9 @@
         <AssociationConnector Association="dekkOnlineModel.FK_products_categories" ManuallyRouted="false" />
         <AssociationConnector Association="dekkOnlineModel.FK_products_categoriesDP" ManuallyRouted="false" />
         <AssociationConnector Association="dekkOnlineModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="dekkOnlineModel.ShoppingCart" Width="1.5" PointX="10.25" PointY="6.75" />
+        <AssociationConnector Association="dekkOnlineModel.fk_user" />
+        <AssociationConnector Association="dekkOnlineModel.fk_product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

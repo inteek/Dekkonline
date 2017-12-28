@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articles.cs" />
+    <Compile Include="Libraies\ResultBrands.cs" />
+    <Compile Include="Libraies\ResultProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

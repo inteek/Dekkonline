@@ -35,5 +35,6 @@ namespace Entity
         public virtual DbSet<categoriesDP> categoriesDP { get; set; }
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<tokens> tokens { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
     }
 }
