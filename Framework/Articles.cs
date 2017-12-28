@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entity;
 using Framework.Libraies;
+using System.Data.Entity;
 
 namespace Framework
 {
@@ -29,7 +30,7 @@ namespace Framework
             }
             catch (Exception ex)
             {
-                return result;
+                throw;
             }
             return result;
         }
@@ -53,7 +54,7 @@ namespace Framework
             }
             catch (Exception ex)
             {
-                return result;
+                throw;
             }
             return result;
         }
@@ -77,7 +78,7 @@ namespace Framework
             }
             catch (Exception ex)
             {
-                return result;
+                throw;
             }
             return result;
         }
@@ -101,7 +102,7 @@ namespace Framework
             }
             catch (Exception ex)
             {
-                return result;
+                throw;
             }
             return result;
         }
@@ -125,12 +126,12 @@ namespace Framework
             }
             catch (Exception ex)
             {
-                return result;
+                throw;
             }
             return result;
         }
 
-        public List<ResultProduct> loadBrands()
+        public List<ResultProduct> loadProducts()
         {
             List<ResultProduct> result = null;
             try
@@ -174,28 +175,11 @@ namespace Framework
             }
             catch (Exception ex)
             {
-                return result;
+                throw;
             }
             return result;
         }
-
-        public string addressUser(int idUser)
-        {
-            var UserAddress = (dynamic) null;
-            try
-            {
-                using (var db = new dekkOnlineEntities())
-                {
-                    UserAddress = (from user in db.UserAddress where user.IdUser == idUser select new { adreess = user.Address, latitude = user.Latitude, length = user.Length});
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return UserAddress;
-        }
-
+       
         //LOAD SYZES PER DEKK
         public List<ResultProduct> SizesperDekk(string dekk)
         {
