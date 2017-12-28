@@ -49,7 +49,9 @@
   <ItemGroup>
     <Compile Include="Articles.cs" />
     <Compile Include="Libraies\ResultBrands.cs" />
+    <Compile Include="Libraies\ResultCategories.cs" />
     <Compile Include="Libraies\ResultProduct.cs" />
+    <Compile Include="Libraies\ResultSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

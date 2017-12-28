@@ -36,5 +36,13 @@ namespace Entity
         public virtual DbSet<products> products { get; set; }
         public virtual DbSet<tokens> tokens { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public virtual DbSet<Appointments> Appointments { get; set; }
+        public virtual DbSet<PromotionCode> PromotionCode { get; set; }
+        public virtual DbSet<PromotionCodeUser> PromotionCodeUser { get; set; }
+        public virtual DbSet<TypesServices> TypesServices { get; set; }
+        public virtual DbSet<UserAddress> UserAddress { get; set; }
+        public virtual DbSet<Workshop> Workshop { get; set; }
+        public virtual DbSet<WorkshopAppointment> WorkshopAppointment { get; set; }
+        public virtual DbSet<WorkshopServices> WorkshopServices { get; set; }
     }
 }

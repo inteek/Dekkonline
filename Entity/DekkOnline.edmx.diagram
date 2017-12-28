@@ -24,6 +24,16 @@
         <EntityTypeShape EntityType="dekkOnlineModel.ShoppingCart" Width="1.5" PointX="10.25" PointY="6.75" />
         <AssociationConnector Association="dekkOnlineModel.fk_user" />
         <AssociationConnector Association="dekkOnlineModel.fk_product" />
+        <EntityTypeShape EntityType="dekkOnlineModel.Appointments" Width="1.5" PointX="5.75" PointY="9.75" />
+        <EntityTypeShape EntityType="dekkOnlineModel.PromotionCode" Width="1.5" PointX="11.375" PointY="10.375" />
+        <EntityTypeShape EntityType="dekkOnlineModel.PromotionCodeUser" Width="1.5" PointX="13.625" PointY="2.5" />
+        <EntityTypeShape EntityType="dekkOnlineModel.TypesServices" Width="1.5" PointX="7.75" PointY="9.75" />
+        <EntityTypeShape EntityType="dekkOnlineModel.UserAddress" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="dekkOnlineModel.Workshop" Width="1.5" PointX="5.75" PointY="12.75" />
+        <EntityTypeShape EntityType="dekkOnlineModel.WorkshopAppointment" Width="1.5" PointX="7.75" PointY="12.75" />
+        <EntityTypeShape EntityType="dekkOnlineModel.WorkshopServices" Width="1.5" PointX="0.75" PointY="13.75" />
+        <AssociationConnector Association="dekkOnlineModel.fk_Userpromcode" />
+        <AssociationConnector Association="dekkOnlineModel.fk_CodepromUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

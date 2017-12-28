@@ -51,6 +51,9 @@ namespace Framework.Libraies
         public bool proEdited { get; set; }
         public string proImage { get; set; }
         public bool proStatus { get; set; }
+        public string Brand { get; set; }
+        public string categories { get; set; }
+        public string BrandImage { get; set; }
         public Nullable<int> catId { get; set; }
         public System.DateTime proLastUpdateDP { get; set; }
         public Nullable<System.DateTime> proLastUpdate { get; set; }

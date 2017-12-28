@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appointments.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="AspNetRoles.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
@@ -93,11 +96,32 @@
     <Compile Include="products.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
+    <Compile Include="PromotionCode.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionCodeUser.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShoppingCart.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="tokens.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TypesServices.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserAddress.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Workshop.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkshopAppointment.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkshopServices.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
   </ItemGroup>

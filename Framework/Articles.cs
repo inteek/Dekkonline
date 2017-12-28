@@ -9,100 +9,191 @@ using Framework.Libraies;
 namespace Framework
 {
     public class Articles
-    {
-        public void loadBrands()
+    {        
+        public List<ResultBrands> loadBrands()
         {
+            List<ResultBrands> result = null;
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    var bran = (from bra in db.brands where bra.products.Count > 0 select bra);
+                    result = (from bra in db.brands
+                              where (bra.products.Count > 0)
+                              select new ResultBrands
+                              {
+                                  braId = bra.braId,
+                                  braName = bra.braName
+
+                              }).ToList();
                 }
             }
-            catch (Exception)
-            {                
-                throw;
-            }
-            
-        }
-
-        public void loadType()
-        {
-            try
+            catch (Exception ex)
             {
-                using(var db = new dekkOnlineEntities())
-                {
-                    var cats = (from cat in db.categories where cat.catStatus == true select new { catId = cat.catId, catName = cat.catName.ToUpper() });
-                }
+                return result;
             }
-            catch (Exception)
-            {                
-                throw;
-            }            
+            return result;
         }
 
-        public void loadSize()
+        public List<ResultCategories> loadType()
         {
+            List<ResultCategories> result = null;
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    var ws = from pro in db.products where pro.proDimensionWidth.HasValue select new { Id = pro.proDimensionWidth.Value.ToString(), Size = pro.proDimensionWidth.Value.ToString() };
-                    var ps = from pro in db.products where pro.proDimensionProfile.HasValue select new { Id = pro.proDimensionProfile.Value.ToString(), Size = pro.proDimensionProfile.Value.ToString() };
-                    var ds = from pro in db.products where pro.proDimensionDiameter.HasValue select new { Id = pro.proDimensionDiameter.Value.ToString(), Size = pro.proDimensionDiameter.Value.ToString() };     
+                    result = (from cat in db.categories
+                              where (cat.catStatus == true)
+                              select new ResultCategories
+                              {
+                                  catId = cat.catId,
+                                  catName = cat.catName.ToUpper()
+
+                              }).ToList();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
-            }           
+                return result;
+            }
+            return result;
         }
 
-        public void loadProducts()
+        public List<ResultSize> loadDimensionWidth()
         {
-            int catId = 0;
-            int width = 0;
-            int profile = 0;
-            int diameter = 0;
-           
-            Guid? braId = null;
-
+            List<ResultSize> result = null;
             try
             {
                 using (var db = new dekkOnlineEntities())
-                {                 
-                    var products = (from pro in db.products
-                                    where pro.proStatus == true
+                {
+                    result = (from pro in db.products
+                              where (pro.proDimensionWidth.HasValue)
+                              select new ResultSize
+                              {
+                                  Id = pro.proDimensionWidth.Value.ToString(),
+                                  Size = pro.proDimensionWidth.Value.ToString()
+
+                              }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            return result;
+        }
+
+        public List<ResultSize> loadDimensionProfile()
+        {
+            List<ResultSize> result = null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    result = (from pro in db.products
+                              where (pro.proDimensionProfile.HasValue)
+                              select new ResultSize
+                              {
+                                  Id = pro.proDimensionProfile.Value.ToString(),
+                                  Size = pro.proDimensionProfile.Value.ToString()
+
+                              }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            return result;
+        }
+
+        public List<ResultSize> loadDimensionDiameter()
+        {
+            List<ResultSize> result = null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    result = (from pro in db.products
+                              where (pro.proDimensionDiameter.HasValue)
+                              select new ResultSize
+                              {
+                                  Id = pro.proDimensionDiameter.Value.ToString(),
+                                  Size = pro.proDimensionDiameter.Value.ToString()
+
+                              }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            return result;
+        }
+
+        public List<ResultProduct> loadBrands()
+        {
+            List<ResultProduct> result = null;
+            try
+            {
+                int catId = 0;
+                int width = 0;
+                int profile = 0;
+                int diameter = 0;
+
+                Guid? braId = null;
+                using (var db = new dekkOnlineEntities())
+                {
+                    result = (from pro in db.products
+                              where (pro.proStatus == true
                                     && pro.categoriesDP.cdpStatus == true
                                     && (catId == 0 || pro.catId == catId)
                                     && (width == 0 || pro.proDimensionWidth == width)
                                     && (profile == 0 || pro.proDimensionProfile == profile)
                                     && (diameter == 0 || pro.proDimensionDiameter == diameter)
-                                    && (braId.HasValue == false || pro.braId == braId)
-                                    select new
-                                    {
-                                        Id = pro.proId,
-                                        Image = pro.proImage,
-                                        CategoryImage = pro.categories.catImage,
-                                        Brand = pro.brands.braName,
-                                        BrandImage = pro.brands.braImage,
-                                        Name = pro.proName,
-                                        Width = pro.proDimensionWidth,
-                                        Profile = pro.proDimensionProfile,
-                                        Diameter = pro.proDimensionDiameter,
-                                        TyreSize = pro.proTyreSize,
-                                        Fuel = pro.proFuel,
-                                        Wet = pro.proWet,
-                                        Noise = pro.proNoise,
-                                        Price = pro.proSuggestedPrice,
-                                        Stock = pro.proInventory
-                                    });                    
+                                    && (braId.HasValue == false || pro.braId == braId))
+                              select new ResultProduct
+                              {
+                                  proId = pro.proId,
+                                  proImage = pro.proImage,
+                                  categories = pro.categories.catImage,
+                                  Brand = pro.brands.braName,
+                                  BrandImage = pro.brands.braImage,
+                                  proName = pro.proName,
+                                  proDimensionWidth = pro.proDimensionWidth,
+                                  proDimensionProfile = pro.proDimensionProfile,
+                                  proDimensionDiameter = pro.proDimensionDiameter,
+                                  proTyreSize = pro.proTyreSize,
+                                  proFuel = pro.proFuel,
+                                  proWet = pro.proWet,
+                                  proNoise = pro.proNoise,
+                                  proSuggestedPrice = pro.proSuggestedPrice,
+                                  proInventory = pro.proInventory
+
+                              }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            return result;
+        }
+
+        public string addressUser(int idUser)
+        {
+            var UserAddress = (dynamic) null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    UserAddress = (from user in db.UserAddress where user.IdUser == idUser select new { adreess = user.Address, latitude = user.Latitude, length = user.Length});
                 }
             }
             catch (Exception)
             {
                 throw;
-            }                       
+            }
+            return UserAddress;
         }
 
         //LOAD SYZES PER DEKK
