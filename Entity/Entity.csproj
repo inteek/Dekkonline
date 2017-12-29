@@ -93,6 +93,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DekkOnline.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DeliveryType.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="products.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>

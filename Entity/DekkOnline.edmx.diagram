@@ -34,6 +34,7 @@
         <EntityTypeShape EntityType="dekkOnlineModel.WorkshopServices" Width="1.5" PointX="0.75" PointY="13.75" />
         <AssociationConnector Association="dekkOnlineModel.fk_Userpromcode" />
         <AssociationConnector Association="dekkOnlineModel.fk_CodepromUser" />
+        <EntityTypeShape EntityType="dekkOnlineModel.DeliveryType" Width="1.5" PointX="13.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

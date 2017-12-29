@@ -112,6 +112,20 @@
           <Property Name="cdpStatus" Type="bit" Nullable="false" />
           <Property Name="cdpEdited" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="DeliveryType">
+          <Key>
+            <PropertyRef Name="IdDelivery" />
+          </Key>
+          <Property Name="IdDelivery" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliveryType" Type="bit" />
+          <Property Name="IdUser" Type="int" />
+          <Property Name="IdWorkshop" Type="int" />
+          <Property Name="IdServiceWorkshop" Type="int" />
+          <Property Name="IdAppointmentsWorkshop" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Time" Type="varchar" MaxLength="10" />
+          <Property Name="Comments" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="products">
           <Key>
             <PropertyRef Name="proId" />
@@ -168,7 +182,7 @@
           <Key>
             <PropertyRef Name="IdCode" />
           </Key>
-          <Property Name="IdCode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="IdCode" Type="varchar" MaxLength="35" Nullable="false" />
           <Property Name="DescriptionCode" Type="varchar" MaxLength="100" />
           <Property Name="PercentCode" Type="decimal" Precision="18" Scale="0" />
           <Property Name="DateStart" Type="datetime" />
@@ -180,7 +194,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
-          <Property Name="IdCode" Type="varchar" MaxLength="15" />
+          <Property Name="IdCode" Type="varchar" MaxLength="35" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -190,6 +204,8 @@
           <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
           <Property Name="proId" Type="int" />
           <Property Name="quantity" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="bit" />
         </EntityType>
         <EntityType Name="tokens">
           <Key>
@@ -402,6 +418,7 @@
           <EntitySet Name="brands" EntityType="Self.brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromotionCode" EntityType="Self.PromotionCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromotionCodeUser" EntityType="Self.PromotionCodeUser" Schema="dbo" store:Type="Tables" />
@@ -756,6 +773,7 @@
             <End Role="PromotionCode" EntitySet="PromotionCode" />
             <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
           </AssociationSet>
+          <EntitySet Name="DeliveryType" EntityType="dekkOnlineModel.DeliveryType" />
         </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -767,6 +785,8 @@
           <Property Name="quantity" Type="Int32" />
           <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_user" FromRole="ShoppingCart" ToRole="AspNetUsers" />
           <NavigationProperty Name="products" Relationship="dekkOnlineModel.fk_product" FromRole="ShoppingCart" ToRole="products" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="Boolean" />
         </EntityType>
         <Association Name="fk_user">
           <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
@@ -803,7 +823,7 @@
           <Key>
             <PropertyRef Name="IdCode" />
           </Key>
-          <Property Name="IdCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdCode" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="DescriptionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PercentCode" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="DateStart" Type="DateTime" Precision="3" />
@@ -816,7 +836,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IdCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="IdCode" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpromcode" FromRole="PromotionCodeUser" ToRole="AspNetUsers" />
           <NavigationProperty Name="PromotionCode" Relationship="dekkOnlineModel.fk_CodepromUser" FromRole="PromotionCodeUser" ToRole="PromotionCode" />
         </EntityType>
@@ -896,6 +916,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DeliveryType">
+          <Key>
+            <PropertyRef Name="IdDelivery" />
+          </Key>
+          <Property Name="IdDelivery" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryType1" Type="Boolean" />
+          <Property Name="IdUser" Type="Int32" />
+          <Property Name="IdWorkshop" Type="Int32" />
+          <Property Name="IdServiceWorkshop" Type="Int32" />
+          <Property Name="IdAppointmentsWorkshop" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Time" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1072,6 +1106,8 @@
           <EntitySetMapping Name="ShoppingCart">
             <EntityTypeMapping TypeName="dekkOnlineModel.ShoppingCart">
               <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="proId" ColumnName="proId" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
@@ -1161,6 +1197,21 @@
                 <ScalarProperty Name="IdService" ColumnName="IdService" />
                 <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryType">
+            <EntityTypeMapping TypeName="dekkOnlineModel.DeliveryType">
+              <MappingFragment StoreEntitySet="DeliveryType">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IdAppointmentsWorkshop" ColumnName="IdAppointmentsWorkshop" />
+                <ScalarProperty Name="IdServiceWorkshop" ColumnName="IdServiceWorkshop" />
+                <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="DeliveryType1" ColumnName="DeliveryType" />
+                <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

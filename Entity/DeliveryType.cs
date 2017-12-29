@@ -12,16 +12,16 @@ namespace Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class ShoppingCart
+    public partial class DeliveryType
     {
-        public int Id { get; set; }
-        public string IdUser { get; set; }
-        public Nullable<int> proId { get; set; }
-        public Nullable<int> quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<bool> Status { get; set; }
-    
-        public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual products products { get; set; }
+        public int IdDelivery { get; set; }
+        public Nullable<bool> DeliveryType1 { get; set; }
+        public Nullable<int> IdUser { get; set; }
+        public Nullable<int> IdWorkshop { get; set; }
+        public Nullable<int> IdServiceWorkshop { get; set; }
+        public Nullable<int> IdAppointmentsWorkshop { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public string Time { get; set; }
+        public string Comments { get; set; }
     }
 }

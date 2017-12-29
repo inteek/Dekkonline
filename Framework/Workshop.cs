@@ -77,5 +77,100 @@ namespace Framework
             }
             return result;
         }
+
+        public bool AddToWorkshop(string name, string address, string phone, int zipCode, string latitude, string length)
+        {
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var addWorkshop = new Entity.Workshop();
+                    addWorkshop.Name = name;
+                    addWorkshop.Address = address;
+                    addWorkshop.Phone = phone;
+                    addWorkshop.ZipCode = zipCode;
+                    addWorkshop.Latitude = latitude;
+                    addWorkshop.Length = length;
+                    db.Workshop.Add(addWorkshop);
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                //_Error = ex;
+                return false;
+            }
+        }
+
+        public bool AddToDelivery(bool deliveryType, int idUser, int idWorkshop, int idServiceWorkshop, int idAppointmentsWorkshop, DateTime date, string time, string comments)
+        {
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    if (idAppointmentsWorkshop != null)
+                    {
+                        var addDelivery = new Entity.DeliveryType();
+                        addDelivery.DeliveryType1 = deliveryType;
+                        addDelivery.IdUser = idUser;
+                        addDelivery.IdWorkshop = idWorkshop;
+                        addDelivery.IdServiceWorkshop = idServiceWorkshop;
+                        addDelivery.IdAppointmentsWorkshop = idAppointmentsWorkshop;
+                        addDelivery.Date = null;
+                        addDelivery.Time = null;
+                        addDelivery.Comments = null;
+                        db.DeliveryType.Add(addDelivery);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        var addDelivery = new Entity.DeliveryType();
+                        addDelivery.DeliveryType1 = deliveryType;
+                        addDelivery.IdUser = idUser;
+                        addDelivery.IdWorkshop = idWorkshop;
+                        addDelivery.IdServiceWorkshop = idServiceWorkshop;
+                        addDelivery.IdAppointmentsWorkshop = null;
+                        addDelivery.Date = date;
+                        addDelivery.Time = time;
+                        addDelivery.Comments = comments;
+                        db.DeliveryType.Add(addDelivery);
+                        db.SaveChanges();
+                        return true;
+                    }
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                //_Error = ex;
+                return false;
+            }
+        }
+
+        public List<ResultWorkshop> loadWorkshopAddress()
+        {
+            List<ResultWorkshop> result = null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    result = (from address in db.Workshop
+                              select new ResultWorkshop
+                              {
+                                  Address = address.Address,
+                                  ZipCode = address.ZipCode,
+                                  Latitude = address.Latitude,
+                                  Length = address.Length
+                              }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return result;
+        }
     }
 }

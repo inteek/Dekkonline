@@ -44,5 +44,6 @@ namespace Entity
         public virtual DbSet<Workshop> Workshop { get; set; }
         public virtual DbSet<WorkshopAppointment> WorkshopAppointment { get; set; }
         public virtual DbSet<WorkshopServices> WorkshopServices { get; set; }
+        public virtual DbSet<DeliveryType> DeliveryType { get; set; }
     }
 }

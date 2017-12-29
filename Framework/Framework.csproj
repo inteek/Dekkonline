@@ -54,6 +54,7 @@
     <Compile Include="Libraies\ResultProduct.cs" />
     <Compile Include="Libraies\ResultSize.cs" />
     <Compile Include="Libraies\ResultTypesServices.cs" />
+    <Compile Include="Libraies\ResultWorkshop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users.cs" />
     <Compile Include="Workshop.cs" />

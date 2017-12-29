@@ -11,7 +11,7 @@ namespace Framework
 {
     public class Users
     {
-        public string addressUser(int idUser)
+        public string loadAddressUser(int idUser)
         {
             var UserAddress = (dynamic)null;
             try
@@ -62,6 +62,53 @@ namespace Framework
             }
             return Result;
         }
+
+        public bool AddToUserAddress(int idUser, string firstName, string lastName, string address, string phone, int zipCode, string latitude, string length)
+        {
+            bool result = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var user = db.UserAddress.Where(s => s.IdUser == idUser).FirstOrDefault();
+                    if (user == null)
+                    {
+                        var addUserAddress = new Entity.UserAddress();
+                        addUserAddress.IdUser = idUser;
+                        addUserAddress.FirstName = firstName;
+                        addUserAddress.LastName = lastName;
+                        addUserAddress.Address = address;
+                        addUserAddress.Phone = phone;
+                        addUserAddress.ZipCode = zipCode;
+                        addUserAddress.Latitude = latitude;
+                        addUserAddress.Length = length;
+                        db.UserAddress.Add(addUserAddress);
+                        db.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        user.FirstName = firstName;
+                        user.LastName = lastName;
+                        user.Address = address;
+                        user.Phone = phone;
+                        user.ZipCode = zipCode;
+                        user.Latitude = latitude;
+                        user.Length = length;
+
+                        db.Entry(user).State = EntityState.Modified;
+                        db.SaveChanges();
+                        result = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+            return result;
+        }
+
 
     }
 }
