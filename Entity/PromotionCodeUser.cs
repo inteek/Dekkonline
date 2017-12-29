@@ -18,7 +18,7 @@ namespace Entity
         public string IdUser { get; set; }
         public string IdCode { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual PromotionCode PromotionCode { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

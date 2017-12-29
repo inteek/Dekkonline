@@ -16,7 +16,7 @@
     </Key>
     <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
   </EntityType>
   <EntityType Name="AspNetUserClaims">
     <Key>
@@ -26,7 +26,7 @@
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
   </EntityType>
   <EntityType Name="AspNetUserLogins">
     <Key>
@@ -37,27 +37,7 @@
     <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-  </EntityType>
-  <EntityType Name="AspNetUsers">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
   </EntityType>
   <EntityType Name="brands">
     <Key>
@@ -155,6 +135,7 @@
     <NavigationProperty Name="brands" Relationship="Self.FK_products_brands" FromRole="products" ToRole="brands" />
     <NavigationProperty Name="categories" Relationship="Self.FK_products_categories" FromRole="products" ToRole="categories" />
     <NavigationProperty Name="categoriesDP" Relationship="Self.FK_products_categoriesDP" FromRole="products" ToRole="categoriesDP" />
+    <NavigationProperty Name="ShoppingCart" Relationship="dekkOnlineModel.fk_product" FromRole="products" ToRole="ShoppingCart" />
   </EntityType>
   <EntityType Name="tokens">
     <Key>
@@ -164,34 +145,6 @@
     <Property Name="tokDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="tokData" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
-  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserClaims">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserLogins">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_products_brands">
     <End Role="brands" Type="Self.brands" Multiplicity="1" />
     <End Role="products" Type="Self.products" Multiplicity="*" />
@@ -228,29 +181,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="AspNetUserRoles">
-    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
-  </Association>
   <EntityContainer Name="dekkOnlineEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
-    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
     <EntitySet Name="brands" EntityType="Self.brands" />
     <EntitySet Name="categories" EntityType="Self.categories" />
     <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" />
     <EntitySet Name="products" EntityType="Self.products" />
     <EntitySet Name="tokens" EntityType="Self.tokens" />
-    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-    </AssociationSet>
     <AssociationSet Name="FK_products_brands" Association="Self.FK_products_brands">
       <End Role="brands" EntitySet="brands" />
       <End Role="products" EntitySet="products" />
@@ -263,9 +203,363 @@
       <End Role="categoriesDP" EntitySet="categoriesDP" />
       <End Role="products" EntitySet="products" />
     </AssociationSet>
-    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+    <EntitySet Name="ShoppingCart" EntityType="dekkOnlineModel.ShoppingCart" />
+    <AssociationSet Name="fk_product" Association="dekkOnlineModel.fk_product">
+      <End Role="products" EntitySet="products" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+    </AssociationSet>
+    <EntitySet Name="Appointments" EntityType="dekkOnlineModel.Appointments" />
+    <EntitySet Name="PromotionCode" EntityType="dekkOnlineModel.PromotionCode" />
+    <EntitySet Name="PromotionCodeUser" EntityType="dekkOnlineModel.PromotionCodeUser" />
+    <EntitySet Name="TypesServices" EntityType="dekkOnlineModel.TypesServices" />
+    <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
+    <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
+    <EntitySet Name="WorkshopAppointment" EntityType="dekkOnlineModel.WorkshopAppointment" />
+    <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
+    <AssociationSet Name="fk_CodepromUser" Association="dekkOnlineModel.fk_CodepromUser">
+      <End Role="PromotionCode" EntitySet="PromotionCode" />
+      <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
+    </AssociationSet>
+    <EntitySet Name="DetailUserPoints" EntityType="dekkOnlineModel.DetailUserPoints" />
+    <EntitySet Name="PurchaseOrder" EntityType="dekkOnlineModel.PurchaseOrder" />
+    <EntitySet Name="UserPoints" EntityType="dekkOnlineModel.UserPoints" />
+    <EntitySet Name="AspNetUsers" EntityType="dekkOnlineModel.AspNetUsers" />
+    <EntitySet Name="DeliveryType" EntityType="dekkOnlineModel.DeliveryType" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="fk_user" Association="dekkOnlineModel.fk_user">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+    </AssociationSet>
+    <AssociationSet Name="fk_UserPoints" Association="dekkOnlineModel.fk_UserPoints">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserPoints" EntitySet="UserPoints" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Userpromcode" Association="dekkOnlineModel.fk_Userpromcode">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Userpromcodeinvite" Association="dekkOnlineModel.fk_Userpromcodeinvite">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="DetailUserPoints" EntitySet="DetailUserPoints" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Userpurchase" Association="dekkOnlineModel.fk_Userpurchase">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="fk_delivery" Association="dekkOnlineModel.fk_delivery">
+      <End Role="DeliveryType" EntitySet="DeliveryType" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="dekkOnlineModel.AspNetUserRoles">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="ShoppingCart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="proId" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <NavigationProperty Name="products" Relationship="dekkOnlineModel.fk_product" FromRole="ShoppingCart" ToRole="products" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_user" FromRole="ShoppingCart" ToRole="AspNetUsers" />
+  </EntityType>
+  <Association Name="fk_product">
+    <End Type="dekkOnlineModel.products" Role="products" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="proId" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="proId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Appointments">
+    <Key>
+      <PropertyRef Name="IdAppointment" />
+    </Key>
+    <Property Name="IdAppointment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Schedule" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PromotionCode">
+    <Key>
+      <PropertyRef Name="IdCode" />
+    </Key>
+    <Property Name="IdCode" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+    <Property Name="DescriptionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PercentCode" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateStart" Type="DateTime" Precision="3" />
+    <Property Name="DateEnd" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PromotionCodeUser" Relationship="dekkOnlineModel.fk_CodepromUser" FromRole="PromotionCode" ToRole="PromotionCodeUser" />
+  </EntityType>
+  <EntityType Name="PromotionCodeUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="IdCode" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PromotionCode" Relationship="dekkOnlineModel.fk_CodepromUser" FromRole="PromotionCodeUser" ToRole="PromotionCode" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpromcode" FromRole="PromotionCodeUser" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="TypesServices">
+    <Key>
+      <PropertyRef Name="IdService" />
+    </Key>
+    <Property Name="IdService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="UserAddress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="Int32" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Workshop">
+    <Key>
+      <PropertyRef Name="IdWorkshop" />
+    </Key>
+    <Property Name="IdWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="WorkshopAppointment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdWorkshop" Type="Int32" />
+    <Property Name="IdAppointment" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Time" Type="Time" Precision="4" />
+    <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="WorkshopServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdWorkshop" Type="Int32" />
+    <Property Name="IdService" Type="Int32" />
+  </EntityType>
+  <Association Name="fk_CodepromUser">
+    <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.PromotionCodeUser" Role="PromotionCodeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PromotionCode">
+        <PropertyRef Name="IdCode" />
+      </Principal>
+      <Dependent Role="PromotionCodeUser">
+        <PropertyRef Name="IdCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="DetailUserPoints">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserFriendEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="DayInvited" Type="DateTime" Precision="3" />
+    <Property Name="StatusofPromo" Type="Boolean" />
+    <Property Name="PointsEarned" Type="Int32" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="DetailUserPoints" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="PurchaseOrder">
+    <Key>
+      <PropertyRef Name="IdOrderDetail" />
+    </Key>
+    <Property Name="IdOrderDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Products" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Paymentmethod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="Orderstatus" Type="Boolean" />
+    <Property Name="IdDelivery" Type="Int32" />
+    <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
+    <Property Name="UsedPromo" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+    <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="PurchaseOrder" ToRole="AspNetUsers" />
+    <NavigationProperty Name="DeliveryType" Relationship="dekkOnlineModel.fk_delivery" FromRole="PurchaseOrder" ToRole="DeliveryType" />
+  </EntityType>
+  <EntityType Name="UserPoints">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Points" Type="Int32" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_UserPoints" FromRole="UserPoints" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="ShoppingCart" Relationship="dekkOnlineModel.fk_user" FromRole="AspNetUsers" ToRole="ShoppingCart" />
+    <NavigationProperty Name="UserPoints" Relationship="dekkOnlineModel.fk_UserPoints" FromRole="AspNetUsers" ToRole="UserPoints" />
+    <NavigationProperty Name="PromotionCodeUser" Relationship="dekkOnlineModel.fk_Userpromcode" FromRole="AspNetUsers" ToRole="PromotionCodeUser" />
+    <NavigationProperty Name="DetailUserPoints" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="AspNetUsers" ToRole="DetailUserPoints" />
+    <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="AspNetUsers" ToRole="PurchaseOrder" />
+    <NavigationProperty Name="AspNetRoles" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="DeliveryType">
+    <Key>
+      <PropertyRef Name="IdDelivery" />
+    </Key>
+    <Property Name="IdDelivery" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DeliveryType1" Type="Boolean" />
+    <Property Name="IdUser" Type="Int32" />
+    <Property Name="IdWorkshop" Type="Int32" />
+    <Property Name="IdServiceWorkshop" Type="Int32" />
+    <Property Name="IdAppointmentsWorkshop" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Time" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_delivery" FromRole="DeliveryType" ToRole="PurchaseOrder" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dekkOnlineModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dekkOnlineModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_user">
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_UserPoints">
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.UserPoints" Role="UserPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserPoints">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Userpromcode">
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.PromotionCodeUser" Role="PromotionCodeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PromotionCodeUser">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Userpromcodeinvite">
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.DetailUserPoints" Role="DetailUserPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetailUserPoints">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Userpurchase">
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_delivery">
+    <End Type="dekkOnlineModel.DeliveryType" Role="DeliveryType" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryType">
+        <PropertyRef Name="IdDelivery" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="IdDelivery" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="dekkOnlineModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+    <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+  </Association>
 </Schema>

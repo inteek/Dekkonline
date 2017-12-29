@@ -21,7 +21,7 @@ namespace Entity
         public Nullable<decimal> Price { get; set; }
         public Nullable<bool> Status { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual products products { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

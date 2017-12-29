@@ -10,6 +10,13 @@
     <Property Name="Model" Type="varbinary(max)" Nullable="false" />
     <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
   </EntityType>
+  <EntityType Name="Appointments">
+    <Key>
+      <PropertyRef Name="IdAppointment" />
+    </Key>
+    <Property Name="IdAppointment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Schedule" Type="datetime" />
+  </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
@@ -100,6 +107,31 @@
     <Property Name="cdpStatus" Type="bit" Nullable="false" />
     <Property Name="cdpEdited" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="DeliveryType">
+    <Key>
+      <PropertyRef Name="IdDelivery" />
+    </Key>
+    <Property Name="IdDelivery" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeliveryType" Type="bit" />
+    <Property Name="IdUser" Type="int" />
+    <Property Name="IdWorkshop" Type="int" />
+    <Property Name="IdServiceWorkshop" Type="int" />
+    <Property Name="IdAppointmentsWorkshop" Type="int" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Time" Type="varchar" MaxLength="10" />
+    <Property Name="Comments" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DetailUserPoints">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="UserFriendEmail" Type="nvarchar" MaxLength="256" />
+    <Property Name="DayInvited" Type="datetime" />
+    <Property Name="StatusofPromo" Type="bit" />
+    <Property Name="PointsEarned" Type="int" />
+  </EntityType>
   <EntityType Name="products">
     <Key>
       <PropertyRef Name="proId" />
@@ -152,6 +184,51 @@
     <Property Name="proLastUpdate" Type="datetime" />
     <Property Name="proDiscount" Type="money" />
   </EntityType>
+  <EntityType Name="PromotionCode">
+    <Key>
+      <PropertyRef Name="IdCode" />
+    </Key>
+    <Property Name="IdCode" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="DescriptionCode" Type="varchar" MaxLength="100" />
+    <Property Name="PercentCode" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DateStart" Type="datetime" />
+    <Property Name="DateEnd" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PromotionCodeUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="IdCode" Type="varchar" MaxLength="35" />
+  </EntityType>
+  <EntityType Name="PurchaseOrder">
+    <Key>
+      <PropertyRef Name="IdOrderDetail" />
+    </Key>
+    <Property Name="IdOrderDetail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="Products" Type="varchar(max)" Nullable="false" />
+    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Paymentmethod" Type="varchar" MaxLength="25" />
+    <Property Name="OrderDate" Type="datetime" />
+    <Property Name="Orderstatus" Type="bit" />
+    <Property Name="IdDelivery" Type="int" />
+    <Property Name="DeliveredDate" Type="datetime" />
+    <Property Name="UsedPromo" Type="varchar" MaxLength="35" />
+    <Property Name="Comments" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ShoppingCart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="proId" Type="int" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
   <EntityType Name="tokens">
     <Key>
       <PropertyRef Name="tokId" />
@@ -160,6 +237,78 @@
     <Property Name="tokDate" Type="datetime" Nullable="false" />
     <Property Name="tokData" Type="nvarchar" MaxLength="1000" Nullable="false" />
   </EntityType>
+  <EntityType Name="TypesServices">
+    <Key>
+      <PropertyRef Name="IdService" />
+    </Key>
+    <Property Name="IdService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserAddress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUser" Type="int" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="150" />
+    <Property Name="Phone" Type="varchar" MaxLength="30" />
+    <Property Name="ZipCode" Type="int" />
+    <Property Name="Latitude" Type="varchar" MaxLength="50" />
+    <Property Name="Length" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserPoints">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="Points" Type="int" />
+  </EntityType>
+  <EntityType Name="Workshop">
+    <Key>
+      <PropertyRef Name="IdWorkshop" />
+    </Key>
+    <Property Name="IdWorkshop" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="Address" Type="varchar" MaxLength="150" />
+    <Property Name="Phone" Type="varchar" MaxLength="30" />
+    <Property Name="ZipCode" Type="int" />
+    <Property Name="Latitude" Type="varchar" MaxLength="50" />
+    <Property Name="Length" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="WorkshopAppointment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdWorkshop" Type="int" />
+    <Property Name="IdAppointment" Type="int" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Time" Type="time" Precision="4" />
+    <Property Name="Comments" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="WorkshopServices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdWorkshop" Type="int" />
+    <Property Name="IdService" Type="int" />
+  </EntityType>
+  <Association Name="fk_CodepromUser">
+    <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
+    <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PromotionCode">
+        <PropertyRef Name="IdCode" />
+      </Principal>
+      <Dependent Role="PromotionCodeUser">
+        <PropertyRef Name="IdCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -216,6 +365,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_delivery">
+    <End Role="DeliveryType" Type="Self.DeliveryType" Multiplicity="0..1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryType">
+        <PropertyRef Name="IdDelivery" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="IdDelivery" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_product">
+    <End Role="products" Type="Self.products" Multiplicity="0..1" />
+    <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="proId" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="proId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_products_brands">
     <End Role="brands" Type="Self.brands" Multiplicity="1" />
     <End Role="products" Type="Self.products" Multiplicity="*" />
@@ -252,8 +425,69 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_user">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_UserPoints">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="UserPoints" Type="Self.UserPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserPoints">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Userpromcode">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PromotionCodeUser">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Userpromcodeinvite">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="DetailUserPoints" Type="Self.DetailUserPoints" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetailUserPoints">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Userpurchase">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="dekkOnlineModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -262,8 +496,24 @@
     <EntitySet Name="brands" EntityType="Self.brands" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromotionCode" EntityType="Self.PromotionCode" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PromotionCodeUser" EntityType="Self.PromotionCodeUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tokens" EntityType="Self.tokens" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypesServices" EntityType="Self.TypesServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserAddress" EntityType="Self.UserAddress" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserPoints" EntityType="Self.UserPoints" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkshopAppointment" EntityType="Self.WorkshopAppointment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkshopServices" EntityType="Self.WorkshopServices" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_CodepromUser" Association="Self.fk_CodepromUser">
+      <End Role="PromotionCode" EntitySet="PromotionCode" />
+      <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -280,6 +530,14 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
+    <AssociationSet Name="fk_delivery" Association="Self.fk_delivery">
+      <End Role="DeliveryType" EntitySet="DeliveryType" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="fk_product" Association="Self.fk_product">
+      <End Role="products" EntitySet="products" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+    </AssociationSet>
     <AssociationSet Name="FK_products_brands" Association="Self.FK_products_brands">
       <End Role="brands" EntitySet="brands" />
       <End Role="products" EntitySet="products" />
@@ -291,6 +549,26 @@
     <AssociationSet Name="FK_products_categoriesDP" Association="Self.FK_products_categoriesDP">
       <End Role="categoriesDP" EntitySet="categoriesDP" />
       <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="fk_user" Association="Self.fk_user">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+    </AssociationSet>
+    <AssociationSet Name="fk_UserPoints" Association="Self.fk_UserPoints">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserPoints" EntitySet="UserPoints" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Userpromcode" Association="Self.fk_Userpromcode">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Userpromcodeinvite" Association="Self.fk_Userpromcodeinvite">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="DetailUserPoints" EntitySet="DetailUserPoints" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Userpurchase" Association="Self.fk_Userpurchase">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

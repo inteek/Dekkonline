@@ -20,7 +20,5 @@ namespace Framework.Libraies
         public string UsedPromo { get; set; }
         public string Comments { get; set; }
 
-        public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual DeliveryType DeliveryType { get; set; }
     }
 }
