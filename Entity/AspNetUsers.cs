@@ -22,6 +22,9 @@ namespace Entity
             this.AspNetRoles = new HashSet<AspNetRoles>();
             this.ShoppingCart = new HashSet<ShoppingCart>();
             this.PromotionCodeUser = new HashSet<PromotionCodeUser>();
+            this.UserPoints = new HashSet<UserPoints>();
+            this.DetailUserPoints = new HashSet<DetailUserPoints>();
+            this.PurchaseOrder = new HashSet<PurchaseOrder>();
         }
     
         public string Id { get; set; }
@@ -47,5 +50,11 @@ namespace Entity
         public virtual ICollection<ShoppingCart> ShoppingCart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PromotionCodeUser> PromotionCodeUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserPoints> UserPoints { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetailUserPoints> DetailUserPoints { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }
     }
 }

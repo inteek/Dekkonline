@@ -96,6 +96,9 @@
     <Compile Include="DeliveryType.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
+    <Compile Include="DetailUserPoints.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="products.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
@@ -106,6 +109,9 @@
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrder.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShoppingCart.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
@@ -116,6 +122,9 @@
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="UserAddress.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserPoints.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="Workshop.cs">

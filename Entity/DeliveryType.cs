@@ -14,6 +14,12 @@ namespace Entity
     
     public partial class DeliveryType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DeliveryType()
+        {
+            this.PurchaseOrder = new HashSet<PurchaseOrder>();
+        }
+    
         public int IdDelivery { get; set; }
         public Nullable<bool> DeliveryType1 { get; set; }
         public Nullable<int> IdUser { get; set; }
@@ -23,5 +29,8 @@ namespace Entity
         public Nullable<System.DateTime> Date { get; set; }
         public string Time { get; set; }
         public string Comments { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }
     }
 }
