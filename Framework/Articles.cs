@@ -10,7 +10,8 @@ using System.Data.Entity;
 namespace Framework
 {
     public class Articles
-    {        
+    {
+        //DE-2 1
         public List<ResultBrands> loadBrands()
         {
             List<ResultBrands> result = null;
@@ -34,7 +35,7 @@ namespace Framework
             }
             return result;
         }
-
+        //DE-2 1
         public List<ResultCategories> loadType()
         {
             List<ResultCategories> result = null;
@@ -58,7 +59,7 @@ namespace Framework
             }
             return result;
         }
-
+        //DE-2 1
         public List<ResultSize> loadDimensionWidth()
         {
             List<ResultSize> result = null;
@@ -82,7 +83,7 @@ namespace Framework
             }
             return result;
         }
-
+        //DE-2 1
         public List<ResultSize> loadDimensionProfile()
         {
             List<ResultSize> result = null;
@@ -106,7 +107,7 @@ namespace Framework
             }
             return result;
         }
-
+        //DE-2 1
         public List<ResultSize> loadDimensionDiameter()
         {
             List<ResultSize> result = null;
@@ -130,7 +131,8 @@ namespace Framework
             }
             return result;
         }
-
+        
+        //DE-2 2
         public List<ResultProduct> loadProducts()
         {
             List<ResultProduct> result = null;
@@ -179,8 +181,8 @@ namespace Framework
             }
             return result;
         }
-       
-        //LOAD SYZES PER DEKK
+
+        //LOAD SYZES PER DEKK DE-5 TASK 1 TASK 2
         public List<ResultProduct> SizesperDekk(string dekk)
         {
             List<ResultProduct> result = null;

@@ -28,6 +28,7 @@ namespace Framework
             return delail;
         }
 
+        //DE-14 4
         public List<ResultTypesServices> detailWorkshopServices(int idWorkshop)
         {
             List<ResultTypesServices> services = null;
@@ -53,6 +54,7 @@ namespace Framework
             return services;
         }
 
+        //DE-14 4
         public List<ResultAppointments> detailWorkshopAppointments(int idWorkshop)
         {
             List<ResultAppointments> result = null;
@@ -78,7 +80,8 @@ namespace Framework
             return result;
         }
 
-        public bool AddToWorkshop(string name, string address, string phone, int zipCode, string latitude, string length)
+        //DE-14 5
+        public bool addToWorkshop(string name, string address, string phone, int zipCode, string latitude, string length)
         {
             try
             {
@@ -103,52 +106,7 @@ namespace Framework
             }
         }
 
-        public bool AddToDelivery(bool deliveryType, int idUser, int idWorkshop, int idServiceWorkshop, int idAppointmentsWorkshop, DateTime date, string time, string comments)
-        {
-            try
-            {
-                using (var db = new dekkOnlineEntities())
-                {
-                    if (idAppointmentsWorkshop != null)
-                    {
-                        var addDelivery = new Entity.DeliveryType();
-                        addDelivery.DeliveryType1 = deliveryType;
-                        addDelivery.IdUser = idUser;
-                        addDelivery.IdWorkshop = idWorkshop;
-                        addDelivery.IdServiceWorkshop = idServiceWorkshop;
-                        addDelivery.IdAppointmentsWorkshop = idAppointmentsWorkshop;
-                        addDelivery.Date = null;
-                        addDelivery.Time = null;
-                        addDelivery.Comments = null;
-                        db.DeliveryType.Add(addDelivery);
-                        db.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        var addDelivery = new Entity.DeliveryType();
-                        addDelivery.DeliveryType1 = deliveryType;
-                        addDelivery.IdUser = idUser;
-                        addDelivery.IdWorkshop = idWorkshop;
-                        addDelivery.IdServiceWorkshop = idServiceWorkshop;
-                        addDelivery.IdAppointmentsWorkshop = null;
-                        addDelivery.Date = date;
-                        addDelivery.Time = time;
-                        addDelivery.Comments = comments;
-                        db.DeliveryType.Add(addDelivery);
-                        db.SaveChanges();
-                        return true;
-                    }
-                   
-                }
-            }
-            catch (Exception ex)
-            {
-                //_Error = ex;
-                return false;
-            }
-        }
-
+        //DE-14 3
         public List<ResultWorkshop> loadWorkshopAddress()
         {
             List<ResultWorkshop> result = null;
@@ -172,5 +130,6 @@ namespace Framework
             }
             return result;
         }
+       
     }
 }

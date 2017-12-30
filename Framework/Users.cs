@@ -11,6 +11,7 @@ namespace Framework
 {
     public class Users
     {
+        //DE-14 1
         public string loadAddressUser(int idUser)
         {
             var UserAddress = (dynamic)null;
@@ -28,6 +29,7 @@ namespace Framework
             return UserAddress;
         }
 
+        //DE-14 2
         public bool updateAddressUser(int idUser, string firstName, string lastName, string address, string phone, int zipCode, string latitude, string length)
         {
             bool Result = false;
@@ -63,7 +65,8 @@ namespace Framework
             return Result;
         }
 
-        public bool AddToUserAddress(int idUser, string firstName, string lastName, string address, string phone, int zipCode, string latitude, string length)
+        //DE-14 5
+        public bool addToUserAddress(int idUser, string firstName, string lastName, string address, string phone, int zipCode, string latitude, string length)
         {
             bool result = false;
             try
@@ -109,6 +112,22 @@ namespace Framework
             return result;
         }
 
-
+        //DE-23 1
+        public string dataUser(int idUser)
+        {
+            var user = (dynamic)null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    user = (from us in db.UserAddress where us.IdUser == idUser select new { idUsuario = us.IdUser, firstName = us.FirstName, lastName = us.LastName, address = us.Address, phone = us.Phone, zipCode = us.ZipCode, latitude = us.Latitude, length = us.Length });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return user;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Framework
     class ShoppingCart
     {
 
-        //ADD TO CART
+        //ADD TO CART DE-5 TASK 3
         public bool AddToCart(string User, int id_dekk, int id_quantity)
         {
             try
@@ -22,6 +22,7 @@ namespace Framework
                     addCart.IdUser = User;
                     addCart.proId = id_dekk;
                     addCart.quantity = id_quantity;
+                    addCart.Status = true;
                     db.ShoppingCart.Add(addCart);
                     db.SaveChanges();
                     return true;
@@ -34,7 +35,7 @@ namespace Framework
             }
         }
 
-        //DELETE FROM CART
+        //DELETE FROM CART DE-11 TASK 5
         public bool DeleteProductFromCart(int idcart)
         {
             try
@@ -64,7 +65,7 @@ namespace Framework
             }
         }
 
-        //PRODUCTS IN CART
+        //PRODUCTS IN CART DE-11 TASK 1
         public List<ResultProduct> ProductsInCart(string User)
         {
             List<ResultProduct> products = null;
@@ -97,7 +98,7 @@ namespace Framework
             return products;
         }
 
-        //LOAD PROMO CODE FROM USER
+        //LOAD PROMO CODE FROM USER DE-11 TASK 2
         public string LoadPromoCodeFomUser(string idCodepromo)
         {
             var promocode = (dynamic)null;
@@ -129,7 +130,7 @@ namespace Framework
 
         }
 
-        //VALIDATE PROMO CODE
+        //VALIDATE PROMO CODE DE-11
         public string ValidatePromoCode(string code, decimal totalprice, string idUser)
         {
             var promocodediscount = (dynamic)null;
@@ -169,7 +170,7 @@ namespace Framework
             }
         }
 
-        //LOAD CURRENT POINTS PER USER
+        //LOAD CURRENT POINTS PER USER DE-11 TASK 3
         public string LoadPointsPerUser(string idUser)
         {
             var NowPointsLoad = (dynamic)null;
@@ -178,7 +179,7 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    NowPointsLoad = db.DetailUserPoints.Where(s=>s.IdUser==idUser && s.StatusofPromo==true).Select(s=>s.PointsEarned).Sum();
+                    NowPointsLoad = db.DetailUserPoints.Where(s => s.IdUser == idUser && s.StatusofPromo == true).Select(s => s.PointsEarned).Sum();
 
                     if (NowPointsLoad == null)
                     {
