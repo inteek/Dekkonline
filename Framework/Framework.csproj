@@ -48,14 +48,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articles.cs" />
-    <Compile Include="Libraies\ResultDeliveryType.cs" />
+    <Compile Include="Libraies\ResultDeliveryType.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Libraies\ResultOrders.cs" />
     <Compile Include="Libraies\ResultAppointments.cs" />
     <Compile Include="Libraies\ResultBrands.cs" />
     <Compile Include="Libraies\ResultCategories.cs" />
     <Compile Include="Libraies\ResultProduct.cs" />
-    <Compile Include="Libraies\ResultProductsConfirmation.cs" />
-    <Compile Include="Libraies\ResultPurchaseOrder.cs" />
+    <Compile Include="Libraies\ResultProductsConfirmation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraies\ResultPurchaseOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Libraies\ResultShoppingCart.cs" />
     <Compile Include="Libraies\ResultSize.cs" />
     <Compile Include="Libraies\ResultTypesServices.cs" />
