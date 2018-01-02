@@ -65,6 +65,7 @@
     <Compile Include="Libraies\ResultShoppingCart.cs" />
     <Compile Include="Libraies\ResultSize.cs" />
     <Compile Include="Libraies\ResultTypesServices.cs" />
+    <Compile Include="Libraies\ResultUserPoints.cs" />
     <Compile Include="Libraies\ResultWorkshop.cs" />
     <Compile Include="Orders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

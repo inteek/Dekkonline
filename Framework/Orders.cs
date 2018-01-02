@@ -160,7 +160,7 @@ namespace Framework
                                                          Price = shpro.Price,
                                                          Quantity = shpro.quantity,
                                                          TotalPrice1 = item.TotalPrice1
-                                                     }).FirstOrDefault();
+                                                     });
 
                             if (EachProductDetail != null)
                             {

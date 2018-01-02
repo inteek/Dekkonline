@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Entity;
 using Framework.Libraies;
+using System.Data.Entity;
 namespace Framework
 {
-    class ShoppingCart
+    public class ShoppingCart
     {
 
         //ADD TO CART DE-5 TASK 3
@@ -17,11 +18,13 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-
+                    var product = db.products.Where(s => s.proId == id_dekk).Select(x => x.proSuggestedPrice).FirstOrDefault();
+                    decimal price = Convert.ToDecimal(product) * id_quantity;
                     var addCart = new Entity.ShoppingCart();
                     addCart.IdUser = User;
                     addCart.proId = id_dekk;
                     addCart.quantity = id_quantity;
+                    addCart.Price = price;
                     addCart.Status = true;
                     db.ShoppingCart.Add(addCart);
                     db.SaveChanges();
@@ -42,7 +45,6 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-
                     var addCart = new ShoppingCart();
                     var d = db.ShoppingCart.Where(x => x.Id == idcart).FirstOrDefault();
                     if (d != null)
@@ -111,7 +113,7 @@ namespace Framework
                                  select new
                                  {
                                      IdCode = p.IdCode
-                                 }).FirstOrDefault();
+                                 }).FirstOrDefault().ToString();
                     if (promocode != null)
                     {
                         return promocode;
@@ -122,7 +124,7 @@ namespace Framework
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -172,7 +174,7 @@ namespace Framework
         }
 
         //LOAD CURRENT POINTS PER USER DE-11 TASK 3
-        public string LoadPointsPerUser(string idUser)
+        public int LoadPointsPerUser(string idUser)
         {
             var NowPointsLoad = (dynamic)null;
 
@@ -180,9 +182,9 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    NowPointsLoad = db.DetailUserPoints.Where(s => s.IdUser == idUser && s.StatusofPromo == true).Select(s => s.PointsEarned).Sum();
+                    NowPointsLoad = db.DetailUserPoints.Where(s => s.IdUser == idUser && s.StatusofPromo == true).Select(s => s.PointsEarned).Sum().ToString();
 
-                    if (NowPointsLoad == null)
+                    if (NowPointsLoad == null || NowPointsLoad == "")
                     {
                         NowPointsLoad = 0;
                     }
@@ -190,22 +192,25 @@ namespace Framework
                     var UserPoints = db.UserPoints.Where(s => s.IdUser == idUser).FirstOrDefault();
                     if (UserPoints == null)
                     {
-                        UserPoints.IdUser = idUser;
-                        UserPoints.Points = NowPointsLoad;
-                        db.UserPoints.Add(UserPoints);
+                        var points = new Entity.UserPoints();
+
+                        points.IdUser = idUser;
+                        points.Points = Convert.ToInt32(NowPointsLoad);
+                        db.UserPoints.Add(points);
                         db.SaveChanges();
                         return NowPointsLoad;
                     }
                     else
                     {
-                        UserPoints.Points = NowPointsLoad;
+                        UserPoints.Points = Convert.ToInt32(NowPointsLoad);
+                        db.Entry(UserPoints).State = EntityState.Modified;
                         db.SaveChanges();
                         return NowPointsLoad;
 
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

@@ -37,7 +37,7 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    var result = db.UserAddress.Find(idUser);
+                    var result = db.UserAddress.Where(s => s.IdUser == idUser).FirstOrDefault();
                     if (result != null)
                     {
                         result.FirstName = firstName;
@@ -58,7 +58,7 @@ namespace Framework
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -120,7 +120,7 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    user = (from us in db.UserAddress where us.IdUser == idUser select new { idUsuario = us.IdUser, firstName = us.FirstName, lastName = us.LastName, address = us.Address, phone = us.Phone, zipCode = us.ZipCode, latitude = us.Latitude, length = us.Length });
+                    user = (from us in db.UserAddress where us.IdUser == idUser select new { idUsuario = us.IdUser, firstName = us.FirstName, lastName = us.LastName, address = us.Address, phone = us.Phone, zipCode = us.ZipCode, latitude = us.Latitude, length = us.Length }).FirstOrDefault().ToString();
                 }
             }
             catch (Exception)

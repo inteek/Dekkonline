@@ -17,3 +17,4 @@ C:\DekkOnline\Entity\bin\Debug\EntityFramework.xml
 C:\DekkOnline\Entity\bin\Debug\EntityFramework.SqlServer.xml
 C:\DekkOnline\Entity\obj\Debug\Entity.dll
 C:\DekkOnline\Entity\obj\Debug\Entity.pdb
+C:\DekkOnline\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
