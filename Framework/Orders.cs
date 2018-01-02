@@ -11,7 +11,7 @@ namespace Framework
 {
     public class Orders
     {
-        public bool addToDelivery(bool deliveryType, int idUser, int idWorkshop, int idServiceWorkshop, int idAppointmentsWorkshop, DateTime date, string time, string comments)
+        public bool addToDelivery(bool deliveryType, string idUser, int idWorkshop, int idServiceWorkshop, int idAppointmentsWorkshop, DateTime date, string time, string comments)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     var idDelivery = (from d in db.DeliveryType
-                              where (d.IdUser == Convert.ToInt32(idUser))
+                              where (d.IdUser == idUser)
                               orderby d.IdUser descending
                               select d.IdDelivery);
 

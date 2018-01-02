@@ -113,7 +113,7 @@
     </Key>
     <Property Name="IdDelivery" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DeliveryType" Type="bit" />
-    <Property Name="IdUser" Type="int" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
     <Property Name="IdWorkshop" Type="int" />
     <Property Name="IdServiceWorkshop" Type="int" />
     <Property Name="IdAppointmentsWorkshop" Type="int" />
@@ -209,7 +209,7 @@
     <Property Name="IdOrderDetail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
     <Property Name="Products" Type="varchar(max)" Nullable="false" />
-    <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="TotalPrice" Type="money" Nullable="false" />
     <Property Name="Paymentmethod" Type="varchar" MaxLength="25" />
     <Property Name="OrderDate" Type="datetime" />
     <Property Name="Orderstatus" Type="bit" />
@@ -226,7 +226,7 @@
     <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
     <Property Name="proId" Type="int" />
     <Property Name="quantity" Type="int" />
-    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Price" Type="money" />
     <Property Name="Status" Type="bit" />
   </EntityType>
   <EntityType Name="tokens">
@@ -249,7 +249,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IdUser" Type="int" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
     <Property Name="FirstName" Type="varchar" MaxLength="50" />
     <Property Name="LastName" Type="varchar" MaxLength="50" />
     <Property Name="Address" Type="varchar" MaxLength="150" />

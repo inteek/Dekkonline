@@ -98,8 +98,8 @@ namespace Framework
             return products;
         }
 
-        //LOAD PROMO CODE FROM USER DE-11 TASK 2
-        public string LoadPromoCodeFomUser(string idCodepromo)
+        //LOAD PROMO CODE FROM USER DE-11 TASK 2 cambios
+        public string LoadPromoCodeFomUser(string idUser)
         {
             var promocode = (dynamic)null;
             try
@@ -107,7 +107,7 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     promocode = (from p in db.PromotionCodeUser
-                                 where p.IdCode == idCodepromo
+                                 where p.IdUser == idUser
                                  select new
                                  {
                                      IdCode = p.IdCode
@@ -130,7 +130,7 @@ namespace Framework
 
         }
 
-        //VALIDATE PROMO CODE DE-11
+        //VALIDATE PROMO CODE DE-11 cambios
         public string ValidatePromoCode(string code, decimal totalprice, string idUser)
         {
             var promocodediscount = (dynamic)null;
@@ -139,7 +139,8 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    promocodediscount = db.PromotionCode.Where(p => p.IdCode == code).Select(p => p.PercentCode).FirstOrDefault();
+                    DateTime DateToday = DateTime.Now;
+                    promocodediscount = db.PromotionCode.Where(p => p.IdCode == code && p.DateStart <= DateToday && p.DateEnd >= DateToday).Select(p => p.PercentCode).FirstOrDefault();
                     promocodevalidate = db.PurchaseOrder.Where(pv => pv.UsedPromo == code && pv.IdUser == idUser).FirstOrDefault();
                     if (promocodevalidate == null)
                     {

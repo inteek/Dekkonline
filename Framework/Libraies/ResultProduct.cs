@@ -58,5 +58,6 @@ namespace Framework.Libraies
         public System.DateTime proLastUpdateDP { get; set; }
         public Nullable<System.DateTime> proLastUpdate { get; set; }
         public Nullable<decimal> proDiscount { get; set; }
+        public Nullable<int> CartId { get; set; }
     }
 }

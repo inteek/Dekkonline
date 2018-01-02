@@ -22,7 +22,7 @@ namespace Entity
     
         public int IdDelivery { get; set; }
         public Nullable<bool> DeliveryType1 { get; set; }
-        public Nullable<int> IdUser { get; set; }
+        public string IdUser { get; set; }
         public Nullable<int> IdWorkshop { get; set; }
         public Nullable<int> IdServiceWorkshop { get; set; }
         public Nullable<int> IdAppointmentsWorkshop { get; set; }
