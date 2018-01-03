@@ -42,7 +42,8 @@ namespace Framework
                                 select new ResultTypesServices
                                 {
                                     IdService = ser.IdService,
-                                    Description = ser.Description
+                                    Description = ser.Description,
+                                    Price = ws.Price
                                 }).ToList();
                 }
 
@@ -107,7 +108,35 @@ namespace Framework
         }
 
         //DE-14 3
-        public List<ResultWorkshop> loadWorkshopAddress()
+        public List<ResultWorkshop> loadWorkshopAddress(int zipCode)
+        {
+            List<ResultWorkshop> result = null;
+            int rango1 = zipCode - 100;
+            int rango2 = zipCode + 100;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    result = (from address in db.Workshop
+                              where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                              select new ResultWorkshop
+                              {
+                                  Address = address.Address,
+                                  ZipCode = address.ZipCode,
+                                  Latitude = address.Latitude,
+                                  Length = address.Length
+                              }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return result;
+        }
+
+        //DE-26 1
+        public List<ResultWorkshop> loadWorkshop(int workshop)
         {
             List<ResultWorkshop> result = null;
             try
@@ -115,10 +144,12 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     result = (from address in db.Workshop
+                              where (address.IdWorkshop >= workshop)
                               select new ResultWorkshop
                               {
                                   Address = address.Address,
                                   ZipCode = address.ZipCode,
+                                  Phone = address.Phone,
                                   Latitude = address.Latitude,
                                   Length = address.Length
                               }).ToList();

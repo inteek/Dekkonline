@@ -184,6 +184,69 @@ namespace Framework
 
         }
 
+        //DE-29 1
+        public List<ResultPurchaseOrder> loadOrderPast(string idUser)
+        {
+            List<ResultPurchaseOrder> AllProducts = new List<ResultPurchaseOrder>();
+            List<ResultPurchaseOrder> orders = null;
+            List<ResultPurchaseOrder> EachProductDetail = (dynamic)null;
+            string[] product = (dynamic)null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    orders = (from or in db.PurchaseOrder
+                              where or.IdUser == idUser && or.Orderstatus == true
+                              orderby or.IdOrderDetail descending
+                              select new ResultPurchaseOrder
+                              {
+                                  IdOrderDetail = or.IdOrderDetail,
+                                  Products = or.Products,
+                                  TotalPrice = or.TotalPrice,
+                                  OrderDate = or.OrderDate,
+                                  Orderstatus = or.Orderstatus,
+                                  DeliveredDate = or.DeliveredDate,
+                                  ShoppingCarts = or.Shoppingcarts
+                              }).ToList();
+                    
+                    foreach (var item in orders)
+                    {
+                        product = item.ShoppingCarts.Split(',');
+
+                        foreach (var item2 in product)
+                        {
+                            EachProductDetail = (from prod in db.products
+                                                 join shpro in db.ShoppingCart on prod.proId equals shpro.proId
+                                                 where shpro.IdUser == idUser && shpro.Status == false && shpro.Id.ToString() == item2
+                                                 orderby shpro.Id descending
+                                                 select new ResultPurchaseOrder
+                                                 {
+                                                     ProductImage = prod.proImage,
+                                                     IdOrderDetail = item.IdOrderDetail,
+                                                     ProductName = prod.proName,
+                                                     Price = shpro.Price,
+                                                     Quantity = shpro.quantity,
+                                                     DeliveredDate = item.DeliveredDate,
+                                                     TotalPrice1 = item.TotalPrice
+                                                 }).ToList();
+
+                            if (EachProductDetail != null)
+                            {
+                                AllProducts.AddRange(EachProductDetail);
+                            }
+
+                        }
+                    }
+                }
+                return AllProducts;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
         //ORDER CONFIRMATION DE-20 TASK 1
         public List<ResultProductsConfirmation> ObtainProductsConfirmed(string idUser)
         {

@@ -283,6 +283,7 @@
           <Property Name="ZipCode" Type="int" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Length" Type="varchar" MaxLength="50" />
+          <Property Name="WorkImage" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="WorkshopAppointment">
           <Key>
@@ -302,6 +303,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdWorkshop" Type="int" />
           <Property Name="IdService" Type="int" />
+          <Property Name="Price" Type="money" />
         </EntityType>
         <Association Name="fk_CodepromUser">
           <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
@@ -795,7 +797,6 @@
           <EntitySet Name="TypesServices" EntityType="dekkOnlineModel.TypesServices" />
           <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
           <EntitySet Name="WorkshopAppointment" EntityType="dekkOnlineModel.WorkshopAppointment" />
-          <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
           <AssociationSet Name="fk_CodepromUser" Association="dekkOnlineModel.fk_CodepromUser">
             <End Role="PromotionCode" EntitySet="PromotionCode" />
             <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
@@ -842,6 +843,7 @@
             <End Role="DeliveryType" EntitySet="DeliveryType" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
+          <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
           </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -914,6 +916,7 @@
           <Property Name="ZipCode" Type="Int32" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WorkshopAppointment">
           <Key>
@@ -925,14 +928,6 @@
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Time" Type="Time" Precision="4" />
           <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="WorkshopServices">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdWorkshop" Type="Int32" />
-          <Property Name="IdService" Type="Int32" />
         </EntityType>
         <Association Name="fk_CodepromUser">
           <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
@@ -1144,6 +1139,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="WorkshopServices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdWorkshop" Type="Int32" />
+          <Property Name="IdService" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1342,6 +1346,7 @@
           <EntitySetMapping Name="Workshop">
             <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
               <MappingFragment StoreEntitySet="Workshop">
+                <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
                 <ScalarProperty Name="Length" ColumnName="Length" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
@@ -1359,15 +1364,6 @@
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="IdAppointment" ColumnName="IdAppointment" />
-                <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WorkshopServices">
-            <EntityTypeMapping TypeName="dekkOnlineModel.WorkshopServices">
-              <MappingFragment StoreEntitySet="WorkshopServices">
-                <ScalarProperty Name="IdService" ColumnName="IdService" />
                 <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1465,6 +1461,16 @@
                 <ScalarProperty Name="Products" ColumnName="Products" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="IdOrderDetail" ColumnName="IdOrderDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkshopServices">
+            <EntityTypeMapping TypeName="dekkOnlineModel.WorkshopServices">
+              <MappingFragment StoreEntitySet="WorkshopServices">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IdService" ColumnName="IdService" />
+                <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

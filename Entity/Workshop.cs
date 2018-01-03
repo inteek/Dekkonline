@@ -21,5 +21,6 @@ namespace Entity
         public Nullable<int> ZipCode { get; set; }
         public string Latitude { get; set; }
         public string Length { get; set; }
+        public string WorkImage { get; set; }
     }
 }

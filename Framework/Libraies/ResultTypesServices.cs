@@ -10,5 +10,6 @@ namespace Framework.Libraies
     {
         public int IdService { get; set; }
         public string Description { get; set; }
+        public Nullable<decimal> Price { get; set; }
     }
 }

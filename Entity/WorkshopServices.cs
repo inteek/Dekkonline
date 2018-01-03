@@ -17,5 +17,6 @@ namespace Entity
         public int Id { get; set; }
         public Nullable<int> IdWorkshop { get; set; }
         public Nullable<int> IdService { get; set; }
+        public Nullable<decimal> Price { get; set; }
     }
 }

@@ -41,12 +41,12 @@ namespace Entity
         public virtual DbSet<TypesServices> TypesServices { get; set; }
         public virtual DbSet<Workshop> Workshop { get; set; }
         public virtual DbSet<WorkshopAppointment> WorkshopAppointment { get; set; }
-        public virtual DbSet<WorkshopServices> WorkshopServices { get; set; }
         public virtual DbSet<DetailUserPoints> DetailUserPoints { get; set; }
         public virtual DbSet<UserPoints> UserPoints { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<DeliveryType> DeliveryType { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrder { get; set; }
+        public virtual DbSet<WorkshopServices> WorkshopServices { get; set; }
     }
 }

@@ -21,17 +21,18 @@ namespace Pruebas
 
             //Console.WriteLine(shoppin.LoadPointsPerUser("3f619083-b218-41e8-8693-1a93ecd82fdff"));
             //Console.WriteLine(user.updateAddressUser("3f619083-b218-41e8-8693-1a93ecd82fd2","Alfredo","Escobar","Apodaca #2334","4444444444", 3333, null, null));
-            List<Framework.Libraies.ResultProduct> product = null;
-            product = shoppin.ProductsInCart("3f619083-b218-41e8-8693-1a93ecd82fdf");
+            List<Framework.Libraies.ResultPurchaseOrder> product = null;
+            product = orders.loadOrderPast("3f619083-b218-41e8-8693-1a93ecd82fdf");
 
             foreach (var item in product)
             {
-                Console.WriteLine("proId: " + item.proId);
-                Console.WriteLine("proImage: " + item.proImage);
-                Console.WriteLine("proName: " + item.proName);
-                Console.WriteLine("proDescription: " + item.proDescription);
-                Console.WriteLine("proSuggestedPrice: " + item.proSuggestedPrice);
-                Console.WriteLine("proInventory: " + item.proInventory + "\n");
+                Console.WriteLine("ProductImage: " + item.ProductImage);
+                Console.WriteLine("IdOrderDetail: " + item.IdOrderDetail);
+                Console.WriteLine("ProductName: " + item.ProductName);
+                Console.WriteLine("Price: " + item.Price);
+                Console.WriteLine("Quantity: " + item.Quantity);
+                Console.WriteLine("DeliveredDate: " + item.DeliveredDate);
+                Console.WriteLine("TotalPrice1: " + item.TotalPrice1 + "\n");
             }
             Console.ReadLine();
 

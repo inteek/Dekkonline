@@ -278,6 +278,7 @@
     <Property Name="ZipCode" Type="int" />
     <Property Name="Latitude" Type="varchar" MaxLength="50" />
     <Property Name="Length" Type="varchar" MaxLength="50" />
+    <Property Name="WorkImage" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="WorkshopAppointment">
     <Key>
@@ -297,6 +298,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IdWorkshop" Type="int" />
     <Property Name="IdService" Type="int" />
+    <Property Name="Price" Type="money" />
   </EntityType>
   <Association Name="fk_CodepromUser">
     <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
