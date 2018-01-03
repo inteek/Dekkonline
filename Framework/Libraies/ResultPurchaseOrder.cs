@@ -24,5 +24,6 @@ namespace Framework.Libraies
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> TotalPrice1 { get; set; }
         public string ProductImage { get; set; }
+        public string ShoppingCarts { get; set; }
     }
 }

@@ -58,22 +58,23 @@ namespace Framework
         }
 
         //DE-8 2
-        public bool addToPurchaseOrder(string idUser, string products, decimal totalPrice, string paymentmethod, DateTime orderDate, bool oderStatus, DateTime deliveredDate, string usedPromo, string comments)
+        public bool addToPurchaseOrder(string idUser, string products, string carts, decimal totalPrice, string paymentmethod, DateTime orderDate, bool oderStatus, DateTime? deliveredDate, string usedPromo, string comments)
         {
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
                     var idDelivery = (from d in db.DeliveryType
-                              where (d.IdUser == idUser)
-                              orderby d.IdUser descending
-                              select d.IdDelivery);
+                                      where (d.IdUser == idUser)
+                                      orderby d.IdUser descending
+                                      select d.IdDelivery).FirstOrDefault(); ;
 
                     if (idDelivery != null)
                     {
                         var addPurchaseOrder = new Entity.PurchaseOrder();
                         addPurchaseOrder.IdUser = idUser;
                         addPurchaseOrder.Products = products;
+                        addPurchaseOrder.Shoppingcarts = carts;
                         addPurchaseOrder.TotalPrice = totalPrice;
                         addPurchaseOrder.Paymentmethod = paymentmethod;
                         addPurchaseOrder.OrderDate = orderDate;
@@ -85,31 +86,33 @@ namespace Framework
 
                         db.PurchaseOrder.Add(addPurchaseOrder);
                         db.SaveChanges();
-                         string[] Products;
-                        Products = products.Split(',');
-                        foreach (var item in Products)
+                        string[] shoppingcartid;
+                        shoppingcartid = products.Split(',');
+                        foreach (var item in shoppingcartid)
                         {
+                            var prodid = db.ShoppingCart.Where(s => s.Id.ToString() == item).Select(s => s.proId).FirstOrDefault();
                             var productquantity = (from a in db.ShoppingCart
-                                                   where a.proId.ToString() == item && a.IdUser == idUser
+                                                   where a.proId == prodid && a.IdUser == idUser
                                                    orderby a.Id descending
                                                    select new { quantity1 = a.quantity }).FirstOrDefault();
-                            var StockProductFinal = db.products.Where(s => s.proId.ToString() == item).FirstOrDefault();
+                            var StockProductFinal = db.products.Where(s => s.proId == prodid).FirstOrDefault();
                             var productcartchange = (from a in db.ShoppingCart
-                                                     where a.proId.ToString() == item && a.IdUser == idUser && a.Status == true
-                                                     orderby a.Id descending select a).FirstOrDefault();
+                                                     where a.proId == prodid && a.IdUser == idUser && a.Status == true
+                                                     orderby a.Id descending
+                                                     select a).FirstOrDefault();
                             StockProductFinal.proInventory = StockProductFinal.proInventory - productquantity.quantity1;
-                            db.products.Add(StockProductFinal);
+                            db.Entry(StockProductFinal).State = EntityState.Modified;
                             productcartchange.Status = false;
-                            db.ShoppingCart.Add(productcartchange);
+                            db.Entry(productcartchange).State = EntityState.Modified;
                             db.SaveChanges();
-                        }                                            
-                        return true;                        
+                        }
+                        return true;
                     }
                     else
                     {
                         return false;
                     }
-                    
+
                 }
             }
             catch (Exception ex)
@@ -118,13 +121,13 @@ namespace Framework
                 return false;
             }
         }
-        
+
         //DE-25 1
         public List<ResultPurchaseOrder> loadOrderPending(string idUser)
         {
-            List<ResultPurchaseOrder> AllProducts = null;
+            List<ResultPurchaseOrder> AllProducts = new List<ResultPurchaseOrder>();
             List<ResultPurchaseOrder> orders = null;
-            var EachProductDetail = (dynamic)null;
+            List<ResultPurchaseOrder> EachProductDetail = (dynamic)null;
             string[] product = (dynamic)null;
             try
             {
@@ -132,6 +135,7 @@ namespace Framework
                 {
                     orders = (from or in db.PurchaseOrder
                               where or.IdUser == idUser && or.Orderstatus == false
+                              orderby or.IdOrderDetail descending
                               select new ResultPurchaseOrder
                               {
                                   IdOrderDetail = or.IdOrderDetail,
@@ -140,27 +144,28 @@ namespace Framework
                                   OrderDate = or.OrderDate,
                                   Orderstatus = or.Orderstatus,
                                   DeliveredDate = or.DeliveredDate,
+                                  ShoppingCarts = or.Shoppingcarts
                               }).ToList();
 
                     foreach (var item in orders)
                     {
-                        product = item.Products.Split(',');
+                        product = item.ShoppingCarts.Split(',');
 
                         foreach (var item2 in product)
                         {
                             EachProductDetail = (from prod in db.products
-                                                     join shpro in db.ShoppingCart on prod.proId equals shpro.proId
-                                                     where shpro.IdUser == idUser && shpro.Status == true && shpro.proId.ToString() == item2
-                                                     orderby shpro.Id descending
-                                                     select new ResultPurchaseOrder
-                                                     {
-                                                         ProductImage = prod.proImage,
-                                                         IdOrderDetail = item.IdOrderDetail,
-                                                         ProductName = prod.proName,
-                                                         Price = shpro.Price,
-                                                         Quantity = shpro.quantity,
-                                                         TotalPrice1 = item.TotalPrice1
-                                                     });
+                                                 join shpro in db.ShoppingCart on prod.proId equals shpro.proId
+                                                 where shpro.IdUser == idUser && shpro.Status == false && shpro.Id.ToString() == item2
+                                                 orderby shpro.Id descending
+                                                 select new ResultPurchaseOrder
+                                                 {
+                                                     ProductImage = prod.proImage,
+                                                     IdOrderDetail = item.IdOrderDetail,
+                                                     ProductName = prod.proName,
+                                                     Price = shpro.Price,
+                                                     Quantity = shpro.quantity,
+                                                     TotalPrice1 = item.TotalPrice
+                                                 }).ToList();
 
                             if (EachProductDetail != null)
                             {
@@ -169,25 +174,21 @@ namespace Framework
 
                         }
                     }
-
-                    
-
                 }
-
-
+                return AllProducts;
             }
             catch (Exception ex)
             {
                 throw;
             }
-            return orders;
+
         }
 
         //ORDER CONFIRMATION DE-20 TASK 1
         public List<ResultProductsConfirmation> ObtainProductsConfirmed(string idUser)
         {
-            List<ResultProductsConfirmation> AllProducts = null;
-            var EachProductDetail = (dynamic)null;
+            List<ResultProductsConfirmation> AllProducts = new List<ResultProductsConfirmation>();
+            List<ResultProductsConfirmation> EachProductDetail = (dynamic)null;
             try
             {
                 using (var db = new dekkOnlineEntities())
@@ -196,16 +197,17 @@ namespace Framework
                                      join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
                                      where pro.IdUser == idUser
                                      orderby pro.IdOrderDetail descending
-                                     select new { ProductsOrder = pro.Products, TotalPrice1 = pro.TotalPrice, IdOrder = pro.IdOrderDetail }
+                                     select new { ProductsOrder = pro.Products, ShoppingCartItems = pro.Shoppingcarts, TotalPrice1 = pro.TotalPrice, IdOrder = pro.IdOrderDetail }
                       ).FirstOrDefault();
 
-                    string[] Products;
-                    Products = OrderInfo.ProductsOrder.Split(',');
-                    foreach (var item in Products)
+                    string[] shoppingcart;
+                    shoppingcart = OrderInfo.ShoppingCartItems.Split(',');
+                    foreach (var item in shoppingcart)
                     {
+                        var prodid = db.ShoppingCart.Where(s => s.Id.ToString() == item).Select(s => s.proId).FirstOrDefault();
                         EachProductDetail = (from prod in db.products
                                              join shpro in db.ShoppingCart on prod.proId equals shpro.proId
-                                             where shpro.IdUser == idUser && shpro.Status == true && shpro.proId.ToString() == item
+                                             where shpro.IdUser == idUser && shpro.Status == false && shpro.Id.ToString() == item
                                              orderby shpro.Id descending
                                              select new ResultProductsConfirmation
                                              {
@@ -215,7 +217,7 @@ namespace Framework
                                                  Price = shpro.Price,
                                                  Quantity = shpro.quantity,
                                                  TotalPrice1 = OrderInfo.TotalPrice1
-                                             }).FirstOrDefault();
+                                             }).ToList();
                         if (EachProductDetail != null)
                         {
                             AllProducts.AddRange(EachProductDetail);
@@ -241,12 +243,12 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                   var DeliveryType = (from pro in db.PurchaseOrder
-                                    join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                    where pro.IdUser == idUser
-                                    orderby pro.IdOrderDetail descending
-                                    select new {Deliverytype = del.DeliveryType1, Appointmentworkshop = del.IdAppointmentsWorkshop}
-                                    ).FirstOrDefault();
+                    var DeliveryType = (from pro in db.PurchaseOrder
+                                        join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
+                                        where pro.IdUser == idUser
+                                        orderby pro.IdOrderDetail descending
+                                        select new { Deliverytype = del.DeliveryType1, Appointmentworkshop = del.IdAppointmentsWorkshop }
+                                     ).FirstOrDefault();
 
 
 
@@ -255,32 +257,32 @@ namespace Framework
                         if (DeliveryType.Appointmentworkshop != null)
                         {
 
-                       
-                        OrderConf = (from pro in db.PurchaseOrder
-                                     join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                     join user in db.UserAddress on del.IdUser equals user.IdUser
-                                     join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
-                                     join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
-                                     where pro.IdUser == idUser
-                                     orderby pro.IdOrderDetail descending
-                                     select new
-                                     {
-                                         Idorderdetail = pro.IdOrderDetail,
-                                         zipcode = user.ZipCode,
-                                         Firstname = user.FirstName,
-                                         Lastname = user.LastName,
-                                         Adress = user.Address,
-                                         Emailuser = tUser.Email,
-                                         Phonenumber = user.Phone,
-                                         DateWorkshop = del.Date,
-                                         TimeWorkshop = del.Time,
-                                         WorkshopComments = del.Comments,
-                                         WorkshopName = twork.Name,
-                                         WorkshopAdress = twork.Address,
-                                         WorkshopLatitude = twork.Latitude,
-                                         WorkshopLength = twork.Length
-                                     }
-                              ).FirstOrDefault();
+
+                            OrderConf = (from pro in db.PurchaseOrder
+                                         join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
+                                         join user in db.UserAddress on del.IdUser equals user.IdUser
+                                         join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
+                                         join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
+                                         where pro.IdUser == idUser
+                                         orderby pro.IdOrderDetail descending
+                                         select new
+                                         {
+                                             Idorderdetail = pro.IdOrderDetail,
+                                             zipcode = user.ZipCode,
+                                             Firstname = user.FirstName,
+                                             Lastname = user.LastName,
+                                             Adress = user.Address,
+                                             Emailuser = tUser.Email,
+                                             Phonenumber = user.Phone,
+                                             DateWorkshop = del.Date,
+                                             TimeWorkshop = del.Time,
+                                             WorkshopComments = del.Comments,
+                                             WorkshopName = twork.Name,
+                                             WorkshopAdress = twork.Address,
+                                             WorkshopLatitude = twork.Latitude,
+                                             WorkshopLength = twork.Length
+                                         }
+                                  ).FirstOrDefault().ToString();
                             return OrderConf;
                         }
                         else
@@ -310,7 +312,7 @@ namespace Framework
                                              WorkshopLatitude = twork.Latitude,
                                              WorkshopLength = twork.Length
                                          }
-                            ).FirstOrDefault();
+                            ).FirstOrDefault().ToString();
                             return OrderConf;
                         }
                     }
@@ -341,7 +343,7 @@ namespace Framework
                                          UserLatitude = user.Latitude,
                                          UserLength = user.Length
                                      }
-                            ).FirstOrDefault();
+                            ).FirstOrDefault().ToString();
                         return OrderConf;
                     }
 
@@ -349,7 +351,7 @@ namespace Framework
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

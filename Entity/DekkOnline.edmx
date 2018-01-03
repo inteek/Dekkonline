@@ -222,6 +222,7 @@
           <Property Name="DeliveredDate" Type="datetime" />
           <Property Name="UsedPromo" Type="varchar" MaxLength="35" />
           <Property Name="Comments" Type="varchar" MaxLength="100" />
+          <Property Name="Shoppingcarts" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -800,7 +801,6 @@
             <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
           </AssociationSet>
           <EntitySet Name="DetailUserPoints" EntityType="dekkOnlineModel.DetailUserPoints" />
-          <EntitySet Name="PurchaseOrder" EntityType="dekkOnlineModel.PurchaseOrder" />
           <EntitySet Name="UserPoints" EntityType="dekkOnlineModel.UserPoints" />
           <EntitySet Name="AspNetUsers" EntityType="dekkOnlineModel.AspNetUsers" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -827,16 +827,17 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="DetailUserPoints" EntitySet="DetailUserPoints" />
           </AssociationSet>
-          <AssociationSet Name="fk_Userpurchase" Association="dekkOnlineModel.fk_Userpurchase">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="dekkOnlineModel.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
           <EntitySet Name="DeliveryType" EntityType="dekkOnlineModel.DeliveryType" />
+          <EntitySet Name="PurchaseOrder" EntityType="dekkOnlineModel.PurchaseOrder" />
+          <AssociationSet Name="fk_Userpurchase" Association="dekkOnlineModel.fk_Userpurchase">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
           <AssociationSet Name="fk_delivery" Association="dekkOnlineModel.fk_delivery">
             <End Role="DeliveryType" EntitySet="DeliveryType" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
@@ -957,24 +958,6 @@
           <Property Name="PointsEarned" Type="Int32" />
           <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="DetailUserPoints" ToRole="AspNetUsers" />
         </EntityType>
-        <EntityType Name="PurchaseOrder">
-          <Key>
-            <PropertyRef Name="IdOrderDetail" />
-          </Key>
-          <Property Name="IdOrderDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Products" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Paymentmethod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="Orderstatus" Type="Boolean" />
-          <Property Name="IdDelivery" Type="Int32" />
-          <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
-          <Property Name="UsedPromo" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
-          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="PurchaseOrder" ToRole="AspNetUsers" />
-          <NavigationProperty Name="DeliveryType" Relationship="dekkOnlineModel.fk_delivery" FromRole="PurchaseOrder" ToRole="DeliveryType" />
-        </EntityType>
         <EntityType Name="UserPoints">
           <Key>
             <PropertyRef Name="Id" />
@@ -1006,8 +989,8 @@
           <NavigationProperty Name="UserPoints" Relationship="dekkOnlineModel.fk_UserPoints" FromRole="AspNetUsers" ToRole="UserPoints" />
           <NavigationProperty Name="PromotionCodeUser" Relationship="dekkOnlineModel.fk_Userpromcode" FromRole="AspNetUsers" ToRole="PromotionCodeUser" />
           <NavigationProperty Name="DetailUserPoints" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="AspNetUsers" ToRole="DetailUserPoints" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="AspNetUsers" ToRole="PurchaseOrder" />
           <NavigationProperty Name="AspNetRoles" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="AspNetUsers" ToRole="PurchaseOrder" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -1085,18 +1068,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_Userpurchase">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Type="dekkOnlineModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
@@ -1130,6 +1101,37 @@
           <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_delivery" FromRole="DeliveryType" ToRole="PurchaseOrder" />
         </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="IdOrderDetail" />
+          </Key>
+          <Property Name="IdOrderDetail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Products" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Paymentmethod" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="Orderstatus" Type="Boolean" />
+          <Property Name="IdDelivery" Type="Int32" />
+          <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
+          <Property Name="UsedPromo" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Shoppingcarts" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="PurchaseOrder" ToRole="AspNetUsers" />
+          <NavigationProperty Name="DeliveryType" Relationship="dekkOnlineModel.fk_delivery" FromRole="PurchaseOrder" ToRole="DeliveryType" />
+        </EntityType>
+        <Association Name="fk_Userpurchase">
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_delivery">
           <End Type="dekkOnlineModel.DeliveryType" Role="DeliveryType" Multiplicity="0..1" />
           <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
@@ -1383,23 +1385,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseOrder">
-            <EntityTypeMapping TypeName="dekkOnlineModel.PurchaseOrder">
-              <MappingFragment StoreEntitySet="PurchaseOrder">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="UsedPromo" ColumnName="UsedPromo" />
-                <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
-                <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
-                <ScalarProperty Name="Orderstatus" ColumnName="Orderstatus" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="Paymentmethod" ColumnName="Paymentmethod" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Products" ColumnName="Products" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="IdOrderDetail" ColumnName="IdOrderDetail" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserPoints">
             <EntityTypeMapping TypeName="dekkOnlineModel.UserPoints">
               <MappingFragment StoreEntitySet="UserPoints">
@@ -1462,6 +1447,24 @@
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="DeliveryType1" ColumnName="DeliveryType" />
                 <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrder">
+            <EntityTypeMapping TypeName="dekkOnlineModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="Shoppingcarts" ColumnName="Shoppingcarts" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="UsedPromo" ColumnName="UsedPromo" />
+                <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
+                <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
+                <ScalarProperty Name="Orderstatus" ColumnName="Orderstatus" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Paymentmethod" ColumnName="Paymentmethod" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Products" ColumnName="Products" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdOrderDetail" ColumnName="IdOrderDetail" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

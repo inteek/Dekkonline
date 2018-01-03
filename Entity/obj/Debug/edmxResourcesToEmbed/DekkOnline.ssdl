@@ -217,6 +217,7 @@
     <Property Name="DeliveredDate" Type="datetime" />
     <Property Name="UsedPromo" Type="varchar" MaxLength="35" />
     <Property Name="Comments" Type="varchar" MaxLength="100" />
+    <Property Name="Shoppingcarts" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="ShoppingCart">
     <Key>

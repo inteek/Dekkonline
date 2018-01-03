@@ -236,23 +236,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PurchaseOrder">
-      <EntityTypeMapping TypeName="dekkOnlineModel.PurchaseOrder">
-        <MappingFragment StoreEntitySet="PurchaseOrder">
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="UsedPromo" ColumnName="UsedPromo" />
-          <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
-          <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
-          <ScalarProperty Name="Orderstatus" ColumnName="Orderstatus" />
-          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-          <ScalarProperty Name="Paymentmethod" ColumnName="Paymentmethod" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="Products" ColumnName="Products" />
-          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-          <ScalarProperty Name="IdOrderDetail" ColumnName="IdOrderDetail" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserPoints">
       <EntityTypeMapping TypeName="dekkOnlineModel.UserPoints">
         <MappingFragment StoreEntitySet="UserPoints">
@@ -315,6 +298,24 @@
           <ScalarProperty Name="IdUser" ColumnName="IdUser" />
           <ScalarProperty Name="DeliveryType1" ColumnName="DeliveryType" />
           <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseOrder">
+      <EntityTypeMapping TypeName="dekkOnlineModel.PurchaseOrder">
+        <MappingFragment StoreEntitySet="PurchaseOrder">
+          <ScalarProperty Name="Shoppingcarts" ColumnName="Shoppingcarts" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="UsedPromo" ColumnName="UsedPromo" />
+          <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
+          <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
+          <ScalarProperty Name="Orderstatus" ColumnName="Orderstatus" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Paymentmethod" ColumnName="Paymentmethod" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Products" ColumnName="Products" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="IdOrderDetail" ColumnName="IdOrderDetail" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
