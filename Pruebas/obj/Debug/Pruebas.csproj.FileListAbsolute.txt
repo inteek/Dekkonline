@@ -1,0 +1,14 @@
+C:\DekkOnline\Pruebas\bin\Debug\Entity.dll
+C:\DekkOnline\Pruebas\bin\Debug\EntityFramework.dll
+C:\DekkOnline\Pruebas\bin\Debug\EntityFramework.SqlServer.dll
+C:\DekkOnline\Pruebas\bin\Debug\Framework.dll
+C:\DekkOnline\Pruebas\bin\Debug\Pruebas.exe.config
+C:\DekkOnline\Pruebas\bin\Debug\Pruebas.exe
+C:\DekkOnline\Pruebas\bin\Debug\Pruebas.pdb
+C:\DekkOnline\Pruebas\bin\Debug\Entity.pdb
+C:\DekkOnline\Pruebas\bin\Debug\Framework.pdb
+C:\DekkOnline\Pruebas\bin\Debug\EntityFramework.xml
+C:\DekkOnline\Pruebas\bin\Debug\EntityFramework.SqlServer.xml
+C:\DekkOnline\Pruebas\obj\Debug\Pruebas.csprojResolveAssemblyReference.cache
+C:\DekkOnline\Pruebas\obj\Debug\Pruebas.exe
+C:\DekkOnline\Pruebas\obj\Debug\Pruebas.pdb
