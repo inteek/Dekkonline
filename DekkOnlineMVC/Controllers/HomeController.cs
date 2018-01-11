@@ -10,7 +10,6 @@ namespace DekkOnlineMVC.Controllers
     {
         public ActionResult Index()
         {
-            //return View("~/Views/Shared/_Layout.cshtml");
             return View();
         }
 
@@ -27,6 +26,5 @@ namespace DekkOnlineMVC.Controllers
 
             return View();
         }
-
     }
 }

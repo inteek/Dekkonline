@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkOnline", "DekkOnline\DekkOnline.csproj", "{305A88C2-B7A6-4671-A478-8044B01C9375}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkOnlineMVC", "DekkOnlineMVC\DekkOnlineMVC.csproj", "{9C5E50CD-A398-47EE-A7C2-CC0BE7288336}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{1EA51A11-C582-4EA1-83C1-C87A0161A49D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{2BEFC8F0-8A5A-4109-984E-6F966C96FB9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkOnlineMVC", "DekkOnlineMVC\DekkOnlineMVC.csproj", "{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{305A88C2-B7A6-4671-A478-8044B01C9375}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{305A88C2-B7A6-4671-A478-8044B01C9375}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{305A88C2-B7A6-4671-A478-8044B01C9375}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C5E50CD-A398-47EE-A7C2-CC0BE7288336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C5E50CD-A398-47EE-A7C2-CC0BE7288336}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C5E50CD-A398-47EE-A7C2-CC0BE7288336}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C5E50CD-A398-47EE-A7C2-CC0BE7288336}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1EA51A11-C582-4EA1-83C1-C87A0161A49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1EA51A11-C582-4EA1-83C1-C87A0161A49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EA51A11-C582-4EA1-83C1-C87A0161A49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

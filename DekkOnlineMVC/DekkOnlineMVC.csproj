@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,16 +9,15 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9C5E50CD-A398-47EE-A7C2-CC0BE7288336}</ProjectGuid>
+    <ProjectGuid>{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DekkOnlineMVC</RootNamespace>
     <AssemblyName>DekkOnlineMVC</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
-    <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -37,7 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
@@ -46,14 +44,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -122,269 +143,142 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ApplicationInsights">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AI.Agent.Intercept">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AI.DependencyCollector">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AI.PerfCounterCollector">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AI.WindowsServer">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AI.Web">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\imgs\arrowGray.png" />
+    <Content Include="Content\imgs\arrowWhite.png" />
+    <Content Include="Content\imgs\ATV-01.png" />
+    <Content Include="Content\imgs\ATV_red-01.png" />
+    <Content Include="Content\imgs\bg.jpg" />
+    <Content Include="Content\imgs\camarita-01.png" />
+    <Content Include="Content\imgs\camarita_white-01.png" />
+    <Content Include="Content\imgs\flecha_dropdown-01.png" />
+    <Content Include="Content\imgs\home_sub.jpg" />
+    <Content Include="Content\imgs\icons\add-01.png" />
+    <Content Include="Content\imgs\icons\col.png" />
+    <Content Include="Content\imgs\icons\edit-01.png" />
+    <Content Include="Content\imgs\icons\edit.png" />
+    <Content Include="Content\imgs\icons\exp.png" />
+    <Content Include="Content\imgs\icons\more_info-01.png" />
+    <Content Include="Content\imgs\icons\move_down-01.png" />
+    <Content Include="Content\imgs\icons\move_down.png" />
+    <Content Include="Content\imgs\icons\move_up-01.png" />
+    <Content Include="Content\imgs\icons\move_up.png" />
+    <Content Include="Content\imgs\icons\no_photo.png" />
+    <Content Include="Content\imgs\icons\no_photos-01.png" />
+    <Content Include="Content\imgs\icons\no_photost.png" />
+    <Content Include="Content\imgs\icons\photos-01.png" />
+    <Content Include="Content\imgs\icons\trash-01.png" />
+    <Content Include="Content\imgs\icons\trash.png" />
+    <Content Include="Content\imgs\icon_faq.png" />
+    <Content Include="Content\imgs\Icon_map.png" />
+    <Content Include="Content\imgs\icon_sale.png" />
+    <Content Include="Content\imgs\logo.png" />
+    <Content Include="Content\imgs\logo_topmenu.png" />
+    <Content Include="Content\imgs\menuBars.png" />
+    <Content Include="Content\imgs\moto-01.png" />
+    <Content Include="Content\imgs\moto_red-01.png" />
+    <Content Include="Content\imgs\pass1.png" />
+    <Content Include="Content\imgs\redtopbanner.jpg" />
+    <Content Include="Content\imgs\search.png" />
+    <Content Include="Content\imgs\settings.png" />
+    <Content Include="Content\imgs\Summer-01.png" />
+    <Content Include="Content\imgs\Summer_red-01.png.png" />
+    <Content Include="Content\imgs\tyre.jpg" />
+    <Content Include="Content\imgs\tyre.png" />
+    <Content Include="Content\imgs\tyreFuel.png" />
+    <Content Include="Content\imgs\tyreNoise.png" />
+    <Content Include="Content\imgs\tyreWet.png" />
+    <Content Include="Content\imgs\user1.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap-growl.js" />
-    <Content Include="Scripts\bootstrap-growl.min.js" />
-    <Content Include="Scripts\bootstrap-switch.js" />
-    <Content Include="Scripts\bootstrap-switch.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\css\bootstrap-theme.css.map" />
-    <Content Include="Scripts\css\bootstrap-theme.min.css.map" />
-    <Content Include="Scripts\css\fonts\footable.eot" />
-    <Content Include="Scripts\css\fonts\footable.ttf" />
-    <Content Include="Scripts\css\fonts\footable.woff" />
-    <Content Include="Scripts\css\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\css\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Scripts\css\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Scripts\css\fonts\glyphiconshalflings-regular.eot" />
-    <Content Include="Scripts\css\fonts\glyphiconshalflings-regular.otf" />
-    <Content Include="Scripts\css\fonts\glyphiconshalflings-regular.ttf" />
-    <Content Include="Scripts\css\fonts\glyphiconshalflings-regular.woff" />
-    <Content Include="Scripts\css\fonts\Helvetica-Bold.eot" />
-    <Content Include="Scripts\css\fonts\Helvetica-Bold.otf" />
-    <Content Include="Scripts\css\fonts\Helvetica-Bold.ttf" />
-    <Content Include="Scripts\css\fonts\Helvetica-Bold.woff" />
-    <Content Include="Scripts\css\fonts\Helvetica-BoldOblique.eot" />
-    <Content Include="Scripts\css\fonts\Helvetica-BoldOblique.otf" />
-    <Content Include="Scripts\css\fonts\Helvetica-BoldOblique.ttf" />
-    <Content Include="Scripts\css\fonts\Helvetica-BoldOblique.woff" />
-    <Content Include="Scripts\css\fonts\Helvetica-Light.eot" />
-    <Content Include="Scripts\css\fonts\Helvetica-Light.otf" />
-    <Content Include="Scripts\css\fonts\Helvetica-Light.ttf" />
-    <Content Include="Scripts\css\fonts\Helvetica-Light.woff" />
-    <Content Include="Scripts\css\fonts\Helvetica-LightOblique.eot" />
-    <Content Include="Scripts\css\fonts\Helvetica-LightOblique.otf" />
-    <Content Include="Scripts\css\fonts\Helvetica-LightOblique.ttf" />
-    <Content Include="Scripts\css\fonts\Helvetica-LightOblique.woff" />
-    <Content Include="Scripts\css\fonts\Helvetica-Oblique.eot" />
-    <Content Include="Scripts\css\fonts\Helvetica-Oblique.otf" />
-    <Content Include="Scripts\css\fonts\Helvetica-Oblique.ttf" />
-    <Content Include="Scripts\css\fonts\Helvetica-Oblique.woff" />
-    <Content Include="Scripts\css\fonts\Helvetica.eot" />
-    <Content Include="Scripts\css\fonts\Helvetica.otf" />
-    <Content Include="Scripts\css\fonts\Helvetica.ttf" />
-    <Content Include="Scripts\css\fonts\Helvetica.woff" />
-    <Content Include="Scripts\css\fonts\Mohave.eot" />
-    <Content Include="Scripts\css\fonts\Mohave.ttf" />
-    <Content Include="Scripts\css\fonts\Mohave.woff" />
-    <Content Include="Scripts\css\fonts\MYRIADPRO-REGULAR.eot" />
-    <Content Include="Scripts\css\fonts\MYRIADPRO-REGULAR.OTF" />
-    <Content Include="Scripts\css\fonts\MYRIADPRO-REGULAR.ttf" />
-    <Content Include="Scripts\css\fonts\MYRIADPRO-REGULAR.woff" />
-    <Content Include="Scripts\fonts\footable.eot" />
-    <Content Include="Scripts\fonts\footable.ttf" />
-    <Content Include="Scripts\fonts\footable.woff" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Scripts\fonts\glyphiconshalflings-regular.eot" />
-    <Content Include="Scripts\fonts\glyphiconshalflings-regular.otf" />
-    <Content Include="Scripts\fonts\glyphiconshalflings-regular.ttf" />
-    <Content Include="Scripts\fonts\glyphiconshalflings-regular.woff" />
-    <Content Include="Scripts\fonts\Helvetica-Bold.eot" />
-    <Content Include="Scripts\fonts\Helvetica-Bold.otf" />
-    <Content Include="Scripts\fonts\Helvetica-Bold.ttf" />
-    <Content Include="Scripts\fonts\Helvetica-Bold.woff" />
-    <Content Include="Scripts\fonts\Helvetica-BoldOblique.eot" />
-    <Content Include="Scripts\fonts\Helvetica-BoldOblique.otf" />
-    <Content Include="Scripts\fonts\Helvetica-BoldOblique.ttf" />
-    <Content Include="Scripts\fonts\Helvetica-BoldOblique.woff" />
-    <Content Include="Scripts\fonts\Helvetica-Light.eot" />
-    <Content Include="Scripts\fonts\Helvetica-Light.otf" />
-    <Content Include="Scripts\fonts\Helvetica-Light.ttf" />
-    <Content Include="Scripts\fonts\Helvetica-Light.woff" />
-    <Content Include="Scripts\fonts\Helvetica-LightOblique.eot" />
-    <Content Include="Scripts\fonts\Helvetica-LightOblique.otf" />
-    <Content Include="Scripts\fonts\Helvetica-LightOblique.ttf" />
-    <Content Include="Scripts\fonts\Helvetica-LightOblique.woff" />
-    <Content Include="Scripts\fonts\Helvetica-Oblique.eot" />
-    <Content Include="Scripts\fonts\Helvetica-Oblique.otf" />
-    <Content Include="Scripts\fonts\Helvetica-Oblique.ttf" />
-    <Content Include="Scripts\fonts\Helvetica-Oblique.woff" />
-    <Content Include="Scripts\fonts\Helvetica.eot" />
-    <Content Include="Scripts\fonts\Helvetica.otf" />
-    <Content Include="Scripts\fonts\Helvetica.ttf" />
-    <Content Include="Scripts\fonts\Helvetica.woff" />
-    <Content Include="Scripts\fonts\Mohave.eot" />
-    <Content Include="Scripts\fonts\Mohave.ttf" />
-    <Content Include="Scripts\fonts\Mohave.woff" />
-    <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.eot" />
-    <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.OTF" />
-    <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.ttf" />
-    <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.woff" />
-    <Content Include="Scripts\css\bootstrap-switch.css" />
-    <Content Include="Scripts\css\bootstrap-theme.css" />
-    <Content Include="Scripts\css\bootstrap-theme.min.css" />
-    <Content Include="Scripts\css\bootstrap.css" />
-    <Content Include="Scripts\css\bootstrap.min.css" />
-    <Content Include="Scripts\css\fonts\footable.svg" />
-    <Content Include="Scripts\css\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Scripts\css\fonts\glyphiconshalflings-regular.svg" />
-    <Content Include="Scripts\css\fonts\Helvetica-Bold.svg" />
-    <Content Include="Scripts\css\fonts\Helvetica-BoldOblique.svg" />
-    <Content Include="Scripts\css\fonts\Helvetica-Light.svg" />
-    <Content Include="Scripts\css\fonts\Helvetica-LightOblique.svg" />
-    <Content Include="Scripts\css\fonts\Helvetica-Oblique.svg" />
-    <Content Include="Scripts\css\fonts\Helvetica.svg" />
-    <Content Include="Scripts\css\fonts\Mohave.svg" />
-    <Content Include="Scripts\css\fonts\MYRIADPRO-REGULAR.svg" />
-    <Content Include="Scripts\css\Menus.css" />
-    <Content Include="Scripts\css\oldSite.css" />
-    <Content Include="Scripts\css\prin.css" />
-    <Content Include="Scripts\css\purecsstooltip.css" />
-    <Content Include="Scripts\css\Site.css" />
-    <Content Include="Scripts\fancyBox\blank.gif" />
-    <Content Include="Scripts\fancyBox\fancybox_loading%402x.gif" />
-    <Content Include="Scripts\fancyBox\fancybox_loading.gif" />
-    <Content Include="Scripts\fancyBox\fancybox_overlay.png" />
-    <Content Include="Scripts\fancyBox\fancybox_sprite%402x.png" />
-    <Content Include="Scripts\fancyBox\fancybox_sprite.png" />
-    <Content Include="Scripts\fancyBox\helpers\fancybox_buttons.png" />
-    <Content Include="Scripts\fancyBox\helpers\jquery.fancybox-buttons.css" />
-    <Content Include="Scripts\fancyBox\helpers\jquery.fancybox-buttons.js" />
-    <Content Include="Scripts\fancyBox\helpers\jquery.fancybox-media.js" />
-    <Content Include="Scripts\fancyBox\helpers\jquery.fancybox-thumbs.css" />
-    <Content Include="Scripts\fancyBox\helpers\jquery.fancybox-thumbs.js" />
-    <Content Include="Scripts\fancyBox\jquery.fancybox.css" />
-    <Content Include="Scripts\fancyBox\jquery.fancybox.js" />
-    <Content Include="Scripts\fancyBox\jquery.fancybox.pack.js" />
-    <Content Include="Scripts\fonts\footable.svg" />
-    <Content Include="Scripts\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Scripts\fonts\glyphiconshalflings-regular.svg" />
-    <Content Include="Scripts\fonts\Helvetica-Bold.svg" />
-    <Content Include="Scripts\fonts\Helvetica-BoldOblique.svg" />
-    <Content Include="Scripts\fonts\Helvetica-Light.svg" />
-    <Content Include="Scripts\fonts\Helvetica-LightOblique.svg" />
-    <Content Include="Scripts\fonts\Helvetica-Oblique.svg" />
-    <Content Include="Scripts\fonts\Helvetica.svg" />
-    <Content Include="Scripts\fonts\Mohave.svg" />
-    <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.svg" />
-    <Content Include="Scripts\ie10-viewport-bug-workaround.js" />
-    <Content Include="Scripts\imgs\arrowGray.png" />
-    <Content Include="Scripts\imgs\arrowWhite.png" />
-    <Content Include="Scripts\imgs\ATV-01.png" />
-    <Content Include="Scripts\imgs\ATV_red-01.png" />
-    <Content Include="Scripts\imgs\bg.jpg" />
-    <Content Include="Scripts\imgs\camarita-01.png" />
-    <Content Include="Scripts\imgs\camarita_white-01.png" />
-    <Content Include="Scripts\imgs\flecha_dropdown-01.png" />
-    <Content Include="Scripts\imgs\home_sub.jpg" />
-    <Content Include="Scripts\imgs\icons\add-01.png" />
-    <Content Include="Scripts\imgs\icons\col.png" />
-    <Content Include="Scripts\imgs\icons\edit-01.png" />
-    <Content Include="Scripts\imgs\icons\edit.png" />
-    <Content Include="Scripts\imgs\icons\exp.png" />
-    <Content Include="Scripts\imgs\icons\more_info-01.png" />
-    <Content Include="Scripts\imgs\icons\move_down-01.png" />
-    <Content Include="Scripts\imgs\icons\move_down.png" />
-    <Content Include="Scripts\imgs\icons\move_up-01.png" />
-    <Content Include="Scripts\imgs\icons\move_up.png" />
-    <Content Include="Scripts\imgs\icons\no_photo.png" />
-    <Content Include="Scripts\imgs\icons\no_photos-01.png" />
-    <Content Include="Scripts\imgs\icons\no_photost.png" />
-    <Content Include="Scripts\imgs\icons\photos-01.png" />
-    <Content Include="Scripts\imgs\icons\trash-01.png" />
-    <Content Include="Scripts\imgs\icons\trash.png" />
-    <Content Include="Scripts\imgs\icon_faq.png" />
-    <Content Include="Scripts\imgs\Icon_map.png" />
-    <Content Include="Scripts\imgs\icon_sale.png" />
-    <Content Include="Scripts\imgs\logo.png" />
-    <Content Include="Scripts\imgs\logo_topmenu.png" />
-    <Content Include="Scripts\imgs\menuBars.png" />
-    <Content Include="Scripts\imgs\moto-01.png" />
-    <Content Include="Scripts\imgs\moto_red-01.png" />
-    <Content Include="Scripts\imgs\pass1.png" />
-    <Content Include="Scripts\imgs\redtopbanner.jpg" />
-    <Content Include="Scripts\imgs\search.png" />
-    <Content Include="Scripts\imgs\settings.png" />
-    <Content Include="Scripts\imgs\Summer-01.png" />
-    <Content Include="Scripts\imgs\Summer_red-01.png.png" />
-    <Content Include="Scripts\imgs\tyre.jpg" />
-    <Content Include="Scripts\imgs\tyre.png" />
-    <Content Include="Scripts\imgs\tyreFuel.png" />
-    <Content Include="Scripts\imgs\tyreNoise.png" />
-    <Content Include="Scripts\imgs\tyreWet.png" />
-    <Content Include="Scripts\imgs\user1.png" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\js\animatedcollapse.js" />
-    <Content Include="Scripts\js\bootstrap-datepicker.js" />
-    <Content Include="Scripts\js\bootstrap-growl.js" />
-    <Content Include="Scripts\js\bootstrap-growl.min.js" />
-    <Content Include="Scripts\js\bootstrap-image-gallery.js" />
-    <Content Include="Scripts\js\bootstrap-image-gallery.min.js" />
-    <Content Include="Scripts\js\bootstrap-switch.js" />
-    <Content Include="Scripts\js\bootstrap-switch.min.js" />
-    <Content Include="Scripts\js\bootstrap.js" />
-    <Content Include="Scripts\js\bootstrap.min.js" />
-    <Content Include="Scripts\js\datepicker.js" />
-    <Content Include="Scripts\js\footable.js" />
-    <Content Include="Scripts\js\ie-emulation-modes-warning.js" />
-    <Content Include="Scripts\js\ie10-viewport-bug-workaround.js" />
-    <Content Include="Scripts\js\jquery.backstretch.min.js" />
-    <Content Include="Scripts\js\jquery.blueimp-gallery.min.js" />
-    <Content Include="Scripts\js\jquery.min.js" />
-    <Content Include="Scripts\menu\blogposts.png" />
-    <Content Include="Scripts\menu\dashboard.png" />
-    <Content Include="Scripts\menu\imagecloud.png" />
-    <Content Include="Scripts\menu\pages.png" />
-    <Content Include="Scripts\menu\personal.png" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\proyecto\jsLayout.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Styles\bootstrap-switch.css" />
+    <Content Include="Styles\bootstrap-theme.css" />
+    <Content Include="Styles\bootstrap-theme.min.css" />
+    <Content Include="Styles\bootstrap.css" />
+    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="fonts\footable.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphiconshalflings-regular.svg" />
+    <Content Include="fonts\Helvetica-Bold.svg" />
+    <Content Include="fonts\Helvetica-BoldOblique.svg" />
+    <Content Include="fonts\Helvetica-Light.svg" />
+    <Content Include="fonts\Helvetica-LightOblique.svg" />
+    <Content Include="fonts\Helvetica-Oblique.svg" />
+    <Content Include="fonts\Helvetica.svg" />
+    <Content Include="fonts\Mohave.svg" />
+    <Content Include="fonts\MYRIADPRO-REGULAR.svg" />
+    <Content Include="Styles\Menus.css" />
+    <Content Include="Styles\oldSite.css" />
+    <Content Include="Styles\prin.css" />
+    <Content Include="Styles\purecsstooltip.css" />
+    <Content Include="Styles\Site.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -399,23 +293,58 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Styles\bootstrap-theme.css.map" />
+    <Content Include="Styles\bootstrap-theme.min.css.map" />
+    <Content Include="fonts\footable.eot" />
+    <Content Include="fonts\footable.ttf" />
+    <Content Include="fonts\footable.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphiconshalflings-regular.eot" />
+    <Content Include="fonts\glyphiconshalflings-regular.otf" />
+    <Content Include="fonts\glyphiconshalflings-regular.ttf" />
+    <Content Include="fonts\glyphiconshalflings-regular.woff" />
+    <Content Include="fonts\Helvetica-Bold.eot" />
+    <Content Include="fonts\Helvetica-Bold.otf" />
+    <Content Include="fonts\Helvetica-Bold.ttf" />
+    <Content Include="fonts\Helvetica-Bold.woff" />
+    <Content Include="fonts\Helvetica-BoldOblique.eot" />
+    <Content Include="fonts\Helvetica-BoldOblique.otf" />
+    <Content Include="fonts\Helvetica-BoldOblique.ttf" />
+    <Content Include="fonts\Helvetica-BoldOblique.woff" />
+    <Content Include="fonts\Helvetica-Light.eot" />
+    <Content Include="fonts\Helvetica-Light.otf" />
+    <Content Include="fonts\Helvetica-Light.ttf" />
+    <Content Include="fonts\Helvetica-Light.woff" />
+    <Content Include="fonts\Helvetica-LightOblique.eot" />
+    <Content Include="fonts\Helvetica-LightOblique.otf" />
+    <Content Include="fonts\Helvetica-LightOblique.ttf" />
+    <Content Include="fonts\Helvetica-LightOblique.woff" />
+    <Content Include="fonts\Helvetica-Oblique.eot" />
+    <Content Include="fonts\Helvetica-Oblique.otf" />
+    <Content Include="fonts\Helvetica-Oblique.ttf" />
+    <Content Include="fonts\Helvetica-Oblique.woff" />
+    <Content Include="fonts\Helvetica.eot" />
+    <Content Include="fonts\Helvetica.otf" />
+    <Content Include="fonts\Helvetica.ttf" />
+    <Content Include="fonts\Helvetica.woff" />
+    <Content Include="fonts\Mohave.eot" />
+    <Content Include="fonts\Mohave.ttf" />
+    <Content Include="fonts\Mohave.woff" />
+    <Content Include="fonts\MYRIADPRO-REGULAR.eot" />
+    <Content Include="fonts\MYRIADPRO-REGULAR.OTF" />
+    <Content Include="fonts\MYRIADPRO-REGULAR.ttf" />
+    <Content Include="fonts\MYRIADPRO-REGULAR.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -438,10 +367,10 @@
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
