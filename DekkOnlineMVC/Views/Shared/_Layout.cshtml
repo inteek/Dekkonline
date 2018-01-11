@@ -20,8 +20,8 @@
 
 </head>
 <body>
-  
-    <div id="principalDiv" class="prDiv" style="">
+
+    <div id="principalDiv" class="prDiv">
         <div class="prMask">
         </div>
         <div class="prLogo link" onclick="goHome()">
@@ -36,9 +36,9 @@
             <table class="tableLogin">
                 <tr>
                     <td>
-                        <div id="HeadLoginView" >
+                        <div id="HeadLoginView">
                             <div id="AnonymousTemplate">
-                                <a href="javascript:openLogin()" id="HeadLoginStatus" >
+                                <a href="javascript:openLogin()" id="HeadLoginStatus">
                                     log in
                                 </a>
                             </div>
@@ -62,351 +62,351 @@
 
     <div class="clearfix"></div>
     <div id="homeContainDiv" class="prContain">
-        <div id="HomeContent"  >
+        <div id="HomeContent">
         </div>
     </div>
 
     <div class="clearfix"></div>
     <div class="spacer20 visible-xs visible-sm"></div>
     <div class="clearfix"></div>
-    <div id="mainContainDiv"  class="prMainContain">
-        <div id="MainContent" runat="server">
+
+    <div id="mainContainDiv" class="prMainContain">
+        <div id="MainContent">
             @RenderBody()
-        </div>
 
-                <div class="clearfix"></div>
-                <div class="footer">
-                    <div class="col-md-3">
-                        <div class="footerLogo"></div>
-                    </div>
-                    <div class="col-md-6 footerCt">
-                        <div class="col-sm-6 barRt">
-                            Tel: (777) 316/3636 y 316/6591<br />
-                            infomdm@dienomdm.com
-                        </div>
-                        <div class="col-sm-6 barLt">
-                            Plaza los geranios Av.Diana 406,<br />
-                            Local 1 Col. Delicias, Cuernavaca
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="spacer10"></div>
-                        <div class="clearfix"></div>
-                        <a href="/">privacy policy</a> - <a href="/">terms & conditions</a>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="footerCol3">
-                            <div class="iconSocial">
-                                <a href="/" title="Instagram">
-                                    <img src="@Url.Content("~/Content/imgs/fbGray.png")" />
-                                </a>
-                            </div>
-                            <div class="iconSocial">
-                                <a href="/" title="facebook">
-                                    <img src="@Url.Content("~/Content/imgs/fbGray.png")" />
-                                </a>
-                            </div>
-                            <div class="clearfix"></div>
-                            <a class="login" href="/Account/Login">log in</a>
-                        </div>
-                    </div>
+            <div class="clearfix"></div>
+            <div class="footer">
+                <div class="col-md-3">
+                    <div class="footerLogo"></div>
                 </div>
-    </div>
-
-
-
-    <div id="modalLogin" class="modal fade modalLogin" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="clearfix"></div>
-                <div class="spacer20"></div>
-                <div class="clearfix"></div>
-                <div class="col-xs-12 loginLogo">
-                </div>
-                <div class="clearfix"></div>
-                <div class="loginContain">
-                    <div class="col-md-6">
-                        <div class="modalLoginLt">
-                            <h4>ALREADY A DEKKONLINE MEMBER:</h4>
-                            <div class="clearfix"></div>
-                            <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
-                                <p class="text-danger">
-                                    <asp:Label runat="server" ID="lblFailureText" ClientIDMode="Static" />
-                                </p>
-                            </asp:PlaceHolder>
-
-                            <div class="clearfix"></div>
-                            @*<asp:TextBox runat="server" ID="Email" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />*@
-                            <input type="email" id="Email" class="txtLogin txtUser" />
-                            @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." ValidationGroup="Login" />*@
-                            <div class="clearfix"></div>
-                            <br />
-
-                           
-                             @*<asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />*@
-                            <input type="password" id="Password" class="txtLogin txtPass" />
-                            @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." ValidationGroup="Login" />*@
-                            <div class="clearfix"></div>
-                            <br />
-
-                            @*<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />*@
-                            <button id="btnLogin" onclick="LogIn" Class="loginBtn">Log in</button>
-                        </div>
+                <div class="col-md-6 footerCt">
+                    <div class="col-sm-6 barRt">
+                        Tel: (777) 316/3636 y 316/6591<br />
+                        infomdm@dienomdm.com
                     </div>
-                    <div class="col-md-6">
-                        <div class="modalLoginRt">
-                            <h4>REGISTER:</h4>
-                            <div class="clearfix"></div>
-                            <asp:PlaceHolder runat="server" ID="NewErrorMessage" Visible="false">
-                                <p class="text-danger">
-                                    <asp:Label runat="server" ID="lblNewFailureText" ClientIDMode="Static"></asp:Label>
-                                </p>
-                            </asp:PlaceHolder>
-
-                            <asp:ValidationSummary runat="server" CssClass="text-danger" />
-
-
-                            @*<asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" />*@
-                            <input type="email" id="NewEmail" class="txtLogin txtUser" />
-                            @*<asp:RequiredFieldValidator runat="server" ControlToValidate="NewEmail" ValidationGroup="Create"
-                                                        CssClass="text-danger" ErrorMessage="The email field is required." />*@
-                            <div class="clearfix"></div>
-                            <br />
-
-                            @*<asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" />*@
-                            <input type="password" id="NewPassword" class="txtLogin txtPass" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword" ValidationGroup="Create"
-                                                        CssClass="text-danger" ErrorMessage="The password field is required." />
-                            <div class="clearfix"></div>
-                            <br />
-
-                            @*<asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="loginBtn" ValidationGroup="Create" />*@
-                            <button id="btnCreateUser" onclick="CreateUser_Click" Class="loginBtn">Sign Up</button>
-                        </div>
-
+                    <div class="col-sm-6 barLt">
+                        Plaza los geranios Av.Diana 406,<br />
+                        Local 1 Col. Delicias, Cuernavaca
                     </div>
-                </div>
-                <div class="hidden">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            <asp:CheckBox runat="server" ID="RememberMe" />
-                            <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
-                <div class="spacer20"></div>
-                <div class="clearfix"></div>
-
-                <div class="BoxGeneral text-center">
-                    <h4>LOG IN FASTER</h4>
                     <div class="clearfix"></div>
-                    <section id="socialLoginForm">
-                        <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                    </section>
+                    <div class="spacer10"></div>
+                    <div class="clearfix"></div>
+                    <a href="/">privacy policy</a> - <a href="/">terms & conditions</a>
                 </div>
-
-                <div class="clearfix"></div>
-                <div class="spacer20"></div>
-                <div class="clearfix"></div>
+                <div class="col-md-3">
+                    <div class="footerCol3">
+                        <div class="iconSocial">
+                            <a href="/" title="Instagram">
+                                <img src="@Url.Content("~/Content/imgs/fbGray.png")" />
+                            </a>
+                        </div>
+                        <div class="iconSocial">
+                            <a href="/" title="facebook">
+                                <img src="@Url.Content("~/Content/imgs/fbGray.png")" />
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <a class="login" href="/Account/Login">log in</a>
+                    </div>
+                </div>
             </div>
+
+</div>
         </div>
-    </div>
+
+
+            <div id="modalLogin" class="modal fade modalLogin" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="clearfix"></div>
+                        <div class="spacer20"></div>
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 loginLogo">
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="loginContain">
+                            <div class="col-md-6">
+                                <div class="modalLoginLt">
+                                    <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+                                    <div class="clearfix"></div>
+                                    <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+                                        <p class="text-danger">
+                                            <asp:Label runat="server" ID="lblFailureText" ClientIDMode="Static" />
+                                        </p>
+                                    </asp:PlaceHolder>
+
+                                    <div class="clearfix"></div>
+                                    @*<asp:TextBox runat="server" ID="Email" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />*@
+                                    <input type="email" id="Email" class="txtLogin txtUser" />
+                                    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." ValidationGroup="Login" />*@
+                                    <div class="clearfix"></div>
+                                    <br />
+
+
+                                    @*<asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />*@
+                                    <input type="password" id="Password" class="txtLogin txtPass" />
+                                    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." ValidationGroup="Login" />*@
+                                    <div class="clearfix"></div>
+                                    <br />
+
+                                    @*<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />*@
+                                    <button id="btnLogin" onclick="LogIn" Class="loginBtn">Log in</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="modalLoginRt">
+                                    <h4>REGISTER:</h4>
+                                    <div class="clearfix"></div>
+                                    <asp:PlaceHolder runat="server" ID="NewErrorMessage" Visible="false">
+                                        <p class="text-danger">
+                                            <asp:Label runat="server" ID="lblNewFailureText" ClientIDMode="Static"></asp:Label>
+                                        </p>
+                                    </asp:PlaceHolder>
+
+                                    <asp:ValidationSummary runat="server" CssClass="text-danger" />
+
+
+                                    @*<asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" />*@
+                                    <input type="email" id="NewEmail" class="txtLogin txtUser" />
+                                    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="NewEmail" ValidationGroup="Create"
+                                        CssClass="text-danger" ErrorMessage="The email field is required." />*@
+                                    <div class="clearfix"></div>
+                                    <br />
+
+                                    @*<asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" />*@
+                                    <input type="password" id="NewPassword" class="txtLogin txtPass" />
+                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword" ValidationGroup="Create"
+                                                                CssClass="text-danger" ErrorMessage="The password field is required." />
+                                    <div class="clearfix"></div>
+                                    <br />
+
+                                    @*<asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="loginBtn" ValidationGroup="Create" />*@
+                                    <button id="btnCreateUser" onclick="CreateUser_Click" Class="loginBtn">Sign Up</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="hidden">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                    <asp:CheckBox runat="server" ID="RememberMe" />
+                                    <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="spacer20"></div>
+                        <div class="clearfix"></div>
+
+                        <div class="BoxGeneral text-center">
+                            <h4>LOG IN FASTER</h4>
+                            <div class="clearfix"></div>
+                            <section id="socialLoginForm">
+                                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                            </section>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="spacer20"></div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
 
 
 
 
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
 
-    @RenderSection("scripts", required: false)
-
-
-
-    <script type="text/javascript">
+            @RenderSection("scripts", required: false)
 
 
-            function getLocation() {
 
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition);
-                } else {
+            <script type="text/javascript">
+
+
+                function getLocation() {
+
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                    } else {
+                    }
                 }
-            }
 
-            function showPosition(p) {
+                function showPosition(p) {
 
-                var latlng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-                geocoder = new google.maps.Geocoder();
-                var zip = "";
+                    var latlng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+                    geocoder = new google.maps.Geocoder();
+                    var zip = "";
 
-                geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        if (results[0]) {
-                            for (j = 0; j < results[0].address_components.length; j++) {
-                                if (results[0].address_components[j].types[0] == 'postal_code') {
-                                    zip = results[0].address_components[j].short_name;
+                    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            if (results[0]) {
+                                for (j = 0; j < results[0].address_components.length; j++) {
+                                    if (results[0].address_components[j].types[0] == 'postal_code') {
+                                        zip = results[0].address_components[j].short_name;
 
-                                    try { txtZipCode.SetText(zip); }catch(x){}
+                                        try { txtZipCode.SetText(zip); } catch (x) { }
+                                    }
                                 }
                             }
+                        } else {
+
                         }
-                    } else {
+                        zip;
+                    });
+                }
 
+                function errorGP(error) {
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            alert("Error. PERMISSION_DENIED");
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            alert("Error. POSITION_UNAVAILABLE");
+                            break;
+                        case error.TIMEOUT:
+                            alert("Error. TIMEOUT");
+                            break;
+                        default:
+                            alert("unknown error code");
                     }
-                    zip;
-                });
-            }
-
-            function errorGP(error) {
-                switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        alert("Error. PERMISSION_DENIED");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        alert("Error. POSITION_UNAVAILABLE");
-                        break;
-                    case error.TIMEOUT:
-                        alert("Error. TIMEOUT");
-                        break;
-                    default:
-                        alert("unknown error code");
-                }
-            }
-
-
-            $(document).ready(function ()
-            {
-
-                try {
-                    initPage();
-                } catch (e) { };
-
-                if ($("#Email").val() != "") {
-                    $("#Email").removeClass("txtUser");
-                } else {
-                    $("#Email").addClass("txtUser");
-                }
-
-                if ($("#Password").val() != "") {
-                    $("#Password").removeClass("txtPass");
-                } else {
-                    $("#Password").addClass("txtPass");
                 }
 
 
-                if ($("#lblFailureText").html() != "" && $("#lblFailureText").html() != undefined) {
-                    //openLogin();
-                }
+                $(document).ready(function () {
 
-                $("#Email").focus(function () {
-                    $(this).removeClass("txtUser");
-                    $(this).addClass("txtUserMin");
+                    try {
+                        initPage();
+                    } catch (e) { };
 
-                });
+                    if ($("#Email").val() != "") {
+                        $("#Email").removeClass("txtUser");
+                    } else {
+                        $("#Email").addClass("txtUser");
+                    }
 
-                $("#Password").focus(function () {
-                    $(this).removeClass("txtPass");
-                });
+                    if ($("#Password").val() != "") {
+                        $("#Password").removeClass("txtPass");
+                    } else {
+                        $("#Password").addClass("txtPass");
+                    }
 
-                $("#Email").focusout(function () {
-                    if ($(this).val() != "") {
+
+                    if ($("#lblFailureText").html() != "" && $("#lblFailureText").html() != undefined) {
+                        //openLogin();
+                    }
+
+                    $("#Email").focus(function () {
                         $(this).removeClass("txtUser");
-                    } else {
-                        $(this).addClass("txtUser");
-                    }
-                });
+                        $(this).addClass("txtUserMin");
 
-                $("#Password").focusout(function () {
-                    if ($(this).val() != "") {
+                    });
+
+                    $("#Password").focus(function () {
                         $(this).removeClass("txtPass");
+                    });
+
+                    $("#Email").focusout(function () {
+                        if ($(this).val() != "") {
+                            $(this).removeClass("txtUser");
+                        } else {
+                            $(this).addClass("txtUser");
+                        }
+                    });
+
+                    $("#Password").focusout(function () {
+                        if ($(this).val() != "") {
+                            $(this).removeClass("txtPass");
+                        } else {
+                            $(this).addClass("txtPass");
+                        }
+                    });
+
+
+                    if ($("#NewEmail").val() != "") {
+                        $("#NewEmail").removeClass("txtUser");
                     } else {
-                        $(this).addClass("txtPass");
+                        $("#NewEmail").addClass("txtUser");
                     }
-                });
+
+                    if ($("#NewPassword").val() != "") {
+                        $("#NewPassword").removeClass("txtPass");
+                    } else {
+                        $("#NewPassword").addClass("txtPass");
+                    }
 
 
-                if ($("#NewEmail").val() != "") {
-                    $("#NewEmail").removeClass("txtUser");
-                } else {
-                    $("#NewEmail").addClass("txtUser");
-                }
+                    if ($("#lblNewFailureText").html() != "" && $("#lblNewFailureText").html() != undefined) {
+                        openLogin();
+                    }
 
-                if ($("#NewPassword").val() != "") {
-                    $("#NewPassword").removeClass("txtPass");
-                } else {
-                    $("#NewPassword").addClass("txtPass");
-                }
+                    $("#NewEmail").focus(function () {
 
-
-                if ($("#lblNewFailureText").html() != "" && $("#lblNewFailureText").html() != undefined) {
-                    openLogin();
-                }
-
-                $("#NewEmail").focus(function () {
-
-                    $(this).removeClass("txtUser");
-                    $(this).addClass("txtUserMin");
-
-                });
-
-                $("#NewPassword").focus(function () {
-
-                    $(this).removeClass("txtPass");
-
-                });
-
-                $("#NewEmail").focusout(function () {
-                    if ($(this).val() != "") {
                         $(this).removeClass("txtUser");
-                    } else {
-                        $(this).addClass("txtUser");
-                    }
-                });
+                        $(this).addClass("txtUserMin");
 
-                $("#NewPassword").focusout(function () {
-                    if ($(this).val() != "") {
+                    });
+
+                    $("#NewPassword").focus(function () {
+
                         $(this).removeClass("txtPass");
-                    } else {
-                        $(this).addClass("txtPass");
-                    }
+
+                    });
+
+                    $("#NewEmail").focusout(function () {
+                        if ($(this).val() != "") {
+                            $(this).removeClass("txtUser");
+                        } else {
+                            $(this).addClass("txtUser");
+                        }
+                    });
+
+                    $("#NewPassword").focusout(function () {
+                        if ($(this).val() != "") {
+                            $(this).removeClass("txtPass");
+                        } else {
+                            $(this).addClass("txtPass");
+                        }
+                    });
+
+
+
                 });
 
 
+                function openMenu() {
+                    $(".prMenuClosed").hide(100);
+                    $(".prMenuOpen").show(100);
+                    $(".prMenuItems").show(100);
+                }
 
-            });
+                function closeMenu() {
+                    $(".prMenuItems").hide(100);
+                    $(".prMenuOpen").hide(100);
+                    $(".prMenuClosed").show(100);
+                }
 
+                function notify(msg, type, time, ele) {
 
-            function openMenu() {
-                $(".prMenuClosed").hide(100);
-                $(".prMenuOpen").show(100);
-                $(".prMenuItems").show(100);
-            }
+                    if (time == undefined) time = 10;
+                    if (ele == undefined) ele = "body";
 
-            function closeMenu() {
-                $(".prMenuItems").hide(100);
-                $(".prMenuOpen").hide(100);
-                $(".prMenuClosed").show(100);
-            }
-
-            function notify(msg, type, time, ele) {
-
-                if (time == undefined) time = 10;
-                if (ele == undefined) ele = "body";
-
-                time = time * 1000;
+                    time = time * 1000;
 
 
-                if (type == 0) type = 'danger';
-                else if (type == 1) type = 'success';
-                else type = 'info';
+                    if (type == 0) type = 'danger';
+                    else if (type == 1) type = 'success';
+                    else type = 'info';
 
-                $.growl({
-                    title: '<div style="font-weight:bold; font-size:large">' + msg + '</div> ',
-                    message: ''
-                }, {
+                    $.growl({
+                        title: '<div style="font-weight:bold; font-size:large">' + msg + '</div> ',
+                        message: ''
+                    }, {
                         type: type,
                         offset: {
                             x: 20,
@@ -415,16 +415,16 @@
                         delay: time,
                         element: ele
                     });
-            }
+                }
 
-            function openLogin() {
-                $('#modalLogin').modal('show')
-            }
+                function openLogin() {
+                    $('#modalLogin').modal('show')
+                }
 
-            function goHome() {
-                window.location = "/";
-            }
-    </script>
+                function goHome() {
+                    window.location = "/";
+                }
+            </script>
 
 
 </body>
