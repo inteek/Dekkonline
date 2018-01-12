@@ -311,3 +311,10 @@ C:\Users\cesar\Desktop\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csprojRe
 C:\Users\cesar\Desktop\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csproj.CoreCompileInputs.cache
 C:\Users\cesar\Desktop\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.dll
 C:\Users\cesar\Desktop\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.pdb
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Framework.dll
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Entity.dll
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Framework.pdb
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Framework.dll.config
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Entity.pdb
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Entity.dll.config
+C:\Productos\DekkOnline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csproj.CoreCompileInputs.cache

@@ -6,3 +6,7 @@
 /Entity/obj/Debug
 /packages
 /.vs/DekkOnline/v15
+/.vs
+/Entity/obj/Release
+/Pruebas/obj/Release
+/Framework
