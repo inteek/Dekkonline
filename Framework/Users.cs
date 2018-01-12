@@ -129,5 +129,31 @@ namespace Framework
             }
             return user;
         }
+
+        public bool validaLogin(string user, string pass)
+        {
+            bool valUser = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var result = db.AspNetUsers.Where(s => s.UserName == user && s.PasswordHash == pass).FirstOrDefault();
+
+                    if (result != null)
+                    {
+                        valUser = true;
+                    }
+                    else
+                    {
+                        valUser = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return valUser;
+        }
     }
 }

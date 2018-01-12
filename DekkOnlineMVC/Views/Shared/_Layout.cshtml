@@ -150,7 +150,7 @@
                                     <br />
 
                                     @*<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />*@
-                                    <button id="btnLogin" onclick="LogIn" Class="loginBtn">Log in</button>
+                                    <button id="btnLogin" Class="loginBtn">Log in</button>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -221,6 +221,9 @@
 
             @Scripts.Render("~/bundles/jquery")
             @Scripts.Render("~/bundles/bootstrap")
+
+            @Scripts.Render("~/Scripts/connectAsy.js?v=2")
+            @Scripts.Render("~/Scripts/Login.js?v=2")
 
             @RenderSection("scripts", required: false)
 

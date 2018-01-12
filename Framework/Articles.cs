@@ -74,7 +74,7 @@ namespace Framework
                                   Id = pro.proDimensionWidth.Value.ToString(),
                                   Size = pro.proDimensionWidth.Value.ToString()
 
-                              }).ToList();
+                              }).Distinct().OrderBy(c => c.Id).ToList();
                 }
             }
             catch (Exception ex)
@@ -98,7 +98,7 @@ namespace Framework
                                   Id = pro.proDimensionProfile.Value.ToString(),
                                   Size = pro.proDimensionProfile.Value.ToString()
 
-                              }).ToList();
+                              }).Distinct().OrderBy(c => c.Id).ToList();
                 }
             }
             catch (Exception ex)
@@ -122,7 +122,7 @@ namespace Framework
                                   Id = pro.proDimensionDiameter.Value.ToString(),
                                   Size = pro.proDimensionDiameter.Value.ToString()
 
-                              }).ToList();
+                              }).Distinct().OrderBy(c => c.Id).ToList();
                 }
             }
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace Framework
             }
             return result;
         }
-        
+
         //DE-2 2
         public List<ResultProduct> loadProducts()
         {
@@ -210,6 +210,33 @@ namespace Framework
             return result;
         }
 
+        //Load Categories
+        public List<ResultCategories> loadCategories()
+        {
+            List<ResultCategories> Categories = null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    Categories = (from cat in db.categories
+                                  select new ResultCategories
+                                  {
+                                      catId = cat.catId,
+                                      catName = cat.catName,
+                                      catDescription = cat.catDescription,
+                                      catStatus = cat.catStatus,
+                                      catImage = cat.catImage
+
+                                  }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return Categories;
+        }
 
     }
 }

@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\DekkController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,7 +259,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\connectAsy.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\Login.js" />
     <Content Include="Styles\bootstrap-switch.css" />
     <Content Include="Styles\bootstrap-theme.css" />
     <Content Include="Styles\bootstrap-theme.min.css" />
@@ -347,6 +350,13 @@
     <Content Include="fonts\MYRIADPRO-REGULAR.ttf" />
     <Content Include="fonts\MYRIADPRO-REGULAR.woff" />
     <Content Include="Views\Dekk\Products.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{2befc8f0-8a5a-4109-984e-6f966c96fb9a}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

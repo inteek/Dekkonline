@@ -1,12 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
-
-
-
-
-
         <div id="HomeContent">
 
             <div class="homeText">
@@ -35,8 +29,7 @@
 
 
                             </dx:ASPxComboBox>*@
-                        <select id="cmbCategory" class="BoxGeneral"></select>
-
+                        @Html.DropDownList("cmbCategory", (SelectList)ViewBag.BagCategories, new { @class = "BoxGeneral" })
                         Tire Sizes<br />
                         <div class="floatLt dp1">
                             @*<dx:ASPxComboBox runat="server" ID="cmbWidth" ClientInstanceName="cmbWidth" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
@@ -44,7 +37,7 @@
                                         <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
                                     </DropDownButton>
                                 </dx:ASPxComboBox>*@
-                            <select id="cmbWidth" class="BoxGeneral"></select>
+                        @Html.DropDownList("cmbWidth", (SelectList)ViewBag.BagWidth, new { @Class = "BoxGeneral" })      
                         </div>
                         <div class="floatLt diagonal">
                         </div>
@@ -54,7 +47,7 @@
                                         <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
                                     </DropDownButton>
                                 </dx:ASPxComboBox>*@
-                            <select id="cmbProfile" class="BoxGeneral"></select>
+                            @Html.DropDownList("cmbProfile", (SelectList)ViewBag.BagProfile, new { @CssClass = "BoxGeneral" })
                         </div>
                         <div class="floatLt dp3">
                             @*<dx:ASPxComboBox runat="server" ID="cmbDiameter" ClientInstanceName="cmbDiameter" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
@@ -62,7 +55,7 @@
                                         <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
                                     </DropDownButton>
                                 </dx:ASPxComboBox>*@
-                            <select id="cmbDiameter" class="BoxGeneral"></select>
+                            @Html.DropDownList("cmbDiameter", (SelectList)ViewBag.BagDiameter, new { @class = "BoxGeneral", @value = '0' })
                         </div>
                         <div class="clearfix"></div>
                         <div class="advancedSearch">
