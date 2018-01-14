@@ -42,7 +42,7 @@ namespace DekkOnlineMVC.Controllers
 
             if (result == true)
             {
-                return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Index", "Profile") });
+                return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Index", "Profile", new { username = user, password = pass }) });
             }
             else
             {

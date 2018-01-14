@@ -12,7 +12,24 @@
     @Styles.Render("~/Styles/bootstrap.min.css")
     @Styles.Render("~/Styles/Site.css?V=7")
 
+    <!-- Icons -->
+    @Styles.Render("~/fonts/ionicons/css/ionicons.min.css")
 
+
+    <!-- Fonts -->
+    @Styles.Render("~/fonts/font-awesome/css/font-awesome.min.css")
+
+
+    <!-- Plugins -->
+    @*@Styles.Render("~/styles/plugins")*@
+    @Styles.Render("~/Styles/plugins/c3.css")
+    @Styles.Render("~/Styles/plugins/waves.css")
+    @Styles.Render("~/Styles/plugins/perfect-scrollbar.css")
+    @Styles.Render("~/Styles/plugins/fullcalendar.css")
+
+
+    <!-- Css/Less Stylesheets -->
+    @Styles.Render("~/Styles/main.min.css")
 
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3pN4K2y47Ta_rkII0WsPOFvCUut8u98w" type="text/javascript"></script>
@@ -111,7 +128,7 @@
                 </div>
             </div>
 
-</div>
+    </div>
         </div>
 
 
@@ -217,7 +234,17 @@
 
 
 
-
+            @Scripts.Render("~/Scripts/vendors.js")
+            @Scripts.Render("~/Scripts/plugins/pace.min.js")
+            @Scripts.Render("~/Scripts/plugins/d3.min.js")
+            @Scripts.Render("~/Scripts/plugins/c3.min.js")
+            @Scripts.Render("~/Scripts/plugins/screenfull.js")
+            @Scripts.Render("~/Scripts/plugins/perfect-scrollbar.min.js")
+            @Scripts.Render("~/Scripts/plugins/waves.min.js")
+            @Scripts.Render("~/Scripts/plugins/jquery.sparkline.min.js")
+            @Scripts.Render("~/Scripts/plugins/jquery.easypiechart.min.js")
+            @Scripts.Render("~/Scripts/plugins/bootstrap-rating.min.js")
+            @Scripts.Render("~/Scripts/plugins/select2.min.js")
 
             @Scripts.Render("~/bundles/jquery")
             @Scripts.Render("~/bundles/bootstrap")

@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articles.cs" />
+    <Compile Include="Libraies\ResultDataUser.cs" />
     <Compile Include="Libraies\ResultDeliveryType.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -113,14 +113,31 @@ namespace Framework
         }
 
         //DE-23 1
-        public string dataUser(string idUser)
+        public List<ResultDataUser> dataUser(string username, string password)
         {
+
             var user = (dynamic)null;
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    user = (from us in db.UserAddress where us.IdUser == idUser select new { idUsuario = us.IdUser, firstName = us.FirstName, lastName = us.LastName, address = us.Address, phone = us.Phone, zipCode = us.ZipCode, latitude = us.Latitude, length = us.Length }).FirstOrDefault().ToString();
+                    var idUser = db.AspNetUsers.Where(s => s.Email == username && s.PasswordHash == password).Select(s => s.Id).FirstOrDefault();
+                    user = (from us in db.UserAddress
+                            join aspuser in db.AspNetUsers on us.IdUser equals aspuser.Id
+                            where us.IdUser == idUser
+                            select new ResultDataUser
+                            {
+                                IdUser = us.IdUser,
+                                FirstName = us.FirstName,
+                                LastName = us.LastName,
+                                Address = us.Address,
+                                Phone = us.Phone,
+                                ZipCode = us.ZipCode.ToString(),
+                                Latitude = us.Latitude,
+                                length = us.Length,
+                                Image = us.Image,
+                                Email = aspuser.Email
+                            }).ToList();
                 }
             }
             catch (Exception)

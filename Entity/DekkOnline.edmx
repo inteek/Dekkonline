@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="dekkOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="dekkOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -263,6 +263,7 @@
           <Property Name="ZipCode" Type="int" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Length" Type="varchar" MaxLength="50" />
+          <Property Name="Image" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="UserPoints">
           <Key>
@@ -832,7 +833,6 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
           <EntitySet Name="DeliveryType" EntityType="dekkOnlineModel.DeliveryType" />
           <EntitySet Name="PurchaseOrder" EntityType="dekkOnlineModel.PurchaseOrder" />
           <AssociationSet Name="fk_Userpurchase" Association="dekkOnlineModel.fk_Userpurchase">
@@ -844,6 +844,7 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
           <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
+          <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
           </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -1067,20 +1068,6 @@
           <End Type="dekkOnlineModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
-        <EntityType Name="UserAddress">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="Int32" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="DeliveryType">
           <Key>
             <PropertyRef Name="IdDelivery" />
@@ -1147,6 +1134,21 @@
           <Property Name="IdWorkshop" Type="Int32" />
           <Property Name="IdService" Type="Int32" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1416,21 +1418,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="UserAddress">
-            <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
-              <MappingFragment StoreEntitySet="UserAddress">
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DeliveryType">
             <EntityTypeMapping TypeName="dekkOnlineModel.DeliveryType">
               <MappingFragment StoreEntitySet="DeliveryType">
@@ -1470,6 +1457,22 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="IdService" ColumnName="IdService" />
                 <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAddress">
+            <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
+              <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

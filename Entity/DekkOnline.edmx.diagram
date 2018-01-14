@@ -36,12 +36,12 @@
         <AssociationConnector Association="dekkOnlineModel.fk_Userpromcode" />
         <AssociationConnector Association="dekkOnlineModel.fk_Userpromcodeinvite" />
         <AssociationConnector Association="dekkOnlineModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="dekkOnlineModel.UserAddress" Width="1.5" PointX="12.375" PointY="5.75" />
         <EntityTypeShape EntityType="dekkOnlineModel.DeliveryType" Width="1.5" PointX="13.375" PointY="10" />
         <EntityTypeShape EntityType="dekkOnlineModel.PurchaseOrder" Width="1.5" PointX="15.625" PointY="6.125" />
         <AssociationConnector Association="dekkOnlineModel.fk_Userpurchase" />
         <AssociationConnector Association="dekkOnlineModel.fk_delivery" />
         <EntityTypeShape EntityType="dekkOnlineModel.WorkshopServices" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="dekkOnlineModel.UserAddress" Width="1.5" PointX="12.375" PointY="5.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

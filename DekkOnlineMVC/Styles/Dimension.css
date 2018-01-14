@@ -1,0 +1,27 @@
+﻿.dimension {
+    margin-left: -70px;
+}
+
+@media screen and (max-width: 768px) {
+    .dimension {
+        margin-left: -40px;
+    }
+    .vl {
+
+        display:none;
+    }
+}
+.vl {
+    border-left: 1px solid black;
+    height: 350px;
+}
+
+
+.left1 {
+    float: left;
+}
+
+.left2 {
+    text-align: left;
+    color: black;
+}

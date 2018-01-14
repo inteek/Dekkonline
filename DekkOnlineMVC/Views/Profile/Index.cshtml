@@ -1,4 +1,119 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h5>Vista Perfil</h5>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="col-md-12 mb30">
+    <div class="page-tabs-lead mb30">
+        <h4 class="text-light">Style One - Default</h4>
+    </div>
+    <!-- tab style -->
+    <div class="clearfix">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-profile" data-toggle="tab">PROFILE</a></li>
+            <li><a href="#tab-pending" data-toggle="tab">YOUR PENDING ORDER</a></li>
+            <li><a href="#tab-past" data-toggle="tab">PAST ORDERS</a></li>
+            <li><a href="#tab-promos" data-toggle="tab">PROMOS</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- tab PROFILE -->
+            <div class="tab-pane active" id="tab-profile">
+                <div class="clearfix">
+                    @foreach (var item in Model)
+                    {
+                        <div class="container">
+                            <div class="row dimension">
+                                <div class="insidebox">
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            @if (item.Image == null)
+                                            {
+                                                <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
+
+                                            }
+                                            else
+                                            {
+                                                <img src="@item.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
+                                            }
+
+                                        </div>
+                                        <div class="form-group ">
+                                            <h4><strong>@item.FirstName @item.LastName</strong></h4>
+                                        </div>
+                                        <div class="form-group">
+                                            <h6>@item.Email</h6>
+                                        </div>
+                                        <br />
+                                        <div class="form-group ">
+                                            <h4><strong>Your cars</strong></h4>
+                                        </div>
+                                        <div class="form-group ">
+                                            <h6>pendiente</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <div class="col-sm-6">
+                                            <h3><span class="title"><strong style="color:red">Personal Information:</strong></span></h3>
+                                            <div class="col-sm-8">
+                                                <div class="left2">
+                                                    <div class="form-group">
+                                                        <label style="color:steelblue">Zip Code:</label> @item.ZipCode
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="color:steelblue"> Name:</label> @item.FirstName
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="color:steelblue"> Last Name:</label> @item.LastName
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="color:steelblue">  Address:</label> @item.Address
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="color:steelblue">  E-mail:</label> @item.Email
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label style="color:steelblue"> Mobile:</label> @item.Phone
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 vl"></div>
+                                        <div class="col-sm-3">
+                                            <h3><span class="title"><strong style="color:red">Your cars:</strong></span></h3>
+                                            <div class="form-group">
+                                                pendiente @*MOdel*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>                
+            </div>
+            <!-- tab PENDING -->
+            <div class="tab-pane" id="tab-pending">
+                @Html.Action("Pending", "Profile")
+
+            </div>
+            <!-- tab PAST -->
+            <div class="tab-pane" id="tab-past">
+                @Html.Action("Past", "Profile")
+   
+            </div>
+            <!-- tab PROMOS -->
+            <div class="tab-pane" id="tab-promos">
+                @Html.Action("Promos", "Profile")
+            </div>
+        </div>
+    </div>
+    <!-- tab style -->
+</div>
+
+@Scripts.Render("~/scripts/app.js")
