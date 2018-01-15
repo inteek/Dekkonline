@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Fram
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkOnlineMVC", "DekkOnlineMVC\DekkOnlineMVC.csproj", "{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkOnlineMVC", "DekkOnlineMVC\DekkOnlineMVC.csproj", "{1AD798C5-36CE-4701-8A91-F929A8EA90D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E225FD8-6755-4DA6-B6BF-9AEE66FA6044}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AD798C5-36CE-4701-8A91-F929A8EA90D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AD798C5-36CE-4701-8A91-F929A8EA90D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AD798C5-36CE-4701-8A91-F929A8EA90D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AD798C5-36CE-4701-8A91-F929A8EA90D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
