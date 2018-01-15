@@ -10,10 +10,20 @@
 
         display:none;
     }
+    .vl2 {
+
+        display:none;
+    }
 }
 .vl {
-    border-left: 1px solid black;
+    width:10px;
+    border-left: 2px solid #ABB2B9;
     height: 350px;
+}
+.vl2 {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 285px;
 }
 
 

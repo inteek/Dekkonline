@@ -11,14 +11,19 @@ namespace DekkOnlineMVC.Controllers
     {
         // GET: /Profile/
 
-        public PartialViewResult Index(string username, string password)
+        //public PartialViewResult Index(string username, string password)
+        //{
+        //    Users us = new Users();
+
+        //    var Userdata = us.dataUser(username, password);
+
+        //    return PartialView(Userdata);
+
+        //}
+
+        public PartialViewResult Index()
         {
-            Users us = new Users();
-
-            var Userdata = us.dataUser(username, password);
-
-            return PartialView(Userdata);
-
+            return PartialView();
         }
 
         public PartialViewResult Pending()
