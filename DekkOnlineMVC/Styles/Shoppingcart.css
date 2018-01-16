@@ -1,0 +1,100 @@
+﻿.table > tbody > tr > td, .table > tfoot > tr > td {
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 768px) {
+    table#cart tbody td .form-control {
+        width: 20%;
+        display: inline !important;
+    }
+    .tableMobile {
+        width: 50%;
+        min-width: 200px;
+        float: left;
+        
+    }
+    .inputqtywid {
+        width: 157%;
+    }
+    .actions .btn {
+        width: 36%;
+        margin: 1.5em 0;
+    }
+
+    .actions .btn-info {
+        float: left;
+    }
+
+    .actions .btn-danger {
+        float: right;
+    }
+    .deschide{
+        display:none;
+    }
+
+    .margininput {
+        margin-left:-38px;
+    }
+    .marginlabelpoints {
+        margin-left: -80px;
+    }
+
+    table#cart thead {
+        display: none;
+
+    }
+
+    table#cart tbody td {
+        display: block;
+        padding: 1.0rem;
+        min-width: 320px;
+    }
+
+    table#cart tbody tr td:first-child {
+        background: #efefef;
+        color: #000;
+    }
+
+    table#cart tbody td:before {
+        content: attr(data-th);
+        font-weight: bold;
+        display: inline-block;
+        width: 8rem;
+        text-align: center;
+    }
+
+
+
+    /*table#cart tfoot td {
+        display: block;
+    }
+
+        table#cart tfoot td .btn {
+            display: block;
+        }*/
+
+}
+.actions {
+    width: 100px;
+    margin: 1.5em 0;
+}
+
+.downico{
+    margin-top:20px;
+}
+
+.inputqtywid {
+    width: 85%;
+}
+
+.points {
+    width:67%;
+}
+
+.marginlabel{
+    width:30px;
+}
+
+.margintextpoints {
+    width: 50px;
+}
