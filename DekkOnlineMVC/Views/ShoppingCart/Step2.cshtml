@@ -6,6 +6,7 @@
 }
 
 @Styles.Render("~/Styles/Dimension.css?v=1")
+@Styles.Render("~/Styles/Shoppingcart.css?v=7")
 
 <br />
 <br />
@@ -25,22 +26,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4">              
+            <div class="col-lg-4">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <label class="radio-inline" style="color:red; font-size:20px;"><strong>I am a: </strong></label>
+                            <label class="radio-inline" style="color: #E53935; font-size: 20px; "><strong>I am a: </strong></label>
                             <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonWinter" value="winter" style="width:20px; height:20px;"> Person </label>
                             <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonSpringFall" value="spring-fall" style="width:20px; height:20px;"> Company </label>
                         </div>
                     </div>
-                 </form>
+                </form>
             </div>
             <div class="col-lg-8">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <label class="radio-inline" style="color:red; font-size:20px;"><strong>I want the service at: </strong></label>
+                            <label class="radio-inline" style="color: #E53935; font-size: 20px; "><strong>I want the service at: </strong></label>
                             <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonWinter" value="winter" style="width:20px; height:20px;"> Nearest workshop </label>
                             <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonSpringFall" value="spring-fall" style="width:20px; height:20px;"> my place </label>
                         </div>
@@ -54,46 +55,46 @@
         <br />
         <div class="row">
             <div class="col-lg-5">
-                <label style="color:red; font-size:20px; margin-bottom:20px;">Personal Information</label>
+                <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Personal Information</strong></label>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="zipcode" class="col-lg-3 control-label textoAzul">zip code</label>
                         <div class="col-lg-2">
                             <input type="text" class="form-control" id="zipcode" placeholder="">
                         </div>
-                    </div>   
+                    </div>
                     <div class="form-group">
                         <label for="Firstname" class="col-lg-3 control-label textoAzul">First name</label>
                         <div class="col-lg-6">
                             <input type="text" class="form-control" id="Firstname" placeholder="">
                         </div>
-                    </div>   
+                    </div>
                     <div class="form-group">
                         <label for="Lastname" class="col-lg-3 control-label textoAzul">Last name</label>
                         <div class="col-lg-6">
                             <input type="text" class="form-control" id="Lastname" placeholder="">
                         </div>
-                    </div>   
+                    </div>
                     <div class="form-group">
                         <label for="address" class="col-lg-3 control-label textoAzul">Address</label>
                         <div class="col-lg-6">
                             <input type="text" class="form-control" id="address" placeholder="">
                         </div>
-                    </div>   
+                    </div>
                     <div class="form-group">
                         <label for="email" class="col-lg-3 control-label textoAzul">Email</label>
                         <div class="col-lg-6">
                             <input type="email" class="form-control" id="email" placeholder="">
                         </div>
-                    </div>   
+                    </div>
                     <div class="form-group">
                         <label for="mobile" class="col-lg-3 control-label textoAzul">Mobile</label>
                         <div class="col-lg-6">
                             <input type="text" class="form-control" id="mobile" placeholder="">
                         </div>
-                    </div>                           
+                    </div>
                 </form>
-                <form class="form-horizontal" role="form" >
+                <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="choose" class="col-lg-3 control-label textoAzul">You choose</label>
                         <div class="col-lg-6">
@@ -115,22 +116,22 @@
                         <div class="col-lg-6">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
-                    </div>                             
+                    </div>
                 </form>
             </div>
-            <div class="col-lg-7">
-                <label style="color:red; font-size:20px; margin-bottom:20px;">This are the nearest workshop:</label>
+            <div class="col-lg-7 alinearWork">
+                <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>This are the nearest workshop:</strong></label>
                 <label style="font-size:20px; margin-bottom:18px;">Click one to see available time, hours and meak an appointment.</label>
-                <div class="form-group">
-                    <label for="zipcode" class="col-lg-2 control-label">SORT BY</label>
-                    <div class="col-lg-3">
+                <div class="form-group alinearSrotBy">
+                    <label class="col-lg-2" for="inputEmail1">SORT BY</label>
+                    <div class="col-lg-3 alinearCombo">
                         <select class="form-control">
                             <option value="">Seleccione</option>
                             <option value="">Seleccione</option>
                             <option value="">Seleccione</option>
                         </select>
                     </div>
-                </div>   
+                </div>
             </div>
         </div>
     </div>

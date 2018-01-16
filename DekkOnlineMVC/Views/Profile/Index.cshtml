@@ -7,15 +7,8 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
     @Styles.Render("~/Styles/Dimension.css?v=8")
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <div class="col-md-12 mb30">
-        <div class="page-tabs-lead mb30">
-            <h4 class="text-light">Style One - Default</h4>
-        </div>
+
+    <div class="col-md-12 mb30">        
         <!-- tab style -->
         <div class="clearfix">
             <ul class="nav nav-tabs">
@@ -119,4 +112,12 @@
         <!-- tab style -->
     </div>
 
-    @Scripts.Render("~/scripts/app.js")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/app.js")
+
+<script>
+    $(document).ready(function () {
+        $("#principalDiv").attr("class", "prDivSub");
+        $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+</script>
