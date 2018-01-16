@@ -142,67 +142,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Headphones.xml" />
-    <Content Include="Content\HeadphonesPhoto\10_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\10_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\11_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\11_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\12_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\12_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\13_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\13_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\14_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\14_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\15_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\15_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\16_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\16_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\17_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\17_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\18_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\18_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\19_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\19_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\1_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\1_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\20_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\20_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\21_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\21_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\22_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\22_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\23_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\23_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\24_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\24_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\25_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\25_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\26_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\26_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\27_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\27_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\28_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\28_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\29_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\29_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\2_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\2_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\30_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\30_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\3_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\3_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\4_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\4_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\5_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\5_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\6_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\6_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\7_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\7_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\8_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\8_s.jpg" />
-    <Content Include="Content\HeadphonesPhoto\9_l.jpg" />
-    <Content Include="Content\HeadphonesPhoto\9_s.jpg" />
     <Content Include="Content\imgs\arrowGray.png" />
     <Content Include="Content\imgs\arrowWhite.png" />
     <Content Include="Content\imgs\ATV-01.png" />
@@ -281,6 +220,20 @@
     <Content Include="fonts\MYRIADPRO-REGULAR.svg" />
     <Content Include="fonts\user.png" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\globalize.cultures.js" />
+    <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.0.0.debug.js" />
+    <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="packages.config" />
     <Content Include="fonts\font-awesome\bower.json" />
     <Content Include="fonts\font-awesome\css\font-awesome.css.map" />
@@ -372,29 +325,6 @@
     <Content Include="fonts\MYRIADPRO-REGULAR.OTF" />
     <Content Include="fonts\MYRIADPRO-REGULAR.ttf" />
     <Content Include="fonts\MYRIADPRO-REGULAR.woff" />
-    <Content Include="Scripts\app.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\connectAsy.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\Login.js" />
-    <Content Include="Scripts\plugins\bootstrap-colorpicker.min.js" />
-    <Content Include="Scripts\plugins\bootstrap-datepicker.min.js" />
-    <Content Include="Scripts\plugins\bootstrap-rating.min.js" />
-    <Content Include="Scripts\plugins\bootstrap-slider.min.js" />
-    <Content Include="Scripts\plugins\c3.min.js" />
-    <Content Include="Scripts\plugins\d3.min.js" />
-    <Content Include="Scripts\plugins\fullcalendar.min.js" />
-    <Content Include="Scripts\plugins\jquery.dataTables.min.js" />
-    <Content Include="Scripts\plugins\jquery.easypiechart.min.js" />
-    <Content Include="Scripts\plugins\jquery.sparkline.min.js" />
-    <Content Include="Scripts\plugins\moment.min.js" />
-    <Content Include="Scripts\plugins\pace.min.js" />
-    <Content Include="Scripts\plugins\perfect-scrollbar.min.js" />
-    <Content Include="Scripts\plugins\screenfull.js" />
-    <Content Include="Scripts\plugins\select2.min.js" />
-    <Content Include="Scripts\plugins\summernote.min.js" />
-    <Content Include="Scripts\plugins\waves.min.js" />
-    <Content Include="Scripts\vendors.js" />
     <Content Include="Styles\bootstrap-switch.css" />
     <Content Include="Styles\bootstrap-theme.css" />
     <Content Include="Styles\bootstrap-theme.min.css" />
@@ -417,7 +347,8 @@
     <Content Include="Styles\prin.css" />
     <Content Include="Styles\purecsstooltip.css" />
     <Content Include="Styles\Site.css" />
-    <None Include="Properties\PublishProfiles\DekkOnlineMVC.pubxml" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
@@ -464,7 +395,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\HeadphonesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -473,7 +403,10 @@
       <Name>Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

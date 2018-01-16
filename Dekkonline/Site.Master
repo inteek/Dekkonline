@@ -236,7 +236,7 @@
             }
 
             function goHome() {
-                window.location = "http://localhost:63149/";
+                window.location = "/";
             }
         </script>
         <div id="principalDiv" runat="server" class="prDiv" style="">
