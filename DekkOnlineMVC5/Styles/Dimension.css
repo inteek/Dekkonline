@@ -1,0 +1,81 @@
+﻿.dimension {
+    margin-left: -70px;
+}
+
+.vl {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 350px;
+}
+.vl2 {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 285px;
+}
+.vl3 {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 170px;
+}
+
+.vl5 {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 200px;
+}
+
+.lineaVertical {
+    border-right: 1px solid #ABB2B9;
+}
+
+.textoAzul{
+    font-size:18px;
+    color:#1A5276;
+}
+
+
+.left1 {
+    float: left;
+}
+
+.left2 {
+    text-align: left;
+    color: black;
+}
+
+@media screen and (max-width: 768px) {
+    .dimension {
+        margin-left: -40px;
+    }
+    .vl {
+
+        display:none;
+    }
+    .vl2 {
+
+        display:none;
+    }
+    .iz {
+        margin-left:30px;
+        margin-top:30px;
+    }
+    .iz2 {
+        margin-left:30px;
+        margin-bottom:30px;
+        margin-top:-30px;
+    }
+    .vl3 {
+        display:none;
+    }
+    .vl4 {
+        width:100px;
+        border-top: 2px solid #ABB2B9;
+    }
+    .vl5 {
+        display:none;
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+
+}

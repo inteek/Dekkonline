@@ -1,4 +1,6 @@
 ﻿@using System.Web.Optimization;
+@model List<DekkOnlineMVC.Models.Headphone>
+
 @{
     ViewBag.Title = "Products";
 }
@@ -81,6 +83,45 @@
 
                 <div id="xcpProducts" Width="100%">
                     <!--AQUI VA EL GRID-->
+
+
+                    <br />
+                    <br />
+                    <script>
+
+                        var cardView = true;
+
+                        function OnToolbarItemClick(s, e){
+                            e.processOnServer = true;
+                        }
+                        function OnSortingChanged(s, e) {
+                            debugger
+                            HeadphoneCards.PerformCallback();
+                        }
+                        function OnHeadphoneCardsBeginCallback(s, e){
+                            e.customArgs["isCardView"] = this.IsCardView();
+                            e.customArgs["sortMode"] = 0; //Sorting.GetValue();
+                        }
+                        function IsCardView() {
+                            return cardView; //HeadphoneCards.GetToolbar(0).GetItemByName("CardView").GetChecked();
+                        }
+
+
+                        function ResiltView() {
+                            if (cardView == true)
+                            {
+                                cardView = false;
+                            }
+                            else {
+                                cardView = true;
+                            }
+
+                        }
+                    </script>
+
+                    @Html.Partial("ProductsPartial", Model)
+
+
                 </div>
 
             </div>

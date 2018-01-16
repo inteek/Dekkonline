@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DekkOnlineMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,23 @@ namespace DekkOnlineMVC.Controllers
 {
     public class DekkController : Controller
     {
-        // GET: Dekk
+
+
+        public enum HeadphoneCardsSortMode { Recomended, Discount, LowPrice, HighPrice };
+        
         public ActionResult Products()
         {
-            return View();
+            ViewBag.IsCardView = true;
+            ViewBag.SortMode = HeadphoneCardsSortMode.Recomended;
+            return View(HeadphonesDataProvider.Headphones);
         }
+        public ActionResult ProductsPartial(bool? isCardView, HeadphoneCardsSortMode? sortMode)
+        {
+            ViewBag.IsCardView = isCardView ?? true;
+            ViewBag.SortMode = sortMode ?? HeadphoneCardsSortMode.Recomended;
+            return PartialView("ProductsPartial", HeadphonesDataProvider.Headphones);
+        }
+
+
     }
 }

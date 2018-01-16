@@ -1,0 +1,142 @@
+﻿@using System.Web.Optimization;
+@model List<DekkOnlineMVC.Models.Headphone>
+
+
+
+
+
+@Html.DevExpress().CardView(settings =>
+{
+    settings.Name = "HeadphoneCards";
+    settings.CallbackRouteValues = new { Controller = "Dekk", Action = "ProductsPartial" };
+    settings.Width = Unit.Percentage(100);
+
+    /*
+    settings.Toolbars.Add(t =>
+    {
+        t.ItemAlign = GridToolbarItemAlign.Justify;
+        t.Items.Add(i =>
+        {
+            i.ItemStyle.Width = Unit.Percentage(100);
+            i.SetTemplateContent(c =>
+            {
+                Html.DevExpress().ComboBox(s =>
+                {
+                    s.Name = "Sorting";
+                    s.Width = 200;
+                    s.Properties.Caption = "Sort by";
+                    s.Properties.ValueType = typeof(HeadphoneCardsSortMode);
+                    s.Properties.Items.Add("Recomended", HeadphoneCardsSortMode.Recomended);
+                    s.Properties.Items.Add("Discount", HeadphoneCardsSortMode.Discount);
+                    s.Properties.Items.Add("Low Price » High Price", HeadphoneCardsSortMode.LowPrice);
+                    s.Properties.Items.Add("High Price » Low Price", HeadphoneCardsSortMode.HighPrice);
+                    s.Properties.ClientSideEvents.ValueChanged = "OnSortingChanged";
+                }).Bind(ViewBag.SortMode).Render();
+            });
+        });
+        t.Items.Add(i =>
+        {
+            i.Name = "ListView";
+            i.ToolTip = "Details View";
+            i.GroupName = "Layout";
+            i.BeginGroup = true;
+            i.Checked = !ViewBag.IsCardView;
+            i.Image.IconID = DevExpress.Web.ASPxThemes.IconID.GridGrid16x16;
+        });
+        t.Items.Add(i =>
+        {
+            i.Name = "CardView";
+            i.ToolTip = "Thumbnails View";
+            i.GroupName = "Layout";
+            i.Checked = ViewBag.IsCardView;
+            i.Image.IconID = DevExpress.Web.ASPxThemes.IconID.GridCards16x16;
+        });
+    });
+    */
+
+    settings.Columns.Add("PhotoUrl", MVCxCardViewColumnType.Image);
+    settings.Columns.Add("Brand");
+    settings.Columns.Add("Price", "Old price").PropertiesEdit.DisplayFormatString = "c";
+    settings.Columns.Add("Discount").PropertiesEdit.DisplayFormatString = "{0}%";
+
+    /*
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "Total";
+        c.Caption = "New price";
+        //c.UnboundType = UnboundColumnType.Decimal;
+        c.UnboundExpression = "[Price]- [Price] * [Discount] / 100";
+        c.PropertiesEdit.DisplayFormatString = "c";
+    });
+    */
+
+    settings.Columns.Add("Sensitivity", "Sensitivity, dB");
+    settings.Columns.Add("Power", "Power, MW");
+    settings.Columns.Add("MinFrequency", "Min Frequency, Hz");
+    settings.Columns.Add("MaxFrequency", "Max Frequency, Hz");
+    settings.Columns.Add("Impedance", "Impendance, ohms");
+    settings.Columns.Add("Fit");
+
+    settings.CardLayoutProperties.Items.Add(i =>
+    {
+        i.ColumnName = "PhotoUrl";
+        i.ShowCaption = DefaultBoolean.False;
+        i.HorizontalAlign = FormLayoutHorizontalAlign.Center;
+    });
+    settings.CardLayoutProperties.Items.AddGroupItem(g =>
+    {
+        g.Name = "Common";
+        g.Caption = "Common";
+        g.ShowCaption = ViewBag.IsCardView ? DefaultBoolean.False : DefaultBoolean.True;
+        g.GroupBoxDecoration = ViewBag.IsCardView ? GroupBoxDecoration.None : GroupBoxDecoration.HeadingLine;
+        g.Items.Add("Brand");
+        g.Items.Add("Fit");
+        g.Items.Add("Price");
+        g.Items.Add("Discount");
+        //g.Items.Add("Total");
+    });
+    settings.CardLayoutProperties.Items.AddGroupItem(g =>
+    {
+        g.Name = "Specifications";
+        g.Visible = !ViewBag.IsCardView;
+        g.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+        g.Caption = "Specifications";
+        g.Items.Add("Sensitivity");
+        g.Items.Add("Power");
+        g.Items.Add("MinFrequency");
+        g.Items.Add("MaxFrequency");
+        g.Items.Add("Impedance");
+    });
+
+    settings.SettingsPager.SettingsTableLayout.ColumnCount = ViewBag.IsCardView ? 3 : 1;
+    settings.CardLayoutProperties.ColCount = ViewBag.IsCardView ? 1 : 3;
+
+    /*
+    settings.BeforeGetCallbackResult = (s, e) =>
+    {
+        var cards = (MVCxCardView)s;
+        cards.ClearSort();
+        switch ((HeadphoneCardsSortMode)ViewBag.SortMode)
+        {
+            case HeadphoneCardsSortMode.Discount:
+                cards.SortBy(cards.Columns["Discount"], ColumnSortOrder.Descending);
+                break;
+            case HeadphoneCardsSortMode.LowPrice:
+                cards.SortBy(cards.Columns["Price"], ColumnSortOrder.Ascending);
+                break;
+            case HeadphoneCardsSortMode.HighPrice:
+                cards.SortBy(cards.Columns["Price"], ColumnSortOrder.Descending);
+                break;
+            default:
+                cards.SortBy(cards.Columns["MaxFrequency"], ColumnSortOrder.Descending);
+                cards.SortBy(cards.Columns["MinFrequency"], ColumnSortOrder.Ascending);
+                cards.SortBy(cards.Columns["Discount"], ColumnSortOrder.Descending);
+                break;
+        }
+    };
+    */
+
+    //settings.ClientSideEvents.ToolbarItemClick = "OnToolbarItemClick";
+    settings.ClientSideEvents.BeginCallback = "OnHeadphoneCardsBeginCallback";
+
+}).Bind(Model).GetHtml()
