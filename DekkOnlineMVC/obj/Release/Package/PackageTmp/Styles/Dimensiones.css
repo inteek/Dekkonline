@@ -1,0 +1,20 @@
+﻿body {
+}
+
+#prueba{
+    color:red;
+}
+
+.vertical{
+    border-right-color: black; 
+    border-right-style: solid; 
+    border-right-width: 1px; 
+    padding-right: 6px;
+}
+
+.vertical2{
+    border-right-color: black; 
+    border-right-style: solid; 
+    border-right-width: 1px; 
+    padding-right: 50px;
+}
