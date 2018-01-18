@@ -1,6 +1,5 @@
-﻿@using System.Web.Optimization;
+﻿
 @model List<DekkOnlineMVC.Models.Headphone>
-
 
 
 
@@ -10,6 +9,26 @@
     settings.Name = "HeadphoneCards";
     settings.CallbackRouteValues = new { Controller = "Dekk", Action = "ProductsPartial" };
     settings.Width = Unit.Percentage(100);
+    settings.KeyFieldName = "ID";
+    settings.EnableCardsCache = false;
+
+    settings.Settings.VerticalScrollableHeight = 600;
+    settings.SettingsPager.SettingsTableLayout.ColumnCount = ViewBag.IsCardView ? 3 : 1;
+    settings.CardLayoutProperties.ColCount = ViewBag.IsCardView ? 1 : 3;
+
+    settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+    settings.SettingsPager.EndlessPagingMode = DevExpress.Web.CardViewEndlessPagingMode.OnClick;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+    settings.ControlStyle.CssClass = "cardViewProducts";
+
+
+
+    //settings.Styles.Card.CssClass = "card";
+
+    settings.CardLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+    settings.CardLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 200;
+
+
 
     /*
     settings.Toolbars.Add(t =>
@@ -77,39 +96,73 @@
     settings.Columns.Add("Impedance", "Impendance, ohms");
     settings.Columns.Add("Fit");
 
-    settings.CardLayoutProperties.Items.Add(i =>
+    //settings.CardLayoutProperties.Items.Add(i =>
+    //{
+    //    i.ColumnName = "PhotoUrl";
+    //    i.ShowCaption = DefaultBoolean.False;
+    //    i.HorizontalAlign = FormLayoutHorizontalAlign.Center;
+    //});
+    //settings.CardLayoutProperties.Items.AddGroupItem(g =>
+    //{
+    //    g.Name = "Common";
+    //    g.Caption = "Common";
+    //    g.ShowCaption = ViewBag.IsCardView ? DefaultBoolean.False : DefaultBoolean.True;
+    //    g.GroupBoxDecoration = ViewBag.IsCardView ? GroupBoxDecoration.None : GroupBoxDecoration.HeadingLine;
+    //    g.Items.Add("Brand");
+    //    g.Items.Add("Fit");
+    //    g.Items.Add("Price");
+    //    g.Items.Add("Discount");
+    //    //g.Items.Add("Total");
+    //});
+    //settings.CardLayoutProperties.Items.AddGroupItem(g =>
+    //{
+    //    g.Name = "Specifications";
+    //    g.Visible = !ViewBag.IsCardView;
+    //    g.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+    //    g.Caption = "Specifications";
+    //    g.Items.Add("Sensitivity");
+    //    g.Items.Add("Power");
+    //    g.Items.Add("MinFrequency");
+    //    g.Items.Add("MaxFrequency");
+    //    g.Items.Add("Impedance");
+    //});
+
+
+
+    settings.SetCardTemplateContent(c =>
     {
-        i.ColumnName = "PhotoUrl";
-        i.ShowCaption = DefaultBoolean.False;
-        i.HorizontalAlign = FormLayoutHorizontalAlign.Center;
-    });
-    settings.CardLayoutProperties.Items.AddGroupItem(g =>
-    {
-        g.Name = "Common";
-        g.Caption = "Common";
-        g.ShowCaption = ViewBag.IsCardView ? DefaultBoolean.False : DefaultBoolean.True;
-        g.GroupBoxDecoration = ViewBag.IsCardView ? GroupBoxDecoration.None : GroupBoxDecoration.HeadingLine;
-        g.Items.Add("Brand");
-        g.Items.Add("Fit");
-        g.Items.Add("Price");
-        g.Items.Add("Discount");
-        //g.Items.Add("Total");
-    });
-    settings.CardLayoutProperties.Items.AddGroupItem(g =>
-    {
-        g.Name = "Specifications";
-        g.Visible = !ViewBag.IsCardView;
-        g.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
-        g.Caption = "Specifications";
-        g.Items.Add("Sensitivity");
-        g.Items.Add("Power");
-        g.Items.Add("MinFrequency");
-        g.Items.Add("MaxFrequency");
-        g.Items.Add("Impedance");
+
+        ViewContext.Writer.Write(
+            "<div style='width:100%'>" +
+              "<div >");
+
+
+        Html.DevExpress().BinaryImage(s =>
+        {
+            s.Name = "Image" + DataBinder.Eval(c.DataItem, "ID");
+        }).Bind(DataBinder.Eval(c.DataItem, "Photo"))
+        .Render();
+
+
+        ViewContext.Writer.Write(
+              "</div>" +
+
+              "<div >" +
+                 "<p>" + DataBinder.Eval(c.DataItem, "Brand") + " " + DataBinder.Eval(c.DataItem, "Brand") + "</p>" +
+              "</div>" +
+
+              "<div >" +
+              "</div>" +
+
+
+            "</div>"
+        );
+
+
     });
 
-    settings.SettingsPager.SettingsTableLayout.ColumnCount = ViewBag.IsCardView ? 3 : 1;
-    settings.CardLayoutProperties.ColCount = ViewBag.IsCardView ? 1 : 3;
+
+
 
     /*
     settings.BeforeGetCallbackResult = (s, e) =>
@@ -138,5 +191,13 @@
 
     //settings.ClientSideEvents.ToolbarItemClick = "OnToolbarItemClick";
     settings.ClientSideEvents.BeginCallback = "OnHeadphoneCardsBeginCallback";
+
+
+
+    settings.Settings.LayoutMode = DevExpress.Web.Layout.Flow;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+    settings.Styles.FlowCard.Width = ViewBag.IsCardView ? Unit.Percentage(31.7) : Unit.Percentage(98.3);
+    settings.Styles.FlowCard.Height = 350;
+    settings.Styles.FlowCard.CssClass = "FlowCard";
 
 }).Bind(Model).GetHtml()

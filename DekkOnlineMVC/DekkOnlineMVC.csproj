@@ -180,6 +180,8 @@
     <Content Include="Content\imgs\icons\edit-01.png" />
     <Content Include="Content\imgs\icons\edit.png" />
     <Content Include="Content\imgs\icons\exp.png" />
+    <Content Include="Content\imgs\icons\grid-view.png" />
+    <Content Include="Content\imgs\icons\list-view.png" />
     <Content Include="Content\imgs\icons\more_info-01.png" />
     <Content Include="Content\imgs\icons\move_down-01.png" />
     <Content Include="Content\imgs\icons\move_down.png" />
@@ -432,7 +434,9 @@
     <Compile Include="Models\HeadphonesModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{2befc8f0-8a5a-4109-984e-6f966c96fb9a}</Project>

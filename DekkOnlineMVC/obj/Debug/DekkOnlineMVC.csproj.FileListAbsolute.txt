@@ -1,4 +1,3 @@
-C:\Productos\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csprojResolveAssemblyReference.cache
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\DekkOnlineMVC.dll.config
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\DekkOnlineMVC.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\DekkOnlineMVC.pdb
@@ -256,5 +255,6 @@ C:\Productos\Dekkonline\DekkOnlineMVC\bin\de\DevExpress.XtraTreeList.v16.1.resou
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\es\DevExpress.XtraTreeList.v16.1.resources.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\ja\DevExpress.XtraTreeList.v16.1.resources.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\ru\DevExpress.XtraTreeList.v16.1.resources.dll
+C:\Productos\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csprojResolveAssemblyReference.cache
 C:\Productos\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.pdb

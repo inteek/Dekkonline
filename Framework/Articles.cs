@@ -21,6 +21,7 @@ namespace Framework
                 {
                     result = (from bra in db.brands
                               where (bra.products.Count > 0)
+                              orderby bra.braName
                               select new ResultBrands
                               {
                                   braId = bra.braId,
@@ -219,6 +220,8 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     Categories = (from cat in db.categories
+                                  where (cat.products.Count > 0)
+                                  orderby cat.catName
                                   select new ResultCategories
                                   {
                                       catId = cat.catId,
