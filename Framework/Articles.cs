@@ -133,17 +133,11 @@ namespace Framework
         }
 
         //DE-2 2
-        public List<ResultProduct> loadProducts()
+        public List<ResultProduct> loadProducts(int catId, int width, int profile, int diameter, Guid? braId)
         {
             List<ResultProduct> result = null;
             try
             {
-                int catId = 0;
-                int width = 0;
-                int profile = 0;
-                int diameter = 0;
-
-                Guid? braId = null;
                 using (var db = new dekkOnlineEntities())
                 {
                     result = (from pro in db.products
