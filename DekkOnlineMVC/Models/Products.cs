@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Framework.Libraies
+namespace DekkOnlineMVC.Models
 {
-    public class ResultProduct
+    public class Products
     {
         public int Id { get; set; }
         public string Image { get; set; }
@@ -25,4 +24,6 @@ namespace Framework.Libraies
         public decimal? Price { get; set; }
         public int? Stock { get; set; }
     }
+
+
 }

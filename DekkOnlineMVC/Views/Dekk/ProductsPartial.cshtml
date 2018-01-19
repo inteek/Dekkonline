@@ -1,5 +1,5 @@
 ﻿
-@model List<DekkOnlineMVC.Models.Headphone>
+@model List<DekkOnlineMVC.Models.Products>
 
 
 
@@ -9,7 +9,7 @@
     settings.Name = "HeadphoneCards";
     settings.CallbackRouteValues = new { Controller = "Dekk", Action = "ProductsPartial" };
     settings.Width = Unit.Percentage(100);
-    settings.KeyFieldName = "ID";
+    settings.KeyFieldName = "Id";
     settings.EnableCardsCache = false;
 
     settings.Settings.VerticalScrollableHeight = 600;
@@ -73,10 +73,13 @@
     });
     */
 
-    settings.Columns.Add("PhotoUrl", MVCxCardViewColumnType.Image);
-    settings.Columns.Add("Brand");
-    settings.Columns.Add("Price", "Old price").PropertiesEdit.DisplayFormatString = "c";
-    settings.Columns.Add("Discount").PropertiesEdit.DisplayFormatString = "{0}%";
+    //*********
+    //settings.Columns.Add("PhotoUrl", MVCxCardViewColumnType.Image);
+    //settings.Columns.Add("Brand");
+    //settings.Columns.Add("Price", "Old price").PropertiesEdit.DisplayFormatString = "c";
+    //settings.Columns.Add("Discount").PropertiesEdit.DisplayFormatString = "{0}%";
+    //*********
+
 
     /*
     settings.Columns.Add(c =>
@@ -89,12 +92,15 @@
     });
     */
 
-    settings.Columns.Add("Sensitivity", "Sensitivity, dB");
-    settings.Columns.Add("Power", "Power, MW");
-    settings.Columns.Add("MinFrequency", "Min Frequency, Hz");
-    settings.Columns.Add("MaxFrequency", "Max Frequency, Hz");
-    settings.Columns.Add("Impedance", "Impendance, ohms");
-    settings.Columns.Add("Fit");
+
+    //*********
+    //settings.Columns.Add("Sensitivity", "Sensitivity, dB");
+    //settings.Columns.Add("Power", "Power, MW");
+    //settings.Columns.Add("MinFrequency", "Min Frequency, Hz");
+    //settings.Columns.Add("MaxFrequency", "Max Frequency, Hz");
+    //settings.Columns.Add("Impedance", "Impendance, ohms");
+    //settings.Columns.Add("Fit");
+    //*********
 
     //settings.CardLayoutProperties.Items.Add(i =>
     //{
@@ -137,11 +143,12 @@
               "<div >");
 
 
-        Html.DevExpress().BinaryImage(s =>
+        Html.DevExpress().Image(s =>
         {
-            s.Name = "Image" + DataBinder.Eval(c.DataItem, "ID");
-        }).Bind(DataBinder.Eval(c.DataItem, "Photo"))
-        .Render();
+            s.Name = "Image" + DataBinder.Eval(c.DataItem, "Id");
+            s.ImageUrl = DataBinder.Eval(c.DataItem, "Image").ToString();
+            //}).Bind(DataBinder.Eval(c.DataItem, "Image"))
+        }).Render();
 
 
         ViewContext.Writer.Write(

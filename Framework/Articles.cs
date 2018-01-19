@@ -134,7 +134,7 @@ namespace Framework
         }
 
         //DE-2 2
-        public List<ResultProduct> loadProducts(int catId, int width, int profile, int diameter, Guid? braId)
+        public List<ResultProduct> loadProducts(int? catId, int? width, int? profile, int? diameter, Guid? braId)
         {
             List<ResultProduct> result = null;
             try
@@ -144,29 +144,28 @@ namespace Framework
                     result = (from pro in db.products
                               where (pro.proStatus == true
                                     && pro.categoriesDP.cdpStatus == true
-                                    && (catId == 0 || pro.catId == catId)
-                                    && (width == 0 || pro.proDimensionWidth == width)
-                                    && (profile == 0 || pro.proDimensionProfile == profile)
-                                    && (diameter == 0 || pro.proDimensionDiameter == diameter)
+                                    && (catId == null || pro.catId == catId)
+                                    && (width == null || pro.proDimensionWidth == width)
+                                    && (profile == null || pro.proDimensionProfile == profile)
+                                    && (diameter == null || pro.proDimensionDiameter == diameter)
                                     && (braId.HasValue == false || pro.braId == braId))
                               select new ResultProduct
                               {
-                                  proId = pro.proId,
-                                  proImage = pro.proImage,
-                                  categories = pro.categories.catImage,
+                                  Id = pro.proId,
+                                  Image = pro.proImage,
+                                  CategoryImage = pro.categories.catImage,
                                   Brand = pro.brands.braName,
                                   BrandImage = pro.brands.braImage,
-                                  proName = pro.proName,
-                                  proDimensionWidth = pro.proDimensionWidth,
-                                  proDimensionProfile = pro.proDimensionProfile,
-                                  proDimensionDiameter = pro.proDimensionDiameter,
-                                  proTyreSize = pro.proTyreSize,
-                                  proFuel = pro.proFuel,
-                                  proWet = pro.proWet,
-                                  proNoise = pro.proNoise,
-                                  proSuggestedPrice = pro.proSuggestedPrice,
-                                  proInventory = pro.proInventory
-
+                                  Name = pro.proName,
+                                  Width = pro.proDimensionWidth,
+                                  Profile = pro.proDimensionProfile,
+                                  Diameter = pro.proDimensionDiameter,
+                                  TyreSize = pro.proTyreSize,
+                                  Fuel = pro.proFuel,
+                                  Wet = pro.proWet,
+                                  Noise = pro.proNoise,
+                                  Price = pro.proSuggestedPrice,
+                                  Stock = pro.proInventory
                               }).ToList();
                 }
             }
@@ -189,11 +188,11 @@ namespace Framework
                               where (x.proName == dekk && x.proInventory > 0)
                               select new ResultProduct
                               {
-                                  proId = x.proId,
-                                  proDimensionProfile = x.proDimensionProfile,
-                                  proDimensionWidth = x.proDimensionWidth,
-                                  proDimensionDiameter = x.proDimensionDiameter,
-                                  proInventory = x.proInventory
+                                  Id = x.proId,
+                                  Profile = x.proDimensionProfile,
+                                  Width = x.proDimensionWidth,
+                                  Diameter = x.proDimensionDiameter,
+                                  Stock = x.proInventory
 
                               }).ToList();
                 }

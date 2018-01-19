@@ -82,12 +82,12 @@ namespace Framework
                                 where cart.IdUser == User
                                 select new ResultProduct
                                 {
-                                    proId = pro.proId,
-                                    proImage = pro.proImage,
-                                    proName = pro.proName,
-                                    proDescription = pro.proDescription,
-                                    proSuggestedPrice = pro.proSuggestedPrice,
-                                    proInventory = pro.proInventory
+                                    Id = pro.proId,
+                                    Image = pro.proImage,
+                                    Name = pro.proName,
+                                    Description = pro.proDescription,
+                                    Price = pro.proSuggestedPrice,
+                                    Stock = pro.proInventory
                                 }).ToList();
                 }
 
