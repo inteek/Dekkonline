@@ -6,133 +6,199 @@
 }
 
 @Styles.Render("~/Styles/Dimension.css?v=1")
-@Styles.Render("~/Styles/Shoppingcart.css?v=7")
+@Styles.Render("~/Styles/Shoppingcart.css?v=9")
 
-<br />
-<br />
-<br />
-<br />
-
-<div class="content" style="margin-top:8px;">
+<div class="content">
     <div class="row">
         <div class="col-lg-12">
-            <img src="~/Content/step2.JPG" style="width:1350px;" />
+            <img src="~/Content/step2.JPG" style="width: 1350px; height: 90px;" class="imgRespons1" />
+            <img src="~/Content/step2movil.PNG" class="img-responsive imgRespons2" />
         </div>
     </div>
     <div style="margin-left:20px;">
         <div class="row">
-            <div style="text-align:center;">
-                <h3 style="color: #1A5276;"> Are you a Dekkonline member? Log in</h3>
+            <div class="col-lg-12" style="text-align:center;">
+                <h3 class="text1"> Are you a Dekkonline member? Log in</h3>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="radio-inline" style="color: #E53935; font-size: 20px; "><strong>I am a: </strong></label>
-                            <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonWinter" value="winter" style="width:20px; height:20px;"> Person </label>
-                            <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonSpringFall" value="spring-fall" style="width:20px; height:20px;"> Company </label>
+        <div class="widthleft">
+            <div class="row">
+                <div class="col-lg-4">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="col-lg-4">
+                                    <label class="radio-inline textLeft"><strong>I am a: </strong></label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonWinter1" value="winter" class="widthCombo1"> Person </label>
+                                    <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonWinter2" value="winter" class="widthCombo2"> Company </label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-8">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="radio-inline" style="color: #E53935; font-size: 20px; "><strong>I want the service at: </strong></label>
-                            <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonWinter" value="winter" style="width:20px; height:20px;"> Nearest workshop </label>
-                            <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="seasonSpringFall" value="spring-fall" style="width:20px; height:20px;"> my place </label>
+                    </form>
+                </div>
+                <div class="col-lg-8">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label class="radio-inline" style="color: #E53935; font-size: 20px; "><strong>I want the service at: </strong></label>
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="seasonWinter2" value="winter2" style="width:20px; height:20px; "> Nearest workshop </label>
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="seasonSpringFall2" value="spring-fall2" style="width:20px; height:20px;"> my place </label>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-6">
+                    </form>
+                </div>
+                <div class="col-lg-6">
 
+                </div>
             </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-5">
-                <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Personal Information</strong></label>
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label for="zipcode" class="col-lg-3 control-label textoAzul">zip code</label>
-                        <div class="col-lg-2">
-                            <input type="text" class="form-control" id="zipcode" placeholder="">
+            <br />
+            <div class="row">
+                <div class="col-lg-5">
+                    <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Personal Information</strong></label>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
+                            <div class="col-lg-2 col-xs-6">
+                                <input type="text" class="form-control borderInput" id="zipcode" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Firstname" class="col-lg-3 col-xs-4 control-label textoAzul">First name</label>
+                            <div class="col-lg-6 col-xs-6">
+                                <input type="text" class="form-control borderInput" id="Firstname" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Lastname" class="col-lg-3 col-xs-4 control-label textoAzul">Last name</label>
+                            <div class="col-lg-6 col-xs-6">
+                                <input type="text" class="form-control borderInput" id="Lastname" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
+                            <div class="col-lg-6 col-xs-6">
+                                <input type="text" class="form-control borderInput" id="address" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-lg-3 col-xs-4 control-label textoAzul">Email</label>
+                            <div class="col-lg-6 col-xs-6">
+                                <input type="email" class="form-control borderInput" id="email" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile" class="col-lg-3 col-xs-4 control-label textoAzul">Mobile</label>
+                            <div class="col-lg-6 col-xs-6">
+                                <input type="text" class="form-control borderInput" id="mobile" placeholder="">
+                            </div>
+                        </div>
+                    </form>
+                    <form class="form-horizontal ocultardiv" role="form">
+                        <div class="form-group">
+                            <label for="choose" class="col-lg-3 control-label textoAzul">You choose</label>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control borderInput" id="choose" placeholder="" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="col-lg-3 control-label textoAzul"> Date</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control borderInput" id="date" placeholder="" disabled>
+                            </div>
+                            <label for="time" class="col-lg-1 control-label textoAzul">Time</label>
+                            <div class="col-lg-2">
+                                <input type="text" class="form-control borderInput" id="time" placeholder="" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Lastname" class="col-lg-3 control-label textoAzul">Last name</label>
+                            <div class="col-lg-6">
+                                <textarea class="form-control borderInput" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-7 alinearWork">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="textshop"><strong>This are the nearest workshop:</strong></label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="Firstname" class="col-lg-3 control-label textoAzul">First name</label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="Firstname" placeholder="">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="sizeText1">Click one to see available time, hours and meak an appointment.</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="Lastname" class="col-lg-3 control-label textoAzul">Last name</label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="Lastname" placeholder="">
-                        </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group alinearSrotBy">
+                                <label class="col-lg-2 alinearSort">SORT BY</label>
+                                <div class="col-lg-3 col-lg-1 alinearCombo">
+                                    <select class="form-control">
+                                        <option value="">Seleccione</option>
+                                        <option value="">Seleccione</option>
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                       
                     </div>
-                    <div class="form-group">
-                        <label for="address" class="col-lg-3 control-label textoAzul">Address</label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="address" placeholder="">
+                    <br />
+                    <div class="widthleftresponse">
+                        <div class="row blanco rowcat">
+                            <div class="col-lg-2 col-xs-3">
+                                <img src="~/Content/t1.jpg" style="width:110px; height:105px;" />
+                            </div>
+                            <div class="col-lg-5 col-xs-8 catalago">
+                                <h4 style="color: #2471A3; "><strong>Big Motors Shop</strong></h4>
+                                <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                            </div>
+                            <div class="col-lg-2 catHiden">
+                                <h3><strong>60 kr</strong></h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="col-lg-3 control-label textoAzul">Email</label>
-                        <div class="col-lg-6">
-                            <input type="email" class="form-control" id="email" placeholder="">
+                        <div class="row blanco rowcat">
+                            <div class="col-lg-2 col-xs-3">
+                                <img src="~/Content/t2.jpg" style="width:110px; height:105px;" />
+                            </div>
+                            <div class="col-lg-5 col-xs-8 catalago">
+                                <h4 style="color: #2471A3; "><strong>Big Red Shop</strong></h4>
+                                <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                            </div>
+                            <div class="col-lg-2 catHiden">
+                                <h3><strong>80 kr</strong></h3>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile" class="col-lg-3 control-label textoAzul">Mobile</label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="mobile" placeholder="">
+                        <div class="row blanco rowcat">
+                            <div class="col-lg-2 col-xs-3">
+                                <img src="~/Content/t3.jpg" style="width:110px; height:105px;" />
+                            </div>
+                            <div class="col-lg-5 col-xs-8 catalago">
+                                <h4 style="color: #2471A3; "><strong>Elite Shop</strong></h4>
+                                <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                            </div>
+                            <div class="col-lg-2 catHiden">
+                                <h3><strong>60 kr</strong></h3>
+                            </div>
                         </div>
-                    </div>
-                </form>
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label for="choose" class="col-lg-3 control-label textoAzul">You choose</label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" id="choose" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="date" class="col-lg-3 control-label textoAzul"> Date</label>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control" id="date" placeholder="">
-                        </div>
-                        <label for="time" class="col-lg-1 control-label textoAzul">Time</label>
-                        <div class="col-lg-2">
-                            <input type="text" class="form-control" id="time" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Lastname" class="col-lg-3 control-label textoAzul">Last name</label>
-                        <div class="col-lg-6">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-7 alinearWork">
-                <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>This are the nearest workshop:</strong></label>
-                <label style="font-size:20px; margin-bottom:18px;">Click one to see available time, hours and meak an appointment.</label>
-                <div class="form-group alinearSrotBy">
-                    <label class="col-lg-2" for="inputEmail1">SORT BY</label>
-                    <div class="col-lg-3 alinearCombo">
-                        <select class="form-control">
-                            <option value="">Seleccione</option>
-                            <option value="">Seleccione</option>
-                            <option value="">Seleccione</option>
-                        </select>
-                    </div>
+                    </div>                   
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/app.js")
+
+<script>
+    $(document).ready(function () {
+        $("#principalDiv").attr("class", "prDivSub");
+        $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+</script>
