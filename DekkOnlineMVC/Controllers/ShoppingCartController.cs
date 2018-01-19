@@ -24,5 +24,10 @@ namespace DekkOnlineMVC.Controllers
         {
             return PartialView();
         }
+
+        public PartialViewResult Step4()
+        {
+            return PartialView();
+        }
 	}
 }
