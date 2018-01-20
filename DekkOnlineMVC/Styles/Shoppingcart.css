@@ -193,6 +193,7 @@
     color: #E53935;
     font-size: 20px;
     margin-left: 0px;
+    margin-right: 0px;
 }
 
 .widthCombo1 {
@@ -217,6 +218,37 @@
     margin-bottom: 0px;
 }
 
+.rowInfo{
+    margin-left:0px;
+}
+
+.rowInfoPer{
+    margin-left:0px;
+}
+
+.rowInfoPer2{
+    margin-left:0px;
+}
+
+.ocultarsalto{
+    display:none;
+}
+
+.radioleft{
+    margin-left:0px;
+}
+
+.moverradio{
+    margin-left: 0px; 
+}
+
+.radioPerson{
+    margin-left:0px;
+}
+
+.leftradio1{
+    margin-left:0px;
+}
 
 @media screen and (max-width:1200px) {
     .imgwidth1 {
@@ -274,7 +306,69 @@
     .imgwidth2 {
        display:initial;
     }
+
+    .imgRespons1 {
+        width: 1025px;
+        height: 70px;
+    }
+
+    .ocultardiv {
+        display: none;
+    }
+
+    .rowInfo{
+        margin-left:-90px;
+    }
+
+    .textLeft {
+        color: #E53935;
+        font-size: 20px;
+        margin-left: -15px;
+        margin-right: 15px;
+    }
+
+    .rowInfoPer{
+        margin-left:-55px;
+    }
+
+    .rowInfoPer2{
+        margin-left:-330px;
+    }
+
+    .catHiden {
+        display: none;
+    }
+
+    .rowcat {
+        margin-bottom: 20px;
+    }
+
+    .alinearCombo {
+        margin-left: -135px;
+        margin-top: -7px;
+    }
+
+    .ocultarsalto{
+        display:none;
+    }
+
+    .radioleft{
+        margin-left:15px;
+    }
+        
+    .moverradio{
+        margin-left: 0px; 
+    }
+
+    .radioPerson{
+        margin-left:30px;
+    }
+
+    .leftradio1{
+        margin-left:15px;
+    }
 }
+
 @media screen and (max-width:1023px) {
     .imgwidth1 {
         margin-left: 2px;
@@ -346,8 +440,79 @@
     .ipadst1 {
         margin-right:-1264px;
     }
-}
 
+    .ocultardiv {
+        display: none;
+    }
+
+    .imgRespons1 {
+        width: 768px;
+        height: 70px;
+    }
+
+    .rowInfo{
+        margin-left:-120px;
+    }
+
+    .rowInfoPer{
+        margin-left:-85px;
+    }
+    .rowInfoPer2{
+        margin-left:-200px;
+    }
+
+    .alinearWork {
+        margin-left: -80px;
+    }
+
+    .alinearCombo {
+        margin-left: -80px;
+        margin-top: -10px;
+    }
+
+    .alinearSort {
+        margin-left: 0px;
+    }
+
+    .alinearSrotBy {
+        margin-left: 0px;
+    }
+
+    .rowcat {
+        margin-bottom: 20px;
+    }
+
+    .catHiden {
+        display: none;
+    }
+
+    .ocultarsalto{
+        display:none;
+    }
+
+    .radioleft{
+        margin-left:15px;
+    }
+
+    .moverradio{
+        margin-left: 0px; 
+    }
+
+    .radioPerson{
+        margin-left:30px;
+    }
+
+    .leftradio1{
+        margin-left:15px;
+    }
+
+    .textLeft {
+        color: #E53935;
+        font-size: 20px;
+        margin-left: -15px;
+        margin-right: 15px;
+    }
+}
 
 @media screen and (max-width: 767px) {
 
@@ -512,12 +677,12 @@
     }
 
     .alinearCombo {
-        margin-left: 50px;
-        margin-top: 0px;
+        margin-left: -30px;
+        margin-top: -10px;
     }
 
     .alinearSort {
-        margin-left: 50px;
+        margin-left: 35px;
     }
 
     .ocultardiv {
@@ -528,6 +693,7 @@
         color: #E53935;
         font-size: 20px;
         margin-left: -15px;
+        margin-right: 0px;
     }
 
     .widthCombo1 {
@@ -607,5 +773,47 @@
         margin-bottom:18px;
         margin-left:50px;
     }
+
+    .rowInfo{
+        margin-left:0px;
+    }
+
+    .rowInfoPer{
+        margin-left:0px;
+    }
+
+    .rowInfoPer2{
+        margin-left:0px;
+    }
+
+    .alinearWork {
+        margin-left: -50px;
+    }
+
+    .alinearSrotBy {
+        margin-left: 0px;
+    }
+
+    .ocultarsalto{
+        display:initial;
+    }
+
+    .radioleft{
+        margin-left:-15px;
+    }
+
+    .moverradio{
+        margin-left: 10px; 
+    }
+
+    .radioPerson{
+        margin-left:0px;
+    }
+   
+    .leftradio1{
+        margin-left:0px;
+    }
 }
+
+
 

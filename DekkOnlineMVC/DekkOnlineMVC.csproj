@@ -417,6 +417,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\connectAsy.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker.min.js" />
@@ -436,6 +437,7 @@
     <Content Include="Scripts\plugins\select2.min.js" />
     <Content Include="Scripts\plugins\summernote.min.js" />
     <Content Include="Scripts\plugins\waves.min.js" />
+    <Content Include="Scripts\Step2.js" />
     <Content Include="Scripts\vendors.js" />
     <Content Include="Styles\bootstrap-switch.css" />
     <Content Include="Styles\bootstrap-theme.css" />
@@ -459,6 +461,7 @@
     <Content Include="Styles\prin.css" />
     <Content Include="Styles\purecsstooltip.css" />
     <Content Include="Styles\Shoppingcart.css" />
+    <Content Include="Styles\Shoppingcart2.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
