@@ -32,6 +32,7 @@ body {
 a{
     color:#CCC !important;
 }
+
 .link {
     cursor: pointer;
 }
@@ -280,7 +281,7 @@ width:100%;
     background-size: 60% 60%;
     float: right;
     cursor: pointer;
-    display: none;
+    display: initial;
     z-index: 1010 !important;
 }
 
@@ -294,13 +295,14 @@ width:100%;
     background-size: 60% 60%;
     float: right;
     cursor: pointer;
+    display: none;
     z-index: 1010 !important;
 }
 
 .prMenuItems {
     float: right;
     padding: 0.5vh 1vw;
-    display: none;
+    display: initial;
     font-size: 1em;
 }
 
@@ -412,6 +414,41 @@ width:100%;
         top: 120px;
     }
 
+
+    .prMenuOpen {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(255,255,255);
+        background-image: url(../Content/imgs/arrowGray.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        float: right;
+        cursor: pointer;
+        display: none;
+        z-index: 1010 !important;
+    }
+
+    .prMenuClosed {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(255,255,255);
+        background-image: url(../Content/imgs/menuBars.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        float: right;
+        cursor: pointer;
+        display:initial;
+        z-index: 1010 !important;
+    }
+
+    .prMenuItems {
+        float: right;
+        padding: 0.5vh 1vw;
+        display: none;
+        font-size: 1em;
+    }
     
 }
 
@@ -432,13 +469,52 @@ width:100%;
         z-index: 1011 !important;
     }
 
-        .prMenuItems div {
-            float: left;
-            padding: 5px;
-            clear: both;
-            z-index: 1011 !important;
-        }
+    .prMenuItems div {
+        float: left;
+        padding: 5px;
+        clear: both;
+        z-index: 1011 !important;
+    }
+
+    .prMenuOpen {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(255,255,255);
+        background-image: url(../Content/imgs/arrowGray.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        float: right;
+        cursor: pointer;
+        display: none;
+        z-index: 1010 !important;
+    }
+
+    .prMenuClosed {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(255,255,255);
+        background-image: url(../Content/imgs/menuBars.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        float: right;
+        cursor: pointer;
+        display:initial;
+        z-index: 1010 !important;
+    }
+
+    .prMenuItems {
+        float: right;
+        padding: 0.5vh 1vw;
+        display: none;
+        font-size: 1em;
+    }
 }
+
+
+
+
 
 @media screen and (max-width:1169px) and (min-width:650px) {
     .prLogo {

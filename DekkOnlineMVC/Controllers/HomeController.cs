@@ -12,11 +12,11 @@ namespace DekkOnlineMVC.Controllers
         public ActionResult Index()
         {
             Articles ar = new Articles();
-            ViewBag.BagCategories = new SelectList(ar.loadCategories(), "catId", "catName");
-            ViewBag.BagWidth = new SelectList(ar.loadDimensionWidth().OrderBy(c => Convert.ToInt32(c.Id)), "Size", "Size");
-            ViewBag.BagProfile = new SelectList(ar.loadDimensionProfile().OrderBy(c => Convert.ToInt32(c.Id)), "Size", "Size");
-            ViewBag.BagDiameter = new SelectList(ar.loadDimensionDiameter().OrderBy(c => Convert.ToInt32(c.Id)), "Size", "Size");
-
+            ViewBag.BagWidth = ar.loadDimensionWidth();
+            ViewBag.BagProfile = ar.loadDimensionProfile();
+            ViewBag.BagDiameter = ar.loadDimensionDiameter();
+            ViewBag.BagCategories = ar.loadCategories();
+           
             return View();
         }
 
