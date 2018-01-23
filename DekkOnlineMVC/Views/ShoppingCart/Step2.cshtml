@@ -4,9 +4,26 @@
     ViewBag.Title = "Step2";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
 @Styles.Render("~/Styles/Dimension.css?v=4")
-@Styles.Render("~/Styles/Shoppingcart.css?v=1")
+@Styles.Render("~/Styles/Shoppingcart.css?v=2")
+
+<style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+
 
 <div class="content">
     <div class="row">
@@ -39,8 +56,8 @@
                         <div class="form-group">
                             <div class="col-sm-12 radioleft">
                                 <label class="radio-inline" style="color: #E53935; font-size: 20px; "><strong>I want the service at: </strong></label>
-                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="seasonWinter2" value="winter2" style="width: 20px; height: 20px;" class="moverradio"> Nearest workshop </label>
-                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="seasonSpringFall2" value="spring-fall2" style="width:20px; height:20px;"> my place </label>
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="nearestWoekshop" value="winter2" style="width: 20px; height: 20px;" class="moverradio"> Nearest workshop </label>
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="myplace" value="spring-fall2" style="width:20px; height:20px;"> my place </label>
                             </div>
                         </div>
                     </form>
@@ -49,46 +66,47 @@
             <br />
             <div class="row">
                 <div class="col-lg-5 rowInfoPer">
-                    <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Personal Information</strong></label>
-                    <form class="form-horizontal rowInfoPer2" role="form">
-                        <div class="form-group">
-                            <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
-                            <div class="col-lg-2 col-xs-6">
-                                <input type="text" class="form-control borderInput" id="zipcode" placeholder="">
+                    <label style="color: #2980B9; font-size: 18px; margin-bottom: 20px; cursor:pointer; " class="account" id="account"> I already have an account</label><br />
+                    <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; cursor:pointer;" class="InfoPersonal" id="InfoPersonal"><strong>Personal Information</strong></label>
+                    <div class="PersonalInformation">
+                        <form class="form-horizontal rowInfoPer2" role="form">
+                            <div class="form-group">
+                                <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
+                                <div class="col-lg-2 col-xs-6">
+                                    <input type="text" class="form-control borderInput" id="zipcode" placeholder="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="Firstname" class="col-lg-3 col-xs-4 control-label textoAzul">First name</label>
-                            <div class="col-lg-6 col-xs-6">
-                                <input type="text" class="form-control borderInput" id="Firstname" placeholder="">
+                            <div class="form-group">
+                                <label for="Firstname" class="col-lg-3 col-xs-4 control-label textoAzul">First name</label>
+                                <div class="col-lg-6 col-xs-6">
+                                    <input type="text" class="form-control borderInput" id="Firstname" placeholder="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="Lastname" class="col-lg-3 col-xs-4 control-label textoAzul">Last name</label>
-                            <div class="col-lg-6 col-xs-6">
-                                <input type="text" class="form-control borderInput" id="Lastname" placeholder="">
+                            <div class="form-group">
+                                <label for="Lastname" class="col-lg-3 col-xs-4 control-label textoAzul">Last name</label>
+                                <div class="col-lg-6 col-xs-6">
+                                    <input type="text" class="form-control borderInput" id="Lastname" placeholder="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
-                            <div class="col-lg-6 col-xs-6">
-                                <input type="text" class="form-control borderInput" id="address" placeholder="">
+                            <div class="form-group">
+                                <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
+                                <div class="col-lg-6 col-xs-6">
+                                    <input type="text" class="form-control borderInput" id="address" placeholder="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="col-lg-3 col-xs-4 control-label textoAzul">Email</label>
-                            <div class="col-lg-6 col-xs-6">
-                                <input type="email" class="form-control borderInput" id="email" placeholder="">
+                            <div class="form-group">
+                                <label for="email" class="col-lg-3 col-xs-4 control-label textoAzul">Email</label>
+                                <div class="col-lg-6 col-xs-6">
+                                    <input type="email" class="form-control borderInput" id="email" placeholder="">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="mobile" class="col-lg-3 col-xs-4 control-label textoAzul">Mobile</label>
-                            <div class="col-lg-6 col-xs-6">
-                                <input type="text" class="form-control borderInput" id="mobile" placeholder="">
+                            <div class="form-group">
+                                <label for="mobile" class="col-lg-3 col-xs-4 control-label textoAzul">Mobile</label>
+                                <div class="col-lg-6 col-xs-6">
+                                    <input type="text" class="form-control borderInput" id="mobile" placeholder="">
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                    <div id="InfoCompany">
+                        </form>
                         <form class="form-horizontal ocultardiv" role="form">
                             <div class="form-group">
                                 <label for="choose" class="col-lg-3 control-label textoAzul">You choose</label>
@@ -99,23 +117,44 @@
                             <div class="form-group">
                                 <label for="date" class="col-lg-3 control-label textoAzul"> Date</label>
                                 <div class="col-lg-3">
-                                    <input type="text" class="form-control borderInput" id="date" placeholder="" disabled>
+                                    <input type="text" class="form-control borderInput date" id="date" placeholder="">
                                 </div>
                                 <label for="time" class="col-lg-1 control-label textoAzul">Time</label>
                                 <div class="col-lg-2">
-                                    <input type="text" class="form-control borderInput" id="time" placeholder="" disabled>
+                                    <input type="text" class="form-control borderInput time" id="time" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="Lastname" class="col-lg-3 control-label textoAzul">Comments</label>
                                 <div class="col-lg-6">
-                                    <textarea class="form-control borderInput" id="comments" rows="3" disabled></textarea>
+                                    <textarea class="form-control borderInput comments" id="comments" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="Login" style="display:none">
+                        <form class="form-horizontal rowInfoPer2" role="form">
+                            <div class="form-group">
+                                <label for="User" class="col-lg-3 col-xs-4 control-label textoAzul">User</label>
+                                <div class="col-lg-6 col-xs-6">
+                                    <input type="email" class="form-control borderInput" id="user" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Passowrod" class="col-lg-3 col-xs-4 control-label textoAzul">Passowrod</label>
+                                <div class="col-lg-6 col-xs-6">
+                                    <input type="password" class="form-control borderInput Passowrod" id="Passowrod" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-6 col-xs-6 btnLogin" style="float: right;">
+                                    <button class="btn btn-primary btn-md">Login In</button>
                                 </div>
                             </div>
                         </form>
                     </div>                   
                 </div>
-                <div class="col-lg-7 alinearWork">
+                <div class="col-lg-7 alinearWork workshopDisplay">
                     <div class="row">
                         <div class="col-lg-12">
                             <label class="textshop"><strong>This are the nearest workshop:</strong></label>
@@ -183,14 +222,62 @@
                         </div>
                     </div>                   
                 </div>
+                <div class="col-lg-7 myPlace" style="display:none;">
+                    <div id="map"></div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 6
+        });
+        var infoWindow = new google.maps.InfoWindow({ map: map });
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Location found.');
+                map.setCenter(pos);
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+</script>
+
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=9")
+@Scripts.Render("~/Scripts/Step2.js?v=2")
 
 <script>
     $(document).ready(function () {

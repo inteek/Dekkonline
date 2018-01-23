@@ -4,7 +4,7 @@
         SelectMethod="GetProviderNames" ViewStateMode="Disabled">
         <ItemTemplate>
             
-                <button type="submit" class="btnLogin<%#: Item %>" name="provider" value="Sign up with <%#: Item %>"
+                <button type="submit" class="btnLogin<%#: Item %>" style="width:110px" name="provider" value="Sign up with <%#: Item %>"
                     title="Log in using your <%#: Item %> account.">
                     <%#: Item %>
                 </button>
