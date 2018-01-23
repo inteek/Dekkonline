@@ -32,7 +32,6 @@ body {
 a{
     color:#CCC !important;
 }
-
 .link {
     cursor: pointer;
 }
@@ -460,7 +459,7 @@ width:100%;
     }
 }
 
-@media screen and (max-width:1169px) {
+@media screen and (max-width:1023px) {
     .prMenuItems {
         float: right;
         clear: both;
@@ -512,8 +511,42 @@ width:100%;
     }
 }
 
+@media screen and (max-width:1366px) and (min-width:1024px) {
+    .prMenuOpen {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(255,255,255);
+        background-image: url(../Content/imgs/arrowGray.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        float: right;
+        cursor: pointer;
+        display: initial;
+        z-index: 1010 !important;
+    }
 
+    .prMenuClosed {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(255,255,255);
+        background-image: url(../Content/imgs/menuBars.png);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 60% 60%;
+        float: right;
+        cursor: pointer;
+        display: none;
+        z-index: 1010 !important;
+    }
 
+    .prMenuItems {
+        float: right;
+        padding: 0.5vh 1vw;
+        display: initial;
+        font-size: 1em;
+    }
+}
 
 
 @media screen and (max-width:1169px) and (min-width:650px) {
