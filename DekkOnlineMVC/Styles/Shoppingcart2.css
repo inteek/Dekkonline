@@ -193,7 +193,6 @@
     color: #E53935;
     font-size: 20px;
     margin-left: 0px;
-    margin-right: 0px;
 }
 
 .widthCombo1 {
@@ -218,167 +217,10 @@
     margin-bottom: 0px;
 }
 
-.rowInfo{
-    margin-left:0px;
-}
 
-.rowInfoPer{
-    margin-left:0px;
-}
-
-.rowInfoPer2{
-    margin-left:0px;
-}
-
-.ocultarsalto{
-    display:none;
-}
-
-.radioleft{
-    margin-left:0px;
-}
-
-.moverradio{
-    margin-left: 0px; 
-}
-
-.radioPerson{
-    margin-left:0px;
-}
-
-.leftradio1{
-    margin-left:0px;
-}
-
-.btnLogin{
-    margin-right: -30px;
-}
-
-@media screen and (max-width:1200px) {
-    .imgwidth1 {
-        margin-left: 2px;
-        width: 1100px;
-    }
-
-    .imgwidth2 {
-        margin-left: 2px;
-        width: 1073px;
-    }
-
-    .widthcomment {
-        width: 832px;
-        margin-top: -1px;
-    }
-
-    .widthaddresst3 {
-        width:unset;
-        margin-top: 10px;
-    }
-
-    .creditCardForm .payment .form-control {
-        line-height: 40px;
-        height: auto;
-        padding: 0 16px;
-    }
-
-    .creditCardForm .owner {
-        width: 35%;
-        margin-right: 10px;
-    }
-
-    .creditCardForm .CVV {
-        width: 20%;
-    }
-
-    .creditCardForm #card-number-field {
-        width: 100%;
-    }
-
-    .creditCardForm #expiration-date {
-        width: 55%;
-        margin-right: -10px;
-    }
-
-    .mobile1 {
-        margin-left: -88px;
-    }
-
-    .terms {
-        width: 361px;
-    }
-
-    .imgwidth2 {
-       display:initial;
-    }
-
-    .imgRespons1 {
-        width: 1025px;
-        height: 70px;
-    }
-
-    .ocultardiv {
-        display: none;
-    }
-
-    .rowInfo{
-        margin-left:-90px;
-    }
-
-    .textLeft {
-        color: #E53935;
-        font-size: 20px;
-        margin-left: -15px;
-        margin-right: 15px;
-    }
-
-    .rowInfoPer{
-        margin-left:-55px;
-    }
-
-    .rowInfoPer2{
-        margin-left:-330px;
-    }
-
-    .catHiden {
-        display: none;
-    }
-
-    .rowcat {
-        margin-bottom: 20px;
-    }
-
-    .alinearCombo {
-        margin-left: -135px;
-        margin-top: -7px;
-    }
-
-    .ocultarsalto{
-        display:none;
-    }
-
-    .radioleft{
-        margin-left:15px;
-    }
-        
-    .moverradio{
-        margin-left: 0px; 
-    }
-
-    .radioPerson{
-        margin-left:30px;
-    }
-
-    .leftradio1{
-        margin-left:15px;
-    }
-
-    .btnLogin{
-    margin-right: -335px;
-}
-}
-
-@media screen and (max-width:1023px) {
-    .imgwidth1 {
+/*Tablet*/
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+      .imgwidth1 {
         margin-left: 2px;
         width: 1024px;
     }
@@ -448,87 +290,72 @@
     .ipadst1 {
         margin-right:-1264px;
     }
+}
 
-    .ocultardiv {
-        display: none;
+/*Tablet*/
+@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) {
+    
+     .imgwidth1 {
+        margin-left: 2px;
+        width: 1100px;
     }
 
-    .imgRespons1 {
-        width: 768px;
-        height: 70px;
+    .imgwidth2 {
+        margin-left: 2px;
+        width: 1073px;
     }
 
-    .rowInfo{
-        margin-left:-120px;
+    .widthcomment {
+        width: 832px;
+        margin-top: -1px;
     }
 
-    .rowInfoPer{
-        margin-left:-85px;
-    }
-    .rowInfoPer2{
-        margin-left:-200px;
+    .widthaddresst3 {
+        width:unset;
+        margin-top: 10px;
     }
 
-    .alinearWork {
-        margin-left: -80px;
+    .creditCardForm .payment .form-control {
+        line-height: 40px;
+        height: auto;
+        padding: 0 16px;
     }
 
-    .alinearCombo {
-        margin-left: -80px;
-        margin-top: -10px;
+    .creditCardForm .owner {
+        width: 35%;
+        margin-right: 10px;
     }
 
-    .alinearSort {
-        margin-left: 0px;
+    .creditCardForm .CVV {
+        width: 20%;
     }
 
-    .alinearSrotBy {
-        margin-left: 0px;
+    .creditCardForm #card-number-field {
+        width: 100%;
     }
 
-    .rowcat {
-        margin-bottom: 20px;
+    .creditCardForm #expiration-date {
+        width: 55%;
+        margin-right: -10px;
     }
 
-    .catHiden {
-        display: none;
+    .mobile1 {
+        margin-left: -88px;
     }
 
-    .ocultarsalto{
-        display:none;
+    .terms {
+        width: 361px;
     }
 
-    .radioleft{
-        margin-left:15px;
-    }
-
-    .moverradio{
-        margin-left: 0px; 
-    }
-
-    .radioPerson{
-        margin-left:30px;
-    }
-
-    .leftradio1{
-        margin-left:15px;
-    }
-
-    .textLeft {
-        color: #E53935;
-        font-size: 20px;
-        margin-left: -15px;
-        margin-right: 15px;
-    }
-
-    .btnLogin{
-        margin-right: -215px;
+    .imgwidth2 {
+       display:initial;
     }
 }
 
-@media screen and (max-width: 767px) {
+/*Movil*/
+@media only screen and (max-width: 760px), (min-device-width: 767px){
 
-    table#cart tbody td .form-control {
+     table#cart tbody td .form-control {
         width: 20%;
         display: inline !important;
     }
@@ -689,12 +516,12 @@
     }
 
     .alinearCombo {
-        margin-left: -30px;
-        margin-top: -10px;
+        margin-left: 50px;
+        margin-top: 0px;
     }
 
     .alinearSort {
-        margin-left: 35px;
+        margin-left: 50px;
     }
 
     .ocultardiv {
@@ -705,7 +532,6 @@
         color: #E53935;
         font-size: 20px;
         margin-left: -15px;
-        margin-right: 0px;
     }
 
     .widthCombo1 {
@@ -785,51 +611,4 @@
         margin-bottom:18px;
         margin-left:50px;
     }
-
-    .rowInfo{
-        margin-left:0px;
-    }
-
-    .rowInfoPer{
-        margin-left:0px;
-    }
-
-    .rowInfoPer2{
-        margin-left:0px;
-    }
-
-    .alinearWork {
-        margin-left: -50px;
-    }
-
-    .alinearSrotBy {
-        margin-left: 0px;
-    }
-
-    .ocultarsalto{
-        display:initial;
-    }
-
-    .radioleft{
-        margin-left:-15px;
-    }
-
-    .moverradio{
-        margin-left: 10px; 
-    }
-
-    .radioPerson{
-        margin-left:0px;
-    }
-   
-    .leftradio1{
-        margin-left:0px;
-    }
-
-    .btnLogin{
-        margin-right: -21px;
-    }
 }
-
-
-

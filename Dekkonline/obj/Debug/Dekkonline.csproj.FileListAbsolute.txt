@@ -749,10 +749,6 @@ C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyRef
 C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.dll.licenses
 C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.dll
 C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.pdb
-C:\DekkonlineNuevaVersion\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
-C:\DekkonlineNuevaVersion\DekkOnline\obj\Debug\DekkOnline.dll.licenses
-C:\DekkonlineNuevaVersion\DekkOnline\obj\Debug\DekkOnline.dll
-C:\DekkonlineNuevaVersion\DekkOnline\obj\Debug\DekkOnline.pdb
 C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
 C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.dll.licenses
 C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.dll

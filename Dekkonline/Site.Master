@@ -84,12 +84,7 @@
                         alert("unknown error code");
                 }
             }
-            $(document).ready(function () {
-
-                
-
-
-                
+            $(document).ready(function () {    
 
                 try {
                     initPage();
@@ -248,8 +243,7 @@
 
 
         </div>
-
-        <div class="prMenu">
+        <div class="prMenu" id="menu1" runat="server">
             <div class="prLogin">
                 <table class="tableLogin">
                     <tr>
@@ -286,7 +280,6 @@
                 <div class="prMenuCI"><a href="/KONTAKT">KONTAKT</a></div>
             </div>
         </div>
-
 
 
         <div class="clearfix"></div>

@@ -67,37 +67,53 @@ namespace Framework
             }
         }
 
-        //PRODUCTS IN CART DE-11 TASK 1
-        public List<ResultProduct> ProductsInCart(string User)
+        //PRODUCTS IN CART DE-11 TASK 1 cambios
+        public List<ResultAllCart> ProductsInCart(string User)
         {
-            List<ResultProduct> products = null;
+            List<ResultShoppingCartProduct> products = null;
+            List<ResultAllCart> allcart = null;
             try
             {
 
                 using (var db = new dekkOnlineEntities())
                 {
                     products = (from pro in db.products
-                                join
-                                    cart in db.ShoppingCart on pro.proId equals cart.proId
+                                join cart in db.ShoppingCart on pro.proId equals cart.proId
                                 where cart.IdUser == User
-                                select new ResultProduct
+                                select new ResultShoppingCartProduct
                                 {
-                                    Id = pro.proId,
-                                    Image = pro.proImage,
-                                    Name = pro.proName,
-                                    Description = pro.proDescription,
-                                    Price = pro.proSuggestedPrice,
-                                    Stock = pro.proInventory
+                                   IdUser = cart.IdUser,
+                                   proId = cart.proId,
+                                   Image = pro.proImage,
+                                   Name = pro.proName,
+                                   Description = pro.proDescription,
+                                   quantity = cart.quantity,
+                                   totalpriceprod = cart.Price
                                 }).ToList();
+                    var promocode1 = LoadPromoCodeFomUser(User);
+                    var points1 = LoadPointsPerUser(User);
+                    decimal subtotal1 = 0.00m;
+                    foreach (var item in products)
+                    {
+                        subtotal1 += Convert.ToDecimal(item.totalpriceprod);
+                    }
+                     allcart = new List<ResultAllCart> {
+                        new ResultAllCart{
+                        cart = products,
+                        subtotal = subtotal1,
+                        promocode = promocode1,
+                        points = points1,
+                        total = 0 }
+                    };
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return products;
+                return allcart;
             }
-            return products;
+            return allcart;
         }
 
         //LOAD PROMO CODE FROM USER DE-11 TASK 2 cambios
@@ -110,10 +126,7 @@ namespace Framework
                 {
                     promocode = (from p in db.PromotionCodeUser
                                  where p.IdUser == idUser
-                                 select new
-                                 {
-                                     IdCode = p.IdCode
-                                 }).FirstOrDefault().ToString();
+                                 select (p.IdCode)).FirstOrDefault().ToString();
                     if (promocode != null)
                     {
                         return promocode;
@@ -198,14 +211,14 @@ namespace Framework
                         points.Points = Convert.ToInt32(NowPointsLoad);
                         db.UserPoints.Add(points);
                         db.SaveChanges();
-                        return NowPointsLoad;
+                        return Convert.ToInt32(NowPointsLoad);
                     }
                     else
                     {
                         UserPoints.Points = Convert.ToInt32(NowPointsLoad);
                         db.Entry(UserPoints).State = EntityState.Modified;
                         db.SaveChanges();
-                        return NowPointsLoad;
+                        return Convert.ToInt32(NowPointsLoad);
 
                     }
                 }

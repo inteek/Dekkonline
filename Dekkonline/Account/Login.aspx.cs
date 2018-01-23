@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using DekkOnline.Models;
+using System.Linq;
 
 namespace DekkOnline.Account
 {
@@ -17,6 +18,7 @@ namespace DekkOnline.Account
             //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
             OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
             var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
+            this.Page.Master.FindControl("menu1").Visible = false;
             if (!String.IsNullOrEmpty(returnUrl))
             {
                 RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
@@ -56,6 +58,25 @@ namespace DekkOnline.Account
                         break;
                 }
             }
+        }
+        protected void CreateUser_Click(object sender, EventArgs e)
+        {
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
+            var user = new ApplicationUser() { UserName = NewEmail.Text, Email = NewEmail.Text };
+            IdentityResult result = manager.Create(user, NewPassword.Text);
+            if (result.Succeeded)
+            {
+
+                signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+            }
+            else
+            {
+                lblNewFailureText.Text = result.Errors.FirstOrDefault();
+            }
+
+
         }
     }
 }

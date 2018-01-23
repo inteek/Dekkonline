@@ -32,7 +32,27 @@
 
 
                             </dx:ASPxComboBox>*@
-                        @Html.DropDownList("cmbCategory", (SelectList)ViewBag.BagCategories, new { @class = "BoxGeneral" })
+                        @*@Html.DropDownList("cmbCategory", (SelectList)ViewBag.BagCategories, new { @class = "BoxGeneral" })*@
+
+                        @Html.DevExpress().ComboBox(
+                            settings =>
+                            {
+                                settings.Name = "cmbCategory";
+                                settings.Width = Unit.Percentage(100);
+                                settings.ControlStyle.CssClass = "BoxGeneral";
+                                //settings.SelectedIndex = 0;
+                                //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                                settings.Properties.CallbackPageSize = 15;
+                                settings.Properties.TextField = "catName";
+                                settings.Properties.ValueField = "catId";
+                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                settings.ClientEnabled = true;
+                                settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+                            }
+                        ).BindList(ViewData["BagCategories"]).GetHtml()
+
+
                         Tire Sizes<br />
                         <div class="floatLt dp1">
                             @*<dx:ASPxComboBox runat="server" ID="cmbWidth" ClientInstanceName="cmbWidth" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
@@ -40,7 +60,25 @@
                                         <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
                                     </DropDownButton>
                                 </dx:ASPxComboBox>*@
-                        @Html.DropDownList("cmbWidth", (SelectList)ViewBag.BagWidth, new { @Class = "BoxGeneral" })      
+                        @*@Html.DropDownList("cmbWidth", (SelectList)ViewBag.BagWidth, new { @Class = "BoxGeneral" })*@      
+
+                            @Html.DevExpress().ComboBox(
+                            settings =>
+                            {
+                                settings.Name = "cmbWidth";
+                                settings.Width = Unit.Percentage(100);
+                                settings.ControlStyle.CssClass = "BoxGeneral";
+                                //settings.SelectedIndex = 0;
+                                //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                                settings.Properties.CallbackPageSize = 15;
+                                settings.Properties.TextField = "Size";
+                                settings.Properties.ValueField = "Id";
+                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                settings.ClientEnabled = true;
+                                settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+                            }
+                        ).BindList(ViewData["BagWidth"]).GetHtml()
                         </div>
                         <div class="floatLt diagonal">
                         </div>
@@ -50,7 +88,25 @@
                                         <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
                                     </DropDownButton>
                                 </dx:ASPxComboBox>*@
-                            @Html.DropDownList("cmbProfile", (SelectList)ViewBag.BagProfile, new { @CssClass = "BoxGeneral" })
+                            @*@Html.DropDownList("cmbProfile", (SelectList)ViewBag.BagProfile, new { @CssClass = "BoxGeneral" })*@
+
+                            @Html.DevExpress().ComboBox(
+                            settings =>
+                            {
+                                settings.Name = "cmbProfile";
+                                settings.Width = Unit.Percentage(100);
+                                settings.ControlStyle.CssClass = "BoxGeneral";
+                                //settings.SelectedIndex = 0;
+                                //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                                settings.Properties.CallbackPageSize = 15;
+                                settings.Properties.TextField = "Size";
+                                settings.Properties.ValueField = "Id";
+                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                settings.ClientEnabled = true;
+                                settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+                            }
+                        ).BindList(ViewData["BagProfile"]).GetHtml()
                         </div>
                         <div class="floatLt dp3">
                             @*<dx:ASPxComboBox runat="server" ID="cmbDiameter" ClientInstanceName="cmbDiameter" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
@@ -58,7 +114,26 @@
                                         <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
                                     </DropDownButton>
                                 </dx:ASPxComboBox>*@
-                            @Html.DropDownList("cmbDiameter", (SelectList)ViewBag.BagDiameter, new { @class = "BoxGeneral", @value = '0' })
+                            @*@Html.DropDownList("cmbDiameter", (SelectList)ViewBag.BagDiameter, new { @class = "BoxGeneral", @value = '0' })*@
+
+                            @Html.DevExpress().ComboBox(
+                            settings =>
+                            {
+                                settings.Name = "cmbDiameter";
+                                settings.Width = Unit.Percentage(100);
+                                settings.ControlStyle.CssClass = "BoxGeneral";
+                                //settings.SelectedIndex = 0;
+                                //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                                settings.Properties.CallbackPageSize = 15;
+                                settings.Properties.TextField = "Size";
+                                settings.Properties.ValueField = "Id";
+                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                settings.ClientEnabled = true;
+                                settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+                            }
+                        ).BindList(ViewData["BagDiameter"]).GetHtml()
+
                         </div>
                         <div class="clearfix"></div>
                         <div class="advancedSearch">
