@@ -153,6 +153,7 @@ namespace Framework
                               {
                                   Id = pro.proId,
                                   Image = pro.proImage,
+                                  CatId = pro.categories.catId,
                                   CategoryImage = pro.categories.catImage,
                                   Brand = pro.brands.braName,
                                   BrandImage = pro.brands.braImage,
@@ -213,7 +214,7 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     Categories = (from cat in db.categories
-                                  where (cat.products.Count > 0)
+                                  //where (cat.products.Count > 0)
                                   orderby cat.catName
                                   select new ResultCategories
                                   {

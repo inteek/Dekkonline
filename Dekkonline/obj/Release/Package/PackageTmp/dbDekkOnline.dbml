@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dekkOnline" Class="dbDekkOnlineDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(local);Initial Catalog=dekkOnline;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DefaultConnection" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tokens" Member="tokens">
+    <Type Name="token">
+      <Column Name="tokId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tokDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="tokData" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetRoles" Member="AspNetRoles">
+    <Type Name="AspNetRole">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetRole_AspNetUserRole" Member="AspNetUserRoles" ThisKey="Id" OtherKey="RoleId" Type="AspNetUserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserClaims" Member="AspNetUserClaims">
+    <Type Name="AspNetUserClaim">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="ClaimType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ClaimValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="AspNetUser_AspNetUserClaim" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserLogins" Member="AspNetUserLogins">
+    <Type Name="AspNetUserLogin">
+      <Column Name="LoginProvider" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProviderKey" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AspNetUser_AspNetUserLogin" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserRoles" Member="AspNetUserRoles">
+    <Type Name="AspNetUserRole">
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AspNetRole_AspNetUserRole" Member="AspNetRole" ThisKey="RoleId" OtherKey="Id" Type="AspNetRole" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="AspNetUser_AspNetUserRole" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
+    <Type Name="AspNetUser">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="EmailConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordHash" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SecurityStamp" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumberConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TwoFactorEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LockoutEndDateUtc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUser_AspNetUserClaim" Member="AspNetUserClaims" ThisKey="Id" OtherKey="UserId" Type="AspNetUserClaim" />
+      <Association Name="AspNetUser_AspNetUserLogin" Member="AspNetUserLogins" ThisKey="Id" OtherKey="UserId" Type="AspNetUserLogin" />
+      <Association Name="AspNetUser_AspNetUserRole" Member="AspNetUserRoles" ThisKey="Id" OtherKey="UserId" Type="AspNetUserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.categoriesDP" Member="categoriesDPs">
+    <Type Name="categoriesDP">
+      <Column Name="cdpId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cdpNameDP" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="cdpDescriptionDP" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="cdpName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="cdpDescription" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="cdpImage" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="cdpParentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="cdpStatus" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="cdpEdited" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="categoriesDP_product" Member="products" ThisKey="cdpId" OtherKey="cdpId" Type="product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.categories" Member="categories">
+    <Type Name="category">
+      <Column Name="catId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="catName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="catDescription" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="catImage" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="catStatus" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="category_product" Member="products" ThisKey="catId" OtherKey="catId" Type="product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.products" Member="products">
+    <Type Name="product">
+      <Column Name="proId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="proUUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="braId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="cdpId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="proSkuId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="proSkuDP" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="proNameDP" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="proDescriptionDP" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="proCodeDP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proDimensionProfileDP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proDimensionWidthDP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proDimensionDiameterDP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proCoverPriceDP" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="proSuggestedPriceDP" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="proRCRDP" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proLoadIndexDP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proSpeedDP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proProductCodeDP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proFuelDP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="proWetDP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="proNoiseDP" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="proTyreSizeDP" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proSku" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="proName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="proDescription" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="proCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proDimensionProfile" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proDimensionWidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proDimensionDiameter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proCoverPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="proSuggestedPrice" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="proInventory" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proRCR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proLoadIndex" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proSpeed" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proProductCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proFuel" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="proWet" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="proNoise" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="proTyreSize" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="proEdited" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="proImage" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="proStatus" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="catId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="proLastUpdateDP" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="proLastUpdate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="proDiscount" Type="System.Decimal" DbType="money" CanBeNull="true" />
+      <Association Name="category_product" Member="category" ThisKey="catId" OtherKey="catId" Type="category" IsForeignKey="true" />
+      <Association Name="categoriesDP_product" Member="categoriesDP" ThisKey="cdpId" OtherKey="cdpId" Type="categoriesDP" IsForeignKey="true" />
+      <Association Name="brand_product" Member="brand" ThisKey="braId" OtherKey="braId" Type="brand" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.brands" Member="brands">
+    <Type Name="brand">
+      <Column Name="braId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="braName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="braNameDP" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="braCodeDP" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="barDescriptionDP" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="braDescription" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="braCode" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="braImage" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="braEdited" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="braPercent" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="brand_product" Member="products" ThisKey="braId" OtherKey="braId" Type="product" />
+    </Type>
+  </Table>
+</Database>

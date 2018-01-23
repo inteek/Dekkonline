@@ -10,6 +10,7 @@ namespace Framework.Libraies
     {
         public int Id { get; set; }
         public string Image { get; set; }
+        public int? CatId { get; set; }
         public string CategoryImage { get; set; }
         public string Brand { get; set; }
         public string BrandImage { get; set; }

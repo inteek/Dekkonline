@@ -491,6 +491,7 @@
     <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.OTF" />
     <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.ttf" />
     <Content Include="Scripts\fonts\MYRIADPRO-REGULAR.woff" />
+    <None Include="Properties\PublishProfiles\DekkOnline.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\imgs\logo_topmenu.png" />
