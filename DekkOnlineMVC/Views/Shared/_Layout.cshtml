@@ -9,10 +9,9 @@
     <title>DekkOnline</title>
 
 
-
-
     @Styles.Render("~/Styles/bootstrap.min.css")
-    @Styles.Render("~/Styles/Site.css?V=9")
+        @Styles.Render("~/Styles/Site.css?V=9")
+        @Styles.Render("~/Styles/plugins/notyf.min.css")
 
     <!-- Icons -->
     @Styles.Render("~/fonts/ionicons/css/ionicons.min.css")
@@ -299,7 +298,7 @@ new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
             @Scripts.Render("~/Scripts/plugins/jquery.easypiechart.min.js")
             @Scripts.Render("~/Scripts/plugins/bootstrap-rating.min.js")
             @Scripts.Render("~/Scripts/plugins/select2.min.js")
-
+            @Scripts.Render("~/Scripts/plugins/notyf.min.js")
 
             @Scripts.Render("~/Scripts/connectAsy.js?v=2")
             @Scripts.Render("~/Scripts/Login.js?v=3")

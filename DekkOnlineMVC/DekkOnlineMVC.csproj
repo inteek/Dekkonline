@@ -431,6 +431,7 @@
     <Content Include="Scripts\plugins\jquery.easypiechart.min.js" />
     <Content Include="Scripts\plugins\jquery.sparkline.min.js" />
     <Content Include="Scripts\plugins\moment.min.js" />
+    <Content Include="Scripts\plugins\notyf.min.js" />
     <Content Include="Scripts\plugins\pace.min.js" />
     <Content Include="Scripts\plugins\perfect-scrollbar.min.js" />
     <Content Include="Scripts\plugins\screenfull.js" />
@@ -454,6 +455,7 @@
     <Content Include="Styles\plugins\bootstrap-slider.css" />
     <Content Include="Styles\plugins\c3.css" />
     <Content Include="Styles\plugins\fullcalendar.css" />
+    <Content Include="Styles\plugins\notyf.min.css" />
     <Content Include="Styles\plugins\perfect-scrollbar.css" />
     <Content Include="Styles\plugins\select2.css" />
     <Content Include="Styles\plugins\summernote.css" />

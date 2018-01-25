@@ -608,6 +608,10 @@ C:\DekkOnline\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cac
 C:\DekkOnline\DekkOnline\obj\Debug\DekkOnline.dll.licenses
 C:\DekkOnline\DekkOnline\obj\Debug\DekkOnline.dll
 C:\DekkOnline\DekkOnline\obj\Debug\DekkOnline.pdb
+C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
+C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.dll.licenses
+C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.dll
+C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.pdb
 C:\Productos\Dekkonline\DekkOnline\bin\ApplicationInsights.config
 C:\Productos\Dekkonline\DekkOnline\bin\roslyn\csc.exe
 C:\Productos\Dekkonline\DekkOnline\bin\roslyn\csc.exe.config
@@ -745,11 +749,5 @@ C:\Productos\Dekkonline\DekkOnline\bin\es\EntityFramework.SqlServer.resources.dl
 C:\Productos\Dekkonline\DekkOnline\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Productos\Dekkonline\DekkOnline\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
 C:\Productos\Dekkonline\DekkOnline\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
-C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.dll.licenses
 C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.dll
 C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.pdb
-C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
-C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.dll.licenses
-C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.dll
-C:\DekkonlineNueva\DekkOnline\obj\Debug\DekkOnline.pdb

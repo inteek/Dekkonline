@@ -58,5 +58,52 @@ namespace Framework
             else
                 return false;
         }
+
+
+        public string GetSessionIdUser()
+        {
+            HttpContext ctx = HttpContext.Current;
+
+            if (ctx == null && ctx.Session["UserInfo"] != null)
+            {
+                return ctx.Session["UserInfo"].ToString();
+            }
+            else {
+
+                return null;
+            }
+
+        }
+
+
+        public string GetIdUser()
+        {
+            bool a = IsSessionTimedOut();
+            //CREAR COOKIES
+            if (a == false)
+            {
+                if (HttpContext.Current.Response.Cookies["UserInfo"] == null)
+                {
+                    Random rnd = new Random();
+                    int Id = rnd.Next();
+                    var enid = Encriptar(Id.ToString());
+
+                    HttpCookie cookie = new HttpCookie("UserInfo");
+                    cookie["id"] = enid;
+                    cookie.Expires = DateTime.Now.AddYears(1);
+                    HttpContext.Current.Response.Cookies.Add(cookie);
+
+                    return enid;
+                }
+                else {
+                    return HttpContext.Current.Response.Cookies["UserInfo"].ToString();
+                }
+            }
+            else
+            {
+                return GetSessionIdUser();
+            }
+        }
+
     }
 }

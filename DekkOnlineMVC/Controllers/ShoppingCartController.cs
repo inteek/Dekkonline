@@ -13,22 +13,8 @@ namespace DekkOnlineMVC.Controllers
         // GET: /ShoppingCart/
         public ActionResult Index()
         {
-            encryptdecrypt en = new encryptdecrypt();
-            bool a = en.IsSessionTimedOut();
             var b = (dynamic)null;
-            //CREAR COOKIES
-            if (a == false)
-            {
-            Random rnd = new Random();
-            int Id = rnd.Next();
-
-            var enid = en.Encriptar(Id.ToString());
-            HttpCookie cookie = new HttpCookie("UserInfo");
-            cookie["id"] = enid;
-            var deid = en.DesEncriptar(enid);
-            cookie.Expires = DateTime.Now.AddYears(1);
-            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
-            }
+           
             ShoppingCart sh = new ShoppingCart();
           var pro =  sh.ProductsInCart("8eb14cb4-c1d5-4e00-94fd-ca458532ac92");//3f619083-b218-41e8-8693-1a93ecd82fdf
             if (pro != null)
@@ -63,5 +49,11 @@ namespace DekkOnlineMVC.Controllers
         {
             return PartialView();
         }
+
+
+
+
+
+
 	}
 }
