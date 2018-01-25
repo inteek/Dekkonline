@@ -495,10 +495,7 @@ C:\Productos\Dekkonline\DekkOnlineMVC\bin\EntityFramework.SqlServer.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\Framework.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\Microsoft.Web.Infrastructure.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\Newtonsoft.Json.dll
-C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Net.Http.Formatting.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.Helpers.dll
-C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.Http.dll
-C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.Http.WebHost.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.Mvc.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.Optimization.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.Razor.dll
@@ -506,7 +503,6 @@ C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.WebPages.Deployment.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.WebPages.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\System.Web.WebPages.Razor.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\WebGrease.dll
-C:\Productos\Dekkonline\DekkOnlineMVC\bin\WebMatrix.Data.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\Entity.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\DevExpress.Office.v16.1.Core.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\bin\DevExpress.Pdf.v16.1.Core.dll
@@ -718,3 +714,6 @@ C:\Productos\Dekkonline\DekkOnlineMVC\bin\ru\DevExpress.XtraTreeList.v16.1.resou
 C:\Productos\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csprojResolveAssemblyReference.cache
 C:\Productos\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.dll
 C:\Productos\Dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.pdb
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Framework.dll.config
+C:\Productos\DekkOnline\DekkOnlineMVC\bin\Entity.dll.config
+C:\Productos\DekkOnline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csproj.CoreCompileInputs.cache

@@ -6,6 +6,7 @@
 }
 
 
+
 <script>
     function cmbFilters_ValueChanged(s, e) {
         //alert(s.uniqueID + " - " + s.GetText() + " / " + s.GetValue());
@@ -15,6 +16,7 @@
         }
     }
 </script>
+
 
 
         <div class="searchWrap" style="top:-300px; width:100%">
@@ -401,6 +403,17 @@
             
 
         });
+
+        function AddToCart(){
+            // Create an instance of Notyf
+            var notyf = new Notyf();
+
+            // Display an alert notification
+            //notyf.alert('You must fill out the form before moving forward');
+
+            // Display a success notification
+            notyf.confirm('Your changes have been successfully saved!');
+        }
 
     </script>
 
