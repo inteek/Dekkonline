@@ -27,5 +27,3 @@ C:\Productos\Dekkonline\Framework\bin\Debug\EntityFramework.SqlServer.xml
 C:\Productos\Dekkonline\Framework\obj\Debug\Framework.csprojResolveAssemblyReference.cache
 C:\Productos\Dekkonline\Framework\obj\Debug\Framework.dll
 C:\Productos\Dekkonline\Framework\obj\Debug\Framework.pdb
-C:\Productos\DekkOnline\Framework\bin\Debug\Entity.dll.config
-C:\Productos\DekkOnline\Framework\obj\Debug\Framework.csproj.CoreCompileInputs.cache

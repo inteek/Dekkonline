@@ -12,21 +12,33 @@ namespace Framework
     {
 
         //ADD TO CART DE-5 TASK 3
-        public bool AddToCart(string User, int id_dekk, int id_quantity)
+        public bool AddToCart(string idUser, int id_dekk, int id_quantity)
         {
             try
             {
+
                 using (var db = new dekkOnlineEntities())
                 {
-                    var product = db.products.Where(s => s.proId == id_dekk).Select(x => x.proSuggestedPrice).FirstOrDefault();
-                    decimal price = Convert.ToDecimal(product) * id_quantity;
-                    var addCart = new Entity.ShoppingCart();
-                    addCart.IdUser = User;
-                    addCart.proId = id_dekk;
-                    addCart.quantity = id_quantity;
-                    addCart.Price = price;
-                    addCart.Status = true;
-                    db.ShoppingCart.Add(addCart);
+                    var productPrice = db.products.Where(s => s.proId == id_dekk).Select(x => x.proSuggestedPrice).FirstOrDefault();
+                    decimal price = Convert.ToDecimal(productPrice) * id_quantity;
+
+                    Entity.ShoppingCart productShoppingCart = db.ShoppingCart.Where(s => s.proId == id_dekk && s.IdUser.Equals(idUser)).FirstOrDefault();
+
+                    if (productShoppingCart == null)
+                    {
+                        Entity.ShoppingCart addCart = new Entity.ShoppingCart();
+                        addCart.IdUser = idUser;
+                        addCart.proId = id_dekk;
+                        addCart.quantity = id_quantity;
+                        addCart.Price = price;
+                        addCart.Status = false;
+                        db.ShoppingCart.Add(addCart);
+                    }
+                    else {
+                        productShoppingCart.quantity = id_quantity;
+                        productShoppingCart.Price = price;
+                    }
+
                     db.SaveChanges();
                     return true;
                 }
@@ -79,7 +91,7 @@ namespace Framework
                 {
                     products = (from pro in db.products
                                 join cart in db.ShoppingCart on pro.proId equals cart.proId
-                                where cart.IdUser == User
+                                where cart.IdUser.Equals(User)
                                 select new ResultShoppingCartProduct
                                 {
                                    IdUser = cart.IdUser,
@@ -90,17 +102,24 @@ namespace Framework
                                    quantity = cart.quantity,
                                    totalpriceprod = cart.Price
                                 }).ToList();
-                    var promocode1 = LoadPromoCodeFomUser(User);
-                    var points1 = LoadPointsPerUser(User);
-                    decimal subtotal1 = 0.00m;
-                    foreach (var item in products)
-                    {
-                        subtotal1 += Convert.ToDecimal(item.totalpriceprod);
-                    }
+
+
+                    var promocode1 = ""; //LoadPromoCodeFomUser(User);
+                    var points1 = 0; //LoadPointsPerUser(User);
+
+
+                    decimal? subtotal1 = products.Select(p => p.totalpriceprod).Sum();
+                    subtotal1 = subtotal1 == null ? 00M : subtotal1;
+
+                    //foreach (var item in products)
+                    //{
+                    //    subtotal1 += Convert.ToDecimal(item.totalpriceprod);
+                    //}
+
                      allcart = new List<ResultAllCart> {
                         new ResultAllCart{
                         cart = products,
-                        subtotal = subtotal1,
+                        subtotal = (decimal)subtotal1,
                         promocode = promocode1,
                         points = points1,
                         total = 0 }

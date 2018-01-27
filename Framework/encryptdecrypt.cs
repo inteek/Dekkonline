@@ -44,66 +44,37 @@ namespace Framework
             if (!ctx.Session.IsNewSession)
                 return false;   //Si no es una nueva sesión es que no ha caducado
 
-            HttpCookie objCookie = ctx.Request.Cookies["UserInfo"];
-            //Esto en teoría es imposible que pase porque si hay una 
-            //nueva sesión debería existir la cookie, pero lo compruebo porque
-            //IsNewSession puede dar True sin ser cierto (más en el post)
-            if (objCookie == null)
-                return false;
+            //HttpCookie objCookie = ctx.Request.Cookies["UserInfo"];
+            ////Esto en teoría es imposible que pase porque si hay una 
+            ////nueva sesión debería existir la cookie, pero lo compruebo porque
+            ////IsNewSession puede dar True sin ser cierto (más en el post)
+            //if (objCookie == null)
+            //    return false;
 
-            //Si hay un valor en la cookie es que hay un valor de sesión previo, pero como la sesión 
-            //es nueva no debería estar, por lo que deducimos que la sesión anterior ha caducado
-            if (!string.IsNullOrEmpty(objCookie.Value))
-                return true;
-            else
-                return false;
+            ////Si hay un valor en la cookie es que hay un valor de sesión previo, pero como la sesión 
+            ////es nueva no debería estar, por lo que deducimos que la sesión anterior ha caducado
+            //if (!string.IsNullOrEmpty(objCookie.Value))
+            //    return true;
+            //else
+
+
+            return false;
         }
 
 
-        public string GetSessionIdUser()
-        {
-            HttpContext ctx = HttpContext.Current;
-
-            if (ctx == null && ctx.Session["UserInfo"] != null)
-            {
-                return ctx.Session["UserInfo"].ToString();
-            }
-            else {
-
-                return null;
-            }
-
-        }
 
 
-        public string GetIdUser()
-        {
-            bool a = IsSessionTimedOut();
-            //CREAR COOKIES
-            if (a == false)
-            {
-                if (HttpContext.Current.Response.Cookies["UserInfo"] == null)
-                {
-                    Random rnd = new Random();
-                    int Id = rnd.Next();
-                    var enid = Encriptar(Id.ToString());
 
-                    HttpCookie cookie = new HttpCookie("UserInfo");
-                    cookie["id"] = enid;
-                    cookie.Expires = DateTime.Now.AddYears(1);
-                    HttpContext.Current.Response.Cookies.Add(cookie);
 
-                    return enid;
-                }
-                else {
-                    return HttpContext.Current.Response.Cookies["UserInfo"].ToString();
-                }
-            }
-            else
-            {
-                return GetSessionIdUser();
-            }
-        }
+
+
+
+
 
     }
+
+
+
+
+
 }

@@ -438,6 +438,7 @@
     <Content Include="Scripts\plugins\select2.min.js" />
     <Content Include="Scripts\plugins\summernote.min.js" />
     <Content Include="Scripts\plugins\waves.min.js" />
+    <Content Include="Scripts\Site\Products.js" />
     <Content Include="Scripts\Step2.js" />
     <Content Include="Scripts\vendors.js" />
     <Content Include="Styles\bootstrap-switch.css" />
@@ -521,6 +522,7 @@
     <Compile Include="Models\HeadphonesModel.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

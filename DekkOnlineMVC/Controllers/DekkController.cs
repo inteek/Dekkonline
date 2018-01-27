@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web.Mvc;
 using DekkOnlineMVC.Models;
 using System.Collections.Generic;
+using System.Web;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace DekkOnlineMVC.Controllers
 {
@@ -96,6 +99,27 @@ namespace DekkOnlineMVC.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult AddToCart(int idPro, int quantity)
+        {
+            Framework.ShoppingCart shoppingCart = new Framework.ShoppingCart();
+
+
+            dynamic product = new JObject();
+            product.IdPro = idPro;
+            product.Quantity = quantity;
+
+
+            var idUser = Security.GetIdUser(this);
+
+            product.Success = shoppingCart.AddToCart(idUser, idPro, quantity);
+            
+
+            return Content(JsonConvert.SerializeObject(product), "application/json");
+        }
+
+
+
         private string GetImageCategory(int? idCat) {
             switch (idCat) {
                 case 1:
@@ -110,6 +134,10 @@ namespace DekkOnlineMVC.Controllers
                     return "~/Content/imgs/Summer_red-01.png"; //"about:blank";
             }
         }
+
+
+        
+
 
 
     }
