@@ -57,23 +57,32 @@ namespace Framework
             }
         }
 
-        //DE-8 2
+        //DE-8 2 cambios
         public bool addToPurchaseOrder(string idUser, string products, string carts, decimal totalPrice, string paymentmethod, DateTime orderDate, bool oderStatus, DateTime? deliveredDate, string usedPromo, string comments)
         {
             try
             {
+                string productss = null;
                 using (var db = new dekkOnlineEntities())
                 {
                     var idDelivery = (from d in db.DeliveryType
                                       where (d.IdUser == idUser)
                                       orderby d.IdUser descending
-                                      select d.IdDelivery).FirstOrDefault(); ;
+                                      select d.IdDelivery).FirstOrDefault();
 
+                    var product = db.ShoppingCart.Where(s => s.IdUser == idUser && s.Status == false).ToList();
+
+                    foreach (var item in product)
+                    {
+                        productss += " " + item.proId;
+                    }
+                    productss = productss.Trim();
+                    productss = productss.Replace(" ", ",");
                     if (idDelivery != null)
                     {
                         var addPurchaseOrder = new Entity.PurchaseOrder();
                         addPurchaseOrder.IdUser = idUser;
-                        addPurchaseOrder.Products = products;
+                        addPurchaseOrder.Products = productss;
                         addPurchaseOrder.Shoppingcarts = carts;
                         addPurchaseOrder.TotalPrice = totalPrice;
                         addPurchaseOrder.Paymentmethod = paymentmethod;

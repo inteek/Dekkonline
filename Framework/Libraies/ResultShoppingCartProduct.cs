@@ -17,6 +17,6 @@ namespace Framework.Libraies
         public Nullable<int> proId { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<decimal> totalpriceprod { get; set; }
-
+        public string cartid { get; set; }
     }
 }

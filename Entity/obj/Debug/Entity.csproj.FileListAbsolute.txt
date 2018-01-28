@@ -18,6 +18,17 @@ C:\Dekkonline\Entity\bin\Debug\EntityFramework.SqlServer.xml
 C:\Dekkonline\Entity\obj\Debug\Entity.dll
 C:\Dekkonline\Entity\obj\Debug\Entity.pdb
 C:\Dekkonline\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
+C:\Productos\DekkOnline1\Entity\bin\Debug\Entity.dll.config
+C:\Productos\DekkOnline1\Entity\bin\Debug\Entity.dll
+C:\Productos\DekkOnline1\Entity\bin\Debug\Entity.pdb
+C:\Productos\DekkOnline1\Entity\bin\Debug\EntityFramework.dll
+C:\Productos\DekkOnline1\Entity\bin\Debug\EntityFramework.SqlServer.dll
+C:\Productos\DekkOnline1\Entity\bin\Debug\EntityFramework.xml
+C:\Productos\DekkOnline1\Entity\bin\Debug\EntityFramework.SqlServer.xml
+C:\Productos\DekkOnline1\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
+C:\Productos\DekkOnline1\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
+C:\Productos\DekkOnline1\Entity\obj\Debug\Entity.dll
+C:\Productos\DekkOnline1\Entity\obj\Debug\Entity.pdb
 C:\Productos\DekkOnline\Entity\bin\Debug\Entity.dll.config
 C:\Productos\DekkOnline\Entity\bin\Debug\Entity.dll
 C:\Productos\DekkOnline\Entity\bin\Debug\Entity.pdb

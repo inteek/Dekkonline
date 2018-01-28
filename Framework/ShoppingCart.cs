@@ -51,14 +51,16 @@ namespace Framework
         }
 
         //DELETE FROM CART DE-11 TASK 5
-        public bool DeleteProductFromCart(int idcart)
+        public bool DeleteProductFromCart(string idcart)
         {
+            Framework.encryptdecrypt en = new encryptdecrypt();
             try
             {
+                int id = Convert.ToInt32(en.DesEncriptar(idcart));
                 using (var db = new dekkOnlineEntities())
                 {
                     var addCart = new ShoppingCart();
-                    var d = db.ShoppingCart.Where(x => x.Id == idcart).FirstOrDefault();
+                    var d = db.ShoppingCart.Where(x => x.Id == id).FirstOrDefault();
                     if (d != null)
                     {
                         db.ShoppingCart.Remove(d);
@@ -79,6 +81,55 @@ namespace Framework
             }
         }
 
+        public bool IncreaseProductFromCart(string idcart, int qty)
+        {
+            Framework.encryptdecrypt en = new encryptdecrypt();
+            try
+            {
+                int id = Convert.ToInt32(en.DesEncriptar(idcart));
+                using (var db = new dekkOnlineEntities())
+                {
+                    var d = db.ShoppingCart.Where(x => x.Id == id).FirstOrDefault();
+                    var e = db.products.Where(x => x.proId == d.proId).FirstOrDefault();
+                    if (e.proInventory > qty)
+                    {
+                        if (d != null)
+                        {
+                            d.Price = ((d.Price / d.quantity) * qty);
+                            d.quantity = qty;
+                            db.SaveChanges();
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (d != null)
+                        {
+                            d.Price = ((d.Price / d.quantity) * e.proInventory);
+                            d.quantity = e.proInventory;
+                            db.SaveChanges();
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+
+        }
         //PRODUCTS IN CART DE-11 TASK 1 cambios
         public List<ResultAllCart> ProductsInCart(string User)
         {
@@ -91,7 +142,7 @@ namespace Framework
                 {
                     products = (from pro in db.products
                                 join cart in db.ShoppingCart on pro.proId equals cart.proId
-                                where cart.IdUser.Equals(User)
+                                where cart.IdUser.Equals(User) && cart.Status == false
                                 select new ResultShoppingCartProduct
                                 {
                                    IdUser = cart.IdUser,
@@ -100,7 +151,8 @@ namespace Framework
                                    Name = pro.proName,
                                    Description = pro.proDescription,
                                    quantity = cart.quantity,
-                                   totalpriceprod = cart.Price
+                                   totalpriceprod = cart.Price,
+                                    cartid = cart.Id.ToString()
                                 }).ToList();
 
 
@@ -163,6 +215,7 @@ namespace Framework
             }
 
         }
+
 
         //VALIDATE PROMO CODE DE-11 cambios
         public string ValidatePromoCode(string code, decimal totalprice, string idUser)

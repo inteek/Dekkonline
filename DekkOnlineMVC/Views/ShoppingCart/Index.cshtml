@@ -19,6 +19,7 @@
             <thead>
                 @if (Model != null)
                 {
+
                     <tr>
                         <th style="width:50%">Item</th>
                         <th style="width:8%">QTY</th>
@@ -41,7 +42,7 @@
 
                             <td data-th="Item">
                                 <div class="row">
-                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;"><span class="glyphicon glyphicon-remove"></span></a></div>
+                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" onclick="DelCrt('@item.cartid')" id="@item.cartid"><span class="glyphicon glyphicon-remove"></span></a></div>
                                     <div class="col-sm-2 col-xs-3">
                                         <img src="~/Content/imgs/camarita-01.png" alt="..." style="height:85px;width:85px;" class="img-responsive " />
                                     </div>
@@ -52,7 +53,7 @@
                                 </div>
                             </td>
                             <td data-th="QTY">
-                                <input type="number" class="form-control text-center inputqtywid" min="1" value="@item.quantity">
+                                <input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" onchange="IncrsCart('@item.cartid', this.value)">
                             </td>
                             <td data-th="Price"><strong>@item.totalpriceprod kr</strong></td>
                         </tr>
@@ -117,7 +118,7 @@
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-2 control-label">TOTAL:</label>
                                 <div class="col-md-7 col-xs-2 margininput">
-                                    <label style="margin-top:5px"><strong>@Model.total kr</strong></label>
+                                    <label style="margin-top:5px"><strong>@Model.subtotal kr</strong></label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -185,6 +186,7 @@
 </div>
 
 @Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=1")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

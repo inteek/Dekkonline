@@ -37,6 +37,55 @@ namespace DekkOnlineMVC.Controllers
             
         }
 
+        [HttpPost]
+        public ActionResult DeleteFromCart(string idcart)
+        {
+            try
+            {
+                ShoppingCart sh = new ShoppingCart();
+                var a = sh.DeleteProductFromCart(idcart);
+                if (a == true)
+                {
+                    return Json(new { Success = true });
+                }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult IncreaseProductFromCart(string idcart, int qty)
+        {
+            try
+            {
+                ShoppingCart sh = new ShoppingCart();
+                var a = sh.IncreaseProductFromCart(idcart, qty);
+                if (a == true)
+                {
+                    return Json(new { Success = true });
+                }
+                else
+                {
+                    return Json(new { error = false });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+
         public PartialViewResult Step2()
         {
             return PartialView();
