@@ -890,7 +890,6 @@ C:\Productos\DekkOnline\DekkOnline\bin\es\EntityFramework.SqlServer.resources.dl
 C:\Productos\DekkOnline\DekkOnline\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Productos\DekkOnline\DekkOnline\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
 C:\Productos\DekkOnline\DekkOnline\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-C:\Productos\DekkOnline\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
 C:\Productos\DekkOnline\DekkOnline\obj\Debug\DekkOnline.csproj.CoreCompileInputs.cache
 C:\Productos\DekkOnline\DekkOnline\obj\Debug\DekkOnline.dll
 C:\Productos\DekkOnline\DekkOnline\obj\Debug\DekkOnline.pdb
