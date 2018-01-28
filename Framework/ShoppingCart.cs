@@ -90,34 +90,45 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     var d = db.ShoppingCart.Where(x => x.Id == id).FirstOrDefault();
-                    var e = db.products.Where(x => x.proId == d.proId).FirstOrDefault();
-                    if (e.proInventory > qty)
+                    //var e = db.products.Where(x => x.proId == d.proId).FirstOrDefault();
+                    //if (e.proInventory > qty)
+                    //{
+                    //    if (d != null)
+                    //    {
+                    //        d.Price = ((d.Price / d.quantity) * qty);
+                    //        d.quantity = qty;
+                    //        db.SaveChanges();
+                    //        return true;
+                    //    }
+                    //    else
+                    //    {
+                    //        return false;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (d != null)
+                    //    {
+                    //        d.Price = ((d.Price / d.quantity) * e.proInventory);
+                    //        d.quantity = e.proInventory;
+                    //        db.SaveChanges();
+                    //        return true;
+                    //    }
+                    //    else
+                    //    {
+                    //        return false;
+                    //    }
+                    //}
+                    if (d != null)
                     {
-                        if (d != null)
-                        {
-                            d.Price = ((d.Price / d.quantity) * qty);
-                            d.quantity = qty;
-                            db.SaveChanges();
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
+                        d.Price = ((d.Price / d.quantity) * qty);
+                        d.quantity = qty;
+                        db.SaveChanges();
+                        return true;
                     }
                     else
                     {
-                        if (d != null)
-                        {
-                            d.Price = ((d.Price / d.quantity) * e.proInventory);
-                            d.quantity = e.proInventory;
-                            db.SaveChanges();
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
+                        return false;
                     }
 
                 }
@@ -140,6 +151,7 @@ namespace Framework
 
                 using (var db = new dekkOnlineEntities())
                 {
+                    Framework.encryptdecrypt en = new encryptdecrypt();
                     products = (from pro in db.products
                                 join cart in db.ShoppingCart on pro.proId equals cart.proId
                                 where cart.IdUser.Equals(User) && cart.Status == false
@@ -152,7 +164,7 @@ namespace Framework
                                    Description = pro.proDescription,
                                    quantity = cart.quantity,
                                    totalpriceprod = cart.Price,
-                                    cartid = cart.Id.ToString()
+                                    cartid =cart.Id.ToString()
                                 }).ToList();
 
 
@@ -163,12 +175,13 @@ namespace Framework
                     decimal? subtotal1 = products.Select(p => p.totalpriceprod).Sum();
                     subtotal1 = subtotal1 == null ? 00M : subtotal1;
 
-                    //foreach (var item in products)
-                    //{
-                    //    subtotal1 += Convert.ToDecimal(item.totalpriceprod);
-                    //}
+                    foreach (var item in products)
+                    {
+                        //subtotal1 += Convert.ToDecimal(item.totalpriceprod);
+                        item.cartid = en.Encriptar(item.cartid);
+                    }
 
-                     allcart = new List<ResultAllCart> {
+                    allcart = new List<ResultAllCart> {
                         new ResultAllCart{
                         cart = products,
                         subtotal = (decimal)subtotal1,

@@ -24,7 +24,7 @@ function IncrsCart(id, qty1) {
         qty: qty1
     };
     $(".qtyprodcart").attr('disabled', 'disabled');
-    conectarAsy(":/IncreaseProductFromCart", data, function (result) {
+    conectarAsy("IncreaseProductFromCart", data, function (result) {
         if (result.Success) {
             window.location.reload();
         }
