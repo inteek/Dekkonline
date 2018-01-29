@@ -358,10 +358,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 <script>
-    function searchTyres() {
-        var cat = cmbCategory.GetText();
-        //window.location.href = "/Search?"+cat;
-    }
+
 
     function initPage() {
 
@@ -379,14 +376,20 @@
 
     function searchTyres() {
         var w = cmbWidth.GetText();
-        if (w == "") w = "000";
+        if (w == "") w = null;
         var p = cmbProfile.GetText();
-        if (p == "") p = "00";
+        if (p == "") p = null;
+        var d = cmbDiameter.GetText();
+        if (d == "") d = null;
 
-        var size = w + p + cmbDiameter.GetText();
-        var type = cmbCategory.GetText();
+        //var size = w + p + d;
+        var type = cmbCategory.GetValue();
 
-        window.location.href = "/Tyres/" + type + "/" + size;
+        // public ActionResult Products(int? sizeWidth, int? profile, int? sizeDiameter, int? idCategory, Guid? idBrand, bool? isCardView, ProductsCardsSortMode? sortMode)
+
+        window.location.href = "/Dekk/ProductsFilters?sizeWidth=" + w + "&profile=" + p + "&sizeDiameter=" + d + "&idCategory=" + type;
+
+      
     }
 
 

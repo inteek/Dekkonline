@@ -24,13 +24,30 @@ namespace DekkOnlineMVC.Controllers
             ViewBag.SortMode = ProductsCardsSortMode.LowestHighest;
 
 
-            var resultModel = GetProducts(null, null, null, null, null, true, ProductsCardsSortMode.LowestHighest);
+            var resultModel = GetProducts(null, null, null, null, null, false, ProductsCardsSortMode.LowestHighest);
 
             resultModel = resultModel.OrderBy(c => c.Price).ToList();
 
 
 
             return View(resultModel);
+        }
+
+        public ActionResult ProductsFilters(int? sizeWidth, int? profile, int? sizeDiameter, int? idCategory, Guid? idBrand, bool? isCardView, ProductsCardsSortMode? sortMode)
+        {
+            GetFilters();
+
+            ViewBag.IsCardView = false;
+            ViewBag.SortMode = ProductsCardsSortMode.LowestHighest;
+
+
+            var resultModel = GetProducts(sizeWidth, profile, sizeDiameter, idCategory, idBrand, false, ProductsCardsSortMode.LowestHighest);
+
+            resultModel = resultModel.OrderBy(c => c.Price).ToList();
+
+
+
+            return View("Products", resultModel);
         }
 
         public ActionResult ProductsPartial(int? sizeWidth, int? profile, int? sizeDiameter, int? idCategory, Guid? idBrand, bool? isCardView, ProductsCardsSortMode? sortMode)

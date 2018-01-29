@@ -151,7 +151,8 @@
          ).BindList(ViewData["BagBrands"]).GetHtml()
                 </div>
                 <div class="col-md-3">
-                    <span class="sTitle">PRICE:</span><br />
+                   <span class="sTitle">PRICE:</span><br />
+
                     @*<dx:ASPxComboBox runat="server" ID="cmbPrice" ClientInstanceName="cmbPrice" CssClass="BoxGeneral" Border-BorderStyle="None">
                 <DropDownButton ImagePosition="Bottom">
                     <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
@@ -163,7 +164,7 @@
                 <ClientSideEvents ValueChanged="loadProducts" />
             </dx:ASPxComboBox>*@
 
-                    <div class="left" style="width:64%">
+                    <div  style="display:block; float:left; width:60%" >
                         @*<select id="cmbPrice" Class="BoxGeneral" style="width:100%">
                             <option value="0">lowest - highest</option>
                             <option value="1">highest - lowest</option>
@@ -190,37 +191,46 @@
 
          }
      ).GetHtml()
+
+
+
+
                         </div>
 
-                        <div class="right">
-                            @Html.DevExpress().Button(
- settings =>
- {
-     settings.Name = "btnListView";
-     settings.EnableTheming = false;
-     settings.Text = "";
-     settings.AllowFocus = false;
-     settings.Height = Unit.Pixel(30);
-     settings.ImagePosition = ImagePosition.Right;
-     settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/list-view.png");
-     settings.Images.Image.Height = 16;
-     settings.Images.Image.Width = 16;
- }).GetHtml()
-                            @Html.DevExpress().Button(
- settings =>
- {
-     settings.Name = "btnGridView";
-     settings.EnableTheming = false;
-     settings.Text = "";
-     settings.AllowFocus = false;
-     settings.ImagePosition = ImagePosition.Right;
-     settings.Height = Unit.Pixel(30);
-     //settings.Styles.Style.PressedStyle.CssClass = "icqPressed";
-     settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/grid-view.png");
-     settings.Images.Image.Height = 16;
-     settings.Images.Image.Width = 16;
- }).GetHtml()
+
+                    <div  style="display:block; float:right; width:40%; margin-right:-17px">
+
+                        @Html.DevExpress().Button(
+                         settings =>
+                         {
+                             settings.Name = "btnListView";
+                             settings.EnableTheming = false;
+                             settings.Text = "";
+                             settings.AllowFocus = false;
+                             settings.Height = Unit.Pixel(30);
+                             settings.ImagePosition = ImagePosition.Right;
+                             settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/list-view.png");
+                             settings.Images.Image.Height = 16;
+                             settings.Images.Image.Width = 16;
+                         }).GetHtml()
+                                                @Html.DevExpress().Button(
+                         settings =>
+                         {
+                             settings.Name = "btnGridView";
+                             settings.EnableTheming = false;
+                             settings.Text = "";
+                             settings.AllowFocus = false;
+                             settings.ImagePosition = ImagePosition.Right;
+                             settings.Height = Unit.Pixel(30);
+                             //settings.Styles.Style.PressedStyle.CssClass = "icqPressed";
+                             settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/grid-view.png");
+                             settings.Images.Image.Height = 16;
+                             settings.Images.Image.Width = 16;
+                         }).GetHtml()
+
                         </div>
+
+
 
                     </div>
 
@@ -229,7 +239,7 @@
                 <br />
                 <br />
                 <br />
-                <br />
+
 
                 <style type="text/css">
                     .cardViewProducts {
