@@ -7,6 +7,8 @@ $(document).ready(function () {
     $(".time").prop('disabled', true);
     $(".comments").prop('disabled', true);
 
+    $("#comboPerson").attr('checked', true);
+    $("#nearestWoekshop").attr('checked', true);
 });
 
 $("#comboPerson").click(function () {
@@ -38,6 +40,11 @@ $("#myplace").click(function () {
     $(".myPlace").show();
 });
 
+$("#LoginIn").click(function () {
+    $('#modalLogin').modal('show');
+});
+
+
 
 
 function habilitarInput() {
@@ -53,3 +60,4 @@ function DeshabilitarInput() {
     $(".time").prop('disabled', true);
     $(".comments").prop('disabled', true);
 }
+

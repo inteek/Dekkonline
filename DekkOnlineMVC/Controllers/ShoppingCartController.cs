@@ -86,10 +86,28 @@ namespace DekkOnlineMVC.Controllers
         }
 
 
-        public PartialViewResult Step2()
+        public ActionResult Step2()
         {
-            return PartialView();
+            Workshop workshop = new Workshop();
+            var work = (dynamic)null;
+
+            try
+            {
+                work = workshop.loadWorkshopAddress(1100);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return View(work);
         }
+
+        //public PartialViewResult Step2()
+        //{
+        //    return PartialView();
+        //}
 
         public PartialViewResult Step3()
         {
@@ -101,9 +119,48 @@ namespace DekkOnlineMVC.Controllers
             return PartialView();
         }
 
+        [HttpPost]
+        public JsonResult Validate(string user, string pass)
+        {
+            Users classUser = new Users();
+            var result = classUser.dataUser(user, pass);
+
+            if (result != null && result.Count != 0)
+            {
+                return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Step2", "ShoppingCart"), resultado = result });
+            }
+            else
+            {
+                return Json(new { error = true, noError = 0, msg = "Usuario y/o contraseña no validos", page = "" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult NewUser(string idUser, string firstName, string lastName, string address, string email, string phone, int zipCode, string latitude, string length)
+        {
+            Users users = new Users();
+
+            users.addNetUser(email);
+
+            users.addToUserAddress(idUser, firstName, lastName, address, phone, zipCode, latitude, length);
+
+            //Cookies
+            encryptdecrypt en = new encryptdecrypt();
+            var cookie = Request.QueryString["UserInfo"];
+            var descookie = en.DesEncriptar(cookie);
 
 
 
+            //if (result != null && result.Count != 0)
+            //{
+            //    return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Step2", "ShoppingCart"), resultado = result });
+            //}
+            //else
+            //{
+            //    return Json(new { error = true, noError = 0, msg = "Usuario y/o contraseña no validos", page = "" });
+            //}
+            return Json(new { error = true });
+        }
 
 
 	}

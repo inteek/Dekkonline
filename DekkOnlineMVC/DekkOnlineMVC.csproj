@@ -330,6 +330,9 @@
     <Content Include="Content\t1.jpg" />
     <Content Include="Content\t2.jpg" />
     <Content Include="Content\t3.jpg" />
+    <Content Include="Content\WorkShop\t1.jpg" />
+    <Content Include="Content\WorkShop\t2.jpg" />
+    <Content Include="Content\WorkShop\t3.jpg" />
     <Content Include="fonts\170712093714.jpg" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -447,6 +450,7 @@
     <Content Include="Scripts\connectAsy.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\Login.js" />
+    <Content Include="Scripts\Map.js" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker.min.js" />
     <Content Include="Scripts\plugins\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\plugins\bootstrap-rating.min.js" />

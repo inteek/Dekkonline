@@ -43,3 +43,15 @@ C:\Productos\dekkonline\Framework\obj\Debug\Framework.csprojResolveAssemblyRefer
 C:\Productos\dekkonline\Framework\obj\Debug\Framework.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline\Framework\obj\Debug\Framework.dll
 C:\Productos\dekkonline\Framework\obj\Debug\Framework.pdb
+C:\DekkonlineNueva\Framework\bin\Debug\Framework.dll.config
+C:\DekkonlineNueva\Framework\bin\Debug\Framework.dll
+C:\DekkonlineNueva\Framework\bin\Debug\Framework.pdb
+C:\DekkonlineNueva\Framework\bin\Debug\Entity.dll
+C:\DekkonlineNueva\Framework\bin\Debug\EntityFramework.dll
+C:\DekkonlineNueva\Framework\bin\Debug\EntityFramework.SqlServer.dll
+C:\DekkonlineNueva\Framework\bin\Debug\Entity.pdb
+C:\DekkonlineNueva\Framework\bin\Debug\EntityFramework.xml
+C:\DekkonlineNueva\Framework\bin\Debug\EntityFramework.SqlServer.xml
+C:\DekkonlineNueva\Framework\obj\Debug\Framework.csprojResolveAssemblyReference.cache
+C:\DekkonlineNueva\Framework\obj\Debug\Framework.dll
+C:\DekkonlineNueva\Framework\obj\Debug\Framework.pdb

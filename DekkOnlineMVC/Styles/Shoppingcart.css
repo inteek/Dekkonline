@@ -254,6 +254,15 @@
     margin-right: -30px;
 }
 
+.mapaLeft{
+    margin-left: -75px;
+}
+
+.widthMapa{
+    width: 100%; 
+    height: 350px;
+}
+
 @media screen and (max-width:1200px) {
     .imgwidth1 {
         margin-left: 2px;

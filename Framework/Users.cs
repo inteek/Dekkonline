@@ -172,5 +172,27 @@ namespace Framework
             }
             return valUser;
         }
+
+        public bool addNetUser(string email)
+        {
+            return true;
+        }
+
+        public string CreateRandomPassword(int PasswordLength)
+        {
+            string _allowedChars = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@$?";
+            Byte[] randomBytes = new Byte[PasswordLength];
+            char[] chars = new char[PasswordLength];
+            int allowedCharCount = _allowedChars.Length;
+
+            for (int i = 0; i < PasswordLength; i++)
+            {
+                Random randomObj = new Random();
+                randomObj.NextBytes(randomBytes);
+                chars[i] = _allowedChars[(int)randomBytes[i] % allowedCharCount];
+            }
+
+            return new string(chars);
+        } 
     }
 }

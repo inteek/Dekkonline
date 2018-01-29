@@ -1,4 +1,7 @@
 ﻿@using System.Web.Optimization;
+
+@model IEnumerable<Framework.Libraies.ResultWorkshop>
+
 @{
 
     ViewBag.Title = "Step2";
@@ -6,8 +9,18 @@
 }
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX6wD6FcmE4ZEFB2gEVka9qNkdsA4eqeg"></script>
+
 @Styles.Render("~/Styles/Dimension.css?v=4")
-@Styles.Render("~/Styles/Shoppingcart.css?v=2")
+@Styles.Render("~/Styles/Shoppingcart.css?v=5")
+
 
 <style>
     /* Always set the map height explicitly to define the size of the div
@@ -35,7 +48,7 @@
     <div style="margin-left:20px;">
         <div class="row">
             <div class="col-lg-12" style="text-align:center;">
-                <h3 class="text1"> Are you a Dekkonline member? Log in</h3>
+                <h3 class="text1 LoginIn" id="LoginIn" style="cursor:pointer;"> Are you a Dekkonline member? Log in</h3>
             </div>
         </div>
         <div class="widthleft">
@@ -61,12 +74,11 @@
                             </div>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-lg-5 rowInfoPer">
-                    <label style="color: #2980B9; font-size: 18px; margin-bottom: 20px; cursor:pointer; " class="account" id="account"> I already have an account</label><br />
                     <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; cursor:pointer;" class="InfoPersonal" id="InfoPersonal"><strong>Personal Information</strong></label>
                     <div class="PersonalInformation">
                         <form class="form-horizontal rowInfoPer2" role="form">
@@ -74,6 +86,12 @@
                                 <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
                                 <div class="col-lg-2 col-xs-6">
                                     <input type="text" class="form-control borderInput" id="zipcode" placeholder="">
+                                    @*@Html.DevExpress().TextBox(settings =>
+                                        {
+                                            settings.Name = "txtZipCode";
+                                            settings.Width = Unit.Pixel(70);
+                                            settings.ControlStyle.CssClass = "form-control borderInput";
+                                        }).GetHtml()*@
                                 </div>
                             </div>
                             <div class="form-group">
@@ -91,7 +109,7 @@
                             <div class="form-group">
                                 <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
                                 <div class="col-lg-6 col-xs-6">
-                                    <input type="text" class="form-control borderInput" id="address" placeholder="">
+                                    <input type="text" class="form-control borderInput address" id="address" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -132,27 +150,6 @@
                             </div>
                         </form>
                     </div>
-                    <div class="Login" style="display:none">
-                        <form class="form-horizontal rowInfoPer2" role="form">
-                            <div class="form-group">
-                                <label for="User" class="col-lg-3 col-xs-4 control-label textoAzul">User</label>
-                                <div class="col-lg-6 col-xs-6">
-                                    <input type="email" class="form-control borderInput" id="user" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Passowrod" class="col-lg-3 col-xs-4 control-label textoAzul">Passowrod</label>
-                                <div class="col-lg-6 col-xs-6">
-                                    <input type="password" class="form-control borderInput Passowrod" id="Passowrod" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-6 col-xs-6 btnLogin" style="float: right;">
-                                    <button class="btn btn-primary btn-md">Login In</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>                   
                 </div>
                 <div class="col-lg-7 alinearWork workshopDisplay">
                     <div class="row">
@@ -177,53 +174,98 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>                       
+                        </div>
                     </div>
                     <br />
                     <div class="widthleftresponse">
-                        <div class="row blanco rowcat">
-                            <div class="col-lg-2 col-xs-3">
-                                <img src="~/Content/t1.jpg" style="width:110px; height:105px;" />
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div class="row blanco rowcat">
+                                    <div class="col-lg-2 col-xs-3">
+                                        <img src="~/Content/WorkShop/t1.jpg" style="width:110px; height:105px;" />
+                                    </div>
+                                    <div class="col-lg-5 col-xs-8 catalago">
+                                        <h4 style="color: #2471A3; "><strong>@item.Name</strong></h4>
+                                        <p>@item.Address</p>
+                                        <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                    </div>
+                                    <div class="col-lg-2 catHiden">
+                                        <h3><strong>60 kr</strong></h3>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @*<div class="row blanco rowcat">
+                                <div class="col-lg-2 col-xs-3">
+                                    <img src="~/Content/t1.jpg" style="width:110px; height:105px;" />
+                                </div>
+                                <div class="col-lg-5 col-xs-8 catalago">
+                                    <h4 style="color: #2471A3; "><strong>Big Motors Shop</strong></h4>
+                                    <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                    <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                </div>
+                                <div class="col-lg-2 catHiden">
+                                    <h3><strong>60 kr</strong></h3>
+                                </div>
                             </div>
-                            <div class="col-lg-5 col-xs-8 catalago">
-                                <h4 style="color: #2471A3; "><strong>Big Motors Shop</strong></h4>
-                                <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
-                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                            <div class="row blanco rowcat">
+                                <div class="col-lg-2 col-xs-3">
+                                    <img src="~/Content/t2.jpg" style="width:110px; height:105px;" />
+                                </div>
+                                <div class="col-lg-5 col-xs-8 catalago">
+                                    <h4 style="color: #2471A3; "><strong>Big Red Shop</strong></h4>
+                                    <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                    <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                </div>
+                                <div class="col-lg-2 catHiden">
+                                    <h3><strong>80 kr</strong></h3>
+                                </div>
                             </div>
-                            <div class="col-lg-2 catHiden">
-                                <h3><strong>60 kr</strong></h3>
-                            </div>
+                            <div class="row blanco rowcat">
+                                <div class="col-lg-2 col-xs-3">
+                                    <img src="~/Content/t3.jpg" style="width:110px; height:105px;" />
+                                </div>
+                                <div class="col-lg-5 col-xs-8 catalago">
+                                    <h4 style="color: #2471A3; "><strong>Elite Shop</strong></h4>
+                                    <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                    <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                </div>
+                                <div class="col-lg-2 catHiden">
+                                    <h3><strong>60 kr</strong></h3>
+                                </div>
+                            </div>*@
+                    </div>
+
+                    <div class="row" style="margin-top:20px; margin-left:100px;">
+                        <div class="col-lg-6">
+
                         </div>
-                        <div class="row blanco rowcat">
-                            <div class="col-lg-2 col-xs-3">
-                                <img src="~/Content/t2.jpg" style="width:110px; height:105px;" />
-                            </div>
-                            <div class="col-lg-5 col-xs-8 catalago">
-                                <h4 style="color: #2471A3; "><strong>Big Red Shop</strong></h4>
-                                <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
-                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
-                            </div>
-                            <div class="col-lg-2 catHiden">
-                                <h3><strong>80 kr</strong></h3>
-                            </div>
+                        <div class="col-lg-6">
+                            <button class="btn btn-default btn-lg">NEXT</button>
                         </div>
-                        <div class="row blanco rowcat">
-                            <div class="col-lg-2 col-xs-3">
-                                <img src="~/Content/t3.jpg" style="width:110px; height:105px;" />
-                            </div>
-                            <div class="col-lg-5 col-xs-8 catalago">
-                                <h4 style="color: #2471A3; "><strong>Elite Shop</strong></h4>
-                                <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
-                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
-                            </div>
-                            <div class="col-lg-2 catHiden">
-                                <h3><strong>60 kr</strong></h3>
-                            </div>
-                        </div>
-                    </div>                   
+                    </div>
                 </div>
-                <div class="col-lg-7 myPlace" style="display:none;">
-                    <div id="map"></div>
+                <div class="col-lg-7 myPlace mapaLeft" style="display:none;">
+                    <form>
+                        <div class="form-group input-group">
+                            <input type="text" id="search_location" class="form-control" placeholder="Search location">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default get_map" type="submit">
+                                    Locate
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- display google map -->
+                    <div class="widthMapa" id="geomap"></div>
+
+                    <h4>Location Details</h4>
+                    <p>Address: <input type="text" class="search_addr" size="45"></p>
+                    <p>Latitude: <input type="text" class="search_latitude" size="30"></p>
+                    <p>Longitude: <input type="text" class="search_longitude" size="30"></p>
 
                 </div>
             </div>
@@ -231,57 +273,135 @@
     </div>
 </div>
 
-<script>
-    // Note: This example requires that you consent to location sharing when
-    // prompted by your browser. If you see the error "The Geolocation service
-    // failed.", it means you probably did not give permission for the browser to
-    // locate you.
 
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 6
-        });
-        var infoWindow = new google.maps.InfoWindow({ map: map });
+<div id="modalLogin" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div style="margin-right:10px; margin-top:5px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12 loginLogo">
+            </div>
+            <div class="clearfix"></div>
+            <div class="loginContain">
+                <div class="col-md-6">
+                    <div class="modalLoginLt">
+                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+                        <div class="clearfix"></div>
+                        <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+                            <p class="text-danger">
+                                <asp:Label runat="server" ID="lblFailureText" ClientIDMode="Static" />
+                            </p>
+                        </asp:PlaceHolder>
 
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
+                        <div class="clearfix"></div>
+                        @*<asp:TextBox runat="server" ID="Email" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />*@
+                        <input type="email" id="Email" class="txtLogin txtUser" />
+                        @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." ValidationGroup="Login" />*@
+                        <div class="clearfix"></div>
+                        <br />
 
-                infoWindow.setPosition(pos);
-                infoWindow.setContent('Location found.');
-                map.setCenter(pos);
-            }, function () {
-                handleLocationError(true, infoWindow, map.getCenter());
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-        }
-    }
 
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-    }
-</script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-</script>
+                        @*<asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />*@
+                        <input type="password" id="Password" class="txtLogin txtPass" />
+                        @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." ValidationGroup="Login" />*@
+                        <div class="clearfix"></div>
+                        <br />
+
+                        @*<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />*@
+                        <button id="btnLogin2" class="loginBtn">Log in</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="modalLoginRt">
+                        <h4>REGISTER:</h4>
+                        <div class="clearfix"></div>
+                        <asp:PlaceHolder runat="server" ID="NewErrorMessage" Visible="false">
+                            <p class="text-danger">
+                                <asp:Label runat="server" ID="lblNewFailureText" ClientIDMode="Static"></asp:Label>
+                            </p>
+                        </asp:PlaceHolder>
+
+                        <asp:validationsummary runat="server" cssclass="text-danger" />
+
+
+                        @*<asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" />*@
+                        <input type="email" id="NewEmail" class="txtLogin txtUser" />
+
+                        <div class="clearfix"></div>
+                        <br />
+
+                        @*<asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" />*@
+                        <input type="password" id="NewPassword" class="txtLogin txtPass" />
+
+                        <div class="clearfix"></div>
+                        <br />
+
+                        @*<asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="loginBtn" ValidationGroup="Create" />*@
+                        <button id="btnCreateUser" onclick="CreateUser_Click" class="loginBtn">Sign Up</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="hidden">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <asp:CheckBox runat="server" ID="RememberMe" />
+                        <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+
+            <div class="BoxGeneral text-center">
+                <h4>LOG IN FASTER</h4>
+                <div class="clearfix"></div>
+                <section id="socialLoginForm">
+                    <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                </section>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=2")
+@Scripts.Render("~/Scripts/Step2.js?v=7")
+@Scripts.Render("~/Scripts/Map.js?v=4")
+@Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
+@Scripts.Render("~/Scripts/Login.js?v=7")
+@Scripts.Render("~/Scripts/connectAsy.js?v=1")
 
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");
         $("#mainContainDiv").attr("class", "prMainContentSub");
     });
+</script>
+
+
+<script>
+    function initPage() {
+
+        //txtZipCode.SetText(cZipCode);
+        getLocation();
+        showAdvanced();
+    }
+
+    function showAdvanced() {
+        $(".advancedSearch").toggle();
+        $("#advancedIcon").toggleClass("moreIcon");
+        $("#advancedIcon").toggleClass("lessIcon");
+    }
 </script>
