@@ -333,6 +333,7 @@
     <Content Include="Content\WorkShop\t1.jpg" />
     <Content Include="Content\WorkShop\t2.jpg" />
     <Content Include="Content\WorkShop\t3.jpg" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\170712093714.jpg" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -589,7 +590,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56407</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63150/</IISUrl>
+          <IISUrl>http://localhost:63154/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -48,7 +48,7 @@
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
 
               settings.ClientEnabled = true;
-              settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+              //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
           }
       ).BindList(ViewData["BagCategories"]).GetHtml()
 
@@ -76,7 +76,7 @@
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
 
               settings.ClientEnabled = true;
-              settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+              //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
           }
 ).BindList(ViewData["BagWidth"]).GetHtml()
                 </div>
@@ -104,7 +104,7 @@
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
 
               settings.ClientEnabled = true;
-              settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+              //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
           }
 ).BindList(ViewData["BagProfile"]).GetHtml()
                 </div>
@@ -130,7 +130,7 @@
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
 
               settings.ClientEnabled = true;
-              settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+              //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
           }
 ).BindList(ViewData["BagDiameter"]).GetHtml()
 
@@ -365,8 +365,9 @@
 
     function initPage() {
 
-        //txtZipCode.SetText(cZipCode);
+        debugger
         getLocation();
+        txtZipCode.SetText(zip);
         showAdvanced();
     }
 

@@ -818,7 +818,6 @@ C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.XtraPrinting.v16.1.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.XtraBars.v16.1.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.XtraTreeList.v16.1.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Framework.pdb
-C:\Productos\dekkonline\DekkOnlineMVC\bin\Framework.dll.config
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Antlr3.Runtime.pdb
 C:\Productos\dekkonline\DekkOnlineMVC\bin\EntityFramework.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\EntityFramework.SqlServer.xml
@@ -863,7 +862,6 @@ C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.XtraReports.v16.1.Web.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.Web.ASPxTreeList.v16.1.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\WebMatrix.Data.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Entity.pdb
-C:\Productos\dekkonline\DekkOnlineMVC\bin\Entity.dll.config
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.Office.v16.1.Core.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.Pdf.v16.1.Core.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.Pdf.v16.1.Drawing.xml
@@ -1021,7 +1019,6 @@ C:\Productos\dekkonline\DekkOnlineMVC\bin\es\DevExpress.XtraTreeList.v16.1.resou
 C:\Productos\dekkonline\DekkOnlineMVC\bin\ja\DevExpress.XtraTreeList.v16.1.resources.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\ru\DevExpress.XtraTreeList.v16.1.resources.dll
 C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csprojResolveAssemblyReference.cache
-C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.dll
 C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.pdb
 C:\DekkonlineNueva\DekkOnlineMVC\bin\Microsoft.AspNet.Identity.Core.dll

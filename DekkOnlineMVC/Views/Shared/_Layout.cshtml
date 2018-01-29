@@ -9,29 +9,18 @@
     <title>DekkOnline</title>
 
 
-    @Styles.Render("~/Styles/bootstrap.min.css")
+    @Styles.Render("~/Styles/bootstrap.css")
         @Styles.Render("~/Styles/Site.css?V=9")
-        @Styles.Render("~/Styles/plugins/notyf.min.css")
 
     <!-- Icons -->
     @Styles.Render("~/fonts/ionicons/css/ionicons.min.css")
 
 
-    <!-- Fonts -->
-    @Styles.Render("~/fonts/font-awesome/css/font-awesome.min.css")
+    @*<link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/Content/imgs/mbfavicon.ico")" />*@
 
+    
 
-    <!-- Plugins -->
-    @*@Styles.Render("~/styles/plugins")*@
-    @Styles.Render("~/Styles/plugins/c3.css")
-    @Styles.Render("~/Styles/plugins/waves.css")
-    @Styles.Render("~/Styles/plugins/perfect-scrollbar.css")
-    @Styles.Render("~/Styles/plugins/fullcalendar.css")
-
-
-    <!-- Css/Less Stylesheets -->
-    @Styles.Render("~/Styles/main.min.css")
-
+   
 
     @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -83,6 +72,7 @@ new Script { ExtensionSuite = ExtensionSuite.DashboardDesigner },
 new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
         )
 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3pN4K2y47Ta_rkII0WsPOFvCUut8u98w" type="text/javascript"></script>
 
 
 </head>
@@ -182,104 +172,111 @@ new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
         </div>
 
 
-            <div id="modalLogin" class="modal fade modalLogin" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="clearfix"></div>
-                        <div class="spacer20"></div>
-                        <div class="clearfix"></div>
-                        <div class="col-xs-12 loginLogo">
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="loginContain">
-                            <div class="col-md-6">
-                                <div class="modalLoginLt">
-                                    <h4>ALREADY A DEKKONLINE MEMBER:</h4>
-                                    <div class="clearfix"></div>
-                                    <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+
+
+    <div id="modalLogin" class="modal fade modalLogin" data-backdrop="true" style="z-index:9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 loginLogo">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="loginContain">
+                        <div class="col-md-6">
+                            <div class="modalLoginLt">
+                                <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+                                <div class="clearfix"></div>
+                                @*<asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
                                         <p class="text-danger">
                                             <asp:Label runat="server" ID="lblFailureText" ClientIDMode="Static" />
                                         </p>
-                                    </asp:PlaceHolder>
+                                    </asp:PlaceHolder>*@
 
-                                    <div class="clearfix"></div>
-                                    @*<asp:TextBox runat="server" ID="Email" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />*@
-                                    <input type="email" id="Email" class="txtLogin txtUser" />
-                                    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." ValidationGroup="Login" />*@
-                                    <div class="clearfix"></div>
-                                    <br />
+                                <div class="clearfix"></div>
+                                @*<asp:TextBox runat="server" ID="Email" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />*@
+                                <input type="email" id="Email" class="txtLogin txtUser" />
+                                @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." ValidationGroup="Login" />*@
+                                <div class="clearfix"></div>
+                                <br />
 
 
-                                    @*<asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />*@
-                                    <input type="password" id="Password" class="txtLogin txtPass" />
-                                    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." ValidationGroup="Login" />*@
-                                    <div class="clearfix"></div>
-                                    <br />
+                                @*<asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />*@
+                                <input type="password" id="Password" class="txtLogin txtPass" />
+                                @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." ValidationGroup="Login" />*@
+                                <div class="clearfix"></div>
+                                <br />
 
-                                    @*<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />*@
-                                    <button id="btnLogin" Class="loginBtn">Log in</button>
-                                </div>
+                                @*<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />*@
+                                <button id="btnLogin" Class="loginBtn">Log in</button>
                             </div>
-                            <div class="col-md-6">
-                                <div class="modalLoginRt">
-                                    <h4>REGISTER:</h4>
-                                    <div class="clearfix"></div>
-                                    <asp:PlaceHolder runat="server" ID="NewErrorMessage" Visible="false">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="modalLoginRt">
+                                <h4>REGISTER:</h4>
+                                <div class="clearfix"></div>
+                                @*<asp:PlaceHolder runat="server" ID="NewErrorMessage" Visible="false">
                                         <p class="text-danger">
                                             <asp:Label runat="server" ID="lblNewFailureText" ClientIDMode="Static"></asp:Label>
                                         </p>
-                                    </asp:PlaceHolder>
+                                    </asp:PlaceHolder>*@
 
-                                    <asp:ValidationSummary runat="server" CssClass="text-danger" />
+                                @*<asp:ValidationSummary runat="server" CssClass="text-danger" />*@
 
 
-                                    @*<asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" />*@
-                                    <input type="email" id="NewEmail" class="txtLogin txtUser" />
-                                    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="NewEmail" ValidationGroup="Create"
-                                        CssClass="text-danger" ErrorMessage="The email field is required." />*@
-                                    <div class="clearfix"></div>
-                                    <br />
+                                @*<asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" />*@
+                                <input type="email" id="NewEmail" class="txtLogin txtUser" />
+                                @*<asp:RequiredFieldValidator runat="server" ControlToValidate="NewEmail" ValidationGroup="Create"
+                                    CssClass="text-danger" ErrorMessage="The email field is required." />*@
+                                <div class="clearfix"></div>
+                                <br />
 
-                                    @*<asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" />*@
-                                    <input type="password" id="NewPassword" class="txtLogin txtPass" />
-                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword" ValidationGroup="Create"
-                                                                CssClass="text-danger" ErrorMessage="The password field is required." />
-                                    <div class="clearfix"></div>
-                                    <br />
+                                @*<asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" />*@
+                                <input type="password" id="NewPassword" class="txtLogin txtPass" />
+                                @*<asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword" ValidationGroup="Create"
+                                    CssClass="text-danger" ErrorMessage="The password field is required." />*@
+                                <div class="clearfix"></div>
+                                <br />
 
-                                    @*<asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="loginBtn" ValidationGroup="Create" />*@
-                                    <button id="btnCreateUser" onclick="CreateUser_Click" Class="loginBtn">Sign Up</button>
-                                </div>
-
+                                @*<asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="loginBtn" ValidationGroup="Create" />*@
+                                <button id="btnCreateUser" onclick="CreateUser_Click" Class="loginBtn">Sign Up</button>
                             </div>
-                        </div>
-                        <div class="hidden">
-                            <div class="col-md-offset-2 col-md-10">
-                                <div class="checkbox">
-                                    <asp:CheckBox runat="server" ID="RememberMe" />
-                                    <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="clearfix"></div>
-                        <div class="spacer20"></div>
-                        <div class="clearfix"></div>
-
-                        <div class="BoxGeneral text-center">
-                            <h4>LOG IN FASTER</h4>
-                            <div class="clearfix"></div>
-                            <section id="socialLoginForm">
-                                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                            </section>
                         </div>
-
-                        <div class="clearfix"></div>
-                        <div class="spacer20"></div>
-                        <div class="clearfix"></div>
                     </div>
+                    <div class="hidden">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @*<asp:CheckBox runat="server" ID="RememberMe" />
+                                    <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
+
+                    <div class="BoxGeneral text-center">
+                        @*<h4>LOG IN FASTER</h4>*@
+                        <div class="clearfix"></div>
+                        @*<section id="socialLoginForm">
+                                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                            </section>*@
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+
 
 
 
@@ -307,7 +304,7 @@ new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
 
 
             <script type="text/javascript">
-
+                var zip = "";
 
                 function getLocation() {
 
@@ -318,19 +315,24 @@ new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
                 }
 
                 function showPosition(p) {
-
+                    debugger
                     var latlng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
                     geocoder = new google.maps.Geocoder();
-                    var zip = "";
+                    
 
+                    debugger
                     geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                        debugger
                         if (status == google.maps.GeocoderStatus.OK) {
                             if (results[0]) {
                                 for (j = 0; j < results[0].address_components.length; j++) {
+                                    debugger
                                     if (results[0].address_components[j].types[0] == 'postal_code') {
                                         zip = results[0].address_components[j].short_name;
-
-                                        try { txtZipCode.SetText(zip); } catch (x) { }
+                                        debugger
+                                        try { txtZipCode.SetText(zip); } catch (x) {
+                                            debugger
+                                        }
                                     }
                                 }
                             }
@@ -498,13 +500,16 @@ new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
                 }
 
                 function openLogin() {
-                    $('#modalLogin').modal('show')
+                    $('#modalLogin').modal('show');
                 }
 
                 function goHome() {
                     window.location = "/";
                 }
             </script>
+
+
+
 
 
 </body>
