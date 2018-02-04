@@ -1,0 +1,44 @@
+﻿@*@model DekkOnlineMVC.Models.LoginViewModel*@
+
+
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="clearfix"></div>
+    @*<asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+            <p class="text-danger">
+                <asp:Label runat="server" ID="lblFailureText" ClientIDMode="Static" />
+            </p>
+        </asp:PlaceHolder>*@
+
+    <div class="clearfix"></div>
+    @*<asp:TextBox runat="server" ID="Email" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />*@
+    @*<input type="email" id="Email" class="txtLogin txtUser" />*@
+    @Html.TextBox("Email", null, new { @class = "txtLogin txtUser" })
+    @*@Html.DevExpress().TextBox(settings =>
+        {
+        settings.Name = "Email";
+        settings.ControlStyle.CssClass = "form-control txtLogin txtUser";
+        }).GetHtml()*@
+    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." ValidationGroup="Login" />*@
+    <div class="clearfix"></div>
+    <br />
+
+
+    @*<asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />*@
+    @*<input type="password" id="Password" class="txtLogin txtPass" />*@
+    @Html.Password("Password", null, new { @class = "txtLogin txtPass" })
+    @*@Html.DevExpress().TextBox(settings =>
+        {
+            settings.Name = "Password";
+            settings.ControlStyle.CssClass = "form-control txtLogin txtPass";
+            settings.Properties.Password = true;
+        }).GetHtml()*@
+    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." ValidationGroup="Login" />*@
+    <div class="clearfix"></div>
+    <br />
+
+    @*<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />*@
+    <button id="btnLogin" class="loginBtn">Log in</button>
+    @*<input type="submit" value="Log in" class="btn btn-default" />*@
+}

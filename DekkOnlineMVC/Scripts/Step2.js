@@ -61,3 +61,37 @@ function DeshabilitarInput() {
     $(".comments").prop('disabled', true);
 }
 
+$("#next").click(function () {
+
+    var zipCode = $("#zipcode").val();
+    var firstName = $("#Firstname").val();
+    var lastName = $("#Lastname").val();
+    var address = $("#address").val();
+    var email = $("#email").val();
+    var choose = $("#mobile").val();
+    var date = $("#choose").val();
+    var time = $("#date").val();
+    var comments = $("#time").val();
+
+    var data = {
+        zipCode: zipCode,
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        email: email,
+        choose: choose,
+        date: date,
+        comments: comments
+    };
+
+    conectarAsy("Next", data, function (result) {
+
+        if (result.error == false) {
+            //window.location.href = result.page;
+            alert("CORRECTO");
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+});

@@ -1,0 +1,247 @@
+﻿@using System.Web.Optimization;
+@model Framework.Libraies.ResultProductsConfirmation
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Styles/Dimension.css?V=5")
+@Styles.Render("~/Styles/Shoppingcart.css?V=5")
+<div class="row">
+    <div class="col-lg-12 ">
+        <img src="~/Content/imgs/Step3.png" class="imgwidth1 img-responsive" />
+        <img src="~/Content/imgs/step3mobile.PNG" class="img-responsive imgmobile" />
+    </div>
+</div>
+<div class="container">
+
+    <div class="row" style="border-bottom:1px solid #ddd">
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                @if (Model.cart.Count > 0)
+                {
+
+                    <tr>
+                        <th style="width:50%">Item</th>
+                        <th style="width:8%">QTY</th>
+                        <th style="width:10%">Price</th>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th style="width:80%">Item</th>
+                    </tr>
+                }
+            </thead>
+            <tbody>
+                @if (Model.cart.Count > 0)
+                {
+                    foreach (var item in Model.cart)
+                    {
+                        <tr>
+
+                            <td data-th="Item">
+                                <div class="row">
+                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" onclick="DelCrt('@item.cartid')" id="@item.cartid"><span class="glyphicon glyphicon-remove"></span></a></div>
+                                    <div class="col-sm-2 col-xs-3">
+                                        <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
+                                    </div>
+                                    <div class="col-sm-8 col-xs-5">
+                                        <h4 class="nomargin"><strong style="color:red">@item.Name</strong></h4>
+                                        <div class="deschide"><p>@item.Description.</p></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-th="QTY">
+                                <input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" onchange="IncrsCart('@item.cartid', this.value)">
+                            </td>
+                            <td data-th="Price"><strong>@item.totalpriceprod kr</strong></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td data-th="Item">
+                            <div class="row">
+                                <div class="col-sm-8 col-xs-8">
+                                    <br />
+                                    <div><p>Empty.</p></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row total">
+        <div class="col-lg-7 ipadtry">
+            <div class="form-group">
+                <strong style="font-size:larger;">PROMO CODE: <strong style="color:steelblue">@Model.Promo</strong></strong>
+            </div>
+            <div class="form-group">
+                <strong style="font-size:larger;">TOTAL: $1.99</strong>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-6">
+            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Personal Information: </strong></label>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="zipcode" class="col-lg-3 control-label textoAzul">zip code:</label>
+                    <label id="zipcode" style="margin-top:10px;"><strong> @Model.ZipCode</strong></label>
+                </div>
+                <div class="form-group">
+                    <label for="Firstname" class="col-lg-3  control-label textoAzul">First name:</label>
+                    <label id="Firstname" style="margin-top:10px;"><strong> @Model.FirstName</strong></label>
+                </div>
+                <div class="form-group">
+                    <label for="Lastname" class="col-lg-3 control-label textoAzul">Last name:</label>
+                    <label id="Lastname" style="margin-top:10px;"><strong> @Model.LastName</strong></label>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-lg-3 control-label textoAzul">Address:</label>
+                    <label id="address" class="widthaddresst3"><strong> @Model.Address</strong></label>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-lg-3  control-label textoAzul">Email:</label>
+                    <label id="email" style="margin-top:10px;"><strong>@Model.Email</strong></label>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="col-lg-3 control-label textoAzul">Mobile:</label>
+                    <label id="mobile" style="margin-top:10px;"><strong> @Model.Mobile</strong></label>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-6">
+            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>The workshop you choose:</strong></label>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <img src="~/Content/prueba.png" style="width:100px; height:100px;" />
+                        </div>
+                        <div class="col-lg-5">
+                            <h4 style="color: #2471A3; "><strong>@Model.WorkshopName</strong></h4>
+                            <p><strong>@Model.WorkshopAddress</strong></p>
+                            <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Dated" class="col-lg-3 control-label textoAzul">Date:</label>
+                    <label id="Dated" style="margin-top:10px;"><strong>@Model.Date</strong></label>
+                </div>
+                <div class="form-group">
+                    <label for="timed" class="col-lg-3  control-label textoAzul">Time:</label>
+                    <label id="timed" style="margin-top:10px;"><strong>@Model.Time</strong></label>
+                </div>
+                <div class="form-group">
+                    <label for="commentsd" class="col-lg-3 control-label textoAzul">Comments:</label>
+                    <label id="commentsd" class="widthcomment"><strong>@Model.Comments </strong></label>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Payment options:</strong></label>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div style="margin-left:15px">
+                        <input type="radio" name="payment" value="1" /><img src="~/Content/imgs/typepayment1.PNG" style="height:40px;" />
+                        <input type="radio" name="payment" value="1" /><img src="~/Content/imgs/typepayment2.PNG" style="height:40px;" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="creditCardForm">
+            <div class="payment">
+                <form>
+                    <div class="form-group col-lg-12" id="card-number-field">
+                        <div class="col-sm-5 col-xs-8">
+                            <label for="cardNumber" class="textoAzul">Card Number:</label>
+                            <input type="text" class="form-control" id="cardNumber">
+                        </div>
+                        <div class="col-sm-7 col-xs-7">
+                            <label class="textoAzul">Expiration Date</label>
+                            <div class="col-md-6 col-xs-6">
+                                <select class="selectpicker form-control" style="width: 120px;height: 41px;">
+                                    <option>Noviembre</option>
+                                    <option>Ketchup</option>
+                                    <option>Relish</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-xs-5">
+                                <select class="selectpicker form-control mobile1" style="width: 85px;height: 41px;">
+                                    <option>2090</option>
+                                    <option>Ketchup</option>
+                                    <option>Relish</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="creditCardForm">
+            <div class="payment">
+                <form>
+                    <div class="form-group col-lg-12" id="card-number-field">
+                        <div class="form-group CVV col-sm-6 col-xs-3">
+                            <label for="cvv" class="textoAzul">Security Code:</label>
+                            <div class="input-group"><input type="text" class="form-control" id="cvv"><span class="input-group-addon"><i class=" 	glyphicon glyphicon-question-sign" style="cursor:pointer"></i></span></div>
+                        </div>
+                        <div class="form-group owner col-sm-6 col-xs-8">
+                            <label for="owner" class="textoAzul">CardHolder name:</label>
+                            <input type="text" class="form-control" id="owner">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-12">
+            <div class="col-sm-5 col-xs-8 terms">
+                <input type="checkbox" name="terms"> <a><span class="linkcolor2 textoAzul">I have read and accepted terms & conditions</span></a>
+            </div>
+            <div class="col-sm-8 col-xs-7 confirm">
+                <br />
+                <div class="form-group">
+                    <label class="col-md-2 col-xs-2 control-label"><a><span class="linkcolor textoAzul">Back</span></a></label>
+                    <div class="col-md-5 col-xs-3 margininput">
+                        <input type="button" class="btn btn-primary form-control" id="confirmpay" value="CONFIRM & PAY" style="margin-bottom:13px">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $(document).ready(function () {
+        $("#principalDiv").attr("class", "prDivSub");
+        $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+</script>

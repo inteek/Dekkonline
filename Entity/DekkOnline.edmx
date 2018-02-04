@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="dekkOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="dekkOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -188,6 +188,17 @@
           <Property Name="proLastUpdateDP" Type="datetime" Nullable="false" />
           <Property Name="proLastUpdate" Type="datetime" />
           <Property Name="proDiscount" Type="money" />
+        </EntityType>
+        <EntityType Name="PromoCodeUsed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+          <Property Name="PromoCode" Type="varchar" MaxLength="35" />
+          <Property Name="Used" Type="bit" />
+          <Property Name="TotalPrice" Type="money" />
+          <Property Name="TotalPriceFinal" Type="money" />
         </EntityType>
         <EntityType Name="PromotionCode">
           <Key>
@@ -434,15 +445,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_user">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+        <Association Name="fk_usedpromo">
+          <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
+          <End Role="PromoCodeUsed" Type="Self.PromoCodeUsed" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
+            <Principal Role="PromotionCode">
+              <PropertyRef Name="IdCode" />
             </Principal>
-            <Dependent Role="ShoppingCart">
-              <PropertyRef Name="IdUser" />
+            <Dependent Role="PromoCodeUsed">
+              <PropertyRef Name="PromoCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -508,6 +519,7 @@
           <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PromoCodeUsed" EntityType="Self.PromoCodeUsed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromotionCode" EntityType="Self.PromotionCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromotionCodeUser" EntityType="Self.PromotionCodeUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
@@ -559,9 +571,9 @@
             <End Role="categoriesDP" EntitySet="categoriesDP" />
             <End Role="products" EntitySet="products" />
           </AssociationSet>
-          <AssociationSet Name="fk_user" Association="Self.fk_user">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          <AssociationSet Name="fk_usedpromo" Association="Self.fk_usedpromo">
+            <End Role="PromotionCode" EntitySet="PromotionCode" />
+            <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
           </AssociationSet>
           <AssociationSet Name="fk_UserPoints" Association="Self.fk_UserPoints">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -845,6 +857,11 @@
           </AssociationSet>
           <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
           <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
+          <EntitySet Name="PromoCodeUsed" EntityType="dekkOnlineModel.PromoCodeUsed" />
+          <AssociationSet Name="fk_usedpromo" Association="dekkOnlineModel.fk_usedpromo">
+            <End Role="PromotionCode" EntitySet="PromotionCode" />
+            <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -888,6 +905,7 @@
           <Property Name="DateStart" Type="DateTime" Precision="3" />
           <Property Name="DateEnd" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PromotionCodeUser" Relationship="dekkOnlineModel.fk_CodepromUser" FromRole="PromotionCode" ToRole="PromotionCodeUser" />
+          <NavigationProperty Name="PromoCodeUsed" Relationship="dekkOnlineModel.fk_usedpromo" FromRole="PromotionCode" ToRole="PromoCodeUsed" />
         </EntityType>
         <EntityType Name="PromotionCodeUser">
           <Key>
@@ -1150,6 +1168,30 @@
           <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="PromoCodeUsed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PromoCode" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Used" Type="Boolean" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalPriceFinal" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="PromotionCode" Relationship="dekkOnlineModel.fk_usedpromo" FromRole="PromoCodeUsed" ToRole="PromotionCode" />
+        </EntityType>
+        <Association Name="fk_usedpromo">
+          <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.PromoCodeUsed" Role="PromoCodeUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PromotionCode">
+              <PropertyRef Name="IdCode" />
+            </Principal>
+            <Dependent Role="PromoCodeUsed">
+              <PropertyRef Name="PromoCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1474,6 +1516,18 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PromoCodeUsed">
+            <EntityTypeMapping TypeName="dekkOnlineModel.PromoCodeUsed">
+              <MappingFragment StoreEntitySet="PromoCodeUsed">
+                <ScalarProperty Name="TotalPriceFinal" ColumnName="TotalPriceFinal" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Used" ColumnName="Used" />
+                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

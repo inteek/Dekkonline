@@ -1,0 +1,611 @@
+﻿.table > tbody > tr > td, .table > tfoot > tr > td {
+    vertical-align: middle;
+}
+.downico {
+    margin-top: 20px;
+}
+
+.inputqtywid {
+    width: 85%;
+}
+
+.points {
+    width: 67%;
+}
+
+.marginlabel {
+    width: 30px;
+}
+
+.margintextpoints {
+    width: 50px;
+}
+
+.checkout {
+    visibility: hidden
+}
+
+.imgwidth1 {
+    margin-left: 2px;
+    width: 1340px;
+    height:90px;
+}
+
+.imgmobile {
+    display:none
+}
+.imgwidth2 {
+    display:initial;
+    height: 90px;
+}
+.altura{
+    height:100px;
+}
+.total {
+    margin-left: 700px;
+}
+.widthaddresst3 {
+    width: 200px;
+    margin-top: 10px;
+}
+.widthcomment {
+    width: 221px;
+    margin-top: 10px;
+}
+
+.creditCardForm label {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.actions {
+    width: 100px;
+    margin: 1.5em 0;
+}
+
+
+.creditCardForm .payment .form-control {
+    line-height: 40px;
+    height: auto;
+    padding: 0 16px;
+}
+
+.creditCardForm .owner {
+    width: 63%;
+    margin-right: 10px;
+}
+
+.creditCardForm .CVV {
+    width: 35%;
+}
+
+.creditCardForm #card-number-field {
+    width: 50%;
+}
+
+.creditCardForm #expiration-date {
+    width: 55%;
+}
+
+.terms {
+   width:440px;
+}
+.confirm {
+    width: 700px
+}
+.linkcolor {
+    color:black;
+    cursor:pointer;
+}
+.linkcolor2 {
+    color: #1A5276;
+    cursor: pointer;
+}
+.ipadst1 {
+    margin-right: -570px;
+}
+.alinearCombo {
+    margin-left: -50px;
+    margin-top: -7px;
+}
+
+.alinearSrotBy {
+    margin-left: -11px;
+}
+
+.alinearWork {
+    margin-left: -50px;
+}
+
+.imgRespons1 {
+    width: 1350px;
+    height: 90px;
+}
+
+.imgRespons2 {
+    display: none;
+}
+
+.blanco:hover {
+    background-color: white;
+}
+
+.borderInput {
+    border: 1px solid #BFC9CA;
+}
+
+.widthleft {
+    margin-left: 100px;
+}
+
+.widthleftresponse {
+    margin-left: 0px;
+}
+
+.textGris {
+    color: #424949;
+}
+
+.textAm {
+    color: #E67E22;
+}
+
+.personal {
+    color: #E53935;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+
+.textPersonal {
+    color: #C0392B;
+    font-size: 20px;
+}
+
+.text1 {
+    color: #1A5276;
+    font-size: 24px;
+    margin-left: 0px;
+}
+
+.textshop {
+    color: #E53935;
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+}
+
+.sizeText1 {
+    font-size: 20px;
+    margin-bottom: 18px;
+    margin-left: 0px;
+}
+
+.alinearSort {
+    margin-left: 0px;
+}
+
+.ocultardiv {
+    display: initial;
+}
+
+.textLeft {
+    color: #E53935;
+    font-size: 20px;
+    margin-left: 0px;
+}
+
+.widthCombo1 {
+    width: 20px;
+    height: 20px;
+}
+
+.widthCombo2 {
+    width: 20px;
+    height: 20px;
+}
+
+.catalago {
+    margin-left: 0px;
+}
+
+.catHiden {
+    display: initial;
+}
+
+.rowcat {
+    margin-bottom: 0px;
+}
+
+
+@media screen and (max-width:1200px) {
+    .imgwidth1 {
+        margin-left: 2px;
+        width: 1100px;
+    }
+
+    .imgwidth2 {
+        margin-left: 2px;
+        width: 1073px;
+    }
+
+    .widthcomment {
+        width: 832px;
+        margin-top: -1px;
+    }
+
+    .widthaddresst3 {
+        width:unset;
+        margin-top: 10px;
+    }
+
+    .creditCardForm .payment .form-control {
+        line-height: 40px;
+        height: auto;
+        padding: 0 16px;
+    }
+
+    .creditCardForm .owner {
+        width: 35%;
+        margin-right: 10px;
+    }
+
+    .creditCardForm .CVV {
+        width: 20%;
+    }
+
+    .creditCardForm #card-number-field {
+        width: 100%;
+    }
+
+    .creditCardForm #expiration-date {
+        width: 55%;
+        margin-right: -10px;
+    }
+
+    .mobile1 {
+        margin-left: -88px;
+    }
+
+    .terms {
+        width: 361px;
+    }
+
+    .imgwidth2 {
+       display:initial;
+    }
+}
+@media screen and (max-width:1023px) {
+    .imgwidth1 {
+        margin-left: 2px;
+        width: 1024px;
+    }
+
+    .widthipadpro {
+        width: 1023px;
+    }
+
+    .displayoff{
+        display:none;
+    }
+
+    .imgwidth2 {
+        margin-left: 2px;
+        width: 949px;
+    }
+
+    .widthcomment {
+        width: 616px;
+        margin-top: -1px;
+    }
+
+    .widthaddresst3 {
+        width: unset;
+        margin-top: 10px;
+    }
+
+    .creditCardForm .payment .form-control {
+        line-height: 40px;
+        height: auto;
+        padding: 0 16px;
+    }
+
+    .creditCardForm .owner {
+        width: 48%;
+        margin-right: 10px;
+    }
+
+    .creditCardForm .CVV {
+        width: 30%;
+    }
+
+    .creditCardForm #card-number-field {
+        width: 100%;
+    }
+
+    .creditCardForm #expiration-date {
+        width: 30%;
+    }
+
+    .mobile1 {
+        margin-left: -35px;
+    }
+
+    .terms {
+        width: 361px;
+    }
+
+    .imgwidth2 {
+        display:initial;
+    }
+
+    .ipadtry {
+        margin-left: -130px;
+    }
+
+    .ipadst1 {
+        margin-right:-1264px;
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+
+    table#cart tbody td .form-control {
+        width: 20%;
+        display: inline !important;
+    }
+
+    .tableMobile {
+        width: 50%;
+        min-width: 200px;
+        float: left;
+        
+    }
+
+    .actions .btn {
+        width: 36%;
+        margin: 1.5em 0;
+    }
+
+    .imgshort{
+        height:50px;
+        width:50px;
+    }
+
+    .actions .btn-info {
+        float: left;
+    }
+
+    .actions .btn-danger {
+        float: right;
+    }
+
+    .marginlabelpoints {
+        margin-left: -80px;
+    }
+
+    table#cart thead {
+        display: none;
+
+    }
+
+    table#cart tbody td {
+        display: block;
+        padding: 1.0rem;
+        min-width: 320px;
+    }
+
+    table#cart tbody tr td:first-child {
+        background: #efefef;
+        color: #000;
+    }
+
+    table#cart tbody td:before {
+        content: attr(data-th);
+        font-weight: bold;
+        display: inline-block;
+        width: 8rem;
+        text-align: center;
+    }
+
+    table#cart tfoot td {
+        display: block;
+    }
+
+    table#cart tfoot td .btn {
+        display: block;
+    }
+
+    .checkout {
+        visibility: visible;
+    }
+
+    .widthmobile {
+        width: 350px;
+    }
+
+    .widthmobile2 {
+        width: 400px;
+    }
+
+    .displayoff {
+        display: none;
+    }
+
+    .imgmobile {
+       display:initial;
+    }
+
+    .imgwidth1 {
+        display: none;
+    }
+    .deschide {
+        display: none;
+    }
+
+    .margininput {
+        margin-left: -38px;
+    }
+
+    .inputqtywid {
+        width: 157%;
+    }
+
+    .imgwidth2{
+        display:none;
+    }
+
+    .total {
+        border-top:-10px;
+        margin-left: 50px;
+    }
+
+    .widthaddresst3 {
+       width:350px;
+       margin-top:2px;
+    }
+
+    .widthcomment {
+        width: 363px;
+        margin-top: -1px;
+    }
+
+    .creditCardForm .payment .form-control {
+        line-height: 40px;
+        height: auto;
+        padding: 0 16px;
+    }
+
+    .creditCardForm .owner {
+        width: 85%;
+        margin-right: 10px;
+    }
+
+    .creditCardForm .CVV {
+        width: 50%;
+    }
+
+    .creditCardForm #card-number-field {
+        width: 100%;
+    }
+
+    .creditCardForm #expiration-date {
+        width: 100%;
+    }
+
+    .mobile1 {
+        margin-left: 60px;
+    }
+
+    .terms {
+        width: 271px;
+    }
+
+    .ipadst1 {
+        margin-right:-554px;
+    }
+
+    .ipadtry {
+        margin-left: -70px;
+
+    }
+
+    .alinearCombo {
+        margin-left: 50px;
+        margin-top: 0px;
+    }
+
+    .alinearSort {
+        margin-left: 50px;
+    }
+
+    .ocultardiv {
+        display: none;
+    }
+
+    .textLeft {
+        color: #E53935;
+        font-size: 20px;
+        margin-left: -15px;
+    }
+
+    .widthCombo1 {
+        width: 20px;
+        height: 20px;
+    }
+
+    .widthCombo2 {
+        width: 20px;
+        height: 20px;
+    }
+
+    .catalago {
+        margin-left: 30px;
+    }
+
+    .catHiden {
+        display: none;
+    }
+
+    .rowcat {
+        margin-bottom: 20px;
+    }
+
+    .imgRespons1{
+        display:none;
+    }
+
+    .imgRespons2 {
+        display:initial;
+    }
+
+    .widthleft{
+        margin-left:0px;
+    }
+
+
+    .widthleftresponse{
+        margin-left:50px;
+    }
+
+    .textGris{
+        color: #424949;
+    }
+
+    .textAm{
+        color: #E67E22;
+    }
+
+    .personal{
+        color: #E53935; 
+        font-size: 20px; 
+        margin-bottom: 10px;
+        margin-left:-5px;
+    }
+
+    .textPersonal{
+        color: #C0392B; 
+        font-size:20px;
+    }
+
+    .text1{
+        color: #1A5276;
+        font-size:18px;
+        margin-left:-15px;
+    }
+
+    .textshop{
+        color: #E53935; 
+        font-size: 20px; 
+        margin-bottom: 20px;
+        margin-left:50px;
+    }
+
+    .sizeText1{
+        font-size:18px; 
+        margin-bottom:18px;
+        margin-left:50px;
+    }
+}
+

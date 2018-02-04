@@ -1,0 +1,211 @@
+﻿.dimension {
+    margin-left: -70px;
+}
+
+.vl {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 350px;
+}
+.vl2 {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 285px;
+}
+.vl3 {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 170px;
+}
+
+.vl5 {
+    width:10px;
+    border-left: 2px solid #ABB2B9;
+    height: 200px;
+}
+
+.lineaVertical {
+    border-right: 1px solid #ABB2B9;
+}
+
+.textoAzul{
+    font-size:18px;
+    color:#1A5276;
+}
+
+.textoAzul2{
+    font-size:20px;
+    color:#1A5276;
+}
+
+.textoGris{
+    font-size:18px;
+    color:#797D7F;
+}
+
+
+.left1 {
+    float: left;
+}
+
+.left2 {
+    text-align: left;
+    color: black;
+}
+
+.rowLeft1{
+    margin-left:80px;
+}
+
+.rowLeft2{
+    margin-left:80px; 
+    margin-top:20px;
+}
+
+.rowLeft3{
+    margin-left:80px; 
+    margin-top:30px;
+}
+
+.rowLeft4{
+    margin-left:130px;
+    margin-top:30px;
+}
+
+.rowLeft5{
+   margin-left:100px; 
+   margin-top:20px;
+}
+
+.rowLeft6{
+    margin-left:100px; 
+    margin-top:20px; 
+    margin-bottom:40px;
+}
+.rowLeft6-1{
+    font-size:18px;
+}
+.sizeText{
+    font-size:22px;
+    color: #424949;
+}
+
+.margintop{
+    margin-top:0px; 
+}
+.leftaddress{   
+    margin-left:-26px;
+}
+
+.leftmovil{   
+    margin-left:-38px;
+}
+
+.labelmargin{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.sizeDesc{
+    font-size:24px;
+    color: #1A5276;
+}
+
+
+@media screen and (max-width: 768px) {
+    .dimension {
+        margin-left: -40px;
+    }
+    .vl {
+
+        display:none;
+    }
+    .vl2 {
+
+        display:none;
+    }
+    .iz {
+        margin-left:30px;
+        margin-top:30px;
+    }
+    .iz2 {
+        margin-left:30px;
+        margin-bottom:30px;
+        margin-top:-30px;
+    }
+    .vl3 {
+        display:none;
+    }
+    .vl4 {
+        width:100px;
+        border-top: 2px solid #ABB2B9;
+    }
+    .vl5 {
+        display:none;
+    }
+
+    .rowLeft1{
+        margin-left:0px;
+    }
+
+    .rowLeft2{
+        margin-left:0px; 
+        margin-top:0px;
+    }
+
+    .rowLeft3{
+        margin-left:0px; 
+        margin-top:0px;
+    }
+
+    .rowLeft4{
+        margin-left:0px;
+        margin-top:0px;
+        margin-top:20px;
+    }
+
+    .rowLeft5{
+       margin-left:0px; 
+       margin-top:0px;
+    }
+
+    .rowLeft6{
+        margin-left:0px; 
+        margin-top:10px; 
+        margin-bottom:20px;
+    }
+    .rowLeft6-1{
+        font-size:15px;
+    }
+
+    .sizeText{
+        font-size:20px;
+        color: #424949;
+    }
+
+    .margintop{
+        margin-top:20px; 
+    }
+
+    .leftaddress{   
+        margin-left:0px;
+    }
+
+    .leftmovil{   
+        margin-left:0px;
+    }
+
+    .labelmargin{
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+
+    .sizeDesc{
+        font-size:18px;
+        color: #1A5276;
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+
+}

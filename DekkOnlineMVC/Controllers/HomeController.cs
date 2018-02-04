@@ -9,7 +9,7 @@ namespace DekkOnlineMVC.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+       public ActionResult Index()
         {
             Articles ar = new Articles();
             ViewBag.BagWidth = ar.loadDimensionWidth();
@@ -30,7 +30,7 @@ namespace DekkOnlineMVC.Controllers
 
             if (result == true)
             {
-                return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Index", "Profile", new { username = user, password = pass }) });
+                return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Index", "Home", new { username = user, password = pass }) });
             }
             else
             {

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using DekkOnlineMVC.Models;
 using System.Collections.Generic;
 using System.Web;
+using System.Security.Claims;
 
 namespace DekkOnlineMVC
 {
@@ -57,6 +58,5 @@ namespace DekkOnlineMVC
                 return GetSessionIdUser(ctr);
             }
         }
-
     }
 }

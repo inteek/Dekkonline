@@ -1,0 +1,322 @@
+﻿@using System.Web.Optimization;
+@model List<DekkOnlineMVC.Models.Products>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+
+
+
+@Scripts.Render("~/Scripts/connectAsy.js?v=2")
+@Scripts.Render("~/Scripts/site/Products.js?v=2")
+
+
+        <div class="searchWrap" style="top:-300px; width:100%">
+            <div class="searchContain" style="width:100%;">
+                <div class="col-md-3">
+                    <span class="sTitle">SIZE:</span><br />
+                    <div class="floatLt dp1">
+                        @*<dx:ASPxComboBox runat="server" ID="cmbWidth" ClientInstanceName="cmbWidth" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                                <DropDownButton ImagePosition="Bottom">
+                                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                                </DropDownButton>
+                                <ClientSideEvents ValueChanged="loadProducts" />
+                            </dx:ASPxComboBox>*@
+                        @*<select id="cmbWidth" Class="BoxGeneral"></select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbWidth";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "Size";
+             settings.Properties.ValueField = "Id";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+         }
+     ).BindList(ViewData["BagWidth"]).GetHtml()
+                    </div>
+                    <div class="floatLt diagonal"></div>
+                    <div class="floatLt dp2">
+                        @*<dx:ASPxComboBox runat="server" ID="cmbProfile" ClientInstanceName="cmbProfile" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                                <DropDownButton ImagePosition="Bottom">
+                                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                                </DropDownButton>
+                                <ClientSideEvents ValueChanged="loadProducts" />
+                            </dx:ASPxComboBox>*@
+                        @*<select id="cmbProfile" Class="BoxGeneral"></select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbProfile";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "Size";
+             settings.Properties.ValueField = "Id";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+         }
+     ).BindList(ViewData["BagProfile"]).GetHtml()
+                    </div>
+                    <div class="floatLt dp3">
+                        @*<dx:ASPxComboBox runat="server" ID="cmbDiameter" ClientInstanceName="cmbDiameter" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                                <DropDownButton ImagePosition="Bottom">
+                                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                                </DropDownButton>
+                                <ClientSideEvents ValueChanged="loadProducts" />
+                            </dx:ASPxComboBox>*@
+                        @*<select id="cmbDiameter" Class="BoxGeneral"></select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbDiameter";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "Size";
+             settings.Properties.ValueField = "Id";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+         }
+     ).BindList(ViewData["BagDiameter"]).GetHtml()
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <span class="sTitle">COVER TYPE:</span><br />
+                    @*<dx:ASPxComboBox runat="server" ID="cmbCategory" ClientInstanceName="cmbCategory" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                            <DropDownButton ImagePosition="Bottom">
+                                <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                            </DropDownButton>
+                            <ClientSideEvents ValueChanged="loadProducts" />
+                        </dx:ASPxComboBox>*@
+                    @*<select id="cmbCategory" Class="BoxGeneral"></select>*@
+                    @Html.DevExpress().ComboBox(
+             settings =>
+             {
+                 settings.Name = "cmbCategory";
+                 settings.Width = Unit.Percentage(100);
+                 settings.ControlStyle.CssClass = "BoxGeneral";
+                 //settings.SelectedIndex = 0;
+                 //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                 settings.Properties.CallbackPageSize = 15;
+                 settings.Properties.TextField = "catName";
+                 settings.Properties.ValueField = "catId";
+                 settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                 settings.ClientEnabled = true;
+                 settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+             }
+         ).BindList(ViewData["BagCategories"]).GetHtml()
+                </div>
+                <div class="col-md-3">
+                    <span class="sTitle">BRAND:</span><br />
+                    @*<dx:ASPxComboBox runat="server" ID="cmbBrand" ClientInstanceName="cmbBrand" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                            <DropDownButton ImagePosition="Bottom">
+                                <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                            </DropDownButton>
+                            <ClientSideEvents ValueChanged="loadProducts" />
+                        </dx:ASPxComboBox>*@
+                    @*<select id="cmbBrand" Class="BoxGeneral"></select>*@
+                    @Html.DevExpress().ComboBox(
+             settings =>
+             {
+                 settings.Name = "BagBrands";
+                 settings.Width = Unit.Percentage(100);
+                 settings.ControlStyle.CssClass = "BoxGeneral";
+                 //settings.SelectedIndex = 0;
+                 //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                 settings.Properties.CallbackPageSize = 15;
+                 settings.Properties.TextField = "braName";
+                 settings.Properties.ValueField = "braId";
+                 settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                 settings.ClientEnabled = true;
+                 settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+             }
+         ).BindList(ViewData["BagBrands"]).GetHtml()
+                </div>
+                <div class="col-md-3">
+                   <span class="sTitle">PRICE:</span><br />
+
+                    @*<dx:ASPxComboBox runat="server" ID="cmbPrice" ClientInstanceName="cmbPrice" CssClass="BoxGeneral" Border-BorderStyle="None">
+                <DropDownButton ImagePosition="Bottom">
+                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                </DropDownButton>
+                <Items>
+                    <dx:ListEditItem Selected="true" Text="lowest - highest" Value="0" />
+                    <dx:ListEditItem Selected="false" Text="highest - lowest" Value="1" />
+                </Items>
+                <ClientSideEvents ValueChanged="loadProducts" />
+            </dx:ASPxComboBox>*@
+
+                    <div  style="display:block; float:left; width:60%" >
+                        @*<select id="cmbPrice" Class="BoxGeneral" style="width:100%">
+                            <option value="0">lowest - highest</option>
+                            <option value="1">highest - lowest</option>
+                        </select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbPrice";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "ProductName";
+             settings.Properties.ValueField = "ProductName";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+             settings.Properties.Items.Add("Lowest - Highest", 0);
+             settings.Properties.Items.Add("Highest - Lowest", 1);
+
+         }
+     ).GetHtml()
+
+
+
+
+                        </div>
+
+
+                    <div  style="display:block; float:right; width:40%; margin-right:-17px">
+
+                        @Html.DevExpress().Button(
+                         settings =>
+                         {
+                             settings.Name = "btnListView";
+                             settings.EnableTheming = false;
+                             settings.Text = "";
+                             settings.AllowFocus = false;
+                             settings.Height = Unit.Pixel(30);
+                             settings.ImagePosition = ImagePosition.Right;
+                             settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/list-view.png");
+                             settings.Images.Image.Height = 16;
+                             settings.Images.Image.Width = 16;
+                         }).GetHtml()
+                                                @Html.DevExpress().Button(
+                         settings =>
+                         {
+                             settings.Name = "btnGridView";
+                             settings.EnableTheming = false;
+                             settings.Text = "";
+                             settings.AllowFocus = false;
+                             settings.ImagePosition = ImagePosition.Right;
+                             settings.Height = Unit.Pixel(30);
+                             //settings.Styles.Style.PressedStyle.CssClass = "icqPressed";
+                             settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/grid-view.png");
+                             settings.Images.Image.Height = 16;
+                             settings.Images.Image.Width = 16;
+                         }).GetHtml()
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                <br />
+                <br />
+                <br />
+
+
+                <style type="text/css">
+                    .cardViewProducts {
+                        background-color: #f1f2f3;
+                        border-style: none;
+                    }
+
+                    .fa {
+                        font-size: 25px;
+                    }
+
+                    .checked {
+                        color: orange;
+                    }
+
+                    .FlowCard {
+                        padding: 0;
+                    }
+
+                    @@media all and (max-width: 420px) {
+                        .FlowCard {
+                            width: 94% !important;
+                            height: 520px !important;
+                        }
+
+                        .dxcvFlowCard_iOS.FlowCard,
+                        .dxcvFlowCard_Moderno.FlowCard,
+                        .dxcvFlowCard_Material.FlowCard {
+                            height: 620px !important;
+                        }
+                    }
+
+                    @@media all and (min-width: 420px) and (max-width: 600px) {
+                        .FlowCard {
+                            width: 250px !important;
+                            height: 550px !important;
+                        }
+
+                        .dxcvFlowCard_iOS.FlowCard,
+                        .dxcvFlowCard_Moderno.FlowCard,
+                        .dxcvFlowCard_Material.FlowCard {
+                            height: 650px !important;
+                        }
+
+                        .dxcvFlowCard_Moderno.FlowCard {
+                            width: 235px !important;
+                        }
+                    }
+                </style>
+                <script>
+                    var cardView = '@ViewBag.IsCardView';
+                    var sortMode = '@ViewBag.SortMode';
+                </script>
+
+                <div id="xcpProducts" style="text-align:center; margin-left:0px; padding-right:0px">
+                    <!--AQUI VA EL GRID-->
+                    @Html.Partial("ProductsPartial", Model)
+                </div>
+
+                </div>
+
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+
+<br />
+<br />
+
+
+
+
+
+
+
+
+
+
+

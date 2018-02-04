@@ -1,0 +1,48 @@
+﻿@model DekkOnlineMVC.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+@Styles.Render("~/Styles/bootstrap.css")
+@Styles.Render("~/Styles/Site.css?V=8")
+
+<!-- Icons -->
+@Styles.Render("~/fonts/ionicons/css/ionicons.min.css")
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        
+        <div class="col-md-10">
+            @Html.DevExpress().TextBox(settings =>
+                                    {
+                                        settings.Name = "Email1";
+                                        settings.ControlStyle.CssClass = "txtLogin txtUser";
+                                    }).GetHtml()
+        </div>
+    </div>
+    <div class="form-group">
+       
+        <div class="col-md-10">
+            @Html.DevExpress().TextBox(settings =>
+                                       {
+                                           settings.Name = "Password1";
+                                           settings.ControlStyle.CssClass = "txtLogin txtUser";
+                                       }).GetHtml()
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

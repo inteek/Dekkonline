@@ -13,7 +13,7 @@ function Login() {
         pass: pass
     };
 
-    conectarAsy("Home/Validate", data, function (result) {
+    conectarAsy("Account/Login", data, function (result) {
 
         if (result.error == false) {
             window.location.href = result.page;

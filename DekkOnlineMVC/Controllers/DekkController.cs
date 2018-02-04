@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Web;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Web.Security;
 
 namespace DekkOnlineMVC.Controllers
 {
@@ -128,8 +129,22 @@ namespace DekkOnlineMVC.Controllers
 
 
             var idUser = Security.GetIdUser(this);
-
-            product.Success = shoppingCart.AddToCart(idUser, idPro, quantity);
+            var usuario1 = User.Identity.Name;
+            if (usuario1 == "")
+            {
+                product.Success = shoppingCart.AddToCart(idUser, idPro, quantity);
+            }
+            else
+            {
+                var id = shoppingCart.User(usuario1);
+                if (id != null)
+                {
+                    product.Success = shoppingCart.AddToCart(id, idPro, quantity);
+                    shoppingCart.UpdateShoppingCart(id, idUser);
+                    
+                }
+               
+            }
             
 
             return Content(JsonConvert.SerializeObject(product), "application/json");

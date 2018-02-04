@@ -36,6 +36,7 @@ C:\Productos\dekkonline\Entity\bin\Debug\EntityFramework.dll
 C:\Productos\dekkonline\Entity\bin\Debug\EntityFramework.SqlServer.dll
 C:\Productos\dekkonline\Entity\bin\Debug\EntityFramework.xml
 C:\Productos\dekkonline\Entity\bin\Debug\EntityFramework.SqlServer.xml
+C:\Productos\dekkonline\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
 C:\Productos\dekkonline\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline\Entity\obj\Debug\Entity.dll
 C:\Productos\dekkonline\Entity\obj\Debug\Entity.pdb
