@@ -137,6 +137,17 @@
           <Property Name="StatusofPromo" Type="bit" />
           <Property Name="PointsEarned" Type="int" />
         </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="smallint" />
+          <Property Name="Expire" Type="varchar" MaxLength="8" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="TargetType" Type="varchar" MaxLength="15" />
+          <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="products">
           <Key>
             <PropertyRef Name="proId" />
@@ -518,6 +529,7 @@
           <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromoCodeUsed" EntityType="Self.PromoCodeUsed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromotionCode" EntityType="Self.PromotionCode" Schema="dbo" store:Type="Tables" />
@@ -862,6 +874,7 @@
             <End Role="PromotionCode" EntitySet="PromotionCode" />
             <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
           </AssociationSet>
+          <EntitySet Name="Payment" EntityType="dekkOnlineModel.Payment" />
           </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -1192,6 +1205,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int16" />
+          <Property Name="Expire" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="TargetType" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1527,6 +1551,18 @@
                 <ScalarProperty Name="Used" ColumnName="Used" />
                 <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment">
+            <EntityTypeMapping TypeName="dekkOnlineModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="TargetType" ColumnName="TargetType" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Expire" ColumnName="Expire" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

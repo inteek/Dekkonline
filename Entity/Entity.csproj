@@ -97,6 +97,9 @@
     <Compile Include="DetailUserPoints.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
+    <Compile Include="Payment.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="products.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
