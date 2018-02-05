@@ -329,7 +329,7 @@
 
             <div class="modal-header" style="background-color:#C84647;">
                 <button type="button" class="close" data-dismiss="modal" style="color:#fff;" >&times;</button>
-                <h4 class="modal-title" style="color:#fff;" >Modal Header</h4>
+                <h4 class="modal-title" style="color:#fff;" >Product Details</h4>
             </div>
 
             <div class="modal-body">
@@ -581,10 +581,45 @@
 
             </div>
 
-
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div class="col-xs-12 col-md-12" style="height:45px; padding-left:0px; padding-right:0px;">
+                    <div class="col-xs-7 col-md-10" style="height:43px; padding-top:7px;">
+                        <p style="font-size:20px;" >Add to cart:</p>
+                    </div>
+                    <div class="col-xs-2 col-md-1" style="height:43px; padding-top:6px; padding-left:0px; padding-right:0px;">
+                        @Html.DevExpress().ComboBox(
+                            settings =>
+                            {
+                                settings.Name = "productDetails_CboAddCart";
+                                settings.Width = Unit.Pixel(55);
+                                settings.ControlStyle.CssClass = "BoxGeneral";
+                                //settings.SelectedIndex = 0;
+                                settings.Properties.CallbackPageSize = 15;
+                                //settings.Properties.TextField = "Size";
+                                //settings.Properties.ValueField = "Id";
+                                //settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                settings.ClientEnabled = true;
+                                //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+                                settings.Properties.Items.Add("1", 1);
+                                settings.Properties.Items.Add("2", 2);
+                                settings.Properties.Items.Add("3", 3);
+                                settings.Properties.Items.Add("4", 4);
+                                settings.Properties.Items.Add("5", 5);
+
+                                settings.Properties.Items[0].Selected = true;
+                                settings.SelectedIndex = 0;
+                            }
+                        ).GetHtml()
+                    </div>
+                    <div class="col-xs-3 col-md-1"  style="height:43px;">
+                        <img id="productDetails_BtnAddCart" src="~/Content/imgs/carrito2.png" style="width:40px; cursor:pointer;" />
+                    </div>
+                </div>
             </div>
+
+
 
         </div>
 
