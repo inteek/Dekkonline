@@ -13,6 +13,7 @@ namespace DekkOnlineMVC.Controllers
 {
     public class DekkController : Controller
     {
+
         public enum ProductsCardsSortMode { LowestHighest, Highestlowest };
 
 
@@ -91,9 +92,11 @@ namespace DekkOnlineMVC.Controllers
                                    Image = p.Image,
                                    CatId = p.CatId,
                                    CategoryImage = GetImageCategory(p.CatId), //p.CategoryImage,
+                                   CategoryName = GetNameCategory(p.CatId), //p.CategoryName,
                                    Brand = string.IsNullOrEmpty(p.Brand) ? "GENERAL": p.Brand.ToUpper(),
                                    BrandImage = p.BrandImage,
                                    Name = p.Name,
+                                   Description = p.Description,
                                    Width = p.Width,
                                    Profile = p.Profile,
                                    Diameter = p.Diameter,
@@ -102,7 +105,9 @@ namespace DekkOnlineMVC.Controllers
                                    Wet = string.IsNullOrEmpty(p.Wet) ? "&emsp;" : p.Wet,
                                    Noise = string.IsNullOrEmpty(p.Noise) ? "&emsp;" : p.Noise,
                                    Price = p.Price,
-                                   Stock = p.Stock
+                                   Stock = p.Stock,
+                                   SpeedIndex = p.SpeedIndex,
+                                   LoadIndex = p.LoadIndex
                                }
                                ).ToList();
 
@@ -110,6 +115,9 @@ namespace DekkOnlineMVC.Controllers
             if (sortMode == ProductsCardsSortMode.LowestHighest) resultModel = resultModel.OrderBy(c => c.Price).ToList();
             else resultModel = resultModel.OrderByDescending(c => c.Price).ToList();
 
+            for (int row = 0; row < resultModel.Count; row++) {
+                resultModel[row].RowIndex = row;
+            }
 
 
             return resultModel;
@@ -166,9 +174,24 @@ namespace DekkOnlineMVC.Controllers
                     return "~/Content/imgs/Summer_red-01.png"; //"about:blank";
             }
         }
-
-
         
+        private string GetNameCategory(int? idCat)
+        {
+            switch (idCat)
+            {
+                case 1:
+                    return "summer";
+                case 2:
+                    return "winter";
+                case 3:
+                    return "motors";
+                case 4:
+                    return "ATV";
+                default:
+                    return "summer"; //"about:blank";
+            }
+        }
+
 
 
 

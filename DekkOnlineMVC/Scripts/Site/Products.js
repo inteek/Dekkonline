@@ -2,9 +2,9 @@
 
 
 function OnSortingChanged(s, e) {
-    HeadphoneCards.PerformCallback();
+    ProductCards.PerformCallback();
 }
-function OnHeadphoneCardsBeginCallback(s, e) {
+function OnProductCardsBeginCallback(s, e) {
     e.customArgs["isCardView"] = this.IsCardView();
     e.customArgs["sortMode"] = 0; //Sorting.GetValue();
 
@@ -17,21 +17,21 @@ function OnHeadphoneCardsBeginCallback(s, e) {
 
 }
 function IsCardView() {
-    return cardView; //HeadphoneCards.GetToolbar(0).GetItemByName("CardView").GetChecked();
+    return cardView; //ProductCards.GetToolbar(0).GetItemByName("CardView").GetChecked();
 }
 function UpdateCardViewHeight() {
-    HeadphoneCards.SetHeight(0);
+    ProductCards.SetHeight(0);
     var containerHeight = ASPxClientUtils.GetDocumentClientHeight();
     if (document.body.scrollHeight > containerHeight)
         containerHeight = document.body.scrollHeight;
-    HeadphoneCards.SetHeight(containerHeight);
+    ProductCards.SetHeight(containerHeight);
 }
 
 
 function TypeResult(btn) {
     //debugger
 
-    if (HeadphoneCards != undefined && HeadphoneCards != null)
+    if (ProductCards != undefined && ProductCards != null)
     {
         if (cardView == true || cardView == 'True') {
             //$(btn).attr("value", "Card View")
@@ -40,7 +40,7 @@ function TypeResult(btn) {
             //$(btn).attr("value", "List View")
             cardView = true;
         }
-        HeadphoneCards.Refresh();
+        ProductCards.Refresh();
 
     }
 }
@@ -60,8 +60,8 @@ ASPxClientControl.GetControlCollection().BrowserWindowResized.AddHandler(functio
 function cmbFilters_ValueChanged(s, e) {
     //alert(s.uniqueID + " - " + s.GetText() + " / " + s.GetValue());
 
-    if (HeadphoneCards != undefined && HeadphoneCards != null) {
-        HeadphoneCards.Refresh();
+    if (ProductCards != undefined && ProductCards != null) {
+        ProductCards.Refresh();
     }
 }
 
@@ -92,6 +92,35 @@ function AddToCart(btn, id, name) {
         }
     });
 
+}
+
+function OnFocusedCardChanged(s, e) {
+    var key = s.GetCardKey(s.GetFocusedCardIndex());
+    openProductDetails(key);
+}
+
+
+function openProductDetails(indexRow) {
+
+
+    ProductCards.GetCardValues(indexRow, "Id", function (value) { $("#productDetails_Id").text(value); });
+    ProductCards.GetCardValues(indexRow, "Image", function (value) { $("#productDetails_Img").attr("src" + "http://admin.dekkonline.sonetworks.no/" + value); });
+    ProductCards.GetCardValues(indexRow, "CategoryImage", function (value) { $("#productDetails_CategoryImg1").attr("src", value.replace("~", "")); $("#productDetails_CategoryImg2").attr("src", value.replace("~", "")); });
+    ProductCards.GetCardValues(indexRow, "Name", function (value) { $("#productDetails_Name").text(value); });
+    //ProductCards.GetCardValues(indexRow, "Description", function (value) { $("#productDetails_Description").text(value); });
+    ProductCards.GetCardValues(indexRow, "Brand", function (value) { $("#productDetails_Brand").text(value); });
+    ProductCards.GetCardValues(indexRow, "Width", function (value) { productDetails_CboWidth.SetValue(value); $("#productDetails_LblWidth".text(value)); });
+    ProductCards.GetCardValues(indexRow, "Profile", function (value) { productDetails_CboProfile.SetValue(value); $("#productDetails_LblProfile".text(value)); });
+    ProductCards.GetCardValues(indexRow, "Diameter", function (value) { productDetails_CboDiameter.SetValue(value); $("#productDetails_LblDiameter".text(value)); });
+    ProductCards.GetCardValues(indexRow, "CategoryName", function (value) { $("#productDetails_CategoryName").text(value); });
+    ProductCards.GetCardValues(indexRow, "Stock", function (value) { $("#productDetails_InStock").text(value); });
+    ProductCards.GetCardValues(indexRow, "SpeedIndex", function (value) { $("#productDetails_SpeedIndex").text(value); });
+    ProductCards.GetCardValues(indexRow, "LoadIndex", function (value) { $("#productDetails_Indexload").text(value); });
+    ProductCards.GetCardValues(indexRow, "Fuel", function (value) { $("#productDetails_TyreFuel").html(value); });
+    ProductCards.GetCardValues(indexRow, "Noise", function (value) { $("#productDetails_TyreNoise").html(value); });
+    ProductCards.GetCardValues(indexRow, "Wet", function (value) { $("#productDetails_TyreWet").html(value); });
+    
+    $('#modalProductDetails').modal('show');
 }
 
 

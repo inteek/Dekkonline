@@ -155,6 +155,7 @@ namespace Framework
                                   Image = pro.proImage,
                                   CatId = pro.categories.catId,
                                   CategoryImage = pro.categories.catImage,
+                                  CategoryName = pro.categories.catName,
                                   Brand = pro.brands.braName,
                                   BrandImage = pro.brands.braImage,
                                   Name = pro.proName,
@@ -166,7 +167,9 @@ namespace Framework
                                   Wet = pro.proWet,
                                   Noise = pro.proNoise,
                                   Price = pro.proSuggestedPrice,
-                                  Stock = pro.proInventory
+                                  Stock = pro.proInventory,
+                                  SpeedIndex = pro.proSpeed,
+                                  LoadIndex = pro.proLoadIndex
                               }).ToList();
                 }
             }

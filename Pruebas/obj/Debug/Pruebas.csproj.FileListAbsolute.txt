@@ -37,12 +37,9 @@ C:\Productos\dekkonline\Pruebas\bin\Debug\EntityFramework.dll
 C:\Productos\dekkonline\Pruebas\bin\Debug\EntityFramework.SqlServer.dll
 C:\Productos\dekkonline\Pruebas\bin\Debug\Framework.dll
 C:\Productos\dekkonline\Pruebas\bin\Debug\Entity.pdb
-C:\Productos\dekkonline\Pruebas\bin\Debug\Entity.dll.config
 C:\Productos\dekkonline\Pruebas\bin\Debug\Framework.pdb
-C:\Productos\dekkonline\Pruebas\bin\Debug\Framework.dll.config
 C:\Productos\dekkonline\Pruebas\bin\Debug\EntityFramework.xml
 C:\Productos\dekkonline\Pruebas\bin\Debug\EntityFramework.SqlServer.xml
 C:\Productos\dekkonline\Pruebas\obj\Debug\Pruebas.csprojResolveAssemblyReference.cache
-C:\Productos\dekkonline\Pruebas\obj\Debug\Pruebas.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline\Pruebas\obj\Debug\Pruebas.exe
 C:\Productos\dekkonline\Pruebas\obj\Debug\Pruebas.pdb
