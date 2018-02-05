@@ -87,7 +87,6 @@ C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.XtraPrinting.v16.1.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.XtraBars.v16.1.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.XtraTreeList.v16.1.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Framework.pdb
-C:\Productos\dekkonline\DekkOnlineMVC\bin\Framework.dll.config
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Antlr3.Runtime.pdb
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.Data.v16.1.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.PivotGrid.v16.1.Core.xml
@@ -141,7 +140,6 @@ C:\Productos\dekkonline\DekkOnlineMVC\bin\Microsoft.AI.ServerTelemetryChannel.xm
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Microsoft.AI.WindowsServer.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Microsoft.AI.Web.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\Entity.pdb
-C:\Productos\dekkonline\DekkOnlineMVC\bin\Entity.dll.config
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.DataAccess.v16.1.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.Map.v16.1.Core.xml
 C:\Productos\dekkonline\DekkOnlineMVC\bin\DevExpress.Sparkline.v16.1.Core.xml
@@ -300,6 +298,5 @@ C:\Productos\dekkonline\DekkOnlineMVC\bin\es\DevExpress.XtraTreeList.v16.1.resou
 C:\Productos\dekkonline\DekkOnlineMVC\bin\ja\DevExpress.XtraTreeList.v16.1.resources.dll
 C:\Productos\dekkonline\DekkOnlineMVC\bin\ru\DevExpress.XtraTreeList.v16.1.resources.dll
 C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csprojResolveAssemblyReference.cache
-C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.dll
 C:\Productos\dekkonline\DekkOnlineMVC\obj\Debug\DekkOnlineMVC.pdb
