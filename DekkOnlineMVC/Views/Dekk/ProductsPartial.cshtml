@@ -4,8 +4,6 @@
 
 
 
-@{int index = 0;}
-
 @Html.DevExpress().CardView(settings =>
 {
     settings.Name = "ProductCards";
@@ -243,23 +241,46 @@
             "</div>" +
 
 
-                "<div class='col-xs-11 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-12'" : "'") + " style='height:75px; padding-top:7px; background-color:#fff;" + (ViewBag.IsCardView == false ? "border-left:1px solid gray;'" : "'") + ">" +
-                    "<p style='font-size:12px; text-align:left;' >Add to cart:</p>" +
-                     "<p style='margin-top:-3px; text-align:left;'>" +
-                        "<select style='width:20%; height:30px; text-align:center;' ><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>" +
-                        "<button style='width:40%; height:30px;' onclick='JavaScript:AddToCart(this, " + (int)DataBinder.Eval(c.DataItem, "Id") + "," + "\"" + (string)DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' >keep shopping</button>" +
-                        "<button style='width:40%; height:30px;' onclick='JavaScript:ShoppingCart(this, " + (int)DataBinder.Eval(c.DataItem, "Id") + "," + "\"" + (string)DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' >go to checkout</button>" +
+            "<div class='col-xs-12 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-12'" : "'") + " style='height:60px; padding-left:0px; padding-right:0px; padding-top:7px; background-color:#fff;" + (ViewBag.IsCardView == false ? "border-left:1px solid gray;'" : "'") + ">" +
 
-                    "</p>" +
+
+                "<div class='col-xs-7 col-md-6' style='height:43px; padding-top:7px;padding-left:0px; text-align:right; '>" +
+                        "<p style = 'font-size:20px;' > Add to cart:</p>" +
+                "</div>" +
+
+
+                "<div class='col-xs-2 col-md-3' style='height:43px; padding-top:6px; padding-left:0px; padding-right:0px;'>" +
+                "<select id='cboAddCartLisProduct" + DataBinder.Eval(c.DataItem, "Id") + "' style='height:30px; width:100%;'><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>" +
+                "</div>" +
+
+                "<div class='col-xs-3 col-md-3'  style='height:43px; '>" +
+                   "<img  src='" + Url.Content("~/Content/imgs/carrito1.png") + "' data-placement='top top-right' data-toggle='popover-x' data-target='#popoverProduct" + DataBinder.Eval(c.DataItem, "Id") + "' style='width:40px; cursor:pointer;' />" +
+                "</div>" +
+
+                "<div id='popoverProduct" + DataBinder.Eval(c.DataItem, "Id") + "' class='popover popover-x popover-default'>" +
+                    "<div class='arrow'></div>" +
+                    "<h3 class='popover-header popover-title'><span class='close pull-right' data-dismiss='popover-x'>&times;</span>DekkOnline</h3>" +
+                    "<div class='popover-body popover-content' style='min-width:300px;'>" +
+                        "<div class='col-xs-12 col-md-12' >" +
+                            "<img src='" + Url.Content("~/Content/imgs/loguito.png") + "' style='height:20px; float:right;' />" +
+                        "</div>" +
+                        "<p>Add to cart</p>" +
+                    "</div>" +
+                    "<div class='popover-footer'>" +
+                        "<button class='btn btn-sm' onClick='JavaScript:AddToCart(" + DataBinder.Eval(c.DataItem, "Id") +  ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' data-placement='top top-right' src='" + Url.Content("~/Content/imgs/carrito1.png") + "' style='background-color:#36434c; color:#fff;'>keep shopping</button>" +
+                        "<button class='btn btn-sm' onClick='JavaScript:ShoppingCart(" + DataBinder.Eval(c.DataItem, "Id") + ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' style='background-color:#36434c; color:#fff;'>go to checkout</button>" +
+                    "</div>" +
+                "</div>" +
+
                 "</div>" + //Agregar
 
 
 
-            "</div>" +
+        "</div>" +
 
 
-        "</div>"
-                                );
+     "</div>"
+                                                );
 
 
     });
@@ -299,13 +320,28 @@
     settings.Settings.LayoutMode = DevExpress.Web.Layout.Flow;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
     settings.Styles.FlowCard.Width = ViewBag.IsCardView == false? Unit.Percentage(98.3) : Unit.Percentage(47);
-    settings.Styles.FlowCard.Height =  ViewBag.IsCardView == false? 230: 420;
+    settings.Styles.FlowCard.Height =  ViewBag.IsCardView == false? 215: 405;
     //settings.Styles.FlowCard.CssClass = "FlowCard";
 
 }).Bind(Model).GetHtml()
 
 
 
+
+@*<div id='myPopover10b' class='popover popover-x popover-default'>
+    <div class='arrow'></div>
+    <h3 class='popover-header popover-title'><span class='close pull-right' data-dismiss='popover-x'>&times;</span>DekkOnline</h3>
+    <div class='popover-body popover-content' style='min-width:300px;'>
+        <div class='col-xs-12 col-md-12' >
+            <img src='@Url.Content("~/Content/imgs/loguito.png")' style='height:20px; float:right;' />
+        </div>
+        <p>Add to cart</p>
+    </div>
+    <div class='popover-footer'>
+        <button class='btn btn-sm' style='background-color:#36434c; color:#fff;'>keep shopping</button>
+        <button class='btn btn-sm' style='background-color:#36434c; color:#fff;'>go to checkout</button>
+    </div>
+</div>*@
 
 
 

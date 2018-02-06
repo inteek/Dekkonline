@@ -356,6 +356,7 @@
     <Content Include="Content\imgs\linea-02.png" />
     <Content Include="Content\imgs\linea-03.png" />
     <Content Include="Content\imgs\linea-04.png" />
+    <Content Include="Content\imgs\loading.gif" />
     <Content Include="Content\imgs\logo.png" />
     <Content Include="Content\imgs\logoGray.png" />
     <Content Include="Content\imgs\logo_topmenu.png" />
@@ -421,6 +422,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\plugins\bootstrap-colorpicker.min.js" />
     <Content Include="Scripts\plugins\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\plugins\bootstrap-popover-x.min.js" />
     <Content Include="Scripts\plugins\bootstrap-rating.min.js" />
     <Content Include="Scripts\plugins\bootstrap-slider.min.js" />
     <Content Include="Scripts\plugins\c3.min.js" />
@@ -455,6 +457,7 @@
     <Content Include="Styles\oldSite.css" />
     <Content Include="Styles\plugins\bootstrap-colorpicker.css" />
     <Content Include="Styles\plugins\bootstrap-datepicker.css" />
+    <Content Include="Styles\plugins\bootstrap-popover-x.css" />
     <Content Include="Styles\plugins\bootstrap-slider.css" />
     <Content Include="Styles\plugins\c3.css" />
     <Content Include="Styles\plugins\fullcalendar.css" />

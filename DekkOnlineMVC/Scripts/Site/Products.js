@@ -15,6 +15,16 @@ function OnProductCardsBeginCallback(s, e) {
     e.customArgs["idCategory"] = cmbCategory.GetValue();
     e.customArgs["idBrand"] = BagBrands.GetValue();
 
+
+    setTimeout(function () {
+        var $btns = $("[data-toggle='popover-x']");
+        if ($btns.length) {
+            $btns.popoverButton();
+        }
+    }, 1000)
+
+
+
 }
 function IsCardView() {
     return cardView; //ProductCards.GetToolbar(0).GetItemByName("CardView").GetChecked();
@@ -98,14 +108,15 @@ function openProductDetails(indexRow) {
 }
 
 
-function ShoppingCart(btn, id, name) {
-    var qty = parseInt($(btn).parent().find("select option:selected").val());
+function ShoppingCart(id, name) {
+    var qty = $("#cboAddCartLisProduct" + id).val();
     AddProductToCart(id, qty, name, true);
 }
 
-function AddToCart(btn, id, name) {
-    var qty = parseInt($(btn).parent().find("select option:selected").val());
+function AddToCart(id, name) {
+    var qty = $("#cboAddCartLisProduct" + id).val();
     AddProductToCart(id, qty, name, false);
+
 }
 
 function AddProductToCart(id, qty, name, returnCart) {
@@ -128,11 +139,18 @@ function AddProductToCart(id, qty, name, returnCart) {
         else {
             notyf.alert('Product: ' + id + ' / ' + name);
         }
+        $("#popoverProduct" + id).hide();
     });
+
+
 }
 
 
+
+
 $(document).ready(function () {
+
+    //DevExpress.ui.dxOverlay.baseZIndex(9999999);
 
     $("#principalDiv").attr("class", "prDivSub");
     $("#mainContainDiv").attr("class", "prMainContentSub");
