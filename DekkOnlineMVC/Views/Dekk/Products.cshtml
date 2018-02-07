@@ -398,6 +398,21 @@
 
                                 settings.ClientEnabled = true;
                                 //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+                                settings.PreRender = (sender, e) =>
+                                {
+                                    if (ViewBag.SizeWidth != null)
+                                    {
+                                        MVCxComboBox cmb = sender as MVCxComboBox;
+                                        string value = ViewBag.SizeWidth.ToString();
+                                        var item = cmb.Properties.Items.FindByText(value);
+                                        cmb.SelectedIndex = item.Index;
+                                        cmb.Text = value;
+                                        cmb.Value = value;
+                                    }
+                                };
+
                             }
                         ).BindList(ViewData["BagWidth"]).GetHtml()
                         </div>
