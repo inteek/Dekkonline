@@ -53,7 +53,7 @@ function Confirm(tar, cn, edm, edy, sc, chn) {
         sc: sc,
         chn: chn
     };
-    conectarAsy("ConfirmPay", data, function (result) {
+    conectarAsy("../ShoppingCart/ConfirmPay", data, function (result) {
         if (result.Success) {
             var url = "/ShoppingCart/Step4";
             window.location = url;

@@ -97,7 +97,7 @@ $("#next").click(function () {
         longitude: longitude
     };
 
-    conectarAsy("Next", data, function (result) {
+    conectarAsy("../ShoppingCart/Next", data, function (result) {
 
         if (result.error == false) {
             var url = "/ShoppingCart/Step3";
@@ -161,7 +161,7 @@ $("#MakeAppoint").click(function () {
 
 
     ////AJAX
-    conectarAsy("MakeApponitment", data, function (result) {
+    conectarAsy("../ShoppingCart/MakeApponitment", data, function (result) {
 
         if (result.error == false) {
             $("#modalWorkShop").hide();
