@@ -21,6 +21,7 @@
           </Key>
           <Property Name="IdAppointment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Schedule" Type="datetime" />
+          <Property Name="IdWorkShop" Type="int" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -121,10 +122,11 @@
           <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
           <Property Name="IdWorkshop" Type="int" />
           <Property Name="IdServiceWorkshop" Type="int" />
-          <Property Name="IdAppointmentsWorkshop" Type="int" />
+          <Property Name="IdAppointments" Type="int" />
           <Property Name="Date" Type="date" />
           <Property Name="Time" Type="varchar" MaxLength="10" />
           <Property Name="Comments" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="DetailUserPoints">
           <Key>
@@ -137,16 +139,37 @@
           <Property Name="StatusofPromo" Type="bit" />
           <Property Name="PointsEarned" Type="int" />
         </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+          <Property Name="Payment" Type="int" />
+          <Property Name="DeliveryAddress" Type="int" />
+          <Property Name="PromoCode" Type="varchar" MaxLength="15" />
+          <Property Name="Total" Type="money" />
+          <Property Name="DateS" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrdersDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="proId" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="price" Type="money" />
+          <Property Name="OrderMain" Type="int" />
+        </EntityType>
         <EntityType Name="Payment">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Number" Type="smallint" />
           <Property Name="Expire" Type="varchar" MaxLength="8" />
-          <Property Name="Date" Type="datetime" />
           <Property Name="TargetType" Type="varchar" MaxLength="15" />
           <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+          <Property Name="Number" Type="int" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -529,6 +552,8 @@
           <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdersDetail" EntityType="Self.OrdersDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromoCodeUsed" EntityType="Self.PromoCodeUsed" Schema="dbo" store:Type="Tables" />
@@ -816,7 +841,6 @@
             <End Role="products" EntitySet="products" />
             <End Role="ShoppingCart" EntitySet="ShoppingCart" />
           </AssociationSet>
-          <EntitySet Name="Appointments" EntityType="dekkOnlineModel.Appointments" />
           <EntitySet Name="PromotionCode" EntityType="dekkOnlineModel.PromotionCode" />
           <EntitySet Name="PromotionCodeUser" EntityType="dekkOnlineModel.PromotionCodeUser" />
           <EntitySet Name="TypesServices" EntityType="dekkOnlineModel.TypesServices" />
@@ -857,24 +881,27 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="DeliveryType" EntityType="dekkOnlineModel.DeliveryType" />
           <EntitySet Name="PurchaseOrder" EntityType="dekkOnlineModel.PurchaseOrder" />
           <AssociationSet Name="fk_Userpurchase" Association="dekkOnlineModel.fk_Userpurchase">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
-          <AssociationSet Name="fk_delivery" Association="dekkOnlineModel.fk_delivery">
-            <End Role="DeliveryType" EntitySet="DeliveryType" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
-          </AssociationSet>
           <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
           <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
+          <EntitySet Name="Appointments" EntityType="dekkOnlineModel.Appointments" />
+          <EntitySet Name="Orders" EntityType="dekkOnlineModel.Orders" />
+          <EntitySet Name="OrdersDetail" EntityType="dekkOnlineModel.OrdersDetail" />
+          <EntitySet Name="Payment" EntityType="dekkOnlineModel.Payment" />
           <EntitySet Name="PromoCodeUsed" EntityType="dekkOnlineModel.PromoCodeUsed" />
           <AssociationSet Name="fk_usedpromo" Association="dekkOnlineModel.fk_usedpromo">
             <End Role="PromotionCode" EntitySet="PromotionCode" />
             <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
           </AssociationSet>
-          <EntitySet Name="Payment" EntityType="dekkOnlineModel.Payment" />
+          <EntitySet Name="DeliveryType" EntityType="dekkOnlineModel.DeliveryType" />
+          <AssociationSet Name="fk_delivery" Association="dekkOnlineModel.fk_delivery">
+            <End Role="DeliveryType" EntitySet="DeliveryType" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -901,13 +928,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Appointments">
-          <Key>
-            <PropertyRef Name="IdAppointment" />
-          </Key>
-          <Property Name="IdAppointment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Schedule" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="PromotionCode">
           <Key>
             <PropertyRef Name="IdCode" />
@@ -1099,21 +1119,6 @@
           <End Type="dekkOnlineModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
-        <EntityType Name="DeliveryType">
-          <Key>
-            <PropertyRef Name="IdDelivery" />
-          </Key>
-          <Property Name="IdDelivery" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DeliveryType1" Type="Boolean" />
-          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IdWorkshop" Type="Int32" />
-          <Property Name="IdServiceWorkshop" Type="Int32" />
-          <Property Name="IdAppointmentsWorkshop" Type="Int32" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="Time" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_delivery" FromRole="DeliveryType" ToRole="PurchaseOrder" />
-        </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
             <PropertyRef Name="IdOrderDetail" />
@@ -1145,18 +1150,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_delivery">
-          <End Type="dekkOnlineModel.DeliveryType" Role="DeliveryType" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeliveryType">
-              <PropertyRef Name="IdDelivery" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="IdDelivery" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="WorkshopServices">
           <Key>
             <PropertyRef Name="Id" />
@@ -1180,6 +1173,46 @@
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Appointments">
+          <Key>
+            <PropertyRef Name="IdAppointment" />
+          </Key>
+          <Property Name="IdAppointment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Schedule" Type="DateTime" Precision="3" />
+          <Property Name="IdWorkShop" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Payment" Type="Int32" />
+          <Property Name="DeliveryAddress" Type="Int32" />
+          <Property Name="PromoCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateS" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OrdersDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="proId" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OrderMain" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Expire" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="TargetType" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="Int32" />
         </EntityType>
         <EntityType Name="PromoCodeUsed">
           <Key>
@@ -1205,17 +1238,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Payment">
+        <EntityType Name="DeliveryType">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="IdDelivery" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Number" Type="Int16" />
-          <Property Name="Expire" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="TargetType" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IdDelivery" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryType1" Type="Boolean" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IdWorkshop" Type="Int32" />
+          <Property Name="IdServiceWorkshop" Type="Int32" />
+          <Property Name="IdAppointments" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Time" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_delivery" FromRole="DeliveryType" ToRole="PurchaseOrder" />
         </EntityType>
+        <Association Name="fk_delivery">
+          <End Type="dekkOnlineModel.DeliveryType" Role="DeliveryType" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryType">
+              <PropertyRef Name="IdDelivery" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="IdDelivery" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1375,14 +1425,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Appointments">
-            <EntityTypeMapping TypeName="dekkOnlineModel.Appointments">
-              <MappingFragment StoreEntitySet="Appointments">
-                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
-                <ScalarProperty Name="IdAppointment" ColumnName="IdAppointment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PromotionCode">
             <EntityTypeMapping TypeName="dekkOnlineModel.PromotionCode">
               <MappingFragment StoreEntitySet="PromotionCode">
@@ -1484,21 +1526,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="DeliveryType">
-            <EntityTypeMapping TypeName="dekkOnlineModel.DeliveryType">
-              <MappingFragment StoreEntitySet="DeliveryType">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="IdAppointmentsWorkshop" ColumnName="IdAppointmentsWorkshop" />
-                <ScalarProperty Name="IdServiceWorkshop" ColumnName="IdServiceWorkshop" />
-                <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="DeliveryType1" ColumnName="DeliveryType" />
-                <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PurchaseOrder">
             <EntityTypeMapping TypeName="dekkOnlineModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrder">
@@ -1543,6 +1570,50 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Appointments">
+            <EntityTypeMapping TypeName="dekkOnlineModel.Appointments">
+              <MappingFragment StoreEntitySet="Appointments">
+                <ScalarProperty Name="IdWorkShop" ColumnName="IdWorkShop" />
+                <ScalarProperty Name="Schedule" ColumnName="Schedule" />
+                <ScalarProperty Name="IdAppointment" ColumnName="IdAppointment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="dekkOnlineModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="DateS" ColumnName="DateS" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdersDetail">
+            <EntityTypeMapping TypeName="dekkOnlineModel.OrdersDetail">
+              <MappingFragment StoreEntitySet="OrdersDetail">
+                <ScalarProperty Name="OrderMain" ColumnName="OrderMain" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="proId" ColumnName="proId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment">
+            <EntityTypeMapping TypeName="dekkOnlineModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="TargetType" ColumnName="TargetType" />
+                <ScalarProperty Name="Expire" ColumnName="Expire" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PromoCodeUsed">
             <EntityTypeMapping TypeName="dekkOnlineModel.PromoCodeUsed">
               <MappingFragment StoreEntitySet="PromoCodeUsed">
@@ -1555,15 +1626,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Payment">
-            <EntityTypeMapping TypeName="dekkOnlineModel.Payment">
-              <MappingFragment StoreEntitySet="Payment">
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
-                <ScalarProperty Name="TargetType" ColumnName="TargetType" />
+          <EntitySetMapping Name="DeliveryType">
+            <EntityTypeMapping TypeName="dekkOnlineModel.DeliveryType">
+              <MappingFragment StoreEntitySet="DeliveryType">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Expire" ColumnName="Expire" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="IdAppointments" ColumnName="IdAppointments" />
+                <ScalarProperty Name="IdServiceWorkshop" ColumnName="IdServiceWorkshop" />
+                <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="DeliveryType1" ColumnName="DeliveryType" />
+                <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

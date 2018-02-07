@@ -445,6 +445,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Site\Products.js" />
     <Content Include="Scripts\Site\ShoppingCartIndex.js" />
+    <Content Include="Scripts\Site\ShoppingCartStep3.js" />
     <Content Include="Scripts\Step2.js" />
     <Content Include="Scripts\vendors.js" />
     <Content Include="Styles\bootstrap-switch.css" />
@@ -520,16 +521,18 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Dekk\Products.cshtml" />
     <Content Include="Views\Dekk\ProductsPartial.cshtml" />
-    <Content Include="Views\ShoppingCart\Index.cshtml" />
-    <Content Include="Views\ShoppingCart\Step2.cshtml" />
-    <Content Include="Views\ShoppingCart\Step3.cshtml" />
-    <Content Include="Views\ShoppingCart\Step4.cshtml" />
     <Content Include="Styles\bootstrap-theme.css.map" />
     <Content Include="Styles\bootstrap-theme.min.css.map" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Past.cshtml" />
     <Content Include="Views\Profile\Pending.cshtml" />
     <Content Include="Views\Profile\Promos.cshtml" />
+    <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\Shared\Register.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\Step2.cshtml" />
+    <Content Include="Views\ShoppingCart\Step3.cshtml" />
+    <Content Include="Views\ShoppingCart\Step4.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

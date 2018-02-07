@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/Styles/Dimension.css?V=5")
-@Styles.Render("~/Styles/Shoppingcart.css?V=5")
+@Styles.Render("~/Styles/Shoppingcart.css?V=6")
 <div class="row">
     <div class="col-lg-12 ">
         <img src="~/Content/imgs/Step3.png" class="imgwidth1 img-responsive" />
@@ -43,7 +43,6 @@
 
                             <td data-th="Item">
                                 <div class="row">
-                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" onclick="DelCrt('@item.cartid')" id="@item.cartid"><span class="glyphicon glyphicon-remove"></span></a></div>
                                     <div class="col-sm-2 col-xs-3">
                                         <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
                                     </div>
@@ -54,7 +53,7 @@
                                 </div>
                             </td>
                             <td data-th="QTY">
-                                <input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" onchange="IncrsCart('@item.cartid', this.value)">
+                                <input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" disabled="disabled">
                             </td>
                             <td data-th="Price"><strong>@item.totalpriceprod kr</strong></td>
                         </tr>
@@ -128,19 +127,38 @@
         </div>
 
         <div class="col-lg-6">
-            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>The workshop you choose:</strong></label>
+            @if (Model.WorkshopName != null)
+            {
+                <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>The workshop you choose:</strong></label>
+            }
+            else
+            {
+                <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>The Address you choose:</strong></label>
+            }
+
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-lg-3">
-                            @*<img src="http://admin.dekkonline.sonetworks.no/@Model.Image" style="width:100px; height:100px;" />*@
-                            <img src="@Model.Image" style="width:100px; height:100px;" />
-                        </div>
-                        <div class="col-lg-5">
-                            <h4 style="color: #2471A3; "><strong>@Model.WorkshopName</strong></h4>
-                            <p><strong>@Model.WorkshopAddress</strong></p>
-                            <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
-                        </div>
+                        @if (Model.WorkshopName != null)
+                        {
+
+                            <div class="col-lg-3">
+                                @*<img src="http://admin.dekkonline.sonetworks.no/@Model.Image" style="width:100px; height:100px;" />*@
+                                <img src="@Model.Image" style="width:100px; height:100px;" />
+                            </div>
+                            <div class="col-lg-5">
+                                <h4 style="color: #2471A3; "><strong>@Model.WorkshopName</strong></h4>
+                                <p><strong>@Model.WorkshopAddress</strong></p>
+                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-5">
+                                <h4 style="color: #2471A3; "><strong>@Model.WorkshopAddress</strong></h4>
+                            </div>
+                        }
+
                     </div>
                 </div>
                 <div class="form-group">
@@ -177,12 +195,12 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Payment options:</strong></label>
+            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Payment options:</strong></label><label id="required" class="hidden" style="color: #E53935; font-size: 20px; margin-bottom: 20px;"><strong> **All fields are required</strong></label>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <div style="margin-left:15px">
-                        <input type="radio" name="payment" value="1" /><img src="~/Content/imgs/typepayment1.PNG" style="height:40px;" />
-                        <input type="radio" name="payment" value="1" /><img src="~/Content/imgs/typepayment2.PNG" style="height:40px;" />
+                        <input type="radio" name="payment" value="1" class="oneradio" /><img src="~/Content/imgs/typepayment1.PNG" style="height:40px;" />
+                        <input type="radio" name="payment" value="2" class="tworadio" /><img src="~/Content/imgs/typepayment2.PNG" style="height:40px;" />
                     </div>
                 </div>
             </form>
@@ -195,41 +213,41 @@
                     <div class="form-group col-lg-12" id="card-number-field">
                         <div class="col-sm-5 col-xs-8">
                             <label for="cardNumber" class="textoAzul">Card Number:</label>
-                            <input type="text" class="form-control" id="cardNumber">
+                            <input class="form-control cn no-spinners" id="cardNumber" pattern="^([0-9 ]+)+$" autocomplete="cc-number" spellcheck="false" data-hj-masked="data-hj-masked" maxlength="16" minlength="16" nonequals="2888 8888 8888" required="" type="tel">
                         </div>
                         <div class="col-sm-7 col-xs-7">
                             <label class="textoAzul">Expiration Date</label>
                             <div class="col-md-6 col-xs-6">
-                                <select class="selectpicker form-control" style="width: 120px;height: 41px;">
-                                    <option>January</option>
-                                    <option>February</option>
-                                    <option>March</option>
-                                    <option>April</option>
-                                    <option>May</option>
-                                    <option>June</option>
-                                    <option>July</option>
-                                    <option>August</option>
-                                    <option>September</option>
-                                    <option>October</option>
-                                    <option>November</option>
-                                    <option>December</option>
+                                <select class="selectpicker form-control mobile1 monthp" style="width: 120px;height: 41px;">
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
                                 </select>
                             </div>
                             <div class="col-md-6 col-xs-5">
-                                <select class="selectpicker form-control mobile1" style="width: 85px;height: 41px;">
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
-                                    <option>2021</option>
-                                    <option>2022</option>
-                                    <option>2023</option>
-                                    <option>2024</option>
-                                    <option>2025</option>
-                                    <option>2026</option>
-                                    <option>2027</option>
-                                    <option>2028</option>
-                                    <option>2029</option>
-                                    <option>2030</option>
+                                <select class="selectpicker form-control mobile1 yeary" style="width: 85px;height: 41px;">
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                    <option value="2029">2029</option>
+                                    <option value="2030">2030</option>
                                 </select>
                             </div>
                         </div>
@@ -247,11 +265,11 @@
                     <div class="form-group col-lg-12" id="card-number-field">
                         <div class="form-group CVV col-sm-6 col-xs-3">
                             <label for="cvv" class="textoAzul">Security Code:</label>
-                            <div class="input-group"><input type="text" class="form-control" id="cvv"><span class="input-group-addon"><i class=" 	glyphicon glyphicon-question-sign" style="cursor:pointer"></i></span></div>
+                            <div class="input-group"><input  class="form-control sc no-spinners" id="cvv" maxlength="4" minlength="3" pattern="^[0-9]+$" autocomplete="off" spellcheck="false" data-hj-masked="data-hj-masked" type="tel"><span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" style="cursor:pointer"></i></span></div>
                         </div>
                         <div class="form-group owner col-sm-6 col-xs-8">
                             <label for="owner" class="textoAzul">CardHolder name:</label>
-                            <input type="text" class="form-control" id="owner">
+                            <input type="text" class="form-control nombretg" id="owner">
                         </div>
                     </div>
                 </form>
@@ -263,14 +281,14 @@
     <div class="row">
         <div class="form-group col-lg-12">
             <div class="col-sm-5 col-xs-8 terms">
-                <input type="checkbox" name="terms"> <a><span class="linkcolor2 textoAzul">I have read and accepted terms & conditions</span></a>
+                <input type="checkbox" name="terms" class="terms2"> <a><span class="linkcolor2 textoAzul">I have read and accepted terms & conditions</span></a>
             </div>
             <div class="col-sm-8 col-xs-7 confirm">
                 <br />
                 <div class="form-group">
-                    <label class="col-md-2 col-xs-2 control-label"><a><span class="linkcolor textoAzul">Back</span></a></label>
+                    <label class="col-md-2 col-xs-2 control-label"><a><span class="linkcolor textoAzul st2">Back</span></a></label>
                     <div class="col-md-5 col-xs-3 margininput">
-                        <input type="button" class="btn btn-primary form-control" id="confirmpay" value="CONFIRM & PAY" style="margin-bottom:13px">
+                        <input type="button" class="btn btn-primary form-control confirmpay" id="confirmpay" value="CONFIRM & PAY" style="margin-bottom:13px">
                     </div>
                 </div>
             </div>
@@ -282,6 +300,7 @@
 
 
 @Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/Site/ShoppingCartStep3.js?v=3")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

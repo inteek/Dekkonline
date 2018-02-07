@@ -110,7 +110,7 @@ function openProductDetails(indexRow) {
 
 
 function ShoppingCart(id, name) {
-    e.preventDefault();
+    //event.preventDefault();
     //var btnLoad = Ladda.create(this);
     //btnLoad.start();
 

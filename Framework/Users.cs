@@ -193,6 +193,61 @@ namespace Framework
             }
 
             return new string(chars);
-        } 
+        }
+        public string IdUser(string email)
+        {
+            var user = (dynamic)null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    user = db.AspNetUsers.Where(s => s.UserName == email).Select(s => s.Id).FirstOrDefault().ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return user;
+        }
+
+        public List<ResulUserWorkShop> infoStep2(string User)
+        {
+            List<ResulUserWorkShop> result = null;
+            List<ResultWorkshop> listWorkshop = null;
+            var userAddress = (dynamic)null;
+
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    userAddress = db.UserAddress.Where(s => s.IdUser == User).FirstOrDefault();
+                    string userEmail = db.AspNetUsers.Where(s => s.Id == User).Select(s => s.UserName).FirstOrDefault();
+
+                    Workshop workshop = new Workshop();
+
+                    listWorkshop = workshop.loadWorkshopAddress(userAddress.ZipCode);
+
+                    if (userAddress != null || userAddress != "")
+                    {
+                        result = new List<ResulUserWorkShop> {
+                        new ResulUserWorkShop{
+                        workshop = listWorkshop,
+                        zipcode = userAddress.ZipCode,
+                        firstName = userAddress.FirstName,
+                        lastName = userAddress.LastName,
+                        address = userAddress.Address,
+                        email = userEmail,
+                        mobile = userAddress.Phone} };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return result;
+        }
+
     }
 }

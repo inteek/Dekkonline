@@ -121,6 +121,8 @@ namespace Framework
                               where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
                               select new ResultWorkshop
                               {
+                                  IdWorkshop = address.IdWorkshop,
+                                  Name = address.Name,
                                   Address = address.Address,
                                   ZipCode = address.ZipCode,
                                   Latitude = address.Latitude,
@@ -134,7 +136,6 @@ namespace Framework
             }
             return result;
         }
-
         //DE-26 1
         public List<ResultWorkshop> loadWorkshop(int workshop)
         {
@@ -161,6 +162,72 @@ namespace Framework
             }
             return result;
         }
-       
+
+        public bool addDeliveryType(int workshop, string idUser, int idWorkShop, int servicio, int fecha, string date, string time, string comments, string address)
+        {
+            bool result = false;
+            bool work = false;
+
+            var resuldata = (dynamic)null;
+
+            if (date == "")
+            {
+                resuldata = null;
+            }
+            else
+            {
+                resuldata = date;
+            }
+
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    if (workshop == 0) work = false;
+                    else work = true;
+
+                    if (fecha != 0)
+                    {
+                        var addwork = new Entity.DeliveryType();
+                        addwork.DeliveryType1 = work;
+                        addwork.IdUser = idUser;
+                        addwork.IdWorkshop = idWorkShop;
+                        addwork.IdServiceWorkshop = servicio;
+                        addwork.IdAppointments = fecha;
+                        addwork.Date = resuldata;
+                        addwork.Time = null;
+                        addwork.Comments = null;
+                        addwork.Address = null;
+                        db.DeliveryType.Add(addwork);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        var addwork = new Entity.DeliveryType();
+                        addwork.DeliveryType1 = work;
+                        addwork.IdUser = idUser;
+                        addwork.IdWorkshop = idWorkShop;
+                        addwork.IdServiceWorkshop = servicio;
+                        addwork.IdAppointments = fecha;
+                        addwork.Date = Convert.ToDateTime(resuldata);
+                        addwork.Time = time;
+                        addwork.Comments = comments;
+                        addwork.Address = address;
+                        db.DeliveryType.Add(addwork);
+                        db.SaveChanges();
+                    }
+
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+
     }
 }

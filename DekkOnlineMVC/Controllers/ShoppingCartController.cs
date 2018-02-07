@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DekkOnlineMVC.Models;
 using Framework;
+using Framework.Libraies;
 using Newtonsoft.Json;
 
 namespace DekkOnlineMVC.Controllers
@@ -15,6 +16,8 @@ namespace DekkOnlineMVC.Controllers
         // GET: /ShoppingCart/
         public ActionResult Index()
         {
+            string path = Request.Url.AbsolutePath;
+            ViewBag.ReturnUrl = path;
             var b = (dynamic)null;
             ShoppingCart sh = new ShoppingCart();
             var idUser = Security.GetIdUser(this);
@@ -205,21 +208,51 @@ namespace DekkOnlineMVC.Controllers
         }
 
         public ActionResult Step2()
+
         {
-            Workshop workshop = new Workshop();
-            var work = (dynamic)null;
+            string path = Request.Url.AbsolutePath;
+            ViewBag.ReturnUrl = path;
+            List<ResulUserWorkShop> list = null;
+            List<ResultWorkshop> WorkShop = null;
+
+            var b = (dynamic)null;
 
             try
             {
-                work = workshop.loadWorkshopAddress(1100);
+                string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+
+                if (idUser == null || idUser == "")
+                {
+                    b = new Framework.Libraies.ResulUserWorkShop { workshop = WorkShop, zipcode = Convert.ToInt32(null), firstName = null, lastName = null, address = null, email = null, mobile = null };
+                }
+                else
+                {
+                    Users users = new Users();
+                    ShoppingCart shoppingCart = new ShoppingCart();
+
+                    var usercookie = Security.GetIdUser(this);
+                    shoppingCart.UpdateShoppingCart(idUser, usercookie);
+                    list = users.infoStep2(idUser);
+
+                    if (list != null)
+                    {
+                        foreach (var item in list)
+                        {
+                            b = new Framework.Libraies.ResulUserWorkShop { workshop = item.workshop, zipcode = item.zipcode, firstName = item.firstName, lastName = item.lastName, address = item.address, email = item.email, mobile = item.mobile };
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
             }
-
-            return View(work);
+            return View(b);
         }
 
         //public PartialViewResult Step2()
@@ -272,14 +305,90 @@ namespace DekkOnlineMVC.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult ConfirmPay(string tar, string cn, string edm, string edy, string sc, string chn)
+        {
+            try
+            {
+                Orders or = new Orders();
+                ShoppingCart sh = new ShoppingCart();
+                var usuario1 = User.Identity.Name;
+                var a = (dynamic)null;
+                if (usuario1 != "")
+                {
+                    var id = sh.User(usuario1);
+                    a = or.addToPurchaseOrder(id, Convert.ToInt32(tar), cn, edm, edy, Convert.ToInt32(sc), chn);
+                }
+                else
+                {
+                    a = false;
+                }
+                if (a == true)
+                {
+                    return Json(new { Success = true });
+                }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
         public ActionResult Step4()
         {
+            var b = (dynamic)null;
+            Orders sh = new Orders();
+            ShoppingCart sh2 = new ShoppingCart();
             var usuario1 = User.Identity.Name;
             if (usuario1 == "")
             {
                 return RedirectToAction("Index", "Home");
             }
-            return PartialView();
+            var id = sh2.User(usuario1);
+            var pro = sh.ObtainProductsPaid(id);//8eb14cb4-c1d5-4e00-94fd-ca458532ac92   3f619083-b218-41e8-8693-1a93ecd82fdf
+            if (pro != null)
+            {
+                foreach (var item in pro)
+                {
+                    b = new Framework.Libraies.ResultPaidProducts
+                    {
+                        cart = item.cart,
+                        ZipCode = item.ZipCode.ToString(),
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        Address = item.Address,
+                        Email = item.Email,
+                        Mobile = item.Mobile,
+                        Promo = item.Promo,
+                        WorkshopName = item.WorkshopName,
+                        WorkshopAddress = item.WorkshopAddress,
+                        Image = item.Image,
+                        Rating = "as",
+                        Date = item.Date.ToString(),
+                        Time = item.Time,
+                        Comments = item.Comments,
+                        Total = item.Total,
+                        TypeTarget = item.TypeTarget,
+                        Number = item.Number,
+                        Expire = item.Expire,
+                        Order = item.Order
+                    
+                    };
+
+                }
+                return View(b);
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         [HttpPost]
@@ -326,37 +435,105 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Next(string zipCode, string firstName, string lastName, string address, string email, string choose, string date, string comments)
+        public ActionResult Next(string zipCode, string firstName, string lastName, string mobile, string address, string email, string choose, string date, string comments, string dateMapa, string timeMapa, string commentsMapa, int IdWorkshop, int radio, string latitude, string longitude)
         {
+            bool error = false;
+            int noError = 0;
+            string msg = "";
+            string page = "";
+            Users users = new Users();
+            Workshop Workshop = new Workshop();
+
+            string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+
             try
             {
-                Users users = new Users();
-                string pass = users.CreateRandomPassword(7);
+                if (idUser == null || idUser == "")
+                {
+                    string pass = users.CreateRandomPassword(7);
 
-                RegisterViewModel model = new RegisterViewModel();
+                    RegisterViewModel model = new RegisterViewModel();
 
-                model.Email1 = email;
-                model.Password1 = pass;
+                    model.Email1 = email;
+                    model.Password1 = pass;
 
-                AccountController account = new AccountController();
+                    AccountController account = new AccountController();
 
-                account.Register(model);
+                    account.Register(model);
 
-                return Json(new { error = false, noError = 0, msg = "Registro exitoso", page = Url.Action("Step3", "ShoppingCart") });
+                    error = false;
+                    noError = 0;
+                    msg = "Registro Exitoso";
+                    page = Url.Action("Step3", "ShoppingCart");
+                }
+                else
+                {
+                    bool resultUpdate = users.updateAddressUser(idUser, firstName, lastName, address, mobile, Convert.ToInt32(zipCode), latitude, longitude);
 
+                    if (resultUpdate == true)
+                    {
+                        if (radio == 1)
+                        {
+                            bool result = Workshop.addDeliveryType(1, idUser, 0, 0, 0, dateMapa, timeMapa, commentsMapa, address);
+                            if (result == true)
+                            {
+                                error = false;
+                                noError = 0;
+                                msg = "Registro Exitoso";
+                                page = Url.Action("Step3", "ShoppingCart");
+                            }
+                            else
+                            {
+                                error = true;
+                                noError = 1;
+                                msg = "Registro incorrecto metodo addDeliveryType";
+                                page = "";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        error = true;
+                        noError = 1;
+                        msg = "Registro incorrecto metodo updateAddressUser";
+                        page = "";
+                    }
+                }
             }
             catch (Exception)
             {
                 return Json(new { error = true, noError = 0, msg = "Error", page = "" });
             }
+
+            return Json(new { error, noError, msg, page });
         }
 
+        [HttpPost]
+        public JsonResult MakeApponitment(int fecha, int servicio, string date, string time, string comments, int workshop, int idWorkShop, string address)
+        {
+            Workshop Workshop = new Workshop();
+            string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
 
+            try
+            {
+                bool result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, date, time, comments, address);
 
+                if (result == true)
+                {
+                    return Json(new { error = false, noError = 0, msg = "Registro Correcto" });
+                }
+                else
+                {
+                    return Json(new { error = true, noError = 0, msg = "Registro Incorrecto" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex, noError = 0, msg = "Registro Incorrecto" });
+            }
+        }
 
-
-
-        public ActionResult CountProductCart()
+  public ActionResult CountProductCart()
         {
 
             List<Framework.Libraies.ResultAllCart> pro;
@@ -379,6 +556,6 @@ namespace DekkOnlineMVC.Controllers
             return Content(JsonConvert.SerializeObject(pro.Select(x=>x.cart.Sum(y=>y.quantity))), "application/json");
         }
 
-
+		
     }
 }

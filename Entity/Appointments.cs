@@ -16,5 +16,6 @@ namespace Entity
     {
         public int IdAppointment { get; set; }
         public Nullable<System.DateTime> Schedule { get; set; }
+        public Nullable<int> IdWorkShop { get; set; }
     }
 }

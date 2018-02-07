@@ -12,6 +12,10 @@ html {
 body {
   margin: 0;
 }
+.modal-xs {
+    width: 450px;
+    margin: auto;
+}
 article,
 aside,
 details,

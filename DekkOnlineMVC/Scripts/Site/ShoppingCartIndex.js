@@ -13,7 +13,7 @@ function DelCrt(id) {
     var data = {
         idcart : id
     };
-    conectarAsy("DeleteFromCart", data, function (result) {
+    conectarAsy("../ShoppingCart/DeleteFromCart", data, function (result) {
         if (result.Success) {
             window.location.reload();
         }
@@ -52,11 +52,12 @@ function ValPromo(id) {
     var data = {
         Code: id
     };
-    conectarAsy("ValidatePromo", data, function (result) {
+    conectarAsy("../ShoppingCart/ValidatePromo", data, function (result) {
         if (result.Success) {
             window.location.reload();
         }
         else if (result.error == false) {
+            swal("error", warning);
         }
         else if (result.error == true) {
             alert(result.msg);
@@ -68,7 +69,7 @@ function UndoPromo(id) {
     var data = {
         id1: id
     };
-    conectarAsy("UndoPromo", data, function (result) {
+    conectarAsy("../ShoppingCart/UndoPromo", data, function (result) {
         if (result.Success) {
             window.location.reload();
         }
