@@ -312,6 +312,9 @@
                 initPage();
             } catch (e) { };
 
+
+            updateCountProductCart();
+
             if ($("#Email").val() != "") {
                 $("#Email").removeClass("txtUser");
             } else {
@@ -452,6 +455,25 @@
         function goHome() {
             window.location = "/";
         }
+
+
+        function updateCountProductCart() {
+            debugger
+            conectarAsy("../ShoppingCart/CountProductCart", null, function (result) {
+                debugger
+                if (result != null && result.length > 0) {
+                    $("#lblProductCount").text(result[0])
+                    if (parseInt(result) < 10) {
+                        $("#lblProductCount").css("right", "25px");
+                    }
+                    else {
+                        $("#lblProductCount").css("right", "23px");
+                    }
+                }
+            });
+        }
+
+
     </script>
 
 

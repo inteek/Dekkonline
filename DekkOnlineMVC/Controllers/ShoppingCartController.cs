@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DekkOnlineMVC.Models;
 using Framework;
+using Newtonsoft.Json;
 
 namespace DekkOnlineMVC.Controllers
 {
@@ -349,5 +350,35 @@ namespace DekkOnlineMVC.Controllers
                 return Json(new { error = true, noError = 0, msg = "Error", page = "" });
             }
         }
+
+
+
+
+
+
+        public ActionResult CountProductCart()
+        {
+
+            List<Framework.Libraies.ResultAllCart> pro;
+            ShoppingCart sh = new ShoppingCart();
+            string idUser = Security.GetIdUser(this);
+            string usuario1 = User.Identity.Name;
+
+            if (usuario1 != "")
+            {
+                var id = sh.User(usuario1);
+                //sh.UpdateShoppingCart(id, idUser);
+                pro = sh.ProductsInCart(id);//8eb14cb4-c1d5-4e00-94fd-ca458532ac92
+            }
+            else
+            {
+                pro = sh.ProductsInCart(idUser);//8eb14cb4-c1d5-4e00-94fd-ca458532ac92
+            }
+
+
+            return Content(JsonConvert.SerializeObject(pro.Select(x=>x.cart.Sum(y=>y.quantity))), "application/json");
         }
+
+
+    }
 }

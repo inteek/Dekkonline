@@ -146,18 +146,15 @@ function AddProductToCart(id, qty, name, returnCart, callback) {
     conectarAsy("../Dekk/AddToCart", data, function (result) {
         var notyf = new Notyf();
         if (result.Success == true) {
+
+            updateCountProductCart();
+
             if (returnCart) {
                 window.location = "../ShoppingCart/Index";
             }
             else {
-                var qtyOld = parseInt($("#lblProductCount").text());
-                var qtyNew = qtyOld + parseInt(qty);
-                $("#lblProductCount").text(qtyNew);
-
                 notyf.confirm('Product: ' + id + ' / ' + name);
             }
-
-
         }
         else {
             notyf.alert('Product: ' + id + ' / ' + name);
