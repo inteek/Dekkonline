@@ -57,6 +57,7 @@ function ValPromo(id) {
             window.location.reload();
         }
         else if (result.error == false) {
+            swal("error", warning);
         }
         else if (result.error == true) {
             alert(result.msg);

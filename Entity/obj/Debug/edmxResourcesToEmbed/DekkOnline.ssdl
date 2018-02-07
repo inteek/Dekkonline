@@ -16,6 +16,7 @@
     </Key>
     <Property Name="IdAppointment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Schedule" Type="datetime" />
+    <Property Name="IdWorkShop" Type="int" />
   </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
@@ -116,10 +117,11 @@
     <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
     <Property Name="IdWorkshop" Type="int" />
     <Property Name="IdServiceWorkshop" Type="int" />
-    <Property Name="IdAppointmentsWorkshop" Type="int" />
+    <Property Name="IdAppointments" Type="int" />
     <Property Name="Date" Type="date" />
     <Property Name="Time" Type="varchar" MaxLength="10" />
     <Property Name="Comments" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="DetailUserPoints">
     <Key>
@@ -132,16 +134,37 @@
     <Property Name="StatusofPromo" Type="bit" />
     <Property Name="PointsEarned" Type="int" />
   </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="Payment" Type="int" />
+    <Property Name="DeliveryAddress" Type="int" />
+    <Property Name="PromoCode" Type="varchar" MaxLength="15" />
+    <Property Name="Total" Type="money" />
+    <Property Name="DateS" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrdersDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="proId" Type="int" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="price" Type="money" />
+    <Property Name="OrderMain" Type="int" />
+  </EntityType>
   <EntityType Name="Payment">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Number" Type="smallint" />
     <Property Name="Expire" Type="varchar" MaxLength="8" />
-    <Property Name="Date" Type="datetime" />
     <Property Name="TargetType" Type="varchar" MaxLength="15" />
     <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="Number" Type="int" />
   </EntityType>
   <EntityType Name="products">
     <Key>
@@ -524,6 +547,8 @@
     <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrdersDetail" EntityType="Self.OrdersDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PromoCodeUsed" EntityType="Self.PromoCodeUsed" Schema="dbo" store:Type="Tables" />

@@ -25,10 +25,11 @@ namespace Entity
         public string IdUser { get; set; }
         public Nullable<int> IdWorkshop { get; set; }
         public Nullable<int> IdServiceWorkshop { get; set; }
-        public Nullable<int> IdAppointmentsWorkshop { get; set; }
+        public Nullable<int> IdAppointments { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string Time { get; set; }
         public string Comments { get; set; }
+        public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }

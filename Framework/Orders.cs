@@ -24,7 +24,7 @@ namespace Framework
                         addDelivery.IdUser = idUser;
                         addDelivery.IdWorkshop = idWorkshop;
                         addDelivery.IdServiceWorkshop = idServiceWorkshop;
-                        addDelivery.IdAppointmentsWorkshop = idAppointmentsWorkshop;
+                        //addDelivery.IdAppointmentsWorkshop = idAppointmentsWorkshop;
                         addDelivery.Date = null;
                         addDelivery.Time = null;
                         addDelivery.Comments = null;
@@ -39,7 +39,7 @@ namespace Framework
                         addDelivery.IdUser = idUser;
                         addDelivery.IdWorkshop = idWorkshop;
                         addDelivery.IdServiceWorkshop = idServiceWorkshop;
-                        addDelivery.IdAppointmentsWorkshop = null;
+                        //addDelivery.IdAppointmentsWorkshop = null;
                         addDelivery.Date = date;
                         addDelivery.Time = time;
                         addDelivery.Comments = comments;
@@ -58,67 +58,87 @@ namespace Framework
         }
 
         //DE-8 2 cambios
-        public bool addToPurchaseOrder(string idUser, string products, string carts, decimal totalPrice, string paymentmethod, DateTime orderDate, bool oderStatus, DateTime? deliveredDate, string usedPromo, string comments)
+        public bool addToPurchaseOrder(string idUser, int tar, string cn, string edm, string edy, int sc, string chn)
         {
             try
             {
-                string productss = null;
                 using (var db = new dekkOnlineEntities())
                 {
-                    var idDelivery = (from d in db.DeliveryType
-                                      where (d.IdUser == idUser)
-                                      orderby d.IdUser descending
-                                      select d.IdDelivery).FirstOrDefault();
-
-                    var product = db.ShoppingCart.Where(s => s.IdUser == idUser && s.Status == false).ToList();
-
-                    foreach (var item in product)
+                    DbContextTransaction transaction = db.Database.BeginTransaction();
+                    try
                     {
-                        productss += " " + item.proId;
-                    }
-                    productss = productss.Trim();
-                    productss = productss.Replace(" ", ",");
-                    if (idDelivery != null)
-                    {
-                        var addPurchaseOrder = new Entity.PurchaseOrder();
-                        addPurchaseOrder.IdUser = idUser;
-                        addPurchaseOrder.Products = productss;
-                        addPurchaseOrder.Shoppingcarts = carts;
-                        addPurchaseOrder.TotalPrice = totalPrice;
-                        addPurchaseOrder.Paymentmethod = paymentmethod;
-                        addPurchaseOrder.OrderDate = orderDate;
-                        addPurchaseOrder.Orderstatus = oderStatus;
-                        addPurchaseOrder.IdDelivery = Convert.ToInt32(idDelivery);
-                        addPurchaseOrder.DeliveredDate = deliveredDate;
-                        addPurchaseOrder.UsedPromo = usedPromo;
-                        addPurchaseOrder.Comments = comments;
 
-                        db.PurchaseOrder.Add(addPurchaseOrder);
-                        db.SaveChanges();
-                        string[] shoppingcartid;
-                        shoppingcartid = products.Split(',');
-                        foreach (var item in shoppingcartid)
+                        var idDelivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
+                        var Address = db.UserAddress.Where(s => s.IdUser == idUser).OrderByDescending(s => s.Id).FirstOrDefault();
+                        var product = db.ShoppingCart.Where(s => s.IdUser == idUser && s.Status == false).ToList();
+                        var Procmocode = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
+                        var prom = (dynamic)null;
+                        var total = (dynamic)null;
+                        var addTarget = new Entity.Payment();
+                        if (tar == 1)
                         {
-                            var prodid = db.ShoppingCart.Where(s => s.Id.ToString() == item).Select(s => s.proId).FirstOrDefault();
-                            var productquantity = (from a in db.ShoppingCart
-                                                   where a.proId == prodid && a.IdUser == idUser
-                                                   orderby a.Id descending
-                                                   select new { quantity1 = a.quantity }).FirstOrDefault();
-                            var StockProductFinal = db.products.Where(s => s.proId == prodid).FirstOrDefault();
-                            var productcartchange = (from a in db.ShoppingCart
-                                                     where a.proId == prodid && a.IdUser == idUser && a.Status == true
-                                                     orderby a.Id descending
-                                                     select a).FirstOrDefault();
-                            StockProductFinal.proInventory = StockProductFinal.proInventory - productquantity.quantity1;
-                            db.Entry(StockProductFinal).State = EntityState.Modified;
-                            productcartchange.Status = false;
-                            db.Entry(productcartchange).State = EntityState.Modified;
+                          cn =  cn.Substring(cn.Length - 4);
+                            addTarget.Number = Convert.ToInt32(cn);
+                            addTarget.Expire = edm + "/" + edy;
+                            addTarget.TargetType = "vpps";
+                            addTarget.idUser = idUser;
+                            db.Payment.Add(addTarget);
                             db.SaveChanges();
                         }
+                        else
+                        {
+                           cn = cn.Substring(cn.Length - 4);
+                            addTarget.Number = Convert.ToInt32(cn);
+                            addTarget.Expire = edm + "/" + edy;
+                            addTarget.TargetType = "Mastercard/Visa";
+                            addTarget.idUser = idUser;
+                            db.Payment.Add(addTarget);
+                            db.SaveChanges();
+                        }
+                        if (Procmocode != null)
+                        {
+                            prom = Procmocode.PromoCode;
+                            total = Procmocode.TotalPriceFinal;
+                        }
+                        else
+                        {
+                            prom = "No promo";
+                            total = product.Select(p => p.Price).Sum();
+                        }
+                        var payment = db.Payment.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).FirstOrDefault();
+                        var addOrder = new Entity.Orders();
+                        addOrder.idUser = idUser;
+                        addOrder.Payment = payment.id;
+                        addOrder.DeliveryAddress = idDelivery.IdDelivery;
+                        addOrder.PromoCode = prom;
+                        addOrder.Total = total;
+                        addOrder.DateS = DateTime.Now;
+                        db.Orders.Add(addOrder);
+                        db.SaveChanges();
+                        var addOrderdetail = new Entity.OrdersDetail();
+                        var ordermain = db.Orders.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).FirstOrDefault();
+                        foreach (var item in product)
+                        {
+                            addOrderdetail.proId = item.proId;
+                            addOrderdetail.quantity = item.quantity;
+                            addOrderdetail.price = item.Price;
+                            addOrderdetail.OrderMain = ordermain.id;
+                            item.Status = true;
+                            if (Procmocode != null)
+                            {
+                            Procmocode.Used = true;
+                            }
+                            db.OrdersDetail.Add(addOrderdetail);
+                            db.SaveChanges();
+
+                        }
+                        transaction.Commit();
                         return true;
                     }
-                    else
+                    catch
                     {
+
+                        transaction.Rollback();
                         return false;
                     }
 
@@ -127,6 +147,7 @@ namespace Framework
             catch (Exception ex)
             {
                 //_Error = ex;
+
                 return false;
             }
         }
@@ -332,25 +353,91 @@ namespace Framework
                                     totalpriceprod = Math.Round((double)cart.Price, 2),
                                     cartid = cart.Id.ToString()
                                 }).ToList();
-                    var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
-                        var userAddress = (from us in db.AspNetUsers join us2 in db.UserAddress on us.Id equals us2.IdUser where us.Id == idUser select new
+                    var promocodeused2 = (from promo in db.PromotionCode
+                                          join promou in db.PromoCodeUsed on promo.IdCode equals promou.PromoCode
+                                          where (promo.DateEnd < DateTime.Now && promou.Used == false && promou.idUser == idUser)
+                                          select new { promo.IdCode }).FirstOrDefault();
+                    if (promocodeused2 != null)
                     {
-                        ZipCode = us2.ZipCode.ToString(),
-                        FirstName = us2.FirstName,
-                        LastName = us2.LastName,
-                        Address = us2.Address,
-                        Email = us.Email,
-                        Mobile = us2.Phone,
-                    }).FirstOrDefault();
+                        var promo1 = db.PromoCodeUsed.Where(s => s.PromoCode == promocodeused2.IdCode && s.idUser == idUser).FirstOrDefault();
+                        db.PromoCodeUsed.Remove(promo1);
+                        db.SaveChanges();
+                    }
+                    var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
+                    var userAddress = (from us in db.AspNetUsers
+                                       join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                       where us.Id == idUser
+                                       select new
+                                       {
+                                           ZipCode = us2.ZipCode.ToString(),
+                                           FirstName = us2.FirstName,
+                                           LastName = us2.LastName,
+                                           Address = us2.Address,
+                                           Email = us.Email,
+                                           Mobile = us2.Phone,
+                                       }).FirstOrDefault();
                     double? Total2 = products.Select(p => p.totalpriceprod).Sum();
                     var Delivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
                     var workshop = db.Workshop.Where(s => s.IdWorkshop == Delivery.IdWorkshop).FirstOrDefault();
                     if (promocodeused == null)
                     {
-                    if (Delivery.IdAppointmentsWorkshop != null)
-                    {
-                        var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointmentsWorkshop).FirstOrDefault();
-                        AddressWorkshop = new List<ResultProductsConfirmation>()
+                        if (Delivery.DeliveryType1 == false)
+                        {
+                            var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                            if (Delivery.IdAppointments == 0)
+                            {
+                                DateTime dat = (DateTime)Delivery.Date;
+                                AddressWorkshop = new List<ResultProductsConfirmation>()
+                                {
+                                   new ResultProductsConfirmation{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = null,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = Delivery.Time,
+                                    Comments = Delivery.Comments,
+                                   Total = (decimal)Total2}
+                                };
+                            }
+                            else
+                            {
+                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
+                                DateTime dat = (DateTime)appointmentpre.Schedule;
+                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                AddressWorkshop = new List<ResultProductsConfirmation>()
+                                {
+                                   new ResultProductsConfirmation{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = null,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = dat2.ToString("t"),
+                                    Comments = Delivery.Comments,
+                                   Total = (decimal)Total2}
+                                };
+                            }
+
+                        }
+                        else
+                        {
+                            DateTime dat = (DateTime)Delivery.Date;
+                            AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
                            new ResultProductsConfirmation{ cart = products,
                             ZipCode = userAddress.ZipCode.ToString(),
@@ -360,66 +447,74 @@ namespace Framework
                             Email = userAddress.Email,
                             Mobile = userAddress.Mobile,
                             Promo = null,
-                            WorkshopName = workshop.Name,
-                            WorkshopAddress = workshop.Address,
-                            Image = workshop.WorkImage,
+                            WorkshopName = null,
+                            WorkshopAddress = Delivery.Address,
+                            Image = null,
                             Rating = "as",
-                            Date = appointment.Date.ToString(),
-                            Time = appointment.Time.ToString(),
-                            Comments = Delivery.Comments,
-                           Total = (decimal)Total2}
-                        };
-                    }
-                    else
-                    {
-                        AddressWorkshop = new List<ResultProductsConfirmation>()
-                        {
-                           new ResultProductsConfirmation{ cart = products,
-                            ZipCode = userAddress.ZipCode.ToString(),
-                            FirstName = userAddress.FirstName,
-                            LastName = userAddress.LastName,
-                            Address = userAddress.Address,
-                            Email = userAddress.Email,
-                            Mobile = userAddress.Mobile,
-                            Promo = null,
-                            WorkshopName = workshop.Name,
-                            WorkshopAddress = workshop.Address,
-                            Image = workshop.WorkImage,
-                            Rating = "as",
-                            Date = Delivery.Date.ToString(),
+                            Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
                            Total = (decimal)Total2 }
                         };
-                    }
-                    }
+                        }
+                    }////promocode null
                     else
                     {
-                        if (Delivery.IdAppointmentsWorkshop != null)
+                        var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                        if (Delivery.DeliveryType1 == false)
                         {
-                            var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointmentsWorkshop).FirstOrDefault();
-                            AddressWorkshop = new List<ResultProductsConfirmation>()
-                        {
-                           new ResultProductsConfirmation{ cart = products,
-                            ZipCode = userAddress.ZipCode.ToString(),
-                            FirstName = userAddress.FirstName,
-                            LastName = userAddress.LastName,
-                            Address = userAddress.Address,
-                            Email = userAddress.Email,
-                            Mobile = userAddress.Mobile,
-                            Promo = promocodeused.PromoCode,
-                            WorkshopName = workshop.Name,
-                            WorkshopAddress = workshop.Address,
-                            Image = workshop.WorkImage,
-                            Rating = "as",
-                            Date = appointment.Date.ToString(),
-                            Time = appointment.Time.ToString(),
-                            Comments = Delivery.Comments,
-                           Total = promocodeused.TotalPriceFinal}
-                        };
+                            if (Delivery.IdAppointments == 0)
+                            {
+                                DateTime dat = (DateTime)Delivery.Date;
+                                AddressWorkshop = new List<ResultProductsConfirmation>()
+                                {
+                                   new ResultProductsConfirmation{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = promocodeused.PromoCode,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = Delivery.Time,
+                                    Comments = Delivery.Comments,
+                                   Total = promocodeused.TotalPriceFinal}
+                                };
+                            }
+                            else
+                            {
+                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
+                                DateTime dat = (DateTime)appointmentpre.Schedule;
+                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                AddressWorkshop = new List<ResultProductsConfirmation>()
+                                {
+                                   new ResultProductsConfirmation{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = promocodeused.PromoCode,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = dat2.ToString("t"),
+                                    Comments = Delivery.Comments,
+                                   Total = promocodeused.TotalPriceFinal}
+                                };
+                            }
                         }
                         else
                         {
+                            DateTime dat = (DateTime)Delivery.Date;
                             AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
                            new ResultProductsConfirmation{ cart = products,
@@ -430,20 +525,17 @@ namespace Framework
                             Email = userAddress.Email,
                             Mobile = userAddress.Mobile,
                             Promo = promocodeused.PromoCode,
-                            WorkshopName = workshop.Name,
-                            WorkshopAddress = workshop.Address,
-                            Image = workshop.WorkImage,
+                            WorkshopName = null,
+                            WorkshopAddress = Delivery.Address,
+                            Image =null,
                             Rating = "as",
-                            Date = Delivery.Date.ToString(),
+                            Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
                            Total = promocodeused.TotalPriceFinal }
                         };
                         }
                     }
-
-
-
                 }
                 return AddressWorkshop;
             }
@@ -454,241 +546,238 @@ namespace Framework
             }
 
         }
-        public string ObtainConfirmation(string idUser)
+
+
+
+        public List<ResultPaidProducts> ObtainProductsPaid(string idUser)
         {
-            var OrderConf = (dynamic)null;
+            List<ResultPaidProducts> AddressWorkshop = (dynamic)null;
+            List<ResultShoppingCartProduct> products = null;
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    var DeliveryType = (from pro in db.PurchaseOrder
-                                        join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                        where pro.IdUser == idUser
-                                        orderby pro.IdOrderDetail descending
-                                        select new { Deliverytype = del.DeliveryType1, Appointmentworkshop = del.IdAppointmentsWorkshop }
-                                     ).FirstOrDefault();
-
-                    List<ResultShoppingCartProduct> products = null;
+                    var order = db.Orders.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).Select(s => s.id).FirstOrDefault();
                     products = (from pro in db.products
-                                join cart in db.ShoppingCart on pro.proId equals cart.proId
-                                where cart.IdUser.Equals(idUser) && cart.Status == false
+                                join cart in db.OrdersDetail on pro.proId equals cart.proId
+                                join or in db.Orders on cart.OrderMain equals or.id
+                                where or.idUser.Equals(idUser) && or.id == order
                                 select new ResultShoppingCartProduct
                                 {
-                                    totalpriceprod = Math.Round((double)cart.Price, 2)
+                                    IdUser = or.idUser,
+                                    proId = cart.proId,
+                                    Image = pro.proImage,
+                                    Name = pro.proName,
+                                    Description = pro.proDescription,
+                                    quantity = cart.quantity,
+                                    totalpriceprod = Math.Round((double)cart.price, 2),
+                                    cartid = cart.id.ToString()
                                 }).ToList();
+                    var promocodeused = (from prom in db.PromoCodeUsed
+                                         join or in db.Orders on prom.PromoCode equals or.PromoCode
+                                         where (prom.idUser == idUser && prom.Used == true && or.id == order)
+                                         select new { prom.PromoCode,
+                                         prom.TotalPriceFinal}).FirstOrDefault();
+                    var userAddress = (from us in db.AspNetUsers
+                                       join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                       where us.Id == idUser
+                                       select new
+                                       {
+                                           ZipCode = us2.ZipCode.ToString(),
+                                           FirstName = us2.FirstName,
+                                           LastName = us2.LastName,
+                                           Address = us2.Address,
+                                           Email = us.Email,
+                                           Mobile = us2.Phone,
+                                       }).FirstOrDefault();
                     double? Total2 = products.Select(p => p.totalpriceprod).Sum();
-                    var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
-                    if (promocodeused != null)
+                    var Delivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
+                    var workshop = db.Workshop.Where(s => s.IdWorkshop == Delivery.IdWorkshop).FirstOrDefault();
+                    var payment = db.Payment.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).FirstOrDefault();
+                    if (promocodeused == null)
                     {
-                        if (DeliveryType.Deliverytype == false)
+                        if (Delivery.DeliveryType1 == false)
                         {
-                            if (DeliveryType.Appointmentworkshop != null)
+                            var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                            if (Delivery.IdAppointments == 0)
                             {
-
-
-                                OrderConf = (from pro in db.PurchaseOrder
-                                             join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                             join user in db.UserAddress on del.IdUser equals user.IdUser
-                                             join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
-                                             join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
-                                             where pro.IdUser == idUser
-                                             orderby pro.IdOrderDetail descending
-                                             select new
-                                             {
-                                                 cart = products,
-                                                 Idorderdetail = pro.IdOrderDetail,
-                                                 zipcode = user.ZipCode,
-                                                 Firstname = user.FirstName,
-                                                 Lastname = user.LastName,
-                                                 Adress = user.Address,
-                                                 Emailuser = tUser.Email,
-                                                 Phonenumber = user.Phone,
-                                                 DateWorkshop = del.Date,
-                                                 TimeWorkshop = del.Time,
-                                                 WorkshopComments = del.Comments,
-                                                 WorkshopName = twork.Name,
-                                                 WorkshopAdress = twork.Address,
-                                                 WorkshopLatitude = twork.Latitude,
-                                                 WorkshopLength = twork.Length,
-                                                 Promo=promocodeused.PromoCode,
-                                                 Total = promocodeused.TotalPriceFinal
-                                             }
-                                      ).FirstOrDefault().ToString();
-                                return OrderConf;
+                                DateTime dat = (DateTime)Delivery.Date;
+                                AddressWorkshop = new List<ResultPaidProducts>()
+                                {
+                                   new ResultPaidProducts{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = null,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = Delivery.Time,
+                                    Comments = Delivery.Comments,
+                                   Total = (decimal)Total2,
+                                   TypeTarget = payment.TargetType,
+                                   Number = (int)payment.Number,
+                                   Expire = payment.Expire,
+                                   Order = order}
+                                  
+                                };
                             }
                             else
                             {
-                                OrderConf = (from pro in db.PurchaseOrder
-                                             join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                             join user in db.UserAddress on del.IdUser equals user.IdUser
-                                             join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
-                                             join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
-                                             join awork in db.WorkshopAppointment on del.IdAppointmentsWorkshop equals awork.Id
-                                             where pro.IdUser == idUser
-                                             orderby pro.IdOrderDetail descending
-                                             select new
-                                             {
-                                                 cart = products,
-                                                 Idorderdetail = pro.IdOrderDetail,
-                                                 zipcode = user.ZipCode,
-                                                 Firstname = user.FirstName,
-                                                 Lastname = user.LastName,
-                                                 Adress = user.Address,
-                                                 Emailuser = tUser.Email,
-                                                 Phonenumber = user.Phone,
-                                                 DateWorkshop = awork.Date,
-                                                 TimeWorkshop = awork.Time,
-                                                 WorkshopComments = del.Comments,
-                                                 WorkshopName = twork.Name,
-                                                 WorkshopAdress = twork.Address,
-                                                 WorkshopLatitude = twork.Latitude,
-                                                 WorkshopLength = twork.Length,
-                                                 Promo = promocodeused.PromoCode,
-                                                 Total = promocodeused.TotalPriceFinal
-                                             }
-                                ).FirstOrDefault().ToString();
-                                return OrderConf;
+                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
+                                DateTime dat = (DateTime)appointmentpre.Schedule;
+                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                AddressWorkshop = new List<ResultPaidProducts>()
+                                {
+                                   new ResultPaidProducts{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = null,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = dat2.ToString("t"),
+                                    Comments = Delivery.Comments,
+                                   Total = (decimal)Total2,
+                                   TypeTarget = payment.TargetType,
+                                   Number = (int)payment.Number,
+                                   Expire = payment.Expire,
+                                   Order = order}
+                                };
+                            }
+
+                        }
+                        else
+                        {
+                            DateTime dat = (DateTime)Delivery.Date;
+                            AddressWorkshop = new List<ResultPaidProducts>()
+                        {
+                           new ResultPaidProducts{ cart = products,
+                            ZipCode = userAddress.ZipCode.ToString(),
+                            FirstName = userAddress.FirstName,
+                            LastName = userAddress.LastName,
+                            Address = userAddress.Address,
+                            Email = userAddress.Email,
+                            Mobile = userAddress.Mobile,
+                            Promo = null,
+                            WorkshopName =null,
+                            WorkshopAddress = Delivery.Address,
+                            Image = null,
+                            Rating = "as",
+                            Date = dat.ToString("D"),
+                            Time = Delivery.Time,
+                            Comments = Delivery.Comments,
+                           Total = (decimal)Total2,
+                                   TypeTarget = payment.TargetType,
+                                   Number = (int)payment.Number,
+                                   Expire = payment.Expire,
+                                   Order = order}
+                        };
+                        }
+                    }////promocode null
+                    else
+                    {
+                        var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                        if (Delivery.DeliveryType1 == false)
+                        {
+                            if (Delivery.IdAppointments == 0)
+                            {
+                                DateTime dat = (DateTime)Delivery.Date;
+                                AddressWorkshop = new List<ResultPaidProducts>()
+                                {
+                                   new ResultPaidProducts{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = promocodeused.PromoCode,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = Delivery.Time,
+                                    Comments = Delivery.Comments,
+                                   Total = promocodeused.TotalPriceFinal,
+                                   TypeTarget = payment.TargetType,
+                                   Number = (int)payment.Number,
+                                   Expire = payment.Expire,
+                                   Order = order}
+                                };
+                            }
+                            else
+                            {
+                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
+                                DateTime dat = (DateTime)appointmentpre.Schedule;
+                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                AddressWorkshop = new List<ResultPaidProducts>()
+                                {
+                                   new ResultPaidProducts{ cart = products,
+                                    ZipCode = userAddress.ZipCode.ToString(),
+                                    FirstName = userAddress.FirstName,
+                                    LastName = userAddress.LastName,
+                                    Address = userAddress.Address,
+                                    Email = userAddress.Email,
+                                    Mobile = userAddress.Mobile,
+                                    Promo = promocodeused.PromoCode,
+                                    WorkshopName = workshop.Name,
+                                    WorkshopAddress = workshop.Address,
+                                    Image = workshop.WorkImage,
+                                    Rating = "as",
+                                    Date = dat.ToString("D"),
+                                    Time = dat2.ToString("t"),
+                                    Comments = Delivery.Comments,
+                                   Total = promocodeused.TotalPriceFinal,
+                                   TypeTarget = payment.TargetType,
+                                   Number = (int)payment.Number,
+                                   Expire = payment.Expire,
+                                   Order = order}
+                                };
                             }
                         }
                         else
                         {
-
-                            OrderConf = (from pro in db.PurchaseOrder
-                                         join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                         join user in db.UserAddress on del.IdUser equals user.IdUser
-                                         join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
-                                         join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
-                                         where pro.IdUser == idUser
-                                         orderby pro.IdOrderDetail descending
-                                         select new
-                                         {
-                                             cart = products,
-                                             Idorderdetail = pro.IdOrderDetail,
-                                             zipcode = user.ZipCode,
-                                             Firstname = user.FirstName,
-                                             Lastname = user.LastName,
-                                             Adress = user.Address,
-                                             Emailuser = tUser.Email,
-                                             Phonenumber = user.Phone,
-                                             DateUser = del.Date,
-                                             TimeUser = del.Time,
-                                             UserComments = del.Comments,
-                                             UserName = user.FirstName,
-                                             UserAdress = user.Address,
-                                             UserLatitude = user.Latitude,
-                                             UserLength = user.Length,
-                                             Promo = promocodeused.PromoCode,
-                                             Total = promocodeused.TotalPriceFinal
-                                         }
-                                ).FirstOrDefault().ToString();
-                            return OrderConf;
-                        }
-
-                    }
-                    else////////////////////////////// me falta agregar el total de cuando no hay promocode validado y lo obtengo de la variable total
-                    {
-                        if (DeliveryType.Deliverytype == false)
+                            DateTime dat = (DateTime)Delivery.Date;
+                            AddressWorkshop = new List<ResultPaidProducts>()
                         {
-                            if (DeliveryType.Appointmentworkshop != null)
-                            {
-
-
-                                OrderConf = (from pro in db.PurchaseOrder
-                                             join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                             join user in db.UserAddress on del.IdUser equals user.IdUser
-                                             join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
-                                             join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
-                                             where pro.IdUser == idUser
-                                             orderby pro.IdOrderDetail descending
-                                             select new
-                                             {
-                                                 cart = products,
-                                                 Idorderdetail = pro.IdOrderDetail,
-                                                 zipcode = user.ZipCode,
-                                                 Firstname = user.FirstName,
-                                                 Lastname = user.LastName,
-                                                 Adress = user.Address,
-                                                 Emailuser = tUser.Email,
-                                                 Phonenumber = user.Phone,
-                                                 DateWorkshop = del.Date,
-                                                 TimeWorkshop = del.Time,
-                                                 WorkshopComments = del.Comments,
-                                                 WorkshopName = twork.Name,
-                                                 WorkshopAdress = twork.Address,
-                                                 WorkshopLatitude = twork.Latitude,
-                                                 WorkshopLength = twork.Length,
-                                                 Total = Total2
-                                             }
-                                      ).FirstOrDefault().ToString();
-                                return OrderConf;
-                            }
-                            else
-                            {
-                                OrderConf = (from pro in db.PurchaseOrder
-                                             join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                             join user in db.UserAddress on del.IdUser equals user.IdUser
-                                             join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
-                                             join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
-                                             join awork in db.WorkshopAppointment on del.IdAppointmentsWorkshop equals awork.Id
-                                             where pro.IdUser == idUser
-                                             orderby pro.IdOrderDetail descending
-                                             select new
-                                             {
-                                                 cart = products,
-                                                 Idorderdetail = pro.IdOrderDetail,
-                                                 zipcode = user.ZipCode,
-                                                 Firstname = user.FirstName,
-                                                 Lastname = user.LastName,
-                                                 Adress = user.Address,
-                                                 Emailuser = tUser.Email,
-                                                 Phonenumber = user.Phone,
-                                                 DateWorkshop = awork.Date,
-                                                 TimeWorkshop = awork.Time,
-                                                 WorkshopComments = del.Comments,
-                                                 WorkshopName = twork.Name,
-                                                 WorkshopAdress = twork.Address,
-                                                 WorkshopLatitude = twork.Latitude,
-                                                 WorkshopLength = twork.Length,
-                                                 Total = Total2
-                                             }
-                                ).FirstOrDefault().ToString();
-                                return OrderConf;
-                            }
-                        }
-                        else
-                        {
-
-                            OrderConf = (from pro in db.PurchaseOrder
-                                         join del in db.DeliveryType on pro.IdDelivery equals del.IdDelivery
-                                         join user in db.UserAddress on del.IdUser equals user.IdUser
-                                         join tUser in db.AspNetUsers on pro.IdUser equals tUser.Id
-                                         join twork in db.Workshop on del.IdWorkshop equals twork.IdWorkshop
-                                         where pro.IdUser == idUser
-                                         orderby pro.IdOrderDetail descending
-                                         select new
-                                         {
-                                             cart = products,
-                                             Idorderdetail = pro.IdOrderDetail,
-                                             zipcode = user.ZipCode,
-                                             Firstname = user.FirstName,
-                                             Lastname = user.LastName,
-                                             Adress = user.Address,
-                                             Emailuser = tUser.Email,
-                                             Phonenumber = user.Phone,
-                                             DateUser = del.Date,
-                                             TimeUser = del.Time,
-                                             UserComments = del.Comments,
-                                             UserName = user.FirstName,
-                                             UserAdress = user.Address,
-                                             UserLatitude = user.Latitude,
-                                             UserLength = user.Length,
-                                             Total = Total2
-                                         }
-                                ).FirstOrDefault().ToString();
-                            return OrderConf;
+                           new ResultPaidProducts{ cart = products,
+                            ZipCode = userAddress.ZipCode.ToString(),
+                            FirstName = userAddress.FirstName,
+                            LastName = userAddress.LastName,
+                            Address = userAddress.Address,
+                            Email = userAddress.Email,
+                            Mobile = userAddress.Mobile,
+                            Promo = promocodeused.PromoCode,
+                            WorkshopName = null,
+                            WorkshopAddress = Delivery.Address,
+                            Image = null,
+                            Rating = "as",
+                            Date = dat.ToString("D"),
+                            Time = Delivery.Time,
+                            Comments = Delivery.Comments,
+                           Total = promocodeused.TotalPriceFinal,
+                                   TypeTarget = payment.TargetType,
+                                   Number = (int)payment.Number,
+                                   Expire = payment.Expire,
+                                   Order = order}
+                        };
                         }
                     }
                 }
+                return AddressWorkshop;
             }
             catch (Exception ex)
             {
@@ -697,5 +786,7 @@ namespace Framework
             }
 
         }
+
+
     }
 }

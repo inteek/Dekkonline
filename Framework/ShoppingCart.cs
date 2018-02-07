@@ -41,7 +41,7 @@ namespace Framework
                     var productPrice = db.products.Where(s => s.proId == id_dekk).Select(x => x.proSuggestedPrice).FirstOrDefault();
                     decimal price = Convert.ToDecimal(productPrice) * id_quantity;
                     var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
-                    Entity.ShoppingCart productShoppingCart = db.ShoppingCart.Where(s => s.proId == id_dekk && s.IdUser.Equals(idUser)).FirstOrDefault();
+                    Entity.ShoppingCart productShoppingCart = db.ShoppingCart.Where(s => s.proId == id_dekk && s.IdUser.Equals(idUser) && s.Status == false).FirstOrDefault();
 
                     if (productShoppingCart == null)
                     {

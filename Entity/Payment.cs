@@ -15,10 +15,9 @@ namespace Entity
     public partial class Payment
     {
         public int id { get; set; }
-        public Nullable<short> Number { get; set; }
         public string Expire { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
         public string TargetType { get; set; }
         public string idUser { get; set; }
+        public Nullable<int> Number { get; set; }
     }
 }
