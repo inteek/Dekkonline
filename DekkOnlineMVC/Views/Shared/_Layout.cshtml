@@ -14,6 +14,8 @@
     @Styles.Render("~/Styles/Site.css?V=2")
     @Styles.Render("~/Styles/plugins/notyf.min.css")
     @Styles.Render("~/Styles/plugins/bootstrap-popover-x.css")
+    @Styles.Render("~/Styles/plugins/ladda-themeless.min.css")
+
 
     <!-- Icons -->
     @Styles.Render("~/fonts/ionicons/css/ionicons.min.css")
@@ -86,6 +88,11 @@
         </div>
         <div class="prLogo link" onclick="goHome()">
             <img src="@Url.Content("~/Content/imgs/logo.png")" />
+        </div>
+
+        <div id="divCart" class="col-xs-12 col-md-12" style="padding-top:100px; text-align:right;" >
+            <label id="lblProductCount" style="font-family:Arial; position:absolute; right:25px; padding-top:2px; font-size:12px; color:#fff;float:right;" >0</label>
+            <a href="@Url.Action("Index", "ShoppingCart")" ><img src="@Url.Content("~/Content/imgs/carrito3.png")" style="height:40px; float:right; cursor:pointer;" /></a>
         </div>
 
 
@@ -229,6 +236,9 @@
     @Scripts.Render("~/Scripts/plugins/select2.min.js")
     @Scripts.Render("~/Scripts/plugins/notyf.min.js")
     @Scripts.Render("~/Scripts/plugins/bootstrap-popover-x.min.js")
+    @Scripts.Render("~/Scripts/plugins/spin.min.js")
+    @Scripts.Render("~/Scripts/plugins/ladda.min.js")
+
 
 
     @Scripts.Render("~/Scripts/connectAsy.js?v=3")

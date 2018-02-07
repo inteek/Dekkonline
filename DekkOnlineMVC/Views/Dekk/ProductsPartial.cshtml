@@ -267,8 +267,8 @@
                         "<p>Add to cart</p>" +
                     "</div>" +
                     "<div class='popover-footer'>" +
-                        "<button class='btn btn-sm' onClick='JavaScript:AddToCart(" + DataBinder.Eval(c.DataItem, "Id") +  ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' data-placement='top top-right' src='" + Url.Content("~/Content/imgs/carrito1.png") + "' style='background-color:#36434c; color:#fff;'>keep shopping</button>" +
-                        "<button class='btn btn-sm' onClick='JavaScript:ShoppingCart(" + DataBinder.Eval(c.DataItem, "Id") + ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' style='background-color:#36434c; color:#fff;'>go to checkout</button>" +
+                        "<button class='btn ladda-button' data-style='zoom-out' onClick='JavaScript:AddToCart(" + DataBinder.Eval(c.DataItem, "Id") +  ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' data-placement='top top-right' src='" + Url.Content("~/Content/imgs/carrito1.png") + "' style='background-color:#36434c; color:#fff;'><span class='ladda-label'>keep shopping</span></button>" +
+                        "<button class='btn ladda-button' data-style='zoom-out' onClick='JavaScript:ShoppingCart(" + DataBinder.Eval(c.DataItem, "Id") + ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' style='background-color:#36434c; color:#fff;'><span class='ladda-label'>go to checkout</span></button>" +
                     "</div>" +
                 "</div>" +
 

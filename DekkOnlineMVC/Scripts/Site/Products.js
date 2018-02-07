@@ -21,6 +21,7 @@ function OnProductCardsBeginCallback(s, e) {
         if ($btns.length) {
             $btns.popoverButton();
         }
+        Ladda.bind('.ladda-button');
     }, 1000)
 
 
@@ -87,7 +88,7 @@ function openProductDetails(indexRow) {
 
     ProductCards.GetCardValues(indexRow, "Id", function (value) { $("#productDetails_Id").val(value); });
     ProductCards.GetCardValues(indexRow, "Image", function (value) { $("#productDetails_Img").attr("src" + "http://admin.dekkonline.sonetworks.no/" + value); });
-    ProductCards.GetCardValues(indexRow, "CategoryImage", function (value) { $("#productDetails_CategoryImg1").attr("src", value.replace("~", "")); $("#productDetails_CategoryImg2").attr("src", value.replace("~", "")); });
+    ProductCards.GetCardValues(indexRow, "CategoryImage", function (value) { $("#productDetails_CategoryImg1").attr("src", value.replace("~", "..")); $("#productDetails_CategoryImg2").attr("src", value.replace("~", "..")); });
     ProductCards.GetCardValues(indexRow, "Name", function (value) { $("#productDetails_Name").text(value); });
     //ProductCards.GetCardValues(indexRow, "Description", function (value) { $("#productDetails_Description").text(value); });
     ProductCards.GetCardValues(indexRow, "Brand", function (value) { $("#productDetails_Brand").text(value); });
@@ -109,21 +110,38 @@ function openProductDetails(indexRow) {
 
 
 function ShoppingCart(id, name) {
+    e.preventDefault();
+    //var btnLoad = Ladda.create(this);
+    //btnLoad.start();
+
     var qty = $("#cboAddCartLisProduct" + id).val();
-    AddProductToCart(id, qty, name, true);
+    AddProductToCart(id, qty, name, true, function () {
+        //btnLoad.stop();
+        $("#popoverProduct" + id).hide();
+    });
 }
 
 function AddToCart(id, name) {
+    //e.preventDefault();
+    //var btnLoad = Ladda.create(this);
+    //btnLoad.start();
+    
     var qty = $("#cboAddCartLisProduct" + id).val();
-    AddProductToCart(id, qty, name, false);
+    AddProductToCart(id, qty, name, false, function () {
+        //btnLoad.stop();
+        $("#popoverProduct" + id).hide();
+    });
 
 }
 
-function AddProductToCart(id, qty, name, returnCart) {
+function AddProductToCart(id, qty, name, returnCart, callback) {
     var data = {
         idPro: id,
         quantity: qty
     }
+
+
+
 
     conectarAsy("../Dekk/AddToCart", data, function (result) {
         var notyf = new Notyf();
@@ -132,14 +150,19 @@ function AddProductToCart(id, qty, name, returnCart) {
                 window.location = "../ShoppingCart/Index";
             }
             else {
+                var qtyOld = parseInt($("#lblProductCount").text());
+                var qtyNew = qtyOld + parseInt(qty);
+                $("#lblProductCount").text(qtyNew);
 
                 notyf.confirm('Product: ' + id + ' / ' + name);
             }
+
+
         }
         else {
             notyf.alert('Product: ' + id + ' / ' + name);
         }
-        $("#popoverProduct" + id).hide();
+        callback();
     });
 
 
@@ -150,10 +173,10 @@ function AddProductToCart(id, qty, name, returnCart) {
 
 $(document).ready(function () {
 
-    //DevExpress.ui.dxOverlay.baseZIndex(9999999);
 
     $("#principalDiv").attr("class", "prDivSub");
     $("#mainContainDiv").attr("class", "prMainContentSub");
+    $("#divCart").css("padding-top", "200px");
 
 
     $("#btnListView,#btnGridView").on("click", function () {

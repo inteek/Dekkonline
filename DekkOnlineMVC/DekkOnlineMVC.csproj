@@ -431,12 +431,14 @@
     <Content Include="Scripts\plugins\jquery.dataTables.min.js" />
     <Content Include="Scripts\plugins\jquery.easypiechart.min.js" />
     <Content Include="Scripts\plugins\jquery.sparkline.min.js" />
+    <Content Include="Scripts\plugins\ladda.min.js" />
     <Content Include="Scripts\plugins\moment.min.js" />
     <Content Include="Scripts\plugins\notyf.min.js" />
     <Content Include="Scripts\plugins\pace.min.js" />
     <Content Include="Scripts\plugins\perfect-scrollbar.min.js" />
     <Content Include="Scripts\plugins\screenfull.js" />
     <Content Include="Scripts\plugins\select2.min.js" />
+    <Content Include="Scripts\plugins\spin.min.js" />
     <Content Include="Scripts\plugins\summernote.min.js" />
     <Content Include="Scripts\plugins\waves.min.js" />
     <Content Include="Scripts\respond.js" />
@@ -461,6 +463,7 @@
     <Content Include="Styles\plugins\bootstrap-slider.css" />
     <Content Include="Styles\plugins\c3.css" />
     <Content Include="Styles\plugins\fullcalendar.css" />
+    <Content Include="Styles\plugins\ladda-themeless.min.css" />
     <Content Include="Styles\plugins\notyf.min.css" />
     <Content Include="Styles\plugins\perfect-scrollbar.css" />
     <Content Include="Styles\plugins\select2.css" />
