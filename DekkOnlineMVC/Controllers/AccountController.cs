@@ -18,9 +18,15 @@ namespace DekkOnlineMVC.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private Controller _ctr;
 
+        public AccountController(Controller ctr)
+        {
+            this._ctr = ctr;
+        }
         public AccountController()
         {
+            this._ctr = null;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -33,7 +39,15 @@ namespace DekkOnlineMVC.Controllers
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                if (HttpContext != null)
+                {
+                    return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                }
+                else
+                {
+                    return _signInManager ?? _ctr.HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                }
+
             }
             private set
             {
@@ -45,7 +59,14 @@ namespace DekkOnlineMVC.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                if (HttpContext != null)
+                {
+                    return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                }
+                else {
+                    return _userManager ?? _ctr.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                }
+
             }
             private set
             {

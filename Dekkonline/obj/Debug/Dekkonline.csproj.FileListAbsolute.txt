@@ -891,7 +891,6 @@ C:\Productos\dekkonline\DekkOnline\bin\es\Microsoft.AspNet.Identity.Core.resourc
 C:\Productos\dekkonline\DekkOnline\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
 C:\Productos\dekkonline\DekkOnline\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
 C:\Productos\dekkonline\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
-C:\Productos\dekkonline\DekkOnline\obj\Debug\DekkOnline.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline\DekkOnline\obj\Debug\DekkOnline.dll
 C:\Productos\dekkonline\DekkOnline\obj\Debug\DekkOnline.pdb
 C:\Productos\dekkonline2\DekkOnline\bin\ApplicationInsights.config

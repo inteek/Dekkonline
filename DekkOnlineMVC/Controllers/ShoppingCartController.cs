@@ -7,6 +7,7 @@ using DekkOnlineMVC.Models;
 using Framework;
 using Framework.Libraies;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace DekkOnlineMVC.Controllers
 {
@@ -464,7 +465,7 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Next(string zipCode, string firstName, string lastName, string mobile, string address, string email, string choose, string date, string comments, string dateMapa, string timeMapa, string commentsMapa, int IdWorkshop, int radio, string latitude, string longitude)
+        public async Task<ActionResult> Next(string zipCode, string firstName, string lastName, string mobile, string address, string email, string choose, string date, string comments, string dateMapa, string timeMapa, string commentsMapa, int IdWorkshop, int radio, string latitude, string longitude)
         {
             bool error = false;
             int noError = 0;
@@ -479,16 +480,16 @@ namespace DekkOnlineMVC.Controllers
             {
                 if (idUser == null || idUser == "")
                 {
-                    string pass = users.CreateRandomPassword(7);
+                    string pass = users.GeneratePassword();
 
                     RegisterViewModel model = new RegisterViewModel();
 
                     model.Email1 = email;
                     model.Password1 = pass;
 
-                    AccountController account = new AccountController();
+                    AccountController account = new AccountController(this);
+                    await account.Register(model);
 
-                    account.Register(model);
 
                     error = false;
                     noError = 0;
@@ -529,7 +530,7 @@ namespace DekkOnlineMVC.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(new { error = true, noError = 0, msg = "Error", page = "" });
             }
