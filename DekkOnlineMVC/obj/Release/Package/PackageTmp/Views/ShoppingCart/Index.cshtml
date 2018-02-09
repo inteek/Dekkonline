@@ -1,0 +1,209 @@
+﻿@using System.Web.Optimization;
+@model Framework.Libraies.ResultAllCart
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Styles/Shoppingcart.css?V=2")
+<div class="row">
+    <div class="col-lg-12 ">
+        <img src="~/Content/imgs/step1-.PNG" class="imgwidth1 img-responsive" />
+        <img src="~/Content/imgs/step1mobile2.PNG" class=" img-responsive imgmobile" />
+    </div>
+</div>
+<div class="container">
+
+    <div class="row" style="border-bottom:1px solid #ddd">
+        <table id="cart" class="table table-hover table-condensed">
+            <thead>
+                @if (Model.cart.Count > 0)
+                {
+
+                    <tr>
+                        <th style="width:50%">Item</th>
+                        <th style="width:8%">QTY</th>
+                        <th style="width:10%">Price</th>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th style="width:80%">Item</th>
+                    </tr>
+                }
+            </thead>
+            <tbody>
+                @if (Model.cart.Count > 0)
+                {
+                    foreach (var item in Model.cart)
+                    {
+                        <tr>
+
+                            <td data-th="Item">
+                                <div class="row">
+                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" onclick="DelCrt('@item.cartid')" id="@item.cartid"><span class="glyphicon glyphicon-remove"></span></a></div>
+                                    <div class="col-sm-2 col-xs-3">
+                                        <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
+                                    </div>
+                                    <div class="col-sm-8 col-xs-5">
+                                        <h4 class="nomargin"><strong style="color:red">@item.Name</strong></h4>
+                                        <div class="deschide"><p>@item.Description.</p></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-th="QTY">
+                                <input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" onchange="IncrsCart('@item.cartid', this.value)">
+                            </td>
+                            <td data-th="Price"><strong>@item.totalpriceprod kr</strong></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td data-th="Item">
+                            <div class="row">
+                                <div class="col-sm-8 col-xs-8">
+                                    <br />
+                                    <div><p>Your Shopping Cart is empty.</p></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-5" style="width:400px;">
+            <form class="form-horizontal ipadst1" role="form">
+                <div class="row">
+                    @if (Model.cart.Count > 0)
+                    {
+                        <div class="col-sm-6">
+                            <div class="form-group" style="margin-bottom:10px;">
+                                <label class="col-md-5 col-xs-2 control-label">SUBTOTAL:</label>
+                                <div class="col-md-7 col-xs-2 margininput">
+                                    <label style="margin-top:5px"><strong>@Model.subtotal kr</strong></label>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:10px;">
+                                <label class="col-md-5 col-xs-2 control-label">TAX:</label>
+                                <div class="col-md-3 col-xs-2 margininput">
+                                    <label style="margin-top:5px"><strong>___________</strong></label>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:10px;">
+                                <label class="col-md-5 col-xs-2 control-label">PROMO CODE:</label>
+                                <div class="col-md-4 col-xs-2 margininput">
+                                    <input type="text" class="form-control" id="promocode" value="@Model.promocode" />
+                                </div>
+                                <div class="col-md-3 col-xs-2">
+                                    <label class="" style="margin-top:7px;color:blue;">
+                                        @if (Model.promocodeapp != true)
+                                        {
+                                            <a onclick="ValPromo(document.getElementById('promocode').value)" id="PromoCode"><span class="linkcolor2">APPLY</span></a>}
+                                        else
+                                        {
+                                            <a  onclick="UndoPromo(document.getElementById('promocode').value)"><span class="linkcolor2">UNDO</span></a>
+                                        }
+                                    </label>
+                                </div>
+
+                            </div>
+                            @*<div class="form-group hidden" style="margin-bottom:10px;">
+                                <label class="col-md-12 col-xs-8 control-label" style="color:red">*Promo code not valid or already used</label>
+                            </div>*@
+
+                            <div class="form-group" style="border-bottom:1px solid #ddd">
+                                <label class="col-md-5 col-xs-2 control-label">Use your Points:</label>
+                                <div class="col-md-3 col-xs-2 margininput">
+                                    <input type="text" class="form-control margintextpoints" id="promopoints" value="@Model.points" style="margin-bottom:5px">
+                                </div>
+                                <div class="col-md-4" style="margin-left:-25px;">
+                                    <label class="marginlabelpoints" style="margin-top:7px">dekk points <a><span class="linkcolor2">APPLY</span></a></label>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-2 control-label">TOTAL:</label>
+                                <div class="col-md-7 col-xs-2 margininput">
+                                    <label style="margin-top:5px"><strong>@Model.total kr</strong></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-2 control-label"><a><span class="linkcolor keep">KEEP SHOPPING</span></a></label>
+                                <div class="col-md-7 col-xs-3 margininput">
+                                    <input type="button" class="btn btn-secundary form-control st2" id="inputEmail" value="Continue to Checkout">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-6">
+                            @*<div class="form-group" style="margin-bottom:10px;">
+                                    <label class="col-md-5 col-xs-2 control-label">SUBTOTAL:</label>
+                                    <div class="col-md-7 col-xs-2 margininput">
+                                        <label style="margin-top:5px"><strong>0 kr</strong></label>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom:10px;">
+                                    <label class="col-md-5 col-xs-2 control-label">TAX:</label>
+                                    <div class="col-md-3 col-xs-2 margininput">
+                                        <label style="margin-top:5px"><strong>___________</strong></label>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom:10px;">
+                                    <label class="col-md-5 col-xs-2 control-label">PROMO CODE:</label>
+                                    <div class="col-md-4 col-xs-2 margininput">
+                                        <input type="text" class="form-control" id="promocode" value="" />
+                                    </div>
+                                    <div class="col-md-3 col-xs-2"> <label class="" style="margin-top:7px;color:blue;"><a><span class="linkcolor2">APPLY</span></a></label></div>
+                                </div>
+
+                                <div class="form-group" style="border-bottom:1px solid #ddd">
+                                    <label class="col-md-5 col-xs-2 control-label">Use your Points:</label>
+                                    <div class="col-md-3 col-xs-2 margininput">
+                                        <input type="text" class="form-control margintextpoints" id="promopoints" value="" style="margin-bottom:5px">
+                                    </div>
+                                    <div class="col-md-4" style="margin-left:-25px;">
+                                        <label class="marginlabelpoints" style="margin-top:7px">dekk points <a><span class="linkcolor2">APPLY</span></a></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5 col-xs-2 control-label">TOTAL:</label>
+                                    <div class="col-md-7 col-xs-2 margininput">
+                                        <label style="margin-top:5px"><strong>0 kr</strong></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-5 col-xs-2 control-label"><a><span class="linkcolor">KEEP SHOPPING</span></a></label>
+                                    <div class="col-md-7 col-xs-3 margininput">
+                                        <input type="button" class="btn btn-secundary form-control" id="inputEmail" value="Continue to Checkout">
+                                    </div>
+                                </div>*@
+                            <div class="form-group">
+                                <label class="col-md-12 col-xs-2 control-label"><a><span class="linkcolor keep" style="color:steelblue;">KEEP SHOPPING</span></a></label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=4")
+<script>
+    $(document).ready(function () {
+        $("#principalDiv").attr("class", "prDivSub");
+        $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+</script>

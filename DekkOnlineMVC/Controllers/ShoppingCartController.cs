@@ -12,6 +12,7 @@ namespace DekkOnlineMVC.Controllers
 {
     public class ShoppingCartController : Controller
     {
+        public static string zip;
         //
         // GET: /ShoppingCart/
         public ActionResult Index()
@@ -207,13 +208,17 @@ namespace DekkOnlineMVC.Controllers
             }
         }
 
-        public ActionResult Step2()
 
+
+        public ActionResult Step2()
         {
             string path = Request.Url.AbsolutePath;
             ViewBag.ReturnUrl = path;
+
             List<ResulUserWorkShop> list = null;
-            List<ResultWorkshop> WorkShop = null;
+            List<ResultWorkshop> workshop = null;
+
+            Workshop workShop = new Workshop();
 
             var b = (dynamic)null;
 
@@ -223,15 +228,28 @@ namespace DekkOnlineMVC.Controllers
 
                 if (idUser == null || idUser == "")
                 {
-                    b = new Framework.Libraies.ResulUserWorkShop { workshop = WorkShop, zipcode = Convert.ToInt32(null), firstName = null, lastName = null, address = null, email = null, mobile = null };
+                    string codeZip = zip;
+
+                    if (codeZip != null)
+                    {
+                        workshop = workShop.loadWorkshopAddress(Convert.ToInt32(codeZip));
+
+                        b = new Framework.Libraies.ResulUserWorkShop { workshop = workshop, zipcode = Convert.ToInt32(null), firstName = null, lastName = null, address = null, email = null, mobile = null };
+                    }
+                    else
+                    {
+                        b = new Framework.Libraies.ResulUserWorkShop { workshop = workshop, zipcode = Convert.ToInt32(null), firstName = null, lastName = null, address = null, email = null, mobile = null };
+                    }
                 }
                 else
                 {
                     Users users = new Users();
                     ShoppingCart shoppingCart = new ShoppingCart();
 
+                    //Actualizar la cookie por el idUser
                     var usercookie = Security.GetIdUser(this);
                     shoppingCart.UpdateShoppingCart(idUser, usercookie);
+
                     list = users.infoStep2(idUser);
 
                     if (list != null)
@@ -254,6 +272,17 @@ namespace DekkOnlineMVC.Controllers
             }
             return View(b);
         }
+
+
+
+
+        [HttpPost]
+        public JsonResult loadWorkShop(string zipCode)
+        {
+            zip = zipCode;
+            return Json(new { error = false, noError = 0, msg = "" });
+        }
+
 
         //public PartialViewResult Step2()
         //{
@@ -391,21 +420,21 @@ namespace DekkOnlineMVC.Controllers
 
         }
 
-        [HttpPost]
-        public JsonResult Validate(string user, string pass)
-        {
-            Users classUser = new Users();
-            var result = classUser.dataUser(user, pass);
+        //[HttpPost]
+        //public JsonResult Validate(string user, string pass)
+        //{
+        //    Users classUser = new Users();
+        //    var result = classUser.dataUser(user, pass);
 
-            if (result != null && result.Count != 0)
-            {
-                return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Step2", "ShoppingCart"), resultado = result });
-            }
-            else
-            {
-                return Json(new { error = true, noError = 0, msg = "Usuario y/o contraseña no validos", page = "" });
-            }
-        }
+        //    if (result != null && result.Count != 0)
+        //    {
+        //        return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Step2", "ShoppingCart"), resultado = result });
+        //    }
+        //    else
+        //    {
+        //        return Json(new { error = true, noError = 0, msg = "Usuario y/o contraseña no validos", page = "" });
+        //    }
+        //}
 
         [HttpPost]
         public JsonResult NewUser(string idUser, string firstName, string lastName, string address, string email, string phone, int zipCode, string latitude, string length)

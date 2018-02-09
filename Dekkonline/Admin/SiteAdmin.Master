@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteAdmin.master.cs" Inherits="DekkOnline.Admin.SiteAdmin" %>
 
 <%@ Register Assembly="DevExpress.Web.v16.1, Version=16.1.13.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
-
+<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-Transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,7 +24,7 @@
     <link href="/Scripts/css/Menus.css" rel="stylesheet" />
     <link href="/Scripts/css/oldSite.css" rel="stylesheet" />
     <link href="/Scripts/css/purecsstooltip.css" rel="stylesheet" />
-    
+
 
     <!-- Placed at the end of the document so the pages load faster -->
 
@@ -85,11 +85,11 @@
 
         }
         function initMasterPage() {
-            
+
             //stickyMenu();
 
             var cp = $("#txtCurrentPage").val();
-            
+
             if (cp.indexOf("default.aspx") > 0) {
                 $("#divDash").addClass("currentMenu");
                 $("#divDash").removeClass("menuIcon");
@@ -116,8 +116,8 @@
                 $("#divPILink").addClass("currentLink");
                 $("#divPILink").removeClass("menuLink");
             }
-            
-            try{
+
+            try {
                 initPage();
             } catch (e) { }
 
@@ -142,7 +142,7 @@
             //       $(this).prop("disabled", true);
             //       setTimeout(enableButtons, 2000);
             //   });
-           // $("[title]").live("mouseover", function () { try { $(this).tooltip({ position: "bottom right", opacity: 0.1 }); } catch (exTool) { } });
+            // $("[title]").live("mouseover", function () { try { $(this).tooltip({ position: "bottom right", opacity: 0.1 }); } catch (exTool) { } });
         }
 
         function enableButtons() {
@@ -173,7 +173,7 @@
         }
 
         function stickyMenu() {
-           
+
         }
 
 
@@ -193,14 +193,14 @@
                 title: '<div style="font-weight:bold; font-size:large">' + msg + '</div> ',
                 message: ''
             }, {
-                type: type,
-                offset: {
-                    x: 20,
-                    y: 50
-                },
-                delay: time,
-                element: ele
-            });
+                    type: type,
+                    offset: {
+                        x: 20,
+                        y: 50
+                    },
+                    delay: time,
+                    element: ele
+                });
         }
 
         function goBack() {
@@ -208,7 +208,7 @@
         }
 
 
-    
+
 
         $(document).ready(function () {
             initMasterPage();
@@ -222,7 +222,7 @@
         //    });
         //}
 
-        
+
 
     </script>
 </head>
@@ -232,51 +232,53 @@
 
 
         <div id="header" class=" navbar-inverse  headerBg" role="navigation">
-             <div class="headerLogin">
-                    <div class="menuLogin">
-                        <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
-                            <AnonymousTemplate>
-                                <div class="spacer10"></div>
-                            </AnonymousTemplate>
-                            <LoggedInTemplate>
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <%= username %>
-                                        </td>
-                                        <td style="padding-left: 10px; padding-right: 10px;" class="hidden-xs link" onclick="goTo('../')">
-                                            website
-                                        </td>
-                                        <td>
-                                            <div class="menuDesp2 menuDespl_2">
-                                                <asp:Image ID="imgMainDivArrows" runat="server" ImageUrl="~/Scripts/imgs/settings.png" CssClass="wheelMenu" />
-                                                <ul>
-                                                    
-                                                    
-                                                    <li onclick="goTo('/Admin/users.aspx')">
-                                                        <a class="link"  style="color: white; text-transform: uppercase;">MORE USERS</a>
-                                                    </li>
-                                                    <li onclick="goTo('/Account/managePassword.aspx')">
-                                                        <a class="link"  style="color: white; text-transform: uppercase;">CHANGE PASSWORD</a>
-                                                    </li>
-                                                    <%--<li onclick="goTo('/Admin/queries.aspx')">
+            <div class="headerLogin">
+                <div class="menuLogin" runat="server">
+                    <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                        <AnonymousTemplate>
+                            <div class="spacer10"></div>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <%= username %>
+                                    </td>
+                                    <td style="padding-left: 10px; padding-right: 10px;" class="hidden-xs link" onclick="goTo('../')">website
+                                    </td>
+                                    <td>
+                                        <div class="menuDesp2 menuDespl_2" runat="server">
+                                            <asp:Image ID="imgMainDivArrows" runat="server" ImageUrl="~/Scripts/imgs/settings.png" CssClass="wheelMenu" />
+                                            <ul>
+
+
+                                                <li onclick="goTo('/Admin/users.aspx')">
+                                                    <a class="link" style="color: white; text-transform: uppercase;">MORE USERS</a>
+                                                </li>
+                                                <li onclick="goTo('/Account/managePassword.aspx')">
+                                                    <a class="link" style="color: white; text-transform: uppercase;">CHANGE PASSWORD</a>
+                                                </li>
+                                                <%--<li onclick="goTo('/Admin/queries.aspx')">
                                                         <a class="link" target="_blank"  style="color: white; text-transform: uppercase;">INQUERIES</a>
                                                     </li>--%>
-                                                    
-                                                    <li onclick="goTo('/Account/login.aspx')">
-                                                        <a class="link"  style="color: white; text-transform: uppercase;">EXIT</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                </table>
+                                                <li>
+                                                        <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="LOG OUT" OnLoggingOut="Unnamed_LoggingOut" LogoutPageUrl="~/Default.aspx" />
+                                               </li>
+                                                        <li onclick="goTo('/Default.aspx')">
+                                                    <a class="link" style="color: white; text-transform: uppercase;">EXIT</a>
 
-                            </LoggedInTemplate>
-                        </asp:LoginView>
-                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </LoggedInTemplate>
+                    </asp:LoginView>
                 </div>
+            </div>
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -288,7 +290,7 @@
                     <div class="headerLogo link">
                         <asp:HyperLink runat="server" NavigateUrl="~/Admin/Default.aspx" ImageUrl="/Scripts/imgs/logo_topmenu.png" Target="_parent"></asp:HyperLink>
                     </div>
-                  
+
                 </div>
 
                 <div class="collapse navbar-collapse">
@@ -311,7 +313,6 @@
                             <a id="" class="" href="/Admin/Products.aspx">PRODUCTS</a><div class="clearfix"></div>
                             <%--<a id="" class="" href="/Admin/cloud.aspx">MY FILES</a><div class="clearfix"></div>--%>
                             <%--<asp:LinkButton ID="LinkButton2" runat="server" CssClass="" OnClick="LinkButtonMyadminAcc_Click">MY ACCOUNT</asp:LinkButton>--%>
-                            
                         </div>
                     </div>
 
@@ -321,22 +322,24 @@
                 </div>
                 <!--/.nav-collapse -->
 
-               
+
             </div>
         </div>
 
 
         <div class="clearfix"></div>
         <div id="menuApp" class=" menuApp">
-            
+
             <div class="spacer20"></div>
             <div class="clearfix"></div>
             <div id="menu" class="menuAdmin">
-                            
+
                 <div class="menuBar">
                     <div class="menuTD">
                         <div class="menuDiv">
-                            <a  href="/Admin/Default.aspx"><div class="menuIcon" id="divDash" style="background-image: url(/Scripts/menu/dashboard.png);"></div></a>
+                            <a href="/Admin/Default.aspx">
+                                <div class="menuIcon" id="divDash" style="background-image: url(/Scripts/menu/dashboard.png);"></div>
+                            </a>
                         </div>
                         <div class="clearfix"></div>
                         <div class="spacer10"></div>
@@ -345,37 +348,45 @@
                     </div>
                     <div class="menuTD">
                         <div class="menuDiv">
-                         <a href="/Admin/ourCategories"><div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div></a>
+                            <a href="/Admin/ourCategories">
+                                <div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div>
+                            </a>
                         </div>
                         <div class="clearfix"></div>
                         <div class="spacer10"></div>
                         <div class="clearfix"></div>
-                
+
                         <a id="divBlogLink" class="menuLink" href="/Admin/ourCategories">SECTION</a>
                     </div>
                     <div class="menuTD">
                         <div class="menuDiv">
-                         <a href="/Admin/Categories"><div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div></a>
+                            <a href="/Admin/Categories">
+                                <div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div>
+                            </a>
                         </div>
                         <div class="clearfix"></div>
                         <div class="spacer10"></div>
                         <div class="clearfix"></div>
-                
+
                         <a id="divBlogLink" class="menuLink" href="/Admin/Categories">CATEGORIES</a>
                     </div>
-                     <div class="menuTD">
+                    <div class="menuTD">
                         <div class="menuDiv">
-                         <a href="/Admin/Brands"><div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div></a>
+                            <a href="/Admin/Brands">
+                                <div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div>
+                            </a>
                         </div>
                         <div class="clearfix"></div>
                         <div class="spacer10"></div>
                         <div class="clearfix"></div>
-                
+
                         <a id="divBlogLink" class="menuLink" href="/Admin/Brands">BRANDS</a>
                     </div>
                     <div class="menuTD">
                         <div class="menuDiv">
-                          <a href="/Admin/PRODUCTS">  <div id="divPages" class="menuIcon" style="background-image: url(/Scripts/menu/pages.png);"></div></a>
+                            <a href="/Admin/PRODUCTS">
+                                <div id="divPages" class="menuIcon" style="background-image: url(/Scripts/menu/pages.png);"></div>
+                            </a>
                         </div>
                         <div class="clearfix"></div>
                         <div class="spacer10"></div>
@@ -384,24 +395,24 @@
                         <a id="divPagesLink" class="menuLink" href="/Admin/PRODUCTS">PRODUCTS</a>
 
                     </div>
-                  
-                  
+
+
                 </div>
-              
-                
+
+
             </div>
-            
+
         </div>
-        
+
         <div id="menuSpace" class="menuSpace hidden-xs"></div>
-          <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="spacer20"></div>
+        <div class="clearfix"></div>
 
-       
 
-     
-        
+
+
+
         <div class="pad20">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
@@ -418,7 +429,7 @@
 
     </form>
 
-    
+
 
 </body>
 

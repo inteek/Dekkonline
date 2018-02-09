@@ -1,0 +1,545 @@
+﻿@using System.Web.Optimization;
+@model Framework.Libraies.ResulUserWorkShop
+
+@{
+
+    ViewBag.Title = "Step2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX6wD6FcmE4ZEFB2gEVka9qNkdsA4eqeg"></script>
+
+@Styles.Render("~/Styles/Dimension.css?v=4")
+@Styles.Render("~/Styles/Shoppingcart.css?v=8")
+
+
+<style>
+    /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+    #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+
+
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <img src="~/Content/step2.JPG" class="imgRespons1" />
+            <img src="~/Content/step2movil.PNG" class="img-responsive imgRespons2" />
+        </div>
+    </div>
+    <div style="margin-left:20px;">
+        <div class="row">
+            <div class="col-lg-12" style="text-align:center;">
+                <h3 class="text1 LoginIn" id="LoginIn" style="cursor:pointer;"> Are you a Dekkonline member? Log in</h3>
+            </div>
+        </div>
+        <div class="widthleft">
+            <div class="row rowInfo">
+                <div class="col-lg-4 radioPerson">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <label class="radio-inline textLeft"><strong>I am a: </strong></label><br class="ocultarsalto" />
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="comboPerson" value="winter" class="widthCombo1"> Person </label>
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season" id="comboCompany" value="winter" class="widthCombo2"> Company </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-8">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-12 radioleft">
+                                <label class="radio-inline" style="color: #E53935; font-size: 20px; "><strong>I want the service at: </strong></label>
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="nearestWoekshop" value="winter2" style="width: 20px; height: 20px;" class="moverradio"> Nearest workshop </label>
+                                <label class="radio-inline" style="font-size:19px;">&nbsp;<input type="radio" name="season2" id="myplace" value="spring-fall2" style="width:20px; height:20px;"> my place </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-5 rowInfoPer">
+                    <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; cursor:pointer;" class="InfoPersonal" id="InfoPersonal"><strong>Personal Information</strong></label>
+                    <div class="PersonalInformation">
+
+                        @if (Model != null)
+                        {
+                            <form class="form-horizontal rowInfoPer2" role="form">
+                                <div class="form-group">
+                                    <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
+                                    <div class="col-lg-2 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="zipcode" value="@Model.zipcode" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Firstname" class="col-lg-3 col-xs-4 control-label textoAzul">First name</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="Firstname" value="@Model.firstName" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Lastname" class="col-lg-3 col-xs-4 control-label textoAzul">Last name</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="Lastname" value="@Model.lastName" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput address" id="address" value="@Model.address" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-lg-3 col-xs-4 control-label textoAzul">Email</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="email" class="form-control borderInput" id="email" value="@Model.email" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile" class="col-lg-3 col-xs-4 control-label textoAzul">Mobile</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="mobile" value="@Model.mobile" placeholder="">
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            <form class="form-horizontal rowInfoPer2" role="form">
+                                <div class="form-group">
+                                    <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
+                                    <div class="col-lg-2 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="zipcode" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Firstname" class="col-lg-3 col-xs-4 control-label textoAzul">First name</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="Firstname" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Lastname" class="col-lg-3 col-xs-4 control-label textoAzul">Last name</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="Lastname" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput address" id="address" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-lg-3 col-xs-4 control-label textoAzul">Email</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="email" class="form-control borderInput" id="email" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile" class="col-lg-3 col-xs-4 control-label textoAzul">Mobile</label>
+                                    <div class="col-lg-6 col-xs-6">
+                                        <input type="text" class="form-control borderInput" id="mobile" placeholder="">
+                                    </div>
+                                </div>
+                            </form>
+                        }
+
+                        <form class="form-horizontal ocultardiv" role="form">
+                            <div class="form-group">
+                                <label for="choose" class="col-lg-3 control-label textoAzul">You choose</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control borderInput choose" id="choose" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="date" class="col-lg-3 control-label textoAzul"> Date</label>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control borderInput date" id="date" placeholder="">
+                                </div>
+                                <label for="time" class="col-lg-1 control-label textoAzul">Time</label>
+                                <div class="col-lg-2">
+                                    <input type="text" class="form-control borderInput time" id="time" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Lastname" class="col-lg-3 control-label textoAzul">Comments</label>
+                                <div class="col-lg-6">
+                                    <textarea class="form-control borderInput comments" id="comments" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-7 alinearWork workshopDisplay">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="textshop"><strong>This are the nearest workshop:</strong></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="sizeText1">Click one to see available time, hours and meak an appointment.</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group alinearSrotBy">
+                                <label class="col-lg-2 col-xs-3 alinearSort">SORT BY</label>
+                                <div class="col-lg-3 col-xs-5 alinearCombo">
+                                    <select class="form-control">
+                                        <option value="">Seleccione</option>
+                                        <option value="">Seleccione</option>
+                                        <option value="">Seleccione</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="widthleftresponse">
+                        @if (Model.workshop != null)
+                        {
+                            foreach (var item in Model.workshop)
+                            {
+                                <div class="row blanco rowcat" id="@item.IdWorkshop" onclick="popouWorkShop('@item.Name','@item.IdWorkshop')" style="cursor:pointer;">
+                                    <div class="col-lg-2 col-xs-3">
+                                        <img src="~/Content/WorkShop/t1.jpg" style="width:110px; height:105px;" />
+                                    </div>
+                                    <div class="col-lg-5 col-xs-8 catalago">
+                                        <h4 class="nameWorkshop" id="nameWorkshop" style="color: #2471A3;"><strong><span></span> @item.Name</strong></h4>
+                                        <p class="">@item.Address</p>
+                                        <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                    </div>
+                                    <div class="col-lg-2 catHiden">
+                                        <h3><strong>60 kr</strong></h3>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row blanco rowcat">
+                                <div class="col-lg-2 col-xs-3">
+                                </div>
+                                <div class="col-lg-5 col-xs-8 catalago">
+                                    <h4>WorkShop</h4>
+                                </div>
+                                <div class="col-lg-2 catHiden">
+                                </div>
+                            </div>
+                        }
+                        @*<div class="row blanco rowcat">
+                                <div class="col-lg-2 col-xs-3">
+                                    <img src="~/Content/t1.jpg" style="width:110px; height:105px;" />
+                                </div>
+                                <div class="col-lg-5 col-xs-8 catalago">
+                                    <h4 style="color: #2471A3; "><strong>Big Motors Shop</strong></h4>
+                                    <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                    <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                </div>
+                                <div class="col-lg-2 catHiden">
+                                    <h3><strong>60 kr</strong></h3>
+                                </div>
+                            </div>
+                            <div class="row blanco rowcat">
+                                <div class="col-lg-2 col-xs-3">
+                                    <img src="~/Content/t2.jpg" style="width:110px; height:105px;" />
+                                </div>
+                                <div class="col-lg-5 col-xs-8 catalago">
+                                    <h4 style="color: #2471A3; "><strong>Big Red Shop</strong></h4>
+                                    <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                    <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                </div>
+                                <div class="col-lg-2 catHiden">
+                                    <h3><strong>80 kr</strong></h3>
+                                </div>
+                            </div>
+                            <div class="row blanco rowcat">
+                                <div class="col-lg-2 col-xs-3">
+                                    <img src="~/Content/t3.jpg" style="width:110px; height:105px;" />
+                                </div>
+                                <div class="col-lg-5 col-xs-8 catalago">
+                                    <h4 style="color: #2471A3; "><strong>Elite Shop</strong></h4>
+                                    <p>Plaza los geranios Av. Diana 406, Local 1 Col Delicias, Cuernavaca</p>
+                                    <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                </div>
+                                <div class="col-lg-2 catHiden">
+                                    <h3><strong>60 kr</strong></h3>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="col-lg-7 myPlace mapaLeft" style="display:none;">
+                    <form>
+                        <div class="form-group input-group">
+                            <input type="text" id="search_location" class="form-control" placeholder="Search location">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default get_map" type="submit">
+                                    Locate
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- display google map -->
+                    <div class="widthMapa" id="geomap"></div>
+
+                    
+                    <div style="display:none;">
+                        <p>Latitude: <input type="text" class="search_latitude" size="30" id="latitude"></p>
+                        <p>Longitude: <input type="text" class="search_longitude" size="30" id="longitude"></p>
+                    </div>                        
+
+                    <form class="form-horizontal" style="margin-top:10px;">
+                        <div class="form-group">
+                            <label for="date" class="col-lg-1 control-label textoAzul"> Date</label>
+                            <div class="col-lg-3">
+                                <input type="date" class="form-control borderInput dateMapa" id="dateMapa">
+                            </div>
+                            <label for="time" class="col-lg-1 control-label textoAzul">Time</label>
+                            <div class="col-lg-3">
+                                <input type="time" class="form-control borderInput timeMapa" id="timeMapa" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <label for="Lastname" class="control-label textoAzul">Comments</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <textarea class="form-control borderInput commentsMapa" id="commentsMapa" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row" style="float:right; margin-right:100px; margin-top:20px;">
+                    <div class="col-lg-12">
+                        <button class="btn btn-default btn-lg" id="next">NEXT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalLogin" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div style="margin-right:10px; margin-top:5px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12 loginLogo">
+            </div>
+            <div class="clearfix"></div>
+            <div class="loginContain">
+                <div class="col-md-6">
+                    <div class="modalLoginLt">
+                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+
+                        @Html.Partial("Login")
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="modalLoginRt">
+                        <h4>REGISTER:</h4>
+
+                        @Html.Partial("Register")
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="hidden">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <asp:CheckBox runat="server" ID="RememberMe" />
+                        <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+
+            <div class="BoxGeneral text-center">
+                <h4>LOG IN FASTER</h4>
+                <div class="clearfix"></div>
+                <section id="socialLoginForm">
+                    <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                </section>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<!--Modal WorkShop-->
+    <div class="modal fade" id="modalWorkShop" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content modal-xs">
+                @*<div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>*@
+                <div class="modal-body">
+                    <div class="row">
+                        <div style="float:left">
+                            <h4 class="textoAzul" id="nameWorkshopModal" style="font-size:20px; margin-left:15px; font-weight:bold;"></h4>
+                        </div>
+                        <div style="float:right; margin-top:5px; margin-right:10px;">
+                            <img src="~/Content/iconoLogo.png" style="width:60px; height:25px;" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>Check available times and hours</h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <h4>We will have your order ready in a week from today, we syggest the following dates to make an appointment with us:</h4>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:15px;">
+                        <div class="col-lg-12">
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date1" value="option1" aria-label="...">
+                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Friday 19 of may -10:00 am
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date2" value="option1" aria-label="...">
+                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Friday 19 of may - 4:00 pm
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date3" value="option1" aria-label="...">
+                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Saturday 21 of may - 10:30 am
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>More services:</h4>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service1" value="1" aria-label="...">
+                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Tire Hotel
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service2" value="2" aria-label="...">
+                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Wheel Cleaner
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service3" value="3" aria-label="...">
+                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Full service
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h4>Or choose the best date and time for you.</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="" class="col-lg-1 control-label">Date</label>
+                                    <div class="col-lg-5">
+                                        <input type="date" class="form-control" id="modEmail" style="margin-left:10px;">
+                                    </div>
+                                    <label for="" class="col-lg-1 control-label">Time</label>
+                                    <div class="col-lg-4">
+                                        <input type="time" class="form-control" id="modTime" style="margin-left:10px;">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="">Comment:</label>
+                                <textarea class="form-control" id="modComment" rows="3" style="width:392px;"></textarea>
+                            </div>
+                            @*<div class="form-group">
+                                    <label for="comment">Comment:</label>
+                                    <textarea class="form-control col-lg-5" rows="3" id="modComment" style="width:309px;"></textarea>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="MakeAppoint">MAKE APPOINTMENT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/scripts/app.js")
+    @Scripts.Render("~/Scripts/Step2.js?v=5")
+    @Scripts.Render("~/Scripts/Map.js?v=4")
+    @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
+    @Scripts.Render("~/Scripts/Login.js?v=2")
+    @Scripts.Render("~/Scripts/connectAsy.js?v=1")
+
+    <script>
+        $(document).ready(function () {
+            $("#principalDiv").attr("class", "prDivSub");
+            $("#mainContainDiv").attr("class", "prMainContentSub");
+        });
+    </script>
+
+
+    <script>
+        function initPage() {
+
+            //txtZipCode.SetText(cZipCode);
+            getLocation();
+            showAdvanced();
+        }
+
+        function showAdvanced() {
+            $(".advancedSearch").toggle();
+            $("#advancedIcon").toggleClass("moreIcon");
+            $("#advancedIcon").toggleClass("lessIcon");
+        }
+    </script>

@@ -1,0 +1,348 @@
+﻿
+@model List<DekkOnlineMVC.Models.Products>
+
+
+
+
+@Html.DevExpress().CardView(settings =>
+{
+    settings.Name = "ProductCards";
+    settings.CallbackRouteValues = new { Controller = "Dekk", Action = "ProductsPartial" };
+    settings.Width = Unit.Percentage(100);
+    settings.KeyFieldName = "Id";
+    settings.EnableCardsCache = false;
+
+    settings.Columns.Add("RowIndex");
+    settings.Columns.Add("Id");
+    settings.Columns.Add("Image");
+    settings.Columns.Add("CatId");
+    settings.Columns.Add("CategoryImage");
+    settings.Columns.Add("Name");
+    settings.Columns.Add("Description");
+    settings.Columns.Add("Brand");
+    settings.Columns.Add("BrandImage");
+    settings.Columns.Add("Price");
+    settings.Columns.Add("Width");
+    settings.Columns.Add("Profile");
+    settings.Columns.Add("Diameter");
+    settings.Columns.Add("CategoryName");
+    settings.Columns.Add("Stock");
+    settings.Columns.Add("SpeedIndex");
+    settings.Columns.Add("LoadIndex");
+    settings.Columns.Add("TyreSize");
+    settings.Columns.Add("Fuel");
+    settings.Columns.Add("Noise");
+    settings.Columns.Add("Wet");
+    settings.Columns.Add("Noise");
+    //settings.Columns.Add("Ratings");
+
+
+    settings.Settings.VerticalScrollableHeight = 600;
+    settings.SettingsPager.SettingsTableLayout.ColumnCount = ViewBag.IsCardView ? 2 : 1;
+    settings.CardLayoutProperties.ColCount = ViewBag.IsCardView ? 1 : 2;
+
+    settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+    settings.SettingsPager.EndlessPagingMode = DevExpress.Web.CardViewEndlessPagingMode.OnScroll;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+    settings.ControlStyle.CssClass = "cardViewProducts";
+
+
+
+    //settings.Styles.Card.CssClass = "card";
+
+    settings.CardLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+    settings.CardLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 200;
+
+
+
+    /*
+    settings.Toolbars.Add(t =>
+    {
+        t.ItemAlign = GridToolbarItemAlign.Justify;
+        t.Items.Add(i =>
+        {
+            i.ItemStyle.Width = Unit.Percentage(100);
+            i.SetTemplateContent(c =>
+            {
+                Html.DevExpress().ComboBox(s =>
+                {
+                    s.Name = "Sorting";
+                    s.Width = 200;
+                    s.Properties.Caption = "Sort by";
+                    s.Properties.ValueType = typeof(ProductCardsSortMode);
+                    s.Properties.Items.Add("Recomended", ProductCardsSortMode.Recomended);
+                    s.Properties.Items.Add("Discount", ProductCardsSortMode.Discount);
+                    s.Properties.Items.Add("Low Price » High Price", ProductCardsSortMode.LowPrice);
+                    s.Properties.Items.Add("High Price » Low Price", ProductCardsSortMode.HighPrice);
+                    s.Properties.ClientSideEvents.ValueChanged = "OnSortingChanged";
+                }).Bind(ViewBag.SortMode).Render();
+            });
+        });
+        t.Items.Add(i =>
+        {
+            i.Name = "ListView";
+            i.ToolTip = "Details View";
+            i.GroupName = "Layout";
+            i.BeginGroup = true;
+            i.Checked = !ViewBag.IsCardView;
+            i.Image.IconID = DevExpress.Web.ASPxThemes.IconID.GridGrid16x16;
+        });
+        t.Items.Add(i =>
+        {
+            i.Name = "CardView";
+            i.ToolTip = "Thumbnails View";
+            i.GroupName = "Layout";
+            i.Checked = ViewBag.IsCardView;
+            i.Image.IconID = DevExpress.Web.ASPxThemes.IconID.GridCards16x16;
+        });
+    });
+    */
+
+    //*********
+    //settings.Columns.Add("PhotoUrl", MVCxCardViewColumnType.Image);
+    //settings.Columns.Add("Brand");
+    //settings.Columns.Add("Price", "Old price").PropertiesEdit.DisplayFormatString = "c";
+    //settings.Columns.Add("Discount").PropertiesEdit.DisplayFormatString = "{0}%";
+    //*********
+
+
+    /*
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "Total";
+        c.Caption = "New price";
+        //c.UnboundType = UnboundColumnType.Decimal;
+        c.UnboundExpression = "[Price]- [Price] * [Discount] / 100";
+        c.PropertiesEdit.DisplayFormatString = "c";
+    });
+    */
+
+
+    //*********
+    //settings.Columns.Add("Sensitivity", "Sensitivity, dB");
+    //settings.Columns.Add("Power", "Power, MW");
+    //settings.Columns.Add("MinFrequency", "Min Frequency, Hz");
+    //settings.Columns.Add("MaxFrequency", "Max Frequency, Hz");
+    //settings.Columns.Add("Impedance", "Impendance, ohms");
+    //settings.Columns.Add("Fit");
+    //*********
+
+    //settings.CardLayoutProperties.Items.Add(i =>
+    //{
+    //    i.ColumnName = "PhotoUrl";
+    //    i.ShowCaption = DefaultBoolean.False;
+    //    i.HorizontalAlign = FormLayoutHorizontalAlign.Center;
+    //});
+    //settings.CardLayoutProperties.Items.AddGroupItem(g =>
+    //{
+    //    g.Name = "Common";
+    //    g.Caption = "Common";
+    //    g.ShowCaption = ViewBag.IsCardView ? DefaultBoolean.False : DefaultBoolean.True;
+    //    g.GroupBoxDecoration = ViewBag.IsCardView ? GroupBoxDecoration.None : GroupBoxDecoration.HeadingLine;
+    //    g.Items.Add("Brand");
+    //    g.Items.Add("Fit");
+    //    g.Items.Add("Price");
+    //    g.Items.Add("Discount");
+    //    //g.Items.Add("Total");
+    //});
+    //settings.CardLayoutProperties.Items.AddGroupItem(g =>
+    //{
+    //    g.Name = "Specifications";
+    //    g.Visible = !ViewBag.IsCardView;
+    //    g.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+    //    g.Caption = "Specifications";
+    //    g.Items.Add("Sensitivity");
+    //    g.Items.Add("Power");
+    //    g.Items.Add("MinFrequency");
+    //    g.Items.Add("MaxFrequency");
+    //    g.Items.Add("Impedance");
+    //});
+
+
+
+    settings.SetCardTemplateContent(c =>
+    {
+
+        ViewContext.Writer.Write(
+            "<div class='row' >" +
+              "<div class='col-xs-4 col-sm-4 " + (ViewBag.IsCardView == false ? "col-md-2 divImageListView" : "divImageCardView") + "'>");
+
+
+        Html.DevExpress().Image(s =>
+        {
+            s.Name = "Image" + DataBinder.Eval(c.DataItem, "Id");
+            s.Height = 145; //ViewBag.IsCardView == false ? 130 : 150;
+                            //s.ControlStyle.CssClass = "align-middle";
+            s.ImageUrl = "http://admin.dekkonline.sonetworks.no/" + DataBinder.Eval(c.DataItem, "Image").ToString();
+            //}).Bind(DataBinder.Eval(c.DataItem, "Image"))
+        }).Render();
+
+
+        ViewContext.Writer.Write(
+        "</div>" +
+
+        "<div class='col-xs-8 col-sm-8 " + (ViewBag.IsCardView == false ? "col-md-6'" : "'") + " style='background-color:yellow; padding-left:0px; padding-right:0px'>" +
+
+            "<div class='col-xs-3 col-sm-3 col-md-3'  style='height:70px; background-color:#fff;padding-top:25px; text-align:left '>" +
+                "<img src='" + Url.Content((string)DataBinder.Eval(c.DataItem, "CategoryImage")) + "' style='width:45px' >" +
+            "</div>" + //Imagen de Categoria
+
+             "<div class='col-xs-9 col-sm-9 col-md-9'  style='height:70px; background-color:#fff'><p><br/></p>" +
+             "</div>" +
+
+
+         "<div class='row' style='width:100%;'>" +
+              "<div  class='col-xs-11 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-12'" : "'") + " style='height:45px; background-color:#fff; margin-left:15px; text-align:left;'>" +
+              "<a style='cursor:pointer;' onclick='JavaScript:openProductDetails(" + DataBinder.Eval(c.DataItem, "RowIndex").ToString() + ");' ><p style='font-size:28px; color:#000;'>" + DataBinder.Eval(c.DataItem, "Name") + "</p></a>" +
+              "</div>" + //Name
+         "</div>" +
+
+
+         "<div class='row' style='width:100%;'>" +
+              "<div  class='col-xs-11 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-12'" : "'") + " style='height:70px; background-color:#fff; margin-left:15px; text-align:left; '>" +
+                "<p style='font-size:16px'> <span>" + DataBinder.Eval(c.DataItem, "Width") + "</span> <span>/</span> <span>" + DataBinder.Eval(c.DataItem, "Profile") + "</span> <span>" + DataBinder.Eval(c.DataItem, "Diameter") + "</span> " +
+                 (ViewBag.IsCardView == true ? "<p></p>" : "&emsp;&emsp;") +
+                "<span><img src='" + Url.Content("~/Content/imgs/tyreFuel.png") + "' style='width:20px'></span> <span class='badge badge-pill badge-default' style='color:#000; background-color:#fff; border:1px solid grey; min-width:30px; min-height:20px;'>" + DataBinder.Eval(c.DataItem, "Fuel") + "</span>&emsp;" +
+                    "<span><img src='" + Url.Content("~/Content/imgs/tyreNoise.png") + "' style='width:20px'></span> <span class='badge badge-pill badge-default' style='color:#000; background-color:#fff; border:1px solid grey; min-width:30px; min-height:20px;'>" + DataBinder.Eval(c.DataItem, "Wet") + "</span>&emsp;" +
+                    "<span><img src='" + Url.Content("~/Content/imgs/tyreWet.png") + "' style='width:20px'></span> <span class='badge badge-pill badge-default' style='color:#000; background-color:#fff; border:1px solid grey; min-width:30px; min-height:20px;'>" + DataBinder.Eval(c.DataItem, "Noise") + "</span>" +
+                 "<p>" +
+              "</div>" + //Medidas
+         "</div>" +
+
+             "</div>" +
+
+
+             "<div  class='col-xs-11 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-4'" : "'") + " style='background-color:#fff;" + (ViewBag.IsCardView == true ? "border-top:1px solid gray;'" : "'") + ">" +
+
+                "<div class='col-xs-8 col-sm-8 col-md-8'  style='height:60px; background-color:#fff; padding-top:16px; border-bottom:1px solid gray;" + (ViewBag.IsCardView == false ? "border-left:1px solid gray;'" : "'") + ">" +
+                    "<p style='color:#000; font-size:20px; font-weight:bold'>" + DataBinder.Eval(c.DataItem, "Price") + " Kr</p>" +
+                "</div>" + //Precio
+
+                "<div class='col-xs-4 col-sm-4 col-md-4'  style='height:60px; background-color:#fff; padding-top:12px; border-bottom:1px solid gray;'>" +
+                    "<p style='color:blue; font-size:12px; '>In stock (" + DataBinder.Eval(c.DataItem, "Stock") + ")</p>" +
+                "</div>" + //stock
+
+
+            "<div class='row' style='width:100%;'>" +
+                "<div  class='col-xs-11 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-12'" : "'") + " style='height:50px; background-color:#fff; margin-left:15px; padding-top:10px; gray; border-bottom:1px solid gray;" + (ViewBag.IsCardView == false ? "border-left:1px solid gray;'" : "'") + ">" +
+                    "<p style='color:gray; font-size:20px; font-weight:bold'>" + DataBinder.Eval(c.DataItem, "Brand") + "</p>" +
+                "</div>" + //Marca
+            "</div>" +
+
+
+            "<div class='row' style='width:100%;'>" +
+                "<div class='col-xs-11 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-12'" : "'") + " style='height:45px; padding-top:3px; text-align:center; background-color:#fff; margin-left:15px; border-bottom:1px solid gray;" + (ViewBag.IsCardView == false ? "border-left:1px solid gray;'" : "'") + ">" +
+                    "<span class='fa fa-star checked'></span>" +
+                    "<span class='fa fa-star checked'></span>" +
+                    "<span class='fa fa-star checked'></span>" +
+                    "<span class='fa fa-star'></span>" +
+                    "<span class='fa fa-star'></span>" +
+                "</div>" + //Ratings
+            "</div>" +
+
+
+            "<div class='col-xs-12 col-sm-12 " + (ViewBag.IsCardView == false ? "col-md-12'" : "'") + " style='height:60px; padding-left:0px; padding-right:0px; padding-top:7px; background-color:#fff;" + (ViewBag.IsCardView == false ? "border-left:1px solid gray;'" : "'") + ">" +
+
+
+                "<div class='col-xs-7 col-md-6' style='height:43px; padding-top:7px;padding-left:0px; text-align:right; '>" +
+                        "<p style = 'font-size:20px;' > Add to cart:</p>" +
+                "</div>" +
+
+
+                "<div class='col-xs-2 col-md-3' style='height:43px; padding-top:6px; padding-left:0px; padding-right:0px;'>" +
+                "<select id='cboAddCartLisProduct" + DataBinder.Eval(c.DataItem, "Id") + "' style='height:30px; width:100%;'><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>" +
+                "</div>" +
+
+                "<div class='col-xs-3 col-md-3'  style='height:43px; '>" +
+                   "<img  src='" + Url.Content("~/Content/imgs/carrito1.png") + "' data-placement='top top-right' data-toggle='popover-x' data-target='#popoverProduct" + DataBinder.Eval(c.DataItem, "Id") + "' style='width:40px; cursor:pointer;' />" +
+                "</div>" +
+
+                "<div id='popoverProduct" + DataBinder.Eval(c.DataItem, "Id") + "' class='popover popover-x popover-default'>" +
+                    "<div class='arrow'></div>" +
+                    "<h3 class='popover-header popover-title'><span class='close pull-right' data-dismiss='popover-x'>&times;</span>DekkOnline</h3>" +
+                    "<div class='popover-body popover-content' style='min-width:300px;'>" +
+                        "<div class='col-xs-12 col-md-12' >" +
+                            "<img src='" + Url.Content("~/Content/imgs/loguito.png") + "' style='height:20px; float:right;' />" +
+                        "</div>" +
+                        "<p>Add to cart</p>" +
+                    "</div>" +
+                    "<div class='popover-footer'>" +
+                        "<button class='btn ladda-button' data-style='zoom-out' onClick='JavaScript:AddToCart(" + DataBinder.Eval(c.DataItem, "Id") +  ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' data-placement='top top-right' src='" + Url.Content("~/Content/imgs/carrito1.png") + "' style='background-color:#36434c; color:#fff;'><span class='ladda-label'>keep shopping</span></button>" +
+                        "<button class='btn ladda-button' data-style='zoom-out' onClick='JavaScript:ShoppingCart(" + DataBinder.Eval(c.DataItem, "Id") + ", \"" + DataBinder.Eval(c.DataItem, "Name") + "\"" + ");' style='background-color:#36434c; color:#fff;'><span class='ladda-label'>go to checkout</span></button>" +
+                    "</div>" +
+                "</div>" +
+
+                "</div>" + //Agregar
+
+
+
+        "</div>" +
+
+
+     "</div>"
+                                                );
+
+
+    });
+
+
+
+
+    /*
+    settings.BeforeGetCallbackResult = (s, e) =>
+    {
+        var cards = (MVCxCardView)s;
+        cards.ClearSort();
+        switch ((ProductCardsSortMode)ViewBag.SortMode)
+        {
+            case ProductCardsSortMode.Discount:
+                cards.SortBy(cards.Columns["Discount"], ColumnSortOrder.Descending);
+                break;
+            case ProductCardsSortMode.LowPrice:
+                cards.SortBy(cards.Columns["Price"], ColumnSortOrder.Ascending);
+                break;
+            case ProductCardsSortMode.HighPrice:
+                cards.SortBy(cards.Columns["Price"], ColumnSortOrder.Descending);
+                break;
+            default:
+                cards.SortBy(cards.Columns["MaxFrequency"], ColumnSortOrder.Descending);
+                cards.SortBy(cards.Columns["MinFrequency"], ColumnSortOrder.Ascending);
+                cards.SortBy(cards.Columns["Discount"], ColumnSortOrder.Descending);
+                break;
+        }
+    };
+    */
+
+    //settings.ClientSideEvents.ToolbarItemClick = "OnToolbarItemClick";
+    settings.ClientSideEvents.BeginCallback = "OnProductCardsBeginCallback";
+
+
+    settings.Settings.LayoutMode = DevExpress.Web.Layout.Flow;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
+    settings.Styles.FlowCard.Width = ViewBag.IsCardView == false? Unit.Percentage(98.3) : Unit.Percentage(47);
+    settings.Styles.FlowCard.Height =  ViewBag.IsCardView == false? 215: 405;
+    //settings.Styles.FlowCard.CssClass = "FlowCard";
+
+}).Bind(Model).GetHtml()
+
+
+
+
+@*<div id='myPopover10b' class='popover popover-x popover-default'>
+    <div class='arrow'></div>
+    <h3 class='popover-header popover-title'><span class='close pull-right' data-dismiss='popover-x'>&times;</span>DekkOnline</h3>
+    <div class='popover-body popover-content' style='min-width:300px;'>
+        <div class='col-xs-12 col-md-12' >
+            <img src='@Url.Content("~/Content/imgs/loguito.png")' style='height:20px; float:right;' />
+        </div>
+        <p>Add to cart</p>
+    </div>
+    <div class='popover-footer'>
+        <button class='btn btn-sm' style='background-color:#36434c; color:#fff;'>keep shopping</button>
+        <button class='btn btn-sm' style='background-color:#36434c; color:#fff;'>go to checkout</button>
+    </div>
+</div>*@
+
+
+
+

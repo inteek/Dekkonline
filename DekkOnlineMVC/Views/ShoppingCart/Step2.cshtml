@@ -81,13 +81,23 @@
                     <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; cursor:pointer;" class="InfoPersonal" id="InfoPersonal"><strong>Personal Information</strong></label>
                     <div class="PersonalInformation">
 
-                        @if (Model != null)
+                        @if (Model.email != null)
                         {
+                            @Html.AntiForgeryToken()
+
                             <form class="form-horizontal rowInfoPer2" role="form">
                                 <div class="form-group">
                                     <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
                                     <div class="col-lg-2 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="zipcode" value="@Model.zipcode" placeholder="">
+                                        @*@Html.DevExpress().TextBox(settings =>
+                                            {
+                                                settings.Name = "txtZipCode";
+                                                settings.Height = Unit.Pixel(30);
+                                                settings.Width = Unit.Percentage(130);
+                                                settings.Text = "@Model.zipcode";
+                                                settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
+                                            }).GetHtml()*@
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -128,7 +138,14 @@
                                 <div class="form-group">
                                     <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
                                     <div class="col-lg-2 col-xs-6">
-                                        <input type="text" class="form-control borderInput" id="zipcode" placeholder="">
+                                        @*<input type="text" class="form-control borderInput" id="zipcode" placeholder="">*@
+                                        @Html.DevExpress().TextBox(settings =>
+                                             {
+                                                 settings.Name = "txtZipCode";
+                                                 settings.Height = Unit.Pixel(30);
+                                                 settings.Width = Unit.Percentage(130);
+                                                 settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
+                                             }).GetHtml()
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -304,11 +321,11 @@
                     <!-- display google map -->
                     <div class="widthMapa" id="geomap"></div>
 
-                    
+
                     <div style="display:none;">
                         <p>Latitude: <input type="text" class="search_latitude" size="30" id="latitude"></p>
                         <p>Longitude: <input type="text" class="search_longitude" size="30" id="longitude"></p>
-                    </div>                        
+                    </div>
 
                     <form class="form-horizontal" style="margin-top:10px;">
                         <div class="form-group">
@@ -402,144 +419,146 @@
 </div>
 
 <!--Modal WorkShop-->
-    <div class="modal fade" id="modalWorkShop" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal-xs">
-                @*<div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>*@
-                <div class="modal-body">
-                    <div class="row">
-                        <div style="float:left">
-                            <h4 class="textoAzul" id="nameWorkshopModal" style="font-size:20px; margin-left:15px; font-weight:bold;"></h4>
+<div class="modal fade" id="modalWorkShop" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-xs">
+            @*<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>*@
+            <div class="modal-body">
+                <div class="row">
+                    <div style="float:left">
+                        <h4 class="textoAzul" id="nameWorkshopModal" style="font-size:20px; margin-left:15px; font-weight:bold;"></h4>
+                    </div>
+                    <div style="float:right; margin-top:5px; margin-right:10px;">
+                        <img src="~/Content/iconoLogo.png" style="width:60px; height:25px;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Check available times and hours</h4>
+                    </div>
+                    <div class="col-lg-12">
+                        <h4>We will have your order ready in a week from today, we syggest the following dates to make an appointment with us:</h4>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-lg-12">
+                        <div class="form-check">
+                            <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date1" value="option1" aria-label="...">
+                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                Friday 19 of may -10:00 am
+                            </label>
                         </div>
-                        <div style="float:right; margin-top:5px; margin-right:10px;">
-                            <img src="~/Content/iconoLogo.png" style="width:60px; height:25px;" />
+                        <div class="form-check">
+                            <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date2" value="option1" aria-label="...">
+                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                Friday 19 of may - 4:00 pm
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date3" value="option1" aria-label="...">
+                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                Saturday 21 of may - 10:30 am
+                            </label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h4>Check available times and hours</h4>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>More services:</h4>
+                        <div class="form-check">
+                            <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service1" value="1" aria-label="...">
+                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                Tire Hotel
+                            </label>
                         </div>
-                        <div class="col-lg-12">
-                            <h4>We will have your order ready in a week from today, we syggest the following dates to make an appointment with us:</h4>
+                        <div class="form-check">
+                            <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service2" value="2" aria-label="...">
+                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                Wheel Cleaner
+                            </label>
                         </div>
-                    </div>
-                    <div class="row" style="margin-top:15px;">
-                        <div class="col-lg-12">
-                            <div class="form-check">
-                                <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date1" value="option1" aria-label="...">
-                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                    Friday 19 of may -10:00 am
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date2" value="option1" aria-label="...">
-                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                    Friday 19 of may - 4:00 pm
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date3" value="option1" aria-label="...">
-                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                    Saturday 21 of may - 10:30 am
-                                </label>
-                            </div>
+                        <div class="form-check">
+                            <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service3" value="3" aria-label="...">
+                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                Full service
+                            </label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h4>More services:</h4>
-                            <div class="form-check">
-                                <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service1" value="1" aria-label="...">
-                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                    Tire Hotel
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service2" value="2" aria-label="...">
-                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                    Wheel Cleaner
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service3" value="3" aria-label="...">
-                                <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                    Full service
-                                </label>
-                            </div>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Or choose the best date and time for you.</h4>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h4>Or choose the best date and time for you.</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="" class="col-lg-1 control-label">Date</label>
-                                    <div class="col-lg-5">
-                                        <input type="date" class="form-control" id="modEmail" style="margin-left:10px;">
-                                    </div>
-                                    <label for="" class="col-lg-1 control-label">Time</label>
-                                    <div class="col-lg-4">
-                                        <input type="time" class="form-control" id="modTime" style="margin-left:10px;">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-lg-12">
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="">Comment:</label>
-                                <textarea class="form-control" id="modComment" rows="3" style="width:392px;"></textarea>
+                                <label for="" class="col-lg-1 control-label">Date</label>
+                                <div class="col-lg-5">
+                                    <input type="date" class="form-control" id="modEmail" style="margin-left:10px;">
+                                </div>
+                                <label for="" class="col-lg-1 control-label">Time</label>
+                                <div class="col-lg-4">
+                                    <input type="time" class="form-control" id="modTime" style="margin-left:10px;">
+                                </div>
                             </div>
-                            @*<div class="form-group">
-                                    <label for="comment">Comment:</label>
-                                    <textarea class="form-control col-lg-5" rows="3" id="modComment" style="width:309px;"></textarea>
-                                </div>*@
+                        </form>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="">Comment:</label>
+                            <textarea class="form-control" id="modComment" rows="3" style="width:392px;"></textarea>
                         </div>
+                        @*<div class="form-group">
+                                <label for="comment">Comment:</label>
+                                <textarea class="form-control col-lg-5" rows="3" id="modComment" style="width:309px;"></textarea>
+                            </div>*@
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="MakeAppoint">MAKE APPOINTMENT</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="MakeAppoint">MAKE APPOINTMENT</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/scripts/app.js")
-    @Scripts.Render("~/Scripts/Step2.js?v=5")
-    @Scripts.Render("~/Scripts/Map.js?v=4")
-    @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
-    @Scripts.Render("~/Scripts/Login.js?v=2")
-    @Scripts.Render("~/Scripts/connectAsy.js?v=1")
-
-    <script>
-        $(document).ready(function () {
-            $("#principalDiv").attr("class", "prDivSub");
-            $("#mainContainDiv").attr("class", "prMainContentSub");
-        });
-    </script>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/app.js")
+@Scripts.Render("~/Scripts/Step2.js?v=5")
+@Scripts.Render("~/Scripts/Map.js?v=4")
+@Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
+@Scripts.Render("~/Scripts/Login.js?v=2")
+@Scripts.Render("~/Scripts/connectAsy.js?v=1")
 
 
-    <script>
-        function initPage() {
+<script>
+    $(document).ready(function () {
+        $("#principalDiv").attr("class", "prDivSub");
+        $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+</script>
 
-            //txtZipCode.SetText(cZipCode);
-            getLocation();
-            showAdvanced();
-        }
 
-        function showAdvanced() {
-            $(".advancedSearch").toggle();
-            $("#advancedIcon").toggleClass("moreIcon");
-            $("#advancedIcon").toggleClass("lessIcon");
-        }
-    </script>
+<script>
+    function initPage() {
+        debugger
+        getLocation();
+        txtZipCode.SetText(zip);
+        showAdvanced();
+    }
+
+    function showAdvanced() {
+        $(".advancedSearch").toggle();
+        $("#advancedIcon").toggleClass("moreIcon");
+        $("#advancedIcon").toggleClass("lessIcon");
+    }
+
+</script>

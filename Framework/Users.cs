@@ -113,15 +113,15 @@ namespace Framework
         }
 
         //DE-23 1
-        public List<ResultDataUser> dataUser(string username, string password)
+        public List<ResultDataUser> dataUser(string idUser)
         {
 
-            var user = (dynamic)null;
+            List<ResultDataUser> user = null;
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    var idUser = db.AspNetUsers.Where(s => s.Email == username && s.PasswordHash == password).Select(s => s.Id).FirstOrDefault();
+                   
                     user = (from us in db.UserAddress
                             join aspuser in db.AspNetUsers on us.IdUser equals aspuser.Id
                             where us.IdUser == idUser

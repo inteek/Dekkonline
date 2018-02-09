@@ -1,9 +1,12 @@
 ﻿var IdWorkshop = 0;
 var b = "";
 var radio = 0;
+var fecha = 0;
+var nombretaller = "";
 
 $(document).ready(function () {
-    //alert("entro");
+    //alert("entro");   
+
     $(".choose").prop('disabled', true);
     $(".date").prop('disabled', true);
     $(".time").prop('disabled', true);
@@ -49,13 +52,36 @@ $("#popupTalleres").click(function () {
     $('#modalWorkShop').modal('show');
 });
 
-$("#next").click(function () { 
+$("#next").click(function () {
 
     if ($('#nearestWoekshop').prop('checked')) {
         radio = 0;
+
+        if (fecha == 0) {
+            date = $("#modEmail").val();
+            time = $("#modTime").val();
+            comments = $("#modComment").val();
+
+            if (date == "" || date == null || time == "" || time == null || comments == "" || comments == null) {
+                alert("Debes seleccionar un horario o registrar uno para el taller seleccionado");
+                return;
+            }
+
+        }
+
     }
     else if ($('#myplace').prop('checked')) {
         radio = 1;
+
+        var dateMapa = $("#dateMapa").val();
+        var timeMapa = $("#timeMapa").val();
+        var commentsMapa = $("#commentsMapa").val();
+
+        if (dateMapa == "" || dateMapa == null || timeMapa == "" || timeMapa == null || commentsMapa == "" || commentsMapa == null) {
+            alert("Debe seleccionar una fecha y hora para la direccion registrada");
+            return;
+        }
+
     }
 
     var zipCode = $("#zipcode").val();
@@ -97,11 +123,15 @@ $("#next").click(function () {
         longitude: longitude
     };
 
-    conectarAsy("../ShoppingCart/Next", data, function (result) {
+    conectarAsy("Next", data, function (result) {
 
-        if (result.error == false) {
-            var url = "/ShoppingCart/Step3";
+        if (result.error == false && result.noError == 0) {
+            var url = "../ShoppingCart/Step3";
             window.location = url;
+
+        }
+        else if (result.error == false && result.noError == 1) {
+
         }
         else if (result.error == true) {
             alert(result.msg);
@@ -111,15 +141,14 @@ $("#next").click(function () {
 
 $("#MakeAppoint").click(function () {
 
-    var fecha = 0;
     var servicio = 0;
-    var date = "";
-    var time = "";
-    var comments = "";
     var workshop = 0;
     var address = "";
     var idworkshop = IdWorkshop;
-    
+    var date = "";
+    var time = "";
+    var comments = "";
+
     //Fecha
     if ($('#Date1').prop('checked')) {
         fecha = 1;
@@ -146,6 +175,12 @@ $("#MakeAppoint").click(function () {
         date = $("#modEmail").val();
         time = $("#modTime").val();
         comments = $("#modComment").val();
+
+        if (date == "" || date == null || time == "" || time == null || comments == "" || comments == null) {
+            alert("Debes ingresar el date, time y comments");
+            return;
+        }
+
     }
 
     var data = {
@@ -155,15 +190,21 @@ $("#MakeAppoint").click(function () {
         time: time,
         comments: comments,
         workshop: workshop,
-        idWorkShop : idworkshop,
-        address : address
+        idWorkShop: idworkshop,
+        address: address
     };
 
 
     ////AJAX
-    conectarAsy("../ShoppingCart/MakeApponitment", data, function (result) {
+    conectarAsy("MakeApponitment", data, function (result) {
 
         if (result.error == false) {
+
+            $("#choose").val(nombretaller);
+            $("#date").val(date);
+            $("#time").val(time);
+            $("#comments").val(comments);
+
             $("#modalWorkShop").hide();
 
         }
@@ -177,7 +218,7 @@ $("#MakeAppoint").click(function () {
 function popouWorkShop(name, idWorkshop) {
     IdWorkshop = idWorkshop;
     var a = "#" + idWorkshop;
-
+    nombretaller = name;
     $('#modalWorkShop').modal({ backdrop: true, keyboard: true })
 
 
@@ -202,3 +243,5 @@ function DeshabilitarInput() {
     $(".time").prop('disabled', true);
     $(".comments").prop('disabled', true);
 }
+
+

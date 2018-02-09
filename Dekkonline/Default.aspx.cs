@@ -1,56 +1,87 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
+using DekkOnline.Models;
+using System.Linq;
 
 namespace DekkOnline
 {
     public partial class _Default : Page
     {
-        dbDekkOnlineDataContext db = new dbDekkOnlineDataContext();
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            //loadProducts();
-            if (!Page.IsCallback && !Page.IsPostBack)
+
+            RegisterHyperLink.NavigateUrl = "Register";
+            // Enable this once you have account confirmation enabled for password reset functionality
+            //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
+            //OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
+            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
+            this.Page.Master.FindControl("menu1").Visible = false;
+            returnUrl = "returnUrl=%2Fadmin%2F";
+            if (!String.IsNullOrEmpty(returnUrl))
             {
-                loadType();
-                loadSize();
+                RegisterHyperLink.NavigateUrl += "?ReturnUrl=%2Fadmin%2F";
+            }
+            
+        }
+
+        protected void LogIn(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                // Validate the user password
+                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+
+                // This doen't count login failures towards account lockout
+                // To enable password failures to trigger lockout, change to shouldLockout: true
+                var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
+                
+                switch (result)
+                {
+                    case SignInStatus.Success:
+
+                        //IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                        Response.Redirect("~/admin/");
+                        break;
+                    case SignInStatus.LockedOut:
+                        Response.Redirect("/Account/Lockout");
+                        break;
+                    case SignInStatus.RequiresVerification:
+                        Response.Redirect(String.Format("/Account/TwoFactorAuthenticationSignIn?ReturnUrl={0}&RememberMe={1}", 
+                                                        Request.QueryString["ReturnUrl"],
+                                                        RememberMe.Checked),
+                                          true);
+                        break;
+                    case SignInStatus.Failure:
+                    default:
+                        FailureText.Text = "Invalid login attempt";
+                        ErrorMessage.Visible = true;
+                        break;
+                }
             }
         }
+        //protected void CreateUser_Click(object sender, EventArgs e)
+        //{
+        //    var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        //    var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
+        //    var user = new ApplicationUser() { UserName = NewEmail.Text, Email = NewEmail.Text };
+        //    IdentityResult result = manager.Create(user, NewPassword.Text);
+        //    if (result.Succeeded)
+        //    {
 
-        /// <summary>
-        /// Testing deployment
-        /// </summary>
-        void loadType()
-        {
-            var cats = (from cat in db.categories where cat.catStatus == true select cat);
-            cmbCategory.DataSource = cats;
-            cmbCategory.ValueField = "catId";
-            cmbCategory.TextField = "catName";
-            cmbCategory.DataBind();
-        }
+        //        signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+        //        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+        //    }
+        //    else
+        //    {
+        //        lblNewFailureText.Text = result.Errors.FirstOrDefault();
+        //    }
 
-        void loadSize()
-        {
 
-            var ws = (from pro in db.products where pro.proDimensionWidth.HasValue select new { Id = pro.proDimensionWidth.Value, Size = pro.proDimensionWidth.Value.ToString() }).Distinct().OrderBy(c=>c.Id).ToList();
-            var ps = (from pro in db.products where pro.proDimensionProfile.HasValue select new { Id = pro.proDimensionProfile.Value, Size = pro.proDimensionProfile.Value.ToString() }).Distinct().OrderBy(c => c.Id).ToList();
-            var ds = (from pro in db.products where pro.proDimensionDiameter.HasValue select new { Id = pro.proDimensionDiameter.Value, Size = pro.proDimensionDiameter.Value.ToString() }).Distinct().OrderBy(c => c.Id).ToList();
-
-            initDropSize(ref cmbWidth, ws.OrderBy(c=>c.Size).ToList());
-            initDropSize(ref cmbProfile, ps.OrderBy(c=>c.Size).ToList());
-            initDropSize(ref cmbDiameter, ds.OrderBy(c => c.Size).ToList());
-        }
-
-        void initDropSize(ref DevExpress.Web.ASPxComboBox cmb, object ds)
-        {
-            cmb.DataSource = ds;
-            cmb.TextField = "Size";
-            cmb.ValueField = "Id";
-            cmb.DataBind();
-        }
+        //}
     }
 }

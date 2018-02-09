@@ -21,5 +21,8 @@ namespace Entity
         public string PromoCode { get; set; }
         public Nullable<decimal> Total { get; set; }
         public Nullable<System.DateTime> DateS { get; set; }
+        public Nullable<System.DateTime> EstimatedDate { get; set; }
+        public Nullable<System.DateTime> DeliveredDate { get; set; }
+        public Nullable<bool> Delivered { get; set; }
     }
 }

@@ -47,10 +47,10 @@ namespace Entity
         public virtual DbSet<WorkshopServices> WorkshopServices { get; set; }
         public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<Appointments> Appointments { get; set; }
-        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<OrdersDetail> OrdersDetail { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<PromoCodeUsed> PromoCodeUsed { get; set; }
         public virtual DbSet<DeliveryType> DeliveryType { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
     }
 }

@@ -1,0 +1,14 @@
+C:\Productos\DekkOnline\Framework\bin\Release\Framework.dll.config
+C:\Productos\DekkOnline\Framework\bin\Release\Framework.dll
+C:\Productos\DekkOnline\Framework\bin\Release\Framework.pdb
+C:\Productos\DekkOnline\Framework\bin\Release\Entity.dll
+C:\Productos\DekkOnline\Framework\bin\Release\EntityFramework.dll
+C:\Productos\DekkOnline\Framework\bin\Release\EntityFramework.SqlServer.dll
+C:\Productos\DekkOnline\Framework\bin\Release\Entity.pdb
+C:\Productos\DekkOnline\Framework\bin\Release\Entity.dll.config
+C:\Productos\DekkOnline\Framework\bin\Release\EntityFramework.xml
+C:\Productos\DekkOnline\Framework\bin\Release\EntityFramework.SqlServer.xml
+C:\Productos\DekkOnline\Framework\obj\Release\Framework.csprojResolveAssemblyReference.cache
+C:\Productos\DekkOnline\Framework\obj\Release\Framework.csproj.CoreCompileInputs.cache
+C:\Productos\DekkOnline\Framework\obj\Release\Framework.dll
+C:\Productos\DekkOnline\Framework\obj\Release\Framework.pdb

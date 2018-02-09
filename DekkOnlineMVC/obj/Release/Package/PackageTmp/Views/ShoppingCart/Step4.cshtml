@@ -1,0 +1,145 @@
+﻿@using System.Web.Optimization;
+@model Framework.Libraies.ResultPaidProducts
+@{
+
+    ViewBag.Title = "Step2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Styles/Dimension.css?v=5")
+@Styles.Render("~/Styles/Shoppingcart.css?v=5")
+
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <img src="~/Content/step4.JPG" class="imgRespons1" />
+            <img src="~/Content/step4movil.PNG" class="img-responsive imgRespons2" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" style="text-align:center;">
+            <h3 class="sizeText"><strong> YOU ARE SET TO GO @Model.FirstName!</strong></h3>
+        </div>
+    </div>
+    <div class="row rowLeft1">
+        <div class="col-lg-12">
+            <h4 class="textGris"> You will recieve an e-mail with a summary of the information you provided. Or you can print now.</h4>
+            <h4 class="labelmargin textGris"> your order confirmation number: <span class="textAm">@Model.Order</span></h4>
+            <h4 class="labelmargin textGris"> You can also revise your purchase and appointment status anytime in the my page section in <a><span class="textAm">dekkonline.no</span></a></h4>
+        </div>
+    </div>
+    <div class="row rowLeft2">
+        @foreach (var item in Model.cart)
+        {
+            <div class="col-lg-6 col-xs-12">
+                <div class="col-lg-2 col-xs-4">
+                    <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width:100px;" />
+                </div>
+                <div class="col-lg-8 col-xs-6" style="margin-left:15px;">
+                    <h3 class="sizeDesc"><strong>@item.Name</strong></h3>
+                    <h3><strong>$@item.totalpriceprod</strong></h3>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="row rowLeft3">
+        <div class="col-lg-5" style="margin-top:15px;">
+            <label class="personal"><strong>Personal Information</strong></label>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="zipcode" class="col-lg-3 control-label textoAzul">zip code</label>
+                    <label for="zipcode" class="col-lg-1 control-label textoGris">@Model.ZipCode</label>
+                </div>
+                <div class="form-group">
+                    <label for="Firstname" class="col-lg-3 control-label textoAzul">First name</label>
+                    <label for="zipcode" class="col-lg-1 control-label textoGris">@Model.FirstName</label>
+                </div>
+                <div class="form-group">
+                    <label for="Lastname" class="col-lg-3 control-label textoAzul">Last name</label>
+                    <label for="zipcode" class="col-lg-1 control-label textoGris">@Model.LastName</label>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-lg-3 control-label textoAzul">Address</label>
+                    <label for="zipcode" class="col-lg-7 leftaddress control-label textoGris">@Model.Address</label>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-lg-3 control-label textoAzul">Email</label>
+                    <label for="zipcode" class="col-lg-1 control-label textoGris">@Model.Email</label>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="col-lg-3 control-label textoAzul">Mobile</label>
+                    <label for="zipcode" class="col-lg-4 control-label textoGris leftmovil">@Model.Mobile</label>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-7 margintop">
+            <div class="row"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    @if (@Model.WorkshopName != null)
+                    {
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <img src="@Model.Image" style="width:110px; height:105px;" />
+                            </div>
+                            <div class="col-lg-5">
+                                <h4 style="color: #2471A3; "><strong>@Model.WorkshopName</strong></h4>
+                                <p>@Model.WorkshopAddress</p>
+                                <h5 style="color: #909497;">Ratings: <img src="" style="width:80px;" /></h5>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <h4 style="color: #2471A3; "><strong>@Model.WorkshopAddress</strong></h4>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row" style="margin-top:15px;">
+                        <div class="col-lg-8">
+                            <label for="zipcode" class="textoAzul">Date:<span class="textoGris"> @Model.Date</span></label><br />
+                            <label for="zipcode" class="textoAzul">Time:<span class="textoGris"> @Model.Time</span></label><br />
+                            <label for="zipcode" class="textoAzul">Comments:</label><br />
+                            <span class="textoGris">@Model.Comments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rowLeft4">
+        <div class="col-lg-6">
+            <label class="textPersonal"><strong>you paid width:</strong><span class="" style="color: black; font-size: 22px;"> @Model.TypeTarget</span></label><br />
+            <label class="textoAzul">Card Number:<span class="textoGris"> xxxxxx @Model.Number</span></label><br />
+            <label class="textoAzul">Expiration date:<span class="textoGris"> @Model.Expire</span></label><br />
+            <label class="textoAzul">Securiry Code:<span class="textoGris"> xxx</span></label><br />
+            <label class="textoAzul">Cardholder name:<span class="textoGris">@Model.FirstName @Model.LastName</span></label>
+        </div>
+    </div>
+    <div class="row rowLeft5">
+        <div class="col-lg-12">
+            <h4 style="color: #424949; "> You will recieve an e-mail as soon as your tires are in the workshop ready for you</h4>
+        </div>
+    </div>
+    <div class="row rowLeft6">
+        <div class="col-lg-12">
+            <h4 class="rowLeft6-1" style="color: #C0392B; "><strong>THANK YO FOR USING DEKKONLINE.NO</strong></h4>
+        </div>
+    </div>
+</div>
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/app.js")
+
+<script>
+    $(document).ready(function () {
+        $("#principalDiv").attr("class", "prDivSub");
+        $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+</script>

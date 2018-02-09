@@ -1,293 +1,150 @@
-﻿<%@ Page Title="DekkOnline" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DekkOnline._Default" %>
+﻿<%@ Page Title="Log in" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DekkOnline._Default" Async="true" %>
 
-<%@ Register Assembly="DevExpress.Web.v16.1, Version=16.1.13.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
-<%@ Register Assembly="DevExpress.Web.v16.1, Version=16.1.13.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+<%--<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>--%>
 
-
-<asp:Content ID="HomeContent" ContentPlaceHolderID="HomeContent" runat="server">
-    <script>
-        function searchTyres() {
-            var cat = cmbCategory.GetText();
-            //window.location.href = "/Search?"+cat;
-        }
-
-        function initPage() {
-            
-            //txtZipCode.SetText(cZipCode);
-            getLocation();
-            showAdvanced();
-        }
-
-        function showAdvanced() {
-            $(".advancedSearch").toggle();
-            $("#advancedIcon").toggleClass("moreIcon");
-            $("#advancedIcon").toggleClass("lessIcon");
-        }
-
-        function searchTyres() {
-            var w = cmbWidth.GetText();
-            if (w == "") w = "000";
-            var p = cmbProfile.GetText();
-            if (p == "") p = "00";
-
-            var size = w+p + cmbDiameter.GetText();
-            var type = cmbCategory.GetText();
-
-            window.location.href = "/Tyres/"+type+"/"+size;
-        }
-    </script>
-
-    <div class="homeText">
-        <div class="line1">With you</div>
-        <div class="line2">every step</div>
-        <div class="line1">on the way!</div>
-    </div>
-
-
-    <div class="searchBox">
-        <div class="title">Vehicle Information:</div>
-        <div class="box">
-            <div class="option opSelected">
-                By Size
-            </div>
-            <div class="option">
-                Plate nr.
-            </div>
-
-            <div class="search">
-                Cover type<br />
-                <dx:ASPxComboBox runat="server" ID="cmbCategory" ClientInstanceName="cmbCategory" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
-                    <DropDownButton ImagePosition="Bottom" >
-                        <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px" ></Image>
-                    </DropDownButton>
-                    
-                    
-                </dx:ASPxComboBox>
-
-                Tire Sizes<br />
-                <div class="floatLt dp1">
-                    <dx:ASPxComboBox runat="server" ID="cmbWidth" ClientInstanceName="cmbWidth" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
-                        <DropDownButton ImagePosition="Bottom">
-                            <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
-                        </DropDownButton>
-                    </dx:ASPxComboBox>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <%--    <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="MainContent">--%>
+    <%--    <h2><%: Title %>.</h2>--%>
+    <%-- <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                <div class="form-horizontal">
+                    <h4>Use a local account to log in.</h4>
+                    <hr />
+                    <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+                        <p class="text-danger">
+                            <asp:Literal runat="server" ID="FailureText" />
+                        </p>
+                    </asp:PlaceHolder>
+                    <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
+                        <div class="col-md-10">
+                            <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
+                                CssClass="text-danger" ErrorMessage="The email field is required." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
+                        <div class="col-md-10">
+                            <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <asp:CheckBox runat="server" ID="RememberMe" />
+                                <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="btn btn-default" />
+                        </div>
+                    </div>
                 </div>
-                <div class="floatLt diagonal">
-                </div>
-                <div class="floatLt dp2">
-                    <dx:ASPxComboBox runat="server" ID="cmbProfile" ClientInstanceName="cmbProfile" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
-                        <DropDownButton ImagePosition="Bottom">
-                            <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
-                        </DropDownButton>
-                    </dx:ASPxComboBox>
-                </div>
-                <div class="floatLt dp3">
-                    <dx:ASPxComboBox runat="server" ID="cmbDiameter" ClientInstanceName="cmbDiameter" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
-                        <DropDownButton ImagePosition="Bottom">
-                            <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
-                        </DropDownButton>
-                    </dx:ASPxComboBox>
-                </div>
-                <div class="clearfix"></div>
-                <div class="advancedSearch">
-                    Speed Index:<br />
-                    <dx:ASPxTextBox runat="server" ID="txtSpeed" ClientInstanceName="txtSI" CssClass="BoxGeneral">
-                        <Border BorderStyle="None" />
-                    </dx:ASPxTextBox>    
-                </div>
-                <div class="advancedSearch">
-                    Index load back<br />
-                    <dx:ASPxSpinEdit runat="server" ID="spLoadIndex" CssClass="BoxGeneral">
-                        <Border BorderStyle="None" />
-                    </dx:ASPxSpinEdit>
-                </div>
-                <div class="clearfix"></div>
-                Enter your Zip Code
-                <dx:ASPxTextBox runat="server" ID="txtZipCode" ClientInstanceName="txtZipCode" CssClass="BoxGeneral">
-                    <Border BorderStyle="None" />
-                </dx:ASPxTextBox>
+                <p>
+                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink>
+                </p>
+                <p>
+                    <%-- Enable this once you have account confirmation enabled for password reset functionality
+                    <asp:HyperLink runat="server" ID="ForgotPasswordHyperLink" ViewStateMode="Disabled">Forgot your password?</asp:HyperLink> 
+                </p>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section id="socialLoginForm">
+                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+            </section>
+        </div>
+    </div>--%>
+    <div id="Login" role="dialog" aria-hidden="true">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="">
                 <div class="clearfix"></div>
                 <div class="spacer20"></div>
                 <div class="clearfix"></div>
-                <div class="advance floatLt" onclick="showAdvanced();">
-                    <div class="floatLt">Advanced</div>
-                    <div class="floatLt lessIcon" id="advancedIcon"></div>
-                </div>
-                <div class="searchBtn floatRt" onclick="searchTyres();">
+                <div class="col-xs-12 loginLogo">
                 </div>
                 <div class="clearfix"></div>
-                <div class="spacer10"></div>
-                <div class="clearfix"></div>
+                <div class="loginContain">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <%--<div class="modalLoginLt">--%>
+                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+                        <div class="clearfix"></div>
+                        <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+                            <p class="text-danger">
+                                <asp:Literal runat="server" ID="FailureText" />
+                            </p>
+                        </asp:PlaceHolder>
+                        <div class="clearfix"></div>
+                        <asp:TextBox runat="server" ID="Email" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="The email field is required." ValidationGroup="Login" />
+                        <div class="clearfix"></div>
+                        <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." ValidationGroup="Login" />
+                        <div class="clearfix"></div>
+                        <%--<asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="loginBtn" ValidationGroup="Login" />--%>
+                        <asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="btn loginBtn" />
+                        <%--</div>--%>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <%-- %> <div class="col-md-6">
+                     <%--   <div class="modalLoginRt">
+                            <h4>REGISTER:</h4>
+                            <div class="clearfix"></div>
+                            <asp:PlaceHolder runat="server" ID="NewErrorMessage" Visible="false">
+                                <p class="text-danger">
+                                    <asp:Label runat="server" ID="lblNewFailureText" ClientIDMode="Static"></asp:Label>
+                                </p>
+                            </asp:PlaceHolder>
+
+                            <asp:ValidationSummary runat="server" CssClass="text-danger" />
+                           <<asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" /
+                            <asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" ClientIDMode="Static" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="NewEmail" ValidationGroup="Create"
+                                CssClass="text-danger" ErrorMessage="The email field is required." />
+                            <div class="clearfix"></div>
+
+                            <asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" />
+                            <asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" ClientIDMode="Static" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword" ValidationGroup="Create"
+                                CssClass="text-danger" ErrorMessage="The password field is required." />
+                            <div class="clearfix"></div>
+                            <<asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="loginBtn" ValidationGroup="Create" />
+                            <asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="btn loginBtn" ValidationGroup="Create"/>
+                        </div>
+
+                    </div>
+                </div> --%>
+                    <div class="hidden">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <asp:CheckBox runat="server" ID="RememberMe" />
+                                <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
 
 
-            </div>
-        </div>
-    </div>
-</asp:Content>
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-
-
-
-    <div class="clearfix"></div>
-    <div class="spacer10"></div>
-    <div class="clearfix"></div>
-    <div class="homeCol">
-        <div class="col-sm-4 colLeft">
-            <div class="locateWS"></div>
-            <div class="title">Your nearest</div>
-            <div class="title">workshop</div>
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            Use your <a href="">current location</a> or type
-        
-        </div>
-
-        <div class="col-sm-4  colCt">
-            <div class="promotions"></div>
-            <div class="title">
-                This Week's Sale
-            </div>
-            <div class="more">More</div>
-        </div>
-        <div class="col-sm-4  colRt">
-            <div class="faq"></div>
-            <div class="title">
-                FAQ
-            </div>
-            <p>Some text here Some text here Some text here</p>
-            <p>Some text here Some text here Some text here</p>
-            <p>Some text here Some text here Some text here</p>
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            <div class="more">More</div>
-        </div>
-    </div>
-
-    <div class="homeTires">
-        <div class="title">
-            Tires you can trust
-        </div>
-
-        <div class="wrapTires">
-            <div class="colTires col-md-3">
-                <div class="category cat1">
-                    SUMMER
-                </div>
-                <div class="image">
-                    <img src="Scripts/imgs/tyre.png" />
-                </div>
-                <div class="subTitle">
-                    Efficient Grip
-                </div>
-                <div class="description">
-                    Lorem ipsum dolor sit amet, consectetur adipsicing elit. Donex ante velit, faucibus eu vulputate at, elementum eu enim.
-                </div>
-            </div>
-            <div class="colTires col-md-3">
-                <div class="category cat2">
-                    WINTER
-                </div>
-                <div class="image">
-                    <img src="Scripts/imgs/tyre.png" />
-                </div>
-                <div class="subTitle">
-                    Ultra Grip
-                </div>
-                <div class="description">
-                    Lorem ipsum dolor sit amet, consectetur adipsicing elit. Donex ante velit, faucibus eu vulputate at, elementum eu enim.
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
-            <div class="colTires col-md-3">
-                <div class="category cat3">
-                    MOTORCYCLE
-                </div>
-                <div class="image">
-                    <img src="Scripts/imgs/tyre.png" />
-                </div>
-                <div class="subTitle">
-                    Efficient Grip
-                </div>
-                <div class="description">
-                    Lorem ipsum dolor sit amet, consectetur adipsicing elit. Donex ante velit, faucibus eu vulputate at, elementum eu enim.
-                </div>
-            </div>
-            <div class="colTires col-md-3">
-                <div class="category cat4">
-                    ATV
-                </div>
-                <div class="image">
-                    <img src="Scripts/imgs/tyre.png" />
-                </div>
-                <div class="subTitle">
-                    Ultra Grip
-                </div>
-                <div class="description">
-                    Lorem ipsum dolor sit amet, consectetur adipsicing elit. Donex ante velit, faucibus eu vulputate at, elementum eu enim.
-                </div>
-            </div>
+            <div class="col-lg-2"></div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="homeContact">
-        <div class="colHC1 col-md-6">
-            <div class="fontRed">
-                Plaza los geranios Av.Diana 406,<br />
-                Local 1 Col. Delicias, Cuernavaca
-            </div>
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            Tel: (777) 316/3636 y 316/6591<br />
-            infomdm@dienomdm.com
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            <div class="iconSocial">
-                <a href="/" title="Instagram">
-                    <img src="/Scripts/imgs/instagramRed.png" /></a>
-            </div>
-            <div class="iconSocial">
-                <a href="/" title="facebook">
-                    <img src="/Scripts/imgs/fbRed.png" /></a>
-            </div>
-
-        </div>
-
-        <div class="colHC2 col-md-6">
-            <div class="divContact">
-            </div>
-        </div>
-
-    </div>
-
-    <div class="BoxGeneral" style="position: absolute; top: 100%; width: 100%; padding: 20px; display: none">
-        <div class="floatLt">
-            SORT BY:
-        </div>
-        <div class="floatLt" style="padding-right: 15px;">
-            <dx:ASPxDropDownEdit runat="server" ID="cmbSort" ClientInstanceName="cmbSort" CssClass=""></dx:ASPxDropDownEdit>
-        </div>
-        <div class="floatLt">
-            BRAND:
-        </div>
-        <div class="">
-            <dx:ASPxDropDownEdit runat="server" ID="cmbBrand" ClientInstanceName="cmbBrand" CssClass=""></dx:ASPxDropDownEdit>
-        </div>
-
-        <div class="clearfix"></div>
-        <div class="spacer20"></div>
-        <div class="clearfix"></div>
-
-        <div class="col-lg-1 visible-lg"></div>
-        <div class="col-lg-10 col-md-12">
-            
-        </div>
-
-
-    </div>
-
-
+        <p class="hidden">
+            <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink>
+        </p>
 </asp:Content>

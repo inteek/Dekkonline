@@ -214,7 +214,7 @@ namespace Framework
                                     Name = pro.proName,
                                     Description = pro.proDescription,
                                     quantity = cart.quantity,
-                                    totalpriceprod = Math.Round((double)cart.Price, 2),
+                                    totalpriceprod = Math.Truncate((double)cart.Price),
                                     cartid = cart.Id.ToString()
                                 }).ToList();
 
@@ -251,7 +251,7 @@ namespace Framework
                         subtotal = (decimal)subtotal1,
                         promocode = promocodeused.PromoCode,
                         points = points1,
-                        total = (decimal)promocodeused.TotalPriceFinal,
+                        total = (decimal)Math.Truncate((double)promocodeused.TotalPriceFinal),
                         promocodeapp = true} };
 
                     }

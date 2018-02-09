@@ -77,7 +77,7 @@ namespace Framework
                         var addTarget = new Entity.Payment();
                         if (tar == 1)
                         {
-                          cn =  cn.Substring(cn.Length - 4);
+                            cn = cn.Substring(cn.Length - 4);
                             addTarget.Number = Convert.ToInt32(cn);
                             addTarget.Expire = edm + "/" + edy;
                             addTarget.TargetType = "vpps";
@@ -87,7 +87,7 @@ namespace Framework
                         }
                         else
                         {
-                           cn = cn.Substring(cn.Length - 4);
+                            cn = cn.Substring(cn.Length - 4);
                             addTarget.Number = Convert.ToInt32(cn);
                             addTarget.Expire = edm + "/" + edy;
                             addTarget.TargetType = "Mastercard/Visa";
@@ -107,12 +107,35 @@ namespace Framework
                         }
                         var payment = db.Payment.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).FirstOrDefault();
                         var addOrder = new Entity.Orders();
+                        var deliverydate = (dynamic)null;
+                        var deliverydate2 = (dynamic)null;
+                        if (idDelivery.IdAppointments != 0 && idDelivery.IdAppointments != null)
+                        {
+                            deliverydate = (from iap in db.WorkshopAppointment
+                                            join ap in db.Appointments on iap.IdAppointment equals ap.IdAppointment
+                                            where iap.IdWorkshop == idDelivery.IdWorkshop && iap.IdAppointment == idDelivery.IdAppointments
+                                            select new { Date = ap.Schedule, iap.IdAppointment }).FirstOrDefault();
+                        }
+                        else if(idDelivery.IdAppointments == 0)
+                        {
+                            DateTime date2 = (DateTime)idDelivery.Date;
+                            deliverydate2 = date2.ToString("d")  + " " + idDelivery.Time;
+                        }
+                        if (deliverydate == null)
+                        {
+                            addOrder.EstimatedDate = Convert.ToDateTime(deliverydate2);
+                        }
+                        else
+                        {
+                            addOrder.EstimatedDate = deliverydate.Date;
+                        }
                         addOrder.idUser = idUser;
                         addOrder.Payment = payment.id;
                         addOrder.DeliveryAddress = idDelivery.IdDelivery;
                         addOrder.PromoCode = prom;
                         addOrder.Total = total;
                         addOrder.DateS = DateTime.Now;
+                        addOrder.Delivered = false;
                         db.Orders.Add(addOrder);
                         db.SaveChanges();
                         var addOrderdetail = new Entity.OrdersDetail();
@@ -126,7 +149,7 @@ namespace Framework
                             item.Status = true;
                             if (Procmocode != null)
                             {
-                            Procmocode.Used = true;
+                                Procmocode.Used = true;
                             }
                             db.OrdersDetail.Add(addOrderdetail);
                             db.SaveChanges();
@@ -135,7 +158,7 @@ namespace Framework
                         transaction.Commit();
                         return true;
                     }
-                    catch
+                    catch (Exception ex)
                     {
 
                         transaction.Rollback();
@@ -153,59 +176,75 @@ namespace Framework
         }
 
         //DE-25 1
-        public List<ResultPurchaseOrder> loadOrderPending(string idUser)
+        public List<ResultUserOrder> loadOrderPending(string idUser)
         {
-            List<ResultPurchaseOrder> AllProducts = new List<ResultPurchaseOrder>();
-            List<ResultPurchaseOrder> orders = null;
-            List<ResultPurchaseOrder> EachProductDetail = (dynamic)null;
-            string[] product = (dynamic)null;
             try
             {
+                var products = (dynamic)null;
+                List<ResultOrderProductsUser> products2 = null;
+                List<ResultDataUser> userdata = null;
                 using (var db = new dekkOnlineEntities())
                 {
-                    orders = (from or in db.PurchaseOrder
-                              where or.IdUser == idUser && or.Orderstatus == false
-                              orderby or.IdOrderDetail descending
-                              select new ResultPurchaseOrder
-                              {
-                                  IdOrderDetail = or.IdOrderDetail,
-                                  Products = or.Products,
-                                  TotalPrice = or.TotalPrice,
-                                  OrderDate = or.OrderDate,
-                                  Orderstatus = or.Orderstatus,
-                                  DeliveredDate = or.DeliveredDate,
-                                  ShoppingCarts = or.Shoppingcarts
-                              }).ToList();
-
-                    foreach (var item in orders)
+                    userdata = (from us in db.AspNetUsers
+                                join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                where (us.Id == idUser)
+                                select new ResultDataUser
+                                {
+                                    FirstName = us2.FirstName,
+                                    LastName = us2.LastName,
+                                    Email = us.Email
+                                }).ToList();
+                    products = (from pro in db.products
+                                join ord in db.OrdersDetail on pro.proId equals ord.proId
+                                join or in db.Orders on ord.OrderMain equals or.id
+                                where or.idUser.Equals(idUser)
+                                select new
+                                {
+                                    IdUser = or.idUser,
+                                    proId = ord.proId,
+                                    Image = pro.proImage,
+                                    Name = pro.proName,
+                                    Description = pro.proDescription,
+                                    quantity = ord.quantity,
+                                    totalpriceprod = Math.Truncate((double)ord.price),
+                                    orders = or.id.ToString(),
+                                    estimated = or.EstimatedDate,
+                                    orderdte = or.DateS
+                                }).ToList();
+                    foreach (var item in products)
                     {
-                        product = item.ShoppingCarts.Split(',');
+                        var dateE = item.estimated;
+                        dateE = dateE.ToString("D");
+                        var dateO = item.orderdte;
+                        dateO = dateO.ToString("D");
 
-                        foreach (var item2 in product)
-                        {
-                            EachProductDetail = (from prod in db.products
-                                                 join shpro in db.ShoppingCart on prod.proId equals shpro.proId
-                                                 where shpro.IdUser == idUser && shpro.Status == false && shpro.Id.ToString() == item2
-                                                 orderby shpro.Id descending
-                                                 select new ResultPurchaseOrder
-                                                 {
-                                                     ProductImage = prod.proImage,
-                                                     IdOrderDetail = item.IdOrderDetail,
-                                                     ProductName = prod.proName,
-                                                     Price = shpro.Price,
-                                                     Quantity = shpro.quantity,
-                                                     TotalPrice1 = item.TotalPrice
-                                                 }).ToList();
-
-                            if (EachProductDetail != null)
+                        products += new List<ResultOrderProductsUser> {
+                            new ResultOrderProductsUser
                             {
-                                AllProducts.AddRange(EachProductDetail);
-                            }
+                                 IdUser = item.idUser,
+                                    proId = item.proId,
+                                    Image = item.Image,
+                                    Name = item.Name,
+                                    Description = item.Description,
+                                    quantity = item.quantity,
+                                    totalpriceprod = item.totalpriceprod,
+                                    orders = item.orders,
+                                    estimated = dateE,
+                                    orderdte = dateO
 
-                        }
+                            }
+                        };
                     }
+                   List<ResultUserOrder> order = new List<ResultUserOrder>()
+                    {
+                        new ResultUserOrder{
+                                product = products,
+                                user = userdata
+                        }
+                    };
+                    return order;
                 }
-                return AllProducts;
+                
             }
             catch (Exception ex)
             {
@@ -350,7 +389,7 @@ namespace Framework
                                     Name = pro.proName,
                                     Description = pro.proDescription,
                                     quantity = cart.quantity,
-                                    totalpriceprod = Math.Round((double)cart.Price, 2),
+                                    totalpriceprod = Math.Truncate((double)cart.Price),
                                     cartid = cart.Id.ToString()
                                 }).ToList();
                     var promocodeused2 = (from promo in db.PromotionCode
@@ -570,14 +609,17 @@ namespace Framework
                                     Name = pro.proName,
                                     Description = pro.proDescription,
                                     quantity = cart.quantity,
-                                    totalpriceprod = Math.Round((double)cart.price, 2),
+                                    totalpriceprod = Math.Truncate((double)cart.price),
                                     cartid = cart.id.ToString()
                                 }).ToList();
                     var promocodeused = (from prom in db.PromoCodeUsed
                                          join or in db.Orders on prom.PromoCode equals or.PromoCode
                                          where (prom.idUser == idUser && prom.Used == true && or.id == order)
-                                         select new { prom.PromoCode,
-                                         prom.TotalPriceFinal}).FirstOrDefault();
+                                         select new
+                                         {
+                                             prom.PromoCode,
+                                             prom.TotalPriceFinal
+                                         }).FirstOrDefault();
                     var userAddress = (from us in db.AspNetUsers
                                        join us2 in db.UserAddress on us.Id equals us2.IdUser
                                        where us.Id == idUser
@@ -624,7 +666,7 @@ namespace Framework
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
                                    Order = order}
-                                  
+
                                 };
                             }
                             else

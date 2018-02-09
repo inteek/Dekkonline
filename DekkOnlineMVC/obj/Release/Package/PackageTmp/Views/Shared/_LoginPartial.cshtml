@@ -1,0 +1,69 @@
+﻿@using System.Web.Optimization;
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+            <div class="prLogin" style="overflow-x:hidden;">
+                <table class="tableLogin">
+                    <tr>
+                        <td>
+                            <div id="HeadLoginView">
+                                <div id="AnonymousTemplate">
+                                    @Html.ActionLink("Hello! " + User.Identity.GetUserName() + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                                </div>
+                            </div>
+                        </td>
+                       
+                    </tr>
+                </table>
+            </div>
+            <div class="prMenuClosed" onclick="openMenu()"></div>
+            <div class="prMenuOpen" onclick="closeMenu()"></div>
+            <div class="prMenuItems" runat="server" id="menu">
+                <div class="prMenuCI prItemDekk"><a href="@Url.Action("Products", "Dekk")">DEKK</a></div>
+                <div class="prMenuCI"><a href="/FELGER">FELGER</a></div>
+                <div class="prMenuCI"><a href="/REKVISITA">REKVISITA</a></div>
+                <div class="prMenuCI"><a href="/MOTORSPORT">MOTORSPORT</a></div>
+                <div class="prMenuCI"><a href="/TIRE GUIDE">TIRE GUIDE</a></div>
+                <div class="prMenuCI"><a href="/KONTAKT">KONTAKT</a></div>
+            </div>
+    }
+}
+else
+{
+
+    @*<ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
+        </ul>*@
+    <div class="prLogin">
+        <table class="tableLogin">
+            <tr>
+                <td>
+                    <div id="HeadLoginView">
+                        <div id="AnonymousTemplate">
+                            <a href="javascript:openLogin()" id="HeadLoginStatus">
+                                log in
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="prMenuClosed" onclick="openMenu()"></div>
+    <div class="prMenuOpen" onclick="closeMenu()"></div>
+    <div class="prMenuItems" runat="server" id="menu">
+        <div class="prMenuCI prItemDekk"><a href="@Url.Action("Products", "Dekk")">DEKK</a></div>
+        <div class="prMenuCI"><a href="/FELGER">FELGER</a></div>
+        <div class="prMenuCI"><a href="/REKVISITA">REKVISITA</a></div>
+        <div class="prMenuCI"><a href="/MOTORSPORT">MOTORSPORT</a></div>
+        <div class="prMenuCI"><a href="/TIRE GUIDE">TIRE GUIDE</a></div>
+        <div class="prMenuCI"><a href="/KONTAKT">KONTAKT</a></div>
+    </div>
+}

@@ -145,6 +145,9 @@
     <Property Name="PromoCode" Type="varchar" MaxLength="15" />
     <Property Name="Total" Type="money" />
     <Property Name="DateS" Type="datetime" />
+    <Property Name="EstimatedDate" Type="datetime" />
+    <Property Name="DeliveredDate" Type="datetime" />
+    <Property Name="Delivered" Type="bit" />
   </EntityType>
   <EntityType Name="OrdersDetail">
     <Key>

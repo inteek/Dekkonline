@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization;
-@model IEnumerable<Framework.Libraies.ResultDataUser>
+@model Framework.Libraies.ResultDataUser
 
     @{
 
@@ -40,10 +40,10 @@
 
                                         </div>
                                         <div class="form-group ">
-                                            <h4><strong>@*@item.FirstName @item.LastName*@ Cesar Medellin</strong></h4>
+                                            <h4><strong>@Model.FirstName @Model.LastName</strong></h4>
                                         </div>
                                         <div class="form-group">
-                                            <h6>@*@item.Email*@ cesar.correo@correo.com</h6>
+                                            <h6>@Model.Email </h6>
                                         </div>
                                         <br />
                                         <div class="form-group ">
@@ -59,22 +59,22 @@
                                             <div class="col-sm-8">
                                                 <div class="left2">
                                                     <div class="form-group">
-                                                        <label style="color:steelblue">Zip Code:</label> @*@item.ZipCode*@22325
+                                                        <label style="color:steelblue">Zip Code:</label> @Model.ZipCode
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue"> Name:</label> @*@item.FirstName*@Cesar
+                                                        <label style="color:steelblue"> Name:</label> @Model.FirstName
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue"> Last Name:</label> @*@item.LastName*@Medellin
+                                                        <label style="color:steelblue"> Last Name:</label> @Model.LastName
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue">  Address:</label> @*@item.Address*@Calle #120, col. Los Rosales, Apodaca, Mexico
+                                                        <label style="color:steelblue">  Address:</label> @Model.Address
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue">  E-mail:</label> @*@item.Email*@cesar.correo@correo.com
+                                                        <label style="color:steelblue">  E-mail:</label> @Model.Email
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue"> Mobile:</label> @*@item.Phone*@235593185
+                                                        <label style="color:steelblue"> Mobile:</label> @Model.Phone
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,0 +1,639 @@
+﻿@using System.Web.Optimization;
+@model List<DekkOnlineMVC.Models.Products>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+
+
+@Scripts.Render("~/Scripts/connectAsy.js?v=2")
+@Scripts.Render("~/Scripts/site/Products.js?v=4")
+
+
+
+        <div class="searchWrap" style="top:-300px; width:100%">
+            <div class="searchContain" style="width:100%;">
+                <div class="col-md-3">
+                    <span class="sTitle">SIZE:</span><br />
+                    <div class="floatLt dp1">
+                        @*<dx:ASPxComboBox runat="server" ID="cmbWidth" ClientInstanceName="cmbWidth" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                                <DropDownButton ImagePosition="Bottom">
+                                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                                </DropDownButton>
+                                <ClientSideEvents ValueChanged="loadProducts" />
+                            </dx:ASPxComboBox>*@
+                        @*<select id="cmbWidth" Class="BoxGeneral"></select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbWidth";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "Size";
+             settings.Properties.ValueField = "Id";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+         }
+     ).BindList(ViewData["BagWidth"]).GetHtml()
+                    </div>
+                    <div class="floatLt diagonal"></div>
+                    <div class="floatLt dp2">
+                        @*<dx:ASPxComboBox runat="server" ID="cmbProfile" ClientInstanceName="cmbProfile" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                                <DropDownButton ImagePosition="Bottom">
+                                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                                </DropDownButton>
+                                <ClientSideEvents ValueChanged="loadProducts" />
+                            </dx:ASPxComboBox>*@
+                        @*<select id="cmbProfile" Class="BoxGeneral"></select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbProfile";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "Size";
+             settings.Properties.ValueField = "Id";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+         }
+     ).BindList(ViewData["BagProfile"]).GetHtml()
+                    </div>
+                    <div class="floatLt dp3">
+                        @*<dx:ASPxComboBox runat="server" ID="cmbDiameter" ClientInstanceName="cmbDiameter" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                                <DropDownButton ImagePosition="Bottom">
+                                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                                </DropDownButton>
+                                <ClientSideEvents ValueChanged="loadProducts" />
+                            </dx:ASPxComboBox>*@
+                        @*<select id="cmbDiameter" Class="BoxGeneral"></select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbDiameter";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "Size";
+             settings.Properties.ValueField = "Id";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+         }
+     ).BindList(ViewData["BagDiameter"]).GetHtml()
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <span class="sTitle">COVER TYPE:</span><br />
+                    @*<dx:ASPxComboBox runat="server" ID="cmbCategory" ClientInstanceName="cmbCategory" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                            <DropDownButton ImagePosition="Bottom">
+                                <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                            </DropDownButton>
+                            <ClientSideEvents ValueChanged="loadProducts" />
+                        </dx:ASPxComboBox>*@
+                    @*<select id="cmbCategory" Class="BoxGeneral"></select>*@
+                    @Html.DevExpress().ComboBox(
+             settings =>
+             {
+                 settings.Name = "cmbCategory";
+                 settings.Width = Unit.Percentage(100);
+                 settings.ControlStyle.CssClass = "BoxGeneral";
+                 //settings.SelectedIndex = 0;
+                 //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                 settings.Properties.CallbackPageSize = 15;
+                 settings.Properties.TextField = "catName";
+                 settings.Properties.ValueField = "catId";
+                 settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                 settings.ClientEnabled = true;
+                 settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+             }
+         ).BindList(ViewData["BagCategories"]).GetHtml()
+                </div>
+                <div class="col-md-3">
+                    <span class="sTitle">BRAND:</span><br />
+                    @*<dx:ASPxComboBox runat="server" ID="cmbBrand" ClientInstanceName="cmbBrand" CssClass="BoxGeneral" Border-BorderStyle="None" ClearButton-DisplayMode="OnHover">
+                            <DropDownButton ImagePosition="Bottom">
+                                <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                            </DropDownButton>
+                            <ClientSideEvents ValueChanged="loadProducts" />
+                        </dx:ASPxComboBox>*@
+                    @*<select id="cmbBrand" Class="BoxGeneral"></select>*@
+                    @Html.DevExpress().ComboBox(
+             settings =>
+             {
+                 settings.Name = "BagBrands";
+                 settings.Width = Unit.Percentage(100);
+                 settings.ControlStyle.CssClass = "BoxGeneral";
+                 //settings.SelectedIndex = 0;
+                 //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                 settings.Properties.CallbackPageSize = 15;
+                 settings.Properties.TextField = "braName";
+                 settings.Properties.ValueField = "braId";
+                 settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                 settings.ClientEnabled = true;
+                 settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+             }
+         ).BindList(ViewData["BagBrands"]).GetHtml()
+                </div>
+                <div class="col-md-3">
+                   <span class="sTitle">PRICE:</span><br />
+
+                    @*<dx:ASPxComboBox runat="server" ID="cmbPrice" ClientInstanceName="cmbPrice" CssClass="BoxGeneral" Border-BorderStyle="None">
+                <DropDownButton ImagePosition="Bottom">
+                    <Image Url="/Scripts/imgs/flecha_dropdown-01.png" Height="10px" Width="10px"></Image>
+                </DropDownButton>
+                <Items>
+                    <dx:ListEditItem Selected="true" Text="lowest - highest" Value="0" />
+                    <dx:ListEditItem Selected="false" Text="highest - lowest" Value="1" />
+                </Items>
+                <ClientSideEvents ValueChanged="loadProducts" />
+            </dx:ASPxComboBox>*@
+
+                    <div  style="display:block; float:left; width:60%" >
+                        @*<select id="cmbPrice" Class="BoxGeneral" style="width:100%">
+                            <option value="0">lowest - highest</option>
+                            <option value="1">highest - lowest</option>
+                        </select>*@
+                        @Html.DevExpress().ComboBox(
+         settings =>
+         {
+             settings.Name = "cmbPrice";
+             settings.Width = Unit.Percentage(100);
+             settings.ControlStyle.CssClass = "BoxGeneral";
+             //settings.SelectedIndex = 0;
+             //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+             settings.Properties.CallbackPageSize = 15;
+             settings.Properties.TextField = "ProductName";
+             settings.Properties.ValueField = "ProductName";
+             settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+             settings.ClientEnabled = true;
+             settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+             settings.Properties.Items.Add("Lowest - Highest", 0);
+             settings.Properties.Items.Add("Highest - Lowest", 1);
+
+         }
+     ).GetHtml()
+
+
+
+
+                        </div>
+
+
+                    <div  style="display:block; float:right; width:40%; margin-right:-17px">
+
+                        @Html.DevExpress().Button(
+                         settings =>
+                         {
+                             settings.Name = "btnListView";
+                             settings.EnableTheming = false;
+                             settings.Text = "";
+                             settings.AllowFocus = false;
+                             settings.Height = Unit.Pixel(30);
+                             settings.ImagePosition = ImagePosition.Right;
+                             settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/list-view.png");
+                             settings.Images.Image.Height = 16;
+                             settings.Images.Image.Width = 16;
+                         }).GetHtml()
+                                                @Html.DevExpress().Button(
+                         settings =>
+                         {
+                             settings.Name = "btnGridView";
+                             settings.EnableTheming = false;
+                             settings.Text = "";
+                             settings.AllowFocus = false;
+                             settings.ImagePosition = ImagePosition.Right;
+                             settings.Height = Unit.Pixel(30);
+                             //settings.Styles.Style.PressedStyle.CssClass = "icqPressed";
+                             settings.Images.Image.Url = Url.Content("~/Content/imgs/icons/grid-view.png");
+                             settings.Images.Image.Height = 16;
+                             settings.Images.Image.Width = 16;
+                         }).GetHtml()
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                <br />
+                <br />
+                <br />
+
+
+                <style type="text/css">
+                    .cardViewProducts {
+                        background-color: #f1f2f3;
+                        border-style: none;
+                    }
+
+                    .fa {
+                        font-size: 25px;
+                    }
+
+                    .checked {
+                        color: orange;
+                    }
+
+                    .FlowCard {
+                        padding: 0;
+                    }
+
+                    @@media all and (max-width: 420px) {
+                        .FlowCard {
+                            width: 94% !important;
+                            height: 520px !important;
+                        }
+
+                        .dxcvFlowCard_iOS.FlowCard,
+                        .dxcvFlowCard_Moderno.FlowCard,
+                        .dxcvFlowCard_Material.FlowCard {
+                            height: 620px !important;
+                        }
+                    }
+
+                    @@media all and (min-width: 420px) and (max-width: 600px) {
+                        .FlowCard {
+                            width: 250px !important;
+                            height: 550px !important;
+                        }
+
+                        .dxcvFlowCard_iOS.FlowCard,
+                        .dxcvFlowCard_Moderno.FlowCard,
+                        .dxcvFlowCard_Material.FlowCard {
+                            height: 650px !important;
+                        }
+
+                        .dxcvFlowCard_Moderno.FlowCard {
+                            width: 235px !important;
+                        }
+                    }
+                </style>
+                <script>
+                    var cardView = '@ViewBag.IsCardView';
+                    var sortMode = '@ViewBag.SortMode';
+                </script>
+
+                <div id="xcpProducts" style="text-align:center; margin-left:0px; padding-right:0px">
+                    <!--AQUI VA EL GRID-->
+                    @Html.Partial("ProductsPartial", Model)
+                </div>
+
+                </div>
+
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+
+<br />
+<br />
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalProductDetails" role="dialog" style="font-family:Arial;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-header" style="background-color:#C84647;">
+                <button type="button" class="close" data-dismiss="modal" style="color:#fff;" >&times;</button>
+                <h4 class="modal-title" style="color:#fff;" >Product Details</h4>
+            </div>
+
+            <div class="modal-body">
+                
+                <input id="productDetails_Id" type="hidden" />
+
+                <div class="col-xs-12 col-md-12" style="margin-top:-10px;  padding-left:0px; padding-right:0px;">
+                    <img  style="float:right; height:30px;" src="@Url.Content("~/Content/imgs/loguito.png")" />
+                </div>
+
+                <!-- -->
+                <div class="col-xs-12 col-md-4" style="height:297px; text-align:center;">
+                    <img id="productDetails_Img" src="http://admin.dekkonline.sonetworks.no//photos/products/202.jpg" alt="" style="height:285px;">
+                </div>
+                <div class="col-xs-12 col-md-8" style="">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12" style="padding-left:0px; padding-right:0px;">
+                            <img id="productDetails_CategoryImg1" src="@Url.Content("~/Content/imgs/Summer_red-01.png")" style="width:45px;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12" style="padding-left:0px; padding-right:0px;">
+                            <h3 id="productDetails_Name" >Eagle F1 Asymmetric 3</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12" style="padding-left:0px; padding-right:0px;">
+                           <p id="productDetails_Description">Continental - Engineered in Germany, Continental o ers premium tyres with optimum braking performance and safety.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12" style="">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6" style="padding-left:0px; padding-right:0px;">
+                                    <p id="productDetails_Brand" style="color:gray; font-size:20px; font-weight:bold">ROVELO</p>
+                                </div>
+                                <div class="col-xs-12 col-md-6" style="padding-left:0px; padding-right:0px;">
+                                    <p id="productDetails_Price" style="color:#000; font-size:20px; font-weight:bold">60 Kr</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12" style="padding-left:0px; padding-right:0px;">
+                            <p>Define your tire size, so we can offer you the best options for your car.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12" style="padding-left:0px; padding-right:0px;">
+                            <p>Size</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-3" style="padding-left:0px; padding-right:0px;">
+                            @Html.DevExpress().ComboBox(
+                            settings =>
+                            {
+                                settings.Name = "productDetails_CboWidth";
+                                settings.Width = Unit.Percentage(100);
+                                settings.ControlStyle.CssClass = "BoxGeneral";
+                                //settings.SelectedIndex = 0;
+                                settings.Properties.CallbackPageSize = 15;
+                                settings.Properties.TextField = "Size";
+                                settings.Properties.ValueField = "Id";
+                                settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                settings.ClientEnabled = true;
+                                //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+                            }
+                        ).BindList(ViewData["BagWidth"]).GetHtml()
+                        </div>
+                        <div class="col-xs-2 col-md-1" style="padding-left:0px; padding-right:0px; text-align:center;">
+                            <span style="font-size:21px;">/</span> 
+                        </div>
+                        <div class="col-xs-3 col-md-3" style="padding-left:0px; padding-right:0px;">
+                            @Html.DevExpress().ComboBox(
+                                settings =>
+                                {
+                                    settings.Name = "productDetails_CboProfile";
+                                    settings.Width = Unit.Percentage(100);
+                                    settings.ControlStyle.CssClass = "BoxGeneral";
+                                    //settings.SelectedIndex = 0;
+                                    settings.Properties.CallbackPageSize = 15;
+                                    settings.Properties.TextField = "Size";
+                                    settings.Properties.ValueField = "Id";
+                                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                    settings.ClientEnabled = true;
+                                    //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+                                }
+                            ).BindList(ViewData["BagProfile"]).GetHtml()
+                        </div>
+                        <div class="col-xs-3 col-md-3" style="padding-left:0px; padding-right:0px;">
+                            @Html.DevExpress().ComboBox(
+                                settings =>
+                                {
+                                    settings.Name = "productDetails_CboDiameter";
+                                    settings.Width = Unit.Percentage(100);
+                                    settings.ControlStyle.CssClass = "BoxGeneral";
+                                    //settings.SelectedIndex = 0;
+                                    settings.Properties.CallbackPageSize = 15;
+                                    settings.Properties.TextField = "Size";
+                                    settings.Properties.ValueField = "Id";
+                                    settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                    settings.ClientEnabled = true;
+                                    //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+                                }
+                            ).BindList(ViewData["BagDiameter"]).GetHtml()
+                        </div>
+                        <div class="col-xs-12 col-md-2" style="padding-left:0px; padding-right:0px;">
+                            @Html.DevExpress().Button(
+                            settings =>
+                            {
+                                settings.Name = "productDetails_BtnSearch";
+                                settings.Width = Unit.Percentage(100);
+                                settings.Height = Unit.Pixel(30);
+                                settings.EnableTheming = false;
+                                settings.Text = "Search";
+                                settings.AllowFocus = false;
+                            }).GetHtml()
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12 col-md-12" style="height:20px"> </div>
+                <div class="col-xs-12 col-md-12" style="padding-left:0px; padding-right:0px;">
+                    <div class="col-xs-12 col-md-8" style="height:25px;background-color:#C84647; padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-6 col-md-6" style="height:25px;">
+                            <span style="color:white; font-size:15px;" >More details</span>
+                        </div>
+                        <div class="col-xs-6 col-md-6" style="height:25px;">
+                            <i class="glyphicon glyphicon-chevron-up" style="color:#fff; float:right; margin-top:2px;" ></i>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xs-12 col-md-8" style=" padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-7 col-md-8" style="height:45px; padding-left:0px; padding-right:0px; ">
+                            <div class="col-xs-3 col-md-2" style="height:45px;  text-align:left;  padding-left:7px; ">
+                                <img id="productDetails_CategoryImg2" src="@Url.Content("/Content/imgs/Summer_red-01.png")" style="width:35px; margin-top:3px;">
+                            </div>
+                            <div class="col-xs-9 col-md-10" style="text-align:left;  padding-left:10px;">
+                                <p id="productDetails_CategoryName" style="color:gray; font-size:25px; ">summer</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-5 col-md-4" style="height:45px; padding-right:0px; padding-left:0px;">
+                            <p  style="color:darkseagreen; font-weight:bold; font-size:14px; float:right;  ">In stock (<span id="productDetails_InStock">16</span>)</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-12 col-md-12" style="height:35px;">
+                            <h3 style="margin-top:7px;">Tire Size</h3>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8" style="height:45px; padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-7 col-md-8" style="height:45px;">
+                            <p style="color:gray; font-size:20px; margin-top:5px; ">
+                                <span id="productDetails_LblWidth">205</span> 
+                                <span >/</span> 
+                                <span id="productDetails_LblProfile">55</span>
+                                <span id="productDetails_LblDiameter">16</span>
+                            </p>
+                        </div>
+                        <div class="col-xs-5 col-md-4" style="padding-left:0px; padding-right:0px;">
+                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
+                                <img src="@Url.Content("~/Content/imgs/tyreFuel.png")" style="width:30px">
+                            </div>
+                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
+                                <span id="productDetails_TyreFuel" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>B</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-12 col-md-12" style="height:35px;">
+                            <h3 style="margin-top:7px;">Speed Index</h3>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-7 col-md-8" style="height:45px;">
+                            <p id="productDetails_SpeedIndex" style="color:gray; font-size:20px; margin-top:5px;">94</p>
+                        </div>
+                        <div class="col-xs-5 col-md-4" style="height:45px; padding-left:0px; padding-right:0px;">
+                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
+                                <img src="@Url.Content("~/Content/imgs/tyreNoise.png")" style="width:30px">
+                            </div>
+                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
+                                <span id="productDetails_TyreNoise" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>71</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-12 col-md-12" style="height:35px;">
+                            <h3 style="margin-top:7px;">Index load back</h3>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-7 col-md-8" style="height:45px;">
+                            <p id="productDetails_Indexload" style="color:gray; font-size:20px; margin-top:5px; ">70</p>
+                        </div>
+                        <div class="col-xs-5 col-md-4" style="height:45px; padding-left:0px; padding-right:0px;">
+                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
+                                <img src="@Url.Content("~/Content/imgs/tyreWet.png")" style="width:30px">
+                            </div>
+                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
+                                <span id="productDetails_TyreWet" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>A</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="col-xs-12 col-md-12" style="height:20px"> </div>
+                <div class="col-xs-12 col-md-12" style="padding-left:0px; padding-right:0px;">
+                    <div class="col-xs-12 col-md-8" style="height:25px; background-color:#C84647; padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-6 col-md-6" style="height:25px;">
+                            <span style="color:white; font-size:15px;">Rating details</span>
+                        </div>
+                        <div class="col-xs-6 col-md-6" style="height:25px;">
+                            <i class="glyphicon glyphicon-chevron-up" style="color:#fff; float:right; margin-top:2px;"></i>
+                        </div>
+                    </div> 
+                    <div class="col-xs-12 col-md-8" style=" padding-left:0px; padding-right:0px; float:right;">
+                        <div class="col-xs-5 col-md-2" style="height:45px;">
+                            <p style="color:gray; font-size:20px; margin-top:5px; ">Ratings:</p>
+                        </div>
+                        <div id="productDetails_Ratings" class="col-xs-7 col-md-10" style="height:45px; padding-top:10px; padding-left:5px; padding-right:0px;">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                    </div>
+                </div>
+                                
+                
+                
+                
+                
+                <div class="clearfix"></div>
+                <div class="spacer20 visible-xs visible-sm"></div>
+                <div class="clearfix"></div>
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="col-xs-12 col-md-12" style="height:45px; padding-left:0px; padding-right:0px;">
+                    <div class="col-xs-7 col-md-10" style="height:43px; padding-top:7px;">
+                        <p style="font-size:20px;" >Add to cart:</p>
+                    </div>
+                    <div class="col-xs-2 col-md-1" style="height:43px; padding-top:6px; padding-left:0px; padding-right:0px;">
+                        @Html.DevExpress().ComboBox(
+                            settings =>
+                            {
+                                settings.Name = "productDetails_CboAddCart";
+                                settings.Width = Unit.Pixel(55);
+                                settings.ControlStyle.CssClass = "BoxGeneral";
+                                //settings.SelectedIndex = 0;
+                                settings.Properties.CallbackPageSize = 15;
+                                //settings.Properties.TextField = "Size";
+                                //settings.Properties.ValueField = "Id";
+                                //settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
+
+                                settings.ClientEnabled = true;
+                                //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+                                settings.Properties.Items.Add("1", 1);
+                                settings.Properties.Items.Add("2", 2);
+                                settings.Properties.Items.Add("3", 3);
+                                settings.Properties.Items.Add("4", 4);
+                                settings.Properties.Items.Add("5", 5);
+
+                                settings.Properties.Items[0].Selected = true;
+                                settings.SelectedIndex = 0;
+                            }
+                        ).GetHtml()
+                    </div>
+                    <div class="col-xs-3 col-md-1"  style="height:43px;">
+                        <img id="productDetails_BtnAddCart" src="~/Content/imgs/carrito2.png" style="width:40px; cursor:pointer;" />
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

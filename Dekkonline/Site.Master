@@ -85,7 +85,8 @@
                 }
             }
             $(document).ready(function () {    
-
+                $("#principalDiv").attr("class", "prDivSub");
+                $("#mainContainDiv").attr("class", "prMainContentSub");
                 try {
                     initPage();
                 } catch (e) { };

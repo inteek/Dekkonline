@@ -55,6 +55,7 @@
     <Compile Include="Libraies\ResultDeliveryType.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Libraies\ResultOrderProductsUser.cs" />
     <Compile Include="Libraies\ResultOrders.cs" />
     <Compile Include="Libraies\ResultAppointments.cs" />
     <Compile Include="Libraies\ResultBrands.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Libraies\ResultShoppingCartProduct.cs" />
     <Compile Include="Libraies\ResultSize.cs" />
     <Compile Include="Libraies\ResultTypesServices.cs" />
+    <Compile Include="Libraies\ResultUserOrder.cs" />
     <Compile Include="Libraies\ResultUserPoints.cs" />
     <Compile Include="Libraies\ResultWorkshop.cs" />
     <Compile Include="Libraies\ResulUserWorkShop.cs" />

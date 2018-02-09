@@ -18,5 +18,6 @@ namespace Framework.Libraies
         public Nullable<int> quantity { get; set; }
         public Nullable<double> totalpriceprod { get; set; }
         public string cartid { get; set; }
+        public string workshop { get; set; }
     }
 }

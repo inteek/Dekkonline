@@ -1,0 +1,51 @@
+﻿@*@model DekkOnlineMVC.Models.RegisterViewModel*@
+
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="clearfix"></div>
+    @*<asp:PlaceHolder runat="server" ID="NewErrorMessage" Visible="false">
+            <p class="text-danger">
+                <asp:Label runat="server" ID="lblNewFailureText" ClientIDMode="Static"></asp:Label>
+            </p>
+        </asp:PlaceHolder>*@
+
+    @*<asp:ValidationSummary runat="server" CssClass="text-danger" />*@
+
+
+    @*<asp:TextBox runat="server" ID="NewEmail" CssClass="txtLogin txtUser" TextMode="Email" />*@
+    @*<input type="email" id="Email1" runat="server" class="txtLogin txtUser" />*@
+    @Html.TextBox("Email1", null, new { @class = "txtLogin txtUser" })
+    @*@Html.ValidationMessageFor(m => m.Email1, "", new { @class = "text-danger" })*@
+    @*@Html.DevExpress().TextBox(settings =>
+        {
+            settings.Name = "Email1";
+            settings.ControlStyle.CssClass = "txtLogin txtUser";
+            settings.Width = 320;
+        }).GetHtml()*@
+    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="NewEmail" ValidationGroup="Create"
+        CssClass="text-danger" ErrorMessage="The email field is required." />*@
+    <div class="clearfix"></div>
+    <br />
+
+    @*<asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="txtLogin txtPass" />*@
+    @*<input type="password" runat="server" class="txtLogin txtPass" />*@
+    @Html.Password("Password1", null, new { @class = "txtLogin txtPass" })
+    @*@Html.ValidationMessageFor(m => m.Password1, "", new { @class = "text-danger" })*@
+    @*@Html.DevExpress().TextBox(settings =>
+        {
+            settings.Name = "Password1";
+            settings.ControlStyle.CssClass = "txtLogin txtPass";
+            settings.Properties.Password = true;
+        }).GetHtml()*@
+    @*<asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword" ValidationGroup="Create"
+        CssClass="text-danger" ErrorMessage="The password field is required." />*@
+    <div class="clearfix"></div>
+    <br />
+
+    @*<asp:Button runat="server" OnClick="CreateUser_Click" ID="CreateUser" Text="Sign Up" CssClass="loginBtn" ValidationGroup="Create" />*@
+    @*<button id="btnCreateUser" onclick="CreateUser_Click" Class="loginBtn">Sign Up</button>*@
+    <input type="submit" class="loginBtn" value="Sign Up" />
+}
