@@ -37,8 +37,10 @@
             <div class="table-responsive">
                 <table class="table">
                     <tbody>
-                        @foreach (var item in Model.product)
+                        @if (Model.product.Count > 0)
     {
+                    foreach (var item in Model.product)
+{
                     <tr>
                         <td class="vertical" style="width:150px;">
                             <div class="form-group" style="margin-top:40px; ">
@@ -48,12 +50,12 @@
                                 <h5>Order number:</h5>
                             </div>
                             <div class="form-group">
-                                <h5>870923</h5>
+                                <h5>@item.orders</h5>
                             </div>
                         </td>
                         <td class="vertical2">
                             <div class="col-lg-4">
-                                <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width: 120px; height: 120px;" />
+                                <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width: 90px; height: 90px;" />
                             </div>
                             <div class="col-lg-8">
                                 <div class="form-group">
@@ -73,13 +75,26 @@
                                     <h5>Status: Pending</h5>
                                 </div>
                                 <div class="form-group">
-                                    <h5>Order date: @item.orderdte</h5>
+                                    <h5>Order date: @item.orderdte2</h5>
                                 </div>
                                 <div class="form-group">
-                                    <h5>Due Date: @item.estimated</h5>
+                                    <h5>Due Date: @item.estimated2</h5>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-danger btn-sm">CONTACT THE SHOP</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+}
+}
+else
+{
+                    <tr>
+                        <td class="vertical2">
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <h4><strong>No pending products.</strong></h4>
                                 </div>
                             </div>
                         </td>

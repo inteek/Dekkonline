@@ -136,6 +136,53 @@ namespace Framework
             }
             return result;
         }
+        public List<ResultWorkshop> loadWorkshopreco(int zipCode, int filter)
+        {
+            List<ResultWorkshop> result = null;
+            int rango1 = zipCode - 100;
+            int rango2 = zipCode + 100;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    if (filter == 1)
+                    {
+                        result = (from address in db.Workshop
+                                                  where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                                                  orderby address.Average descending
+                                                  select new ResultWorkshop
+                                                  {
+                                                      IdWorkshop = address.IdWorkshop,
+                                                      Name = address.Name,
+                                                      Address = address.Address,
+                                                      ZipCode = address.ZipCode,
+                                                      Latitude = address.Latitude,
+                                                      Length = address.Length
+                                                  }).ToList();
+                    }
+                    else
+                    {
+                        result = (from address in db.Workshop
+                                  where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                                  select new ResultWorkshop
+                                  {
+                                      IdWorkshop = address.IdWorkshop,
+                                      Name = address.Name,
+                                      Address = address.Address,
+                                      ZipCode = address.ZipCode,
+                                      Latitude = address.Latitude,
+                                      Length = address.Length
+                                  }).ToList();
+                    }
+                
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return result;
+        }
         //DE-26 1
         public List<ResultWorkshop> loadWorkshop(int workshop)
         {

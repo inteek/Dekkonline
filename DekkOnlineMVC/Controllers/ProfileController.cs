@@ -11,8 +11,10 @@ namespace DekkOnlineMVC.Controllers
     {
         // GET: /Profile/
 
-        public PartialViewResult Index(string username, string password)
+        public ActionResult Index()
         {
+            string path = Request.Url.AbsolutePath;
+            ViewBag.ReturnUrl = path;
             Users us = new Users();
             ShoppingCart sh = new ShoppingCart();
             var UserData = (dynamic)null;
@@ -47,7 +49,7 @@ namespace DekkOnlineMVC.Controllers
             }
             
 
-            return PartialView(pro);
+            return View(pro);
 
         }
 
@@ -58,12 +60,70 @@ namespace DekkOnlineMVC.Controllers
 
         public PartialViewResult Pending()
         {
-            return PartialView();
+            Orders or = new Orders();
+            ShoppingCart sh = new ShoppingCart();
+            var pending = (dynamic)null;
+            var idUser = Security.GetIdUser(this);
+            var usuario1 = User.Identity.Name;
+            var pro = (dynamic)null;
+            if (usuario1 != "")
+            {
+                var id = sh.User(usuario1);
+                pending = or.loadOrderPending(id);
+                if (pending != null)
+                {
+                    foreach (var item in pending)
+                    {
+                        pro = new Framework.Libraies.ResultUserOrder
+                        {
+                            product = item.product,
+                        user = item.user
+                        };
+                    }
+                }
+
+            }
+            else
+            {
+                Response.Redirect("~/Home/Index");
+            }
+
+
+            return PartialView(pro);
         }
 
         public PartialViewResult Past()
         {
-            return PartialView();
+            Orders or = new Orders();
+            ShoppingCart sh = new ShoppingCart();
+            var pending = (dynamic)null;
+            var idUser = Security.GetIdUser(this);
+            var usuario1 = User.Identity.Name;
+            var pro = (dynamic)null;
+            if (usuario1 != "")
+            {
+                var id = sh.User(usuario1);
+                pending = or.loadOrderPast(id);
+                if (pending != null)
+                {
+                    foreach (var item in pending)
+                    {
+                        pro = new Framework.Libraies.ResultUserOrder
+                        {
+                            product = item.product,
+                            user = item.user
+                        };
+                    }
+                }
+
+            }
+            else
+            {
+                Response.Redirect("~/Home/Index");
+            }
+
+
+            return PartialView(pro);
         }
 
         public PartialViewResult Promos()

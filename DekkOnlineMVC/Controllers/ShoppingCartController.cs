@@ -209,8 +209,6 @@ namespace DekkOnlineMVC.Controllers
             }
         }
 
-
-
         public ActionResult Step2()
         {
             string path = Request.Url.AbsolutePath;
@@ -274,16 +272,12 @@ namespace DekkOnlineMVC.Controllers
             return View(b);
         }
 
-
-
-
         [HttpPost]
         public JsonResult loadWorkShop(string zipCode)
         {
             zip = zipCode;
             return Json(new { error = false, noError = 0, msg = "" });
         }
-
 
         //public PartialViewResult Step2()
         //{
@@ -491,6 +485,7 @@ namespace DekkOnlineMVC.Controllers
                     await account.Register(model);
 
 
+
                     error = false;
                     noError = 0;
                     msg = "Registro Exitoso";
@@ -563,7 +558,7 @@ namespace DekkOnlineMVC.Controllers
             }
         }
 
-  public ActionResult CountProductCart()
+        public ActionResult CountProductCart()
         {
 
             List<Framework.Libraies.ResultAllCart> pro;
@@ -586,6 +581,103 @@ namespace DekkOnlineMVC.Controllers
             return Content(JsonConvert.SerializeObject(pro.Select(x=>x.cart.Sum(y=>y.quantity))), "application/json");
         }
 
-		
+        [HttpPost]
+        public ActionResult insertDeliveryRegisterUser(string zipCode, string firstName, string lastName, string mobile, string address, string email, string choose, string date, string comments, string dateMapa, string timeMapa, string commentsMapa, int IdWorkshop, int radio, string latitude, string longitude)
+        {
+            bool error = false;
+            int noError = 0;
+            string msg = "";
+            string page = "";
+            Users users = new Users();
+            Workshop Workshop = new Workshop();
+
+            string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+            var cookie = Security.GetIdUser(this);
+
+            try
+            {
+                bool addUser = users.addToUserAddress(idUser, firstName, lastName, address, mobile, Convert.ToInt32(zipCode), latitude, longitude);
+
+                if (addUser == true)
+                {
+                    if (radio == 1)
+                    {
+                        bool result = Workshop.addDeliveryType(1, idUser, 0, 0, 0, dateMapa, timeMapa, commentsMapa, address);
+                        if (result == true)
+                        {
+                            ShoppingCart shoppingCart = new ShoppingCart();
+
+                            bool shopping = shoppingCart.UpdateShoppingCart(idUser, cookie);
+
+                            if (shopping == true)
+                            {
+                                error = false;
+                                noError = 0;
+                                msg = "Registro Exitoso";
+                                page = Url.Action("Step3", "ShoppingCart");
+                            }
+                            else
+                            {
+                                error = true;
+                                noError = 1;
+                                msg = "Registro incorrecto metodo UpdateShoppingCart ";
+                                page = "";
+                            }
+                           
+                        }
+                        else
+                        {
+                            error = true;
+                            noError = 1;
+                            msg = "Registro incorrecto metodo addDeliveryType";
+                            page = "";
+                        }
+                    }                    
+                }
+                else
+                {
+                    error = true;
+                    noError = 1;
+                    msg = "Registro incorrecto metodo addToUserAddress";
+                    page = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = true, noError = 0, msg = "Error", page = "" });
+            }
+
+            return Json(new { error, noError, msg, page });
+        }
+
+        [HttpPost]
+        public JsonResult workshopreco(string zipCode, string selection)
+        {
+            List<ResultWorkshop> workshop = null;
+
+            Workshop workShop = new Workshop();
+
+            var b = (dynamic)null;
+            try
+            {
+                workshop = workShop.loadWorkshopreco(Convert.ToInt32(zipCode), Convert.ToInt32(selection));
+
+                b = new Framework.Libraies.ResulUserWorkShop { workshop = workshop, zipcode = Convert.ToInt32(null), firstName = null, lastName = null, address = null, email = null, mobile = null };
+                if (b != null)
+                {
+                    return Json(b, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { error = true, msg = "No workshops in the area" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

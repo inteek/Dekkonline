@@ -14,6 +14,11 @@ $(document).ready(function () {
 
     $("#comboPerson").attr('checked', true);
     $("#nearestWoekshop").attr('checked', true);
+
+    $(".reco").change(function () {
+        Workshopreco();
+    });
+
 });
 
 $("#comboPerson").click(function () {
@@ -53,7 +58,7 @@ $("#popupTalleres").click(function () {
 });
 
 $("#next").click(function () {
-
+    var ZIPCODE = 0;
     if ($('#nearestWoekshop').prop('checked')) {
         radio = 0;
 
@@ -81,9 +86,9 @@ $("#next").click(function () {
             alert("Debe seleccionar una fecha y hora para la direccion registrada");
             return;
         }
-
     }
 
+    var codeZip = txtZipCode.GetText();
     var zipCode = $("#zipcode").val();
     var firstName = $("#Firstname").val();
     var lastName = $("#Lastname").val();
@@ -100,12 +105,19 @@ $("#next").click(function () {
     var latitude = $("#latitude").val();
     var longitude = $("#longitude").val();
 
+    if (codeZip != null || codeZip != "") {
+        ZIPCODE = codeZip;
+    }
+    else {
+        ZIPCODE = zipCode;
+    }
+
     if (IdWorkshop == 0 && dateMapa == "" && timeMapa == "" && commentsMapa == "") {
         alert("Debes de seleccionar un taller o una ubicacion en el mapa");
         return;
     }
     var data = {
-        zipCode: zipCode,
+        zipCode: ZIPCODE,
         firstName: firstName,
         lastName: lastName,
         mobile: mobile,
@@ -126,12 +138,7 @@ $("#next").click(function () {
     conectarAsy("Next", data, function (result) {
 
         if (result.error == false && result.noError == 0) {
-            var url = "../ShoppingCart/Step3";
-            window.location = url;
-
-        }
-        else if (result.error == false && result.noError == 1) {
-
+            Next(data);            
         }
         else if (result.error == true) {
             alert(result.msg);
@@ -244,4 +251,57 @@ function DeshabilitarInput() {
     $(".comments").prop('disabled', true);
 }
 
+function Next(data) {
 
+    var data2 = {
+        zipCode: data['zipCode'],
+        firstName: data['firstName'],
+        lastName: data['lastName'],
+        mobile: data['mobile'],
+        address: data['address'],
+        email: data['email'],
+        choose: data['choose'],
+        date: data['date'],
+        comments: data['comments'],
+        dateMapa: data['dateMapa'],
+        timeMapa: data['timeMapa'],
+        commentsMapa: data['commentsMapa'],
+        IdWorkshop: data['IdWorkshop'],
+        radio: data['radio'],
+        latitude: data['latitude'],
+        longitude: data['longitude']
+    };
+
+    conectarAsy("insertDeliveryRegisterUser", data2, function (result) {
+
+        if (result.error == false && result.noError == 0) {            
+            var url = "../ShoppingCart/Step3";
+            window.location = url;
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+}
+
+function Workshopreco() {
+    var zipCode = $("#zipcode").val();
+    var sel = $(".reco").val();
+    var data = {
+        zipCode: zipCode,
+        selection: sel
+    }
+    conectarAsy("workshopreco", data, function (result) {
+
+        if (result.error == false && result.noError == 0) {
+            console.log(result);
+
+        }
+        else if (result.error == false && result.noError == 1) {
+
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+}

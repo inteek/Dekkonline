@@ -187,6 +187,10 @@ namespace DekkOnlineMVC.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    Users users = new Users();
+                    string idUser = users.IdUser(model.Email1);
+                    System.Web.HttpContext.Current.Session["SessionUser"] = idUser;
+
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

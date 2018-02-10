@@ -67,3 +67,5 @@ C:\Productos\dekkonline2\Framework\obj\Debug\Framework.csprojResolveAssemblyRefe
 C:\Productos\dekkonline2\Framework\obj\Debug\Framework.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline2\Framework\obj\Debug\Framework.dll
 C:\Productos\dekkonline2\Framework\obj\Debug\Framework.pdb
+C:\DekkonlineNueva\Framework\bin\Debug\Entity.dll.config
+C:\DekkonlineNueva\Framework\obj\Debug\Framework.csproj.CoreCompileInputs.cache

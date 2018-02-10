@@ -116,10 +116,10 @@ namespace Framework
                                             where iap.IdWorkshop == idDelivery.IdWorkshop && iap.IdAppointment == idDelivery.IdAppointments
                                             select new { Date = ap.Schedule, iap.IdAppointment }).FirstOrDefault();
                         }
-                        else if(idDelivery.IdAppointments == 0)
+                        else if (idDelivery.IdAppointments == 0)
                         {
                             DateTime date2 = (DateTime)idDelivery.Date;
-                            deliverydate2 = date2.ToString("d")  + " " + idDelivery.Time;
+                            deliverydate2 = date2.ToString("d") + " " + idDelivery.Time;
                         }
                         if (deliverydate == null)
                         {
@@ -181,7 +181,6 @@ namespace Framework
             try
             {
                 var products = (dynamic)null;
-                List<ResultOrderProductsUser> products2 = null;
                 List<ResultDataUser> userdata = null;
                 using (var db = new dekkOnlineEntities())
                 {
@@ -197,8 +196,8 @@ namespace Framework
                     products = (from pro in db.products
                                 join ord in db.OrdersDetail on pro.proId equals ord.proId
                                 join or in db.Orders on ord.OrderMain equals or.id
-                                where or.idUser.Equals(idUser)
-                                select new
+                                where or.idUser.Equals(idUser) && or.Delivered == false && or.DeliveredDate == null
+                                select new ResultOrderProductsUser
                                 {
                                     IdUser = or.idUser,
                                     proId = ord.proId,
@@ -208,34 +207,20 @@ namespace Framework
                                     quantity = ord.quantity,
                                     totalpriceprod = Math.Truncate((double)ord.price),
                                     orders = or.id.ToString(),
-                                    estimated = or.EstimatedDate,
-                                    orderdte = or.DateS
+                                    estimated1 = (DateTime)or.EstimatedDate,
+                                    orderdte1 = (DateTime)or.DateS
                                 }).ToList();
                     foreach (var item in products)
                     {
-                        var dateE = item.estimated;
+                        var dateE = item.estimated1;
                         dateE = dateE.ToString("D");
-                        var dateO = item.orderdte;
+                        var dateO = item.orderdte1;
                         dateO = dateO.ToString("D");
-
-                        products += new List<ResultOrderProductsUser> {
-                            new ResultOrderProductsUser
-                            {
-                                 IdUser = item.idUser,
-                                    proId = item.proId,
-                                    Image = item.Image,
-                                    Name = item.Name,
-                                    Description = item.Description,
-                                    quantity = item.quantity,
-                                    totalpriceprod = item.totalpriceprod,
-                                    orders = item.orders,
-                                    estimated = dateE,
-                                    orderdte = dateO
-
-                            }
-                        };
+                        item.estimated2 = dateE;
+                        item.orderdte2 = dateO;
                     }
-                   List<ResultUserOrder> order = new List<ResultUserOrder>()
+
+                    List<ResultUserOrder> order = new List<ResultUserOrder>()
                     {
                         new ResultUserOrder{
                                 product = products,
@@ -244,7 +229,7 @@ namespace Framework
                     };
                     return order;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -254,60 +239,65 @@ namespace Framework
         }
 
         //DE-29 1
-        public List<ResultPurchaseOrder> loadOrderPast(string idUser)
+        public List<ResultUserOrder> loadOrderPast(string idUser)
         {
-            List<ResultPurchaseOrder> AllProducts = new List<ResultPurchaseOrder>();
-            List<ResultPurchaseOrder> orders = null;
-            List<ResultPurchaseOrder> EachProductDetail = (dynamic)null;
-            string[] product = (dynamic)null;
             try
             {
+                var products = (dynamic)null;
+                List<ResultDataUser> userdata = null;
                 using (var db = new dekkOnlineEntities())
                 {
-                    orders = (from or in db.PurchaseOrder
-                              where or.IdUser == idUser && or.Orderstatus == true
-                              orderby or.IdOrderDetail descending
-                              select new ResultPurchaseOrder
-                              {
-                                  IdOrderDetail = or.IdOrderDetail,
-                                  Products = or.Products,
-                                  TotalPrice = or.TotalPrice,
-                                  OrderDate = or.OrderDate,
-                                  Orderstatus = or.Orderstatus,
-                                  DeliveredDate = or.DeliveredDate,
-                                  ShoppingCarts = or.Shoppingcarts
-                              }).ToList();
-
-                    foreach (var item in orders)
+                    userdata = (from us in db.AspNetUsers
+                                join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                where (us.Id == idUser)
+                                select new ResultDataUser
+                                {
+                                    FirstName = us2.FirstName,
+                                    LastName = us2.LastName,
+                                    Email = us.Email
+                                }).ToList();
+                    products = (from pro in db.products
+                                join ord in db.OrdersDetail on pro.proId equals ord.proId
+                                join or in db.Orders on ord.OrderMain equals or.id
+                                join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
+                                where or.idUser.Equals(idUser) && or.DeliveredDate != null && or.Delivered == true
+                                select new ResultOrderProductsUser
+                                {
+                                    IdUser = or.idUser,
+                                    proId = ord.proId,
+                                    Image = pro.proImage,
+                                    Name = pro.proName,
+                                    Description = pro.proDescription,
+                                    quantity = ord.quantity,
+                                    totalpriceprod = Math.Truncate((double)ord.price),
+                                    orders = or.id.ToString(),
+                                    estimated1 = (DateTime)or.EstimatedDate,
+                                    orderdte1 = (DateTime)or.DateS,
+                                    Datedelivered1 = (DateTime)or.DeliveredDate
+                                }).ToList();
+                    foreach (var item in products)
                     {
-                        product = item.ShoppingCarts.Split(',');
-
-                        foreach (var item2 in product)
-                        {
-                            EachProductDetail = (from prod in db.products
-                                                 join shpro in db.ShoppingCart on prod.proId equals shpro.proId
-                                                 where shpro.IdUser == idUser && shpro.Status == false && shpro.Id.ToString() == item2
-                                                 orderby shpro.Id descending
-                                                 select new ResultPurchaseOrder
-                                                 {
-                                                     ProductImage = prod.proImage,
-                                                     IdOrderDetail = item.IdOrderDetail,
-                                                     ProductName = prod.proName,
-                                                     Price = shpro.Price,
-                                                     Quantity = shpro.quantity,
-                                                     DeliveredDate = item.DeliveredDate,
-                                                     TotalPrice1 = item.TotalPrice
-                                                 }).ToList();
-
-                            if (EachProductDetail != null)
-                            {
-                                AllProducts.AddRange(EachProductDetail);
-                            }
-
-                        }
+                        var dateE = item.estimated1;
+                        dateE = dateE.ToString("D");
+                        var dateO = item.orderdte1;
+                        dateO = dateO.ToString("D");
+                        var dateD = item.Datedelivered1;
+                        dateD = dateD.ToString("D");
+                        item.estimated2 = dateE;
+                        item.orderdte2 = dateO;
+                        item.Datedelivered2 = dateD;
                     }
+
+                    List<ResultUserOrder> order = new List<ResultUserOrder>()
+                    {
+                        new ResultUserOrder{
+                                product = products,
+                                user = userdata
+                        }
+                    };
+                    return order;
                 }
-                return AllProducts;
+
             }
             catch (Exception ex)
             {
@@ -368,6 +358,8 @@ namespace Framework
         //}
 
         //ORDER CONFIRMATION DE-20 TASK 1
+
+        //ORDER CONFIRMATION DE-20 TASK 1YY
 
         //ORDER CONFIRMATION DE-20 TASK 1YY
         public List<ResultProductsConfirmation> ObtainProductsConfirmed(string idUser)
@@ -585,8 +577,6 @@ namespace Framework
             }
 
         }
-
-
 
         public List<ResultPaidProducts> ObtainProductsPaid(string idUser)
         {

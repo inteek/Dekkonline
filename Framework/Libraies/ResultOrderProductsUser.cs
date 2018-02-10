@@ -18,8 +18,11 @@ namespace Framework.Libraies
         public string orders { get; set; }
         public string workshop { get; set; }
         public string duedate { get; set; }
-        public string orderdte { get; set; }
-        public string estimated { get; set; }
-        public string Datedelivered { get; set; }
+        public Nullable<DateTime> orderdte1 { get; set; }
+        public Nullable<DateTime> estimated1 { get; set; }
+        public string orderdte2 { get; set; }
+        public string estimated2 { get; set; }
+        public Nullable<DateTime> Datedelivered1 { get; set; }
+        public string Datedelivered2 { get; set; }
     }
 }

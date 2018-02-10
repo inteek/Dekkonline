@@ -292,6 +292,7 @@
     </Key>
     <Property Name="IdService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
   </EntityType>
   <EntityType Name="UserAddress">
     <Key>
@@ -328,6 +329,7 @@
     <Property Name="Latitude" Type="varchar" MaxLength="50" />
     <Property Name="Length" Type="varchar" MaxLength="50" />
     <Property Name="WorkImage" Type="varchar" MaxLength="200" />
+    <Property Name="Average" Type="int" />
   </EntityType>
   <EntityType Name="WorkshopAppointment">
     <Key>
