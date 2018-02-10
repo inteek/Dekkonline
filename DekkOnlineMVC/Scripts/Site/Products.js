@@ -90,11 +90,12 @@ function openProductDetails(indexRow) {
     ProductCards.GetCardValues(indexRow, "Image", function (value) { $("#productDetails_Img").attr("src" + "http://admin.dekkonline.sonetworks.no/" + value); });
     ProductCards.GetCardValues(indexRow, "CategoryImage", function (value) { $("#productDetails_CategoryImg1").attr("src", value.replace("~", "..")); $("#productDetails_CategoryImg2").attr("src", value.replace("~", "..")); });
     ProductCards.GetCardValues(indexRow, "Name", function (value) { $("#productDetails_Name").text(value); });
+    ProductCards.GetCardValues(indexRow, "Price", function (value) { $("#productDetails_Price").text(value); });
     //ProductCards.GetCardValues(indexRow, "Description", function (value) { $("#productDetails_Description").text(value); });
     ProductCards.GetCardValues(indexRow, "Brand", function (value) { $("#productDetails_Brand").text(value); });
-    ProductCards.GetCardValues(indexRow, "Width", function (value) { productDetails_CboWidth.SetValue(value); $("#productDetails_LblWidth".text(value)); });
-    ProductCards.GetCardValues(indexRow, "Profile", function (value) { productDetails_CboProfile.SetValue(value); $("#productDetails_LblProfile".text(value)); });
-    ProductCards.GetCardValues(indexRow, "Diameter", function (value) { productDetails_CboDiameter.SetValue(value); $("#productDetails_LblDiameter".text(value)); });
+    ProductCards.GetCardValues(indexRow, "Width", function (value) { productDetails_CboWidth.SetValue(value); $("#productDetails_LblWidth").text(value); });
+    ProductCards.GetCardValues(indexRow, "Profile", function (value) { productDetails_CboProfile.SetValue(value); $("#productDetails_LblProfile").text(value); });
+    ProductCards.GetCardValues(indexRow, "Diameter", function (value) { productDetails_CboDiameter.SetValue(value); $("#productDetails_LblDiameter").text(value); });
     ProductCards.GetCardValues(indexRow, "CategoryName", function (value) { $("#productDetails_CategoryName").text(value); });
     ProductCards.GetCardValues(indexRow, "Stock", function (value) { $("#productDetails_InStock").text(value); });
     ProductCards.GetCardValues(indexRow, "SpeedIndex", function (value) { $("#productDetails_SpeedIndex").text(value); });
@@ -109,26 +110,24 @@ function openProductDetails(indexRow) {
 }
 
 
-function ShoppingCart(id, name) {
-    //event.preventDefault();
-    //var btnLoad = Ladda.create(this);
-    //btnLoad.start();
+function ShoppingCart(btn, id, name) {
+    var btnLoad = Ladda.create(btn);
+    btnLoad.start();
 
     var qty = $("#cboAddCartLisProduct" + id).val();
     AddProductToCart(id, qty, name, true, function () {
-        //btnLoad.stop();
+        btnLoad.stop();
         $("#popoverProduct" + id).hide();
     });
 }
 
-function AddToCart(id, name) {
-    //e.preventDefault();
-    //var btnLoad = Ladda.create(this);
-    //btnLoad.start();
+function AddToCart(btn, id, name) {
+    var btnLoad = Ladda.create(btn);
+    btnLoad.start();
     
     var qty = $("#cboAddCartLisProduct" + id).val();
     AddProductToCart(id, qty, name, false, function () {
-        //btnLoad.stop();
+        btnLoad.stop();
         $("#popoverProduct" + id).hide();
     });
 
