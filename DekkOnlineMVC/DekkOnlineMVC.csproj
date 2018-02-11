@@ -446,6 +446,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Site\Products.js" />
+    <Content Include="Scripts\Site\Profile.js" />
     <Content Include="Scripts\Site\ShoppingCartIndex.js" />
     <Content Include="Scripts\Site\ShoppingCartStep3.js" />
     <Content Include="Scripts\Step2.js" />

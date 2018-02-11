@@ -130,5 +130,38 @@ namespace DekkOnlineMVC.Controllers
         {
             return PartialView();
         }
+
+        //public JsonResult ValidateEmail()
+        //{
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw;
+        //    }
+
+        //}
+
+        //public JsonResult UpdateUserData(string zipcore, string name, string lastname, string address, string email, string mobile)
+        //{
+        //    try
+        //    {
+        //        string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+        //        if (idUser != null && idUser != "")
+        //        {
+
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw;
+        //    }
+
+        //}
 	}
 }

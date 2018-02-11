@@ -13,17 +13,21 @@ function DelCrt(id) {
     var data = {
         idcart : id
     };
-    conectarAsy("../ShoppingCart/DeleteFromCart", data, function (result) {
-        if (result.Success) {
-            window.location.reload();
-        }
-        else if (result.error == false) {
-            window.location.href = result.page;
-        }
-        else if (result.error == true) {
-            alert(result.msg);
-        }
+    $(".del").modal('show');
+    $(".del1").on("click", function () {
+        conectarAsy("../ShoppingCart/DeleteFromCart", data, function (result) {
+            if (result.Success) {
+                window.location.reload();
+            }
+            else if (result.error == false) {
+                window.location.href = result.page;
+            }
+            else if (result.error == true) {
+                alert(result.msg);
+            }
+        });
     });
+    
 }
 
 function IncrsCart(id, qty1) {
@@ -52,12 +56,17 @@ function ValPromo(id) {
     var data = {
         Code: id
     };
+    $(".promo").addClass("hidden");
+    if ($("#promocode").val() == "" || $("#promocode").val() == null ) {
+        $(".promo").removeClass("hidden");
+        return false;
+    }
     conectarAsy("../ShoppingCart/ValidatePromo", data, function (result) {
         if (result.Success) {
             window.location.reload();
         }
-        else if (result.error == false) {
-            swal("error", warning);
+        else if (result.Success == false) {
+            $(".promo").removeClass("hidden");
         }
         else if (result.error == true) {
             alert(result.msg);

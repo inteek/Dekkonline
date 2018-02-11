@@ -221,7 +221,7 @@ namespace Framework
 
                     //var promocode1 = ""; //LoadPromoCodeFomUser(User);
                     var promocode1 = LoadPromoCodeFomUser(User);
-                    var points1 = 0; //LoadPointsPerUser(User);
+                    var points1 = LoadPointsPerUser(User);
 
                     var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == User && s.Used == false).FirstOrDefault();
                     double? subtotal1 = products.Select(p => p.totalpriceprod).Sum();
@@ -385,31 +385,40 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    NowPointsLoad = db.DetailUserPoints.Where(s => s.IdUser == idUser && s.StatusofPromo == true).Select(s => s.PointsEarned).Sum().ToString();
-
-                    if (NowPointsLoad == null || NowPointsLoad == "")
+                    var user = db.AspNetUsers.Where(s => s.Id == idUser).FirstOrDefault();
+                    if (user != null)
                     {
-                        NowPointsLoad = 0;
-                    }
 
-                    var UserPoints = db.UserPoints.Where(s => s.IdUser == idUser).FirstOrDefault();
-                    if (UserPoints == null)
-                    {
-                        var points = new Entity.UserPoints();
+                        NowPointsLoad = db.DetailUserPoints.Where(s => s.IdUser == idUser && s.StatusofPromo == true).Select(s => s.PointsEarned).Sum().ToString();
 
-                        points.IdUser = idUser;
-                        points.Points = Convert.ToInt32(NowPointsLoad);
-                        db.UserPoints.Add(points);
-                        db.SaveChanges();
-                        return Convert.ToInt32(NowPointsLoad);
+                        if (NowPointsLoad == null || NowPointsLoad == "")
+                        {
+                            NowPointsLoad = "0";
+                        }
+
+                        var UserPoints = db.UserPoints.Where(s => s.IdUser == idUser).FirstOrDefault();
+                        if (UserPoints == null)
+                        {
+                            var points = new Entity.UserPoints();
+
+                            points.IdUser = idUser;
+                            points.Points = Convert.ToInt32(NowPointsLoad);
+                            db.UserPoints.Add(points);
+                            db.SaveChanges();
+                            return Convert.ToInt32(NowPointsLoad);
+                        }
+                        else
+                        {
+                            UserPoints.Points = Convert.ToInt32(NowPointsLoad);
+                            db.Entry(UserPoints).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return Convert.ToInt32(NowPointsLoad);
+
+                        }
                     }
                     else
                     {
-                        UserPoints.Points = Convert.ToInt32(NowPointsLoad);
-                        db.Entry(UserPoints).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return Convert.ToInt32(NowPointsLoad);
-
+                        return 0;
                     }
                 }
             }
@@ -458,7 +467,7 @@ namespace Framework
 
                         }
                     }
-                   else if (promocodeusedus != null)
+                    else if (promocodeusedus != null)
                     {
                         var percent = db.PromotionCode.Where(s => s.IdCode == promocodeusedus.PromoCode).Select(s => s.PercentCode).FirstOrDefault();
                         percent = percent / 100;

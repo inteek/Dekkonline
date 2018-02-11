@@ -1,126 +1,134 @@
 ﻿@using System.Web.Optimization;
 @model Framework.Libraies.ResultDataUser
 
-    @{
+@{
 
-        ViewBag.Title = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    @Styles.Render("~/Styles/Dimension.css?v=8")
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Styles/Dimension.css?v=8")
 
-    <div class="col-md-12 mb30">        
-        <!-- tab style -->
-        <div class="clearfix">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab-profile" data-toggle="tab">PROFILE</a></li>
-                <li><a href="#tab-pending" data-toggle="tab">YOUR PENDING ORDER</a></li>
-                <li><a href="#tab-past" data-toggle="tab">PAST ORDERS</a></li>
-                <li><a href="#tab-promos" data-toggle="tab">PROMOS</a></li>
-            </ul>
-            <div class="tab-content">
-                <!-- tab PROFILE -->
-                <div class="tab-pane active" id="tab-profile">
-                    <div class="clearfix">
-                        @*@foreach (var item in Model)
+<div class="col-md-12 mb30" style="font-family:Arial">
+    <!-- tab style -->
+    <div class="clearfix">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-profile" data-toggle="tab">PROFILE</a></li>
+            <li><a href="#tab-pending" data-toggle="tab">YOUR PENDING ORDER</a></li>
+            <li><a href="#tab-past" data-toggle="tab">PAST ORDERS</a></li>
+            <li><a href="#tab-promos" data-toggle="tab">PROMOS</a></li>
+        </ul>
+        <div class="tab-content" style="background-color:#F2F2F2">
+            <!-- tab PROFILE -->
+            <div class="tab-pane active" id="tab-profile">
+                <div class="clearfix">
+                    @*@foreach (var item in Model)
                         {*@
-                        <div class="container">
-                            <div class="row dimension">
-                                <div class="insidebox">
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            @*@if (item.Image == null)
-                                {*@
-                                            <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
+                    <div class="container">
+                        <div class="row dimension">
+                            <div class="insidebox">
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        @*@if (item.Image == null)
+                                            {*@
+                                        <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
 
-                                            @*}
-                                else
-                                {
-                                    <img src="@item.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
-                                }*@
+                                        @*}
+                                            else
+                                            {
+                                                <img src="@item.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
+                                            }*@
 
-                                        </div>
-                                        <div class="form-group ">
-                                            <h4><strong>@Model.FirstName @Model.LastName</strong></h4>
-                                        </div>
-                                        <div class="form-group">
-                                            <h6>@Model.Email </h6>
-                                        </div>
-                                        <br />
-                                        <div class="form-group ">
-                                            <h4><strong>Your cars</strong></h4>
-                                        </div>
-                                        <div class="form-group ">
-                                            <h6>pendiente</h6>
-                                        </div>
                                     </div>
-                                    <div class="col-lg-10">
-                                        <div class="col-sm-6">
-                                            <h3><span class="title"><strong style="color:red">Personal Information:</strong></span></h3>
-                                            <div class="col-sm-8">
+                                    <div class="form-group ">
+                                        <h4><strong>@Model.FirstName @Model.LastName</strong></h4>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6>@Model.Email </h6>
+                                    </div>
+                                    <br />
+                                    <div class="form-group ">
+                                        <h4><strong>Your cars</strong></h4>
+                                    </div>
+                                    <div class="form-group ">
+                                        <h6>pendiente</h6>
+                                    </div>
+                                </div>
+                                <div class="col-lg-10">
+                                    <div class="col-sm-6">
+                                        <h3><span class="title"><strong style="color:red">Personal Information: </strong></span><span class="glyphicon glyphicon-edit" style="color:darkgray;cursor:pointer"></span></h3>
+                                        <div class="col-sm-9">
                                                 <div class="left2">
                                                     <div class="form-group">
-                                                        <label style="color:steelblue">Zip Code:</label> @Model.ZipCode
-                                                        <input type="text" class="form-control borderInput hidden" id="ZipCode" placeholder="">
+                                                        <label style="color:steelblue">Zip Code: </label> <label class="lab" id="zip">@Model.ZipCode</label>
+                                                        <input type="number" class="form-control borderInput e hidden" id="ZipCode" placeholder="" value="@Model.ZipCode">
+                                                        <span class="req1 hidden" style="color:red">*Insert a valid Zip Code(4 digits)</span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue"> Name:</label> @Model.FirstName
-                                                        <input type="text" class="form-control borderInput hidden" id="Firstname" placeholder="">
+                                                        <label style="color:steelblue"> Name: </label> <label class="lab" id="fname">@Model.FirstName</label>
+                                                        <input type="text" class="form-control borderInput e hidden" id="Firstname" placeholder="" value="@Model.FirstName">
+                                                        <span class="req2 hidden" style="color:red">*Insert a Name(50 characters max)</span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue"> Last Name:</label> @Model.LastName
-                                                        <input type="text" class="form-control borderInput hidden" id="LastName" placeholder="">
+                                                        <label style="color:steelblue"> Last Name: </label> <label class="lab" id="lname"> @Model.LastName</label>
+                                                        <input type="text" class="form-control borderInput e hidden" id="LastName" placeholder="" value="@Model.LastName">
+                                                        <span class="req3 hidden" style="color:red">*Insert a Lastname(50 characters max)</span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue">  Address:</label> @Model.Address
-                                                        <input type="text" class="form-control borderInput hidden" id="Address" placeholder="">
+                                                        <label style="color:steelblue">  Address: </label> <label class="lab" id="adrs">@Model.Address</label>
+                                                        <input type="text" class="form-control borderInput e hidden" id="Address" placeholder="" value="@Model.Address">
+                                                        <span class="req4 hidden" style="color:red">*Insert a Address(150 characters max)</span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue">  E-mail:</label> @Model.Email
-                                                        <input type="text" class="form-control borderInput hidden" id="Email1" placeholder="">
+                                                        <label style="color:steelblue">  E-mail: </label> <label class="lab" id="em">@Model.Email</label>
+                                                        <input type="text" class="form-control borderInput e hidden" id="Email1" placeholder="" value="@Model.Email">
+                                                        <span class="req5 hidden" style="color:red">*Insert a valid Email</span>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label style="color:steelblue"> Mobile:</label> @Model.Phone
-                                                        <input type="text" class="form-control borderInput hidden" id="Phone" placeholder="">
+                                                        <label style="color:steelblue"> Mobile: </label> <label class="lab" id="movil">@Model.Phone</label>
+                                                        <input type="number" class="form-control borderInput e hidden" id="Phone" placeholder="" value="@Model.Phone">
+                                                        <span class="req6 hidden" style="color:red">*Insert a valide phone(15 digits)</span>
                                                     </div>
+                                                    <button type="button" class="btn btn-default cncel hidden">Cancel</button>
+                                                    <button class="btn btn-success save hidden">Save</button>
                                                 </div>
-                                            </div>
                                         </div>
-                                        <div class="col-sm-1 vl"></div>
-                                        <div class="col-sm-3">
-                                            <h3><span class="title"><strong style="color:red">Your cars:</strong></span></h3>
-                                            <div class="form-group">
-                                                pendiente @*MOdel*@
-                                            </div>
+                                    </div>
+                                    <div class="col-sm-1 vl"></div>
+                                    <div class="col-sm-3">
+                                        <h3><span class="title"><strong style="color:red">Your cars:</strong></span></h3>
+                                        <div class="form-group">
+                                            pendiente @*MOdel*@
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @*}*@
                     </div>
-                </div>
-                <!-- tab PENDING -->
-                <div class="tab-pane" id="tab-pending">
-                    @Html.Action("Pending", "Profile")
-
-                </div>
-                <!-- tab PAST -->
-                <div class="tab-pane" id="tab-past">
-                    @Html.Action("Past", "Profile")
-
-                </div>
-                <!-- tab PROMOS -->
-                <div class="tab-pane" id="tab-promos">
-                    @Html.Action("Promos", "Profile")
+                    @*}*@
                 </div>
             </div>
+            <!-- tab PENDING -->
+            <div class="tab-pane" id="tab-pending">
+                @Html.Action("Pending", "Profile")
+
+            </div>
+            <!-- tab PAST -->
+            <div class="tab-pane" id="tab-past">
+                @Html.Action("Past", "Profile")
+
+            </div>
+            <!-- tab PROMOS -->
+            <div class="tab-pane" id="tab-promos">
+                @Html.Action("Promos", "Profile")
+            </div>
         </div>
-        <!-- tab style -->
     </div>
+    <!-- tab style -->
+</div>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-
+@Scripts.Render("~/Scripts/Site/Profile.js?v=3")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

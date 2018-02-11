@@ -12,7 +12,7 @@
         <img src="~/Content/imgs/step1mobile2.PNG" class=" img-responsive imgmobile" />
     </div>
 </div>
-<div class="container">
+<div class="container" style="font-family:Arial">
 
     <div class="row" style="border-bottom:1px solid #ddd">
         <table id="cart" class="table table-hover table-condensed">
@@ -108,15 +108,17 @@
                                             <a onclick="ValPromo(document.getElementById('promocode').value)" id="PromoCode"><span class="linkcolor2">APPLY</span></a>}
                                         else
                                         {
-                                            <a  onclick="UndoPromo(document.getElementById('promocode').value)"><span class="linkcolor2">UNDO</span></a>
+                                            <a onclick="UndoPromo(document.getElementById('promocode').value)"><span class="linkcolor2">UNDO</span></a>
                                         }
                                     </label>
                                 </div>
-
+                                <div class="form-group hidden promo" style="margin-bottom:10px;">
+                                        <label class="col-md-12 col-xs-8 control-label" style="color:red">*Promo code not valid or already used</label>
+                                    </div>
                             </div>
                             @*<div class="form-group hidden" style="margin-bottom:10px;">
-                                <label class="col-md-12 col-xs-8 control-label" style="color:red">*Promo code not valid or already used</label>
-                            </div>*@
+                                    <label class="col-md-12 col-xs-8 control-label" style="color:red">*Promo code not valid or already used</label>
+                                </div>*@
 
                             <div class="form-group" style="border-bottom:1px solid #ddd">
                                 <label class="col-md-5 col-xs-2 control-label">Use your Points:</label>
@@ -199,11 +201,40 @@
 
 </div>
 
+<div class="modal fade  del" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-family:Arial">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>You are about to delete one product from the cart, this procedure is irreversible.</p>
+                <p>Do you want to proceed?</p>
+                <p class="debug-url"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok del1">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=6")
+@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=1")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");
         $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
 </script>

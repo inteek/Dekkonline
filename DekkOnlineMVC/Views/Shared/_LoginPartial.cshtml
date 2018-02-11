@@ -11,7 +11,7 @@
                         <td>
                             <div id="HeadLoginView">
                                 <div id="AnonymousTemplate">
-                                    @Html.ActionLink("Hello! " + User.Identity.GetUserName() + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                    @Html.ActionLink("Hello! " + User.Identity.GetUserName() + "!", "Index", "Profile", routeValues: null, htmlAttributes: new { title = "Profile" })
                                     <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                                 </div>
                             </div>
