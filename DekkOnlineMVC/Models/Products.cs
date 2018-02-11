@@ -23,7 +23,7 @@ namespace DekkOnlineMVC.Models
         public string Fuel { get; set; }
         public string Wet { get; set; }
         public string Noise { get; set; }
-        public decimal? Price { get; set; }
+        public int Price { get; set; }
         public int? Stock { get; set; }
         public string SpeedIndex { get; set; }
         public string LoadIndex { get; set; }

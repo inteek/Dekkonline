@@ -166,11 +166,15 @@ namespace Framework
                                   Fuel = pro.proFuel,
                                   Wet = pro.proWet,
                                   Noise = pro.proNoise,
-                                  Price = pro.proSuggestedPrice,
+                                  //Price = pro.proSuggestedPrice,
+                                  Price = pro.proSuggestedPrice != null ? (int)Math.Floor((decimal)pro.proSuggestedPrice) : 0,
                                   Stock = pro.proInventory,
                                   SpeedIndex = pro.proSpeed,
                                   LoadIndex = pro.proLoadIndex
                               }).ToList();
+
+
+
                 }
             }
             catch (Exception ex)
@@ -178,6 +182,19 @@ namespace Framework
                 throw;
             }
             return result;
+        }
+
+
+        public string FormatPrice(string strPrice)
+        {
+            if (strPrice == null)
+            {
+                return "0";
+            }
+            else {
+                strPrice = strPrice.Replace(strPrice.Substring(strPrice.IndexOf('.')), "");
+                return strPrice;
+            }
         }
 
         //LOAD SYZES PER DEKK DE-5 TASK 1 TASK 2

@@ -47,6 +47,11 @@ namespace DekkOnlineMVC.Controllers
 
             resultModel = resultModel.OrderBy(c => c.Price).ToList();
 
+            ViewBag.SizeWidth = sizeWidth;
+            ViewBag.Profile = profile;
+            ViewBag.SizeDiameter = sizeDiameter;
+            ViewBag.IdCategory = idCategory;
+            ViewBag.IdBrand = idBrand;
 
 
             return View("Products", resultModel);
