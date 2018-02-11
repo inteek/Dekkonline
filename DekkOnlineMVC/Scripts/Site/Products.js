@@ -6,7 +6,7 @@ function OnSortingChanged(s, e) {
 }
 function OnProductCardsBeginCallback(s, e) {
     e.customArgs["isCardView"] = this.IsCardView();
-    e.customArgs["sortMode"] = 0; //Sorting.GetValue();
+    e.customArgs["sortMode"] = cmbOrderPrice.GetValue();
 
 
     e.customArgs["sizeWidth"] = cmbWidth.GetValue();

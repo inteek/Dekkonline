@@ -259,7 +259,7 @@
                         @Html.DevExpress().ComboBox(
          settings =>
          {
-             settings.Name = "cmbPrice";
+             settings.Name = "cmbOrderPrice";
              settings.Width = Unit.Percentage(100);
              settings.ControlStyle.CssClass = "BoxGeneral";
              //settings.SelectedIndex = 0;
@@ -275,6 +275,21 @@
 
              settings.Properties.Items.Add("Lowest - Highest", 0);
              settings.Properties.Items.Add("Highest - Lowest", 1);
+
+             
+            settings.PreRender = (sender, e) =>
+            {
+                if (ViewBag.SortMode != null)
+                {
+                    MVCxComboBox cbo = sender as MVCxComboBox;
+                    var item = cbo.Properties.Items.FindByValue(((int)ViewBag.SortMode).ToString());
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                        cbo.SelectedIndex = item.Index;
+                    }
+                }
+            };
 
          }
      ).GetHtml()
