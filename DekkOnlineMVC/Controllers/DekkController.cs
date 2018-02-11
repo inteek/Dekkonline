@@ -30,7 +30,7 @@ namespace DekkOnlineMVC.Controllers
 
             resultModel = resultModel.OrderBy(c => c.Price).ToList();
 
-
+            //resultModel.Clear();
 
             return View(resultModel);
         }
@@ -115,9 +115,7 @@ namespace DekkOnlineMVC.Controllers
             if (sortMode == ProductsCardsSortMode.LowestHighest) resultModel = resultModel.OrderBy(c => c.Price).ToList();
             else resultModel = resultModel.OrderByDescending(c => c.Price).ToList();
 
-            for (int row = 0; row < resultModel.Count; row++) {
-                resultModel[row].RowIndex = row;
-            }
+           
 
 
             return resultModel;

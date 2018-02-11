@@ -21,7 +21,7 @@ namespace Pruebas
 
             //Console.WriteLine(shoppin.LoadPointsPerUser("3f619083-b218-41e8-8693-1a93ecd82fdff"));
             List<Framework.Libraies.ResultPurchaseOrder> product = null;
-            product = orders.loadOrderPast("3f619083-b218-41e8-8693-1a93ecd82fdf");
+            //product = orders.loadOrderPast("3f619083-b218-41e8-8693-1a93ecd82fdf");
 
             foreach (var item in product)
             {

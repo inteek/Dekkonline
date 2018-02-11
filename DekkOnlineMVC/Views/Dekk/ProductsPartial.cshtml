@@ -1,6 +1,6 @@
 ﻿
+@using DekkOnlineMVC.Models
 @model List<DekkOnlineMVC.Models.Products>
-
 
 
 
@@ -12,7 +12,7 @@
     settings.KeyFieldName = "Id";
     settings.EnableCardsCache = false;
 
-    settings.Columns.Add("RowIndex");
+
     settings.Columns.Add("Id");
     settings.Columns.Add("Image");
     settings.Columns.Add("CatId");
@@ -163,9 +163,11 @@
     settings.SetCardTemplateContent(c =>
     {
 
+
+
         ViewContext.Writer.Write(
             "<div class='row' >" +
-            "<a style='cursor:pointer;' onclick='JavaScript:openProductDetails(" + DataBinder.Eval(c.DataItem, "RowIndex").ToString() + ");' >" +
+            "<a style='cursor:pointer;' onclick='JavaScript:openProductDetails(" + Json.Encode(Model.Find(x => x.Id == (int)DataBinder.Eval(c.DataItem, "Id"))) + ");' >" +
               "<div class='col-xs-4 col-sm-4 " + (ViewBag.IsCardView == false ? "col-md-2 divImageListView" : "divImageCardView") + "'>");
 
 
@@ -182,7 +184,7 @@
         ViewContext.Writer.Write(
         "</div></a>" +
 
-        "<a style='cursor:pointer;' onclick='JavaScript:openProductDetails(" + DataBinder.Eval(c.DataItem, "RowIndex").ToString() + ");' >"+
+        "<a style='cursor:pointer;' onclick='JavaScript:openProductDetails(" + Json.Encode(Model.Find(x => x.Id == (int)DataBinder.Eval(c.DataItem, "Id"))) + ");' >" +
         "<div class='col-xs-8 col-sm-8 " + (ViewBag.IsCardView == false ? "col-md-6'" : "'") + " style='background-color:yellow; padding-left:0px; padding-right:0px'>" +
 
             "<div class='col-xs-3 col-sm-3 col-md-3'  style='height:70px; background-color:#fff;padding-top:25px; text-align:left '>" +
@@ -329,21 +331,6 @@
 
 
 
-
-@*<div id='myPopover10b' class='popover popover-x popover-default'>
-    <div class='arrow'></div>
-    <h3 class='popover-header popover-title'><span class='close pull-right' data-dismiss='popover-x'>&times;</span>DekkOnline</h3>
-    <div class='popover-body popover-content' style='min-width:300px;'>
-        <div class='col-xs-12 col-md-12' >
-            <img src='@Url.Content("~/Content/imgs/loguito.png")' style='height:20px; float:right;' />
-        </div>
-        <p>Add to cart</p>
-    </div>
-    <div class='popover-footer'>
-        <button class='btn btn-sm' style='background-color:#36434c; color:#fff;'>keep shopping</button>
-        <button class='btn btn-sm' style='background-color:#36434c; color:#fff;'>go to checkout</button>
-    </div>
-</div>*@
 
 
 

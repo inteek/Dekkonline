@@ -7,7 +7,6 @@ namespace DekkOnlineMVC.Models
 {
     public class Products
     {
-        public int RowIndex { get; set; }
         public int Id { get; set; }
         public string Image { get; set; }
         public int? CatId { get; set; }
