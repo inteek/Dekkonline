@@ -28,22 +28,21 @@
                             <div class="insidebox">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        @*@if (item.Image == null)
+                                        @*@if (Model.Image == null)
                                             {*@
                                         <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
 
                                         @*}
                                             else
                                             {
-                                                <img src="@item.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
+                                                <img src="@Model.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
                                             }*@
-
                                     </div>
                                     <div class="form-group ">
-                                        <h4><strong>@Model.FirstName @Model.LastName</strong></h4>
+                                        <h4><strong><label id="titlename">@Model.FirstName @Model.LastName</label></strong></h4>
                                     </div>
                                     <div class="form-group">
-                                        <h6>@Model.Email </h6>
+                                        <h6><label id="titleemail">@Model.Email</label> </h6>
                                     </div>
                                     <br />
                                     <div class="form-group ">
@@ -52,45 +51,67 @@
                                     <div class="form-group ">
                                         <h6>pendiente</h6>
                                     </div>
+                                    <div class="form-group">
+                                        @*<form action="" method="post" enctype="multipart/form-data">
+                                                <fieldset>
+                                                    <label for="Image">Change Image</label>
+                                                    <input type="file" name="Image" />
+                                                    <br />
+                                                    <input type="submit" value="Upload" />
+                                                </fieldset>
+                                            </form>*@
+                                        @*@using (Html.BeginForm("Create", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {
+                                        <div class="editor-field">
+                                            <label for="Image">Change Image</label>
+                                            <input type="file" title="search image" file-model="profileimage" id="allfilepath" name="file" />
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                            </button>
+                                        </div>
+                                        }*@
+                                    </div>
+
                                 </div>
                                 <div class="col-lg-10">
                                     <div class="col-sm-6">
                                         <h3><span class="title"><strong style="color:red">Personal Information: </strong></span><span class="glyphicon glyphicon-edit" style="color:darkgray;cursor:pointer"></span></h3>
                                         <div class="col-sm-9">
-                                                <div class="left2">
-                                                    <div class="form-group">
-                                                        <label style="color:steelblue">Zip Code: </label> <label class="lab" id="zip">@Model.ZipCode</label>
-                                                        <input type="number" class="form-control borderInput e hidden" id="ZipCode" placeholder="" value="@Model.ZipCode">
-                                                        <span class="req1 hidden" style="color:red">*Insert a valid Zip Code(4 digits)</span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label style="color:steelblue"> Name: </label> <label class="lab" id="fname">@Model.FirstName</label>
-                                                        <input type="text" class="form-control borderInput e hidden" id="Firstname" placeholder="" value="@Model.FirstName">
-                                                        <span class="req2 hidden" style="color:red">*Insert a Name(50 characters max)</span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label style="color:steelblue"> Last Name: </label> <label class="lab" id="lname"> @Model.LastName</label>
-                                                        <input type="text" class="form-control borderInput e hidden" id="LastName" placeholder="" value="@Model.LastName">
-                                                        <span class="req3 hidden" style="color:red">*Insert a Lastname(50 characters max)</span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label style="color:steelblue">  Address: </label> <label class="lab" id="adrs">@Model.Address</label>
-                                                        <input type="text" class="form-control borderInput e hidden" id="Address" placeholder="" value="@Model.Address">
-                                                        <span class="req4 hidden" style="color:red">*Insert a Address(150 characters max)</span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label style="color:steelblue">  E-mail: </label> <label class="lab" id="em">@Model.Email</label>
-                                                        <input type="text" class="form-control borderInput e hidden" id="Email1" placeholder="" value="@Model.Email">
-                                                        <span class="req5 hidden" style="color:red">*Insert a valid Email</span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label style="color:steelblue"> Mobile: </label> <label class="lab" id="movil">@Model.Phone</label>
-                                                        <input type="number" class="form-control borderInput e hidden" id="Phone" placeholder="" value="@Model.Phone">
-                                                        <span class="req6 hidden" style="color:red">*Insert a valide phone(15 digits)</span>
-                                                    </div>
-                                                    <button type="button" class="btn btn-default cncel hidden">Cancel</button>
-                                                    <button class="btn btn-success save hidden">Save</button>
+                                            <div class="left2">
+                                                <div class="form-group">
+                                                    <label style="color:steelblue">Zip Code: </label> <label class="lab" id="zip">@Model.ZipCode</label>
+                                                    <input type="number" class="form-control borderInput e hidden" id="ZipCode" placeholder="">
+                                                    <span class="req1 hidden" style="color:red">*Insert a valid Zip Code(4 digits)</span>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label style="color:steelblue"> Name: </label> <label class="lab" id="fname">@Model.FirstName</label>
+                                                    <input type="text" class="form-control borderInput e hidden" id="Firstname" placeholder="">
+                                                    <span class="req2 hidden" style="color:red">*Insert a Name(50 characters max)</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label style="color:steelblue"> Last Name: </label> <label class="lab" id="lname">@Model.LastName</label>
+                                                    <input type="text" class="form-control borderInput e hidden" id="LastName" placeholder="">
+                                                    <span class="req3 hidden" style="color:red">*Insert a Lastname(50 characters max)</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label style="color:steelblue">  Address: </label> <label class="lab" id="adrs">@Model.Address</label>
+                                                    <input type="text" class="form-control borderInput e hidden" id="Address" placeholder="">
+                                                    <span class="req4 hidden" style="color:red">*Insert a Address(150 characters max)</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label style="color:steelblue">  E-mail: </label> <label class="lab" id="em">@Model.Email</label>
+                                                    <input type="text" class="form-control borderInput e hidden" id="Email1" placeholder="">
+                                                    <span class="req5 hidden" style="color:red">*Insert a valid Email</span>
+                                                    <span class="req7 hidden" style="color:red">*Email already taken</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label style="color:steelblue"> Mobile: </label> <label class="lab" id="movil">@Model.Phone</label>
+                                                    <input type="number" class="form-control borderInput e hidden" id="Phone" placeholder="" value="@Model.Phone">
+                                                    <span class="req6 hidden" style="color:red">*Insert a valide phone(15 digits)</span>
+                                                </div>
+                                                <button type="button" class="btn btn-default cncel hidden">Cancel</button>
+                                                <button class="btn btn-success save hidden">Save</button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-1 vl"></div>
@@ -128,7 +149,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Site/Profile.js?v=3")
+@Scripts.Render("~/Scripts/Site/Profile.js?v=5")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

@@ -6,14 +6,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/Styles/Dimension.css?V=5")
-@Styles.Render("~/Styles/Shoppingcart.css?V=6")
+@Styles.Render("~/Styles/Shoppingcart.css?V=7")
 <div class="row">
     <div class="col-lg-12 ">
         <img src="~/Content/imgs/Step3.png" class="imgwidth1 img-responsive" />
         <img src="~/Content/imgs/step3mobile.PNG" class="img-responsive imgmobile" />
     </div>
 </div>
-<div class="container">
+<div class="container" style="font-family:Arial">
 
     <div class="row" style="border-bottom:1px solid #ddd">
         <table id="cart" class="table table-hover table-condensed">
@@ -53,7 +53,8 @@
                                 </div>
                             </td>
                             <td data-th="QTY">
-                                <input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" disabled="disabled">
+                                @*<input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" disabled="disabled">*@
+                                <strong>@item.quantity</strong>
                             </td>
                             <td data-th="Price"><strong>@item.totalpriceprod kr</strong></td>
                         </tr>
@@ -195,12 +196,13 @@
     </div>
     <div class="row">
         <div class="col-lg-5">
-            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Payment options:</strong></label><label id="required" class="hidden" style="color: #E53935; font-size: 20px; margin-bottom: 20px;"><strong> **All fields are required</strong></label>
+            <label style="color: #E53935; font-size: 20px; margin-bottom: 20px; "><strong>Payment options:</strong></label>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <div style="margin-left:15px">
-                        <input type="radio" name="payment" value="1" class="oneradio" /><img src="~/Content/imgs/typepayment1.PNG" style="height:40px;" />
+                        <input type="radio" name="payment" value="1" class="oneradio" /><img src="~/Content/imgs/typepayment1.PNG" style="height:40px;"/>
                         <input type="radio" name="payment" value="2" class="tworadio" /><img src="~/Content/imgs/typepayment2.PNG" style="height:40px;" />
+                                                                                        <div> <span class="req1 hidden" style="color:red">*Target Type</span></div>
                     </div>
                 </div>
             </form>
@@ -213,7 +215,7 @@
                     <div class="form-group col-lg-12" id="card-number-field">
                         <div class="col-sm-5 col-xs-8">
                             <label for="cardNumber" class="textoAzul">Card Number:</label>
-                            <input class="form-control cn no-spinners" id="cardNumber" pattern="^([0-9 ]+)+$" autocomplete="cc-number" spellcheck="false" data-hj-masked="data-hj-masked" maxlength="16" minlength="16" nonequals="2888 8888 8888" required="" type="tel">
+                            <input class="form-control cn no-spinners" id="cardNumber" pattern="^([0-9 ]+)+$" autocomplete="cc-number" spellcheck="false" data-hj-masked="data-hj-masked" maxlength="16" minlength="16" nonequals="2888 8888 8888" required="" type="tel"><span class="req2 hidden" style="color:red">*Card Number 16 Digits</span>
                         </div>
                         <div class="col-sm-7 col-xs-7">
                             <label class="textoAzul">Expiration Date</label>
@@ -231,10 +233,10 @@
                                     <option value="10">October</option>
                                     <option value="11">November</option>
                                     <option value="12">December</option>
-                                </select>
+                                </select><span class="req3 hidden" style="color:red">*Expiration Date</span>
                             </div>
                             <div class="col-md-6 col-xs-5">
-                                <select class="selectpicker form-control mobile1 yeary" style="width: 85px;height: 41px;">
+                                <select class="selectpicker form-control mobile1 yeary" style="width: 87px;height: 41px;">
                                     <option value="2018">2018</option>
                                     <option value="2019">2019</option>
                                     <option value="2020">2020</option>
@@ -265,11 +267,11 @@
                     <div class="form-group col-lg-12" id="card-number-field">
                         <div class="form-group CVV col-sm-6 col-xs-3">
                             <label for="cvv" class="textoAzul">Security Code:</label>
-                            <div class="input-group"><input  class="form-control sc no-spinners" id="cvv" maxlength="4" minlength="3" pattern="^[0-9]+$" autocomplete="off" spellcheck="false" data-hj-masked="data-hj-masked" type="tel"><span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" style="cursor:pointer"></i></span></div>
+                            <div class="input-group"><input  class="form-control sc no-spinners" id="cvv" maxlength="4" minlength="3" pattern="^[0-9]+$" autocomplete="off" spellcheck="false" data-hj-masked="data-hj-masked" type="tel"><span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" style="cursor:pointer"></i></span></div><span class="req4 hidden" style="color:red">*Security Code</span>
                         </div>
                         <div class="form-group owner col-sm-6 col-xs-8">
                             <label for="owner" class="textoAzul">CardHolder name:</label>
-                            <input type="text" class="form-control nombretg" id="owner">
+                            <input type="text" class="form-control nombretg" id="owner"><span class="req5 hidden" style="color:red">*CardHolder Name</span>
                         </div>
                     </div>
                 </form>
@@ -281,26 +283,30 @@
     <div class="row">
         <div class="form-group col-lg-12">
             <div class="col-sm-5 col-xs-8 terms">
-                <input type="checkbox" name="terms" class="terms2"> <a><span class="linkcolor2 textoAzul">I have read and accepted terms & conditions</span></a>
+                <input type="checkbox" name="terms" class="terms2" id="terms2"> <a><span class="linkcolor2 textoAzul">I have read and accepted terms & conditions</span></a>
             </div>
             <div class="col-sm-8 col-xs-7 confirm">
                 <br />
                 <div class="form-group">
                     <label class="col-md-2 col-xs-2 control-label"><a><span class="linkcolor textoAzul st2">Back</span></a></label>
                     <div class="col-md-5 col-xs-3 margininput">
-                        <input type="button" class="btn btn-primary form-control confirmpay" id="confirmpay" value="CONFIRM & PAY" style="margin-bottom:13px">
+                        <input type="button" class="btn btn-primary form-control confirmpay" id="confirmpay" value="CONFIRM & PAY" style="margin-bottom:13px"><span class="req6 hidden" style="color:red">*Accept terms & conditions</span>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="col-lg-12">
+            <div class="col-sm-4">
+                <label id="required" class="hidden" style="color: #E53935; font-size: 20px; margin-bottom: 20px;margin-left:20px"><strong> *Fields Are Required</strong></label>
+            </div>
+        </div>
 
     </div>
 </div>
 
 
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/Scripts/Site/ShoppingCartStep3.js?v=3")
+@Scripts.Render("~/Scripts/Site/ShoppingCartStep3.js?v=9")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

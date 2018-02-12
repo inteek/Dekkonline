@@ -341,6 +341,7 @@
     <Property Name="Date" Type="date" />
     <Property Name="Time" Type="time" Precision="4" />
     <Property Name="Comments" Type="varchar" MaxLength="100" />
+    <Property Name="DayAppointment" Type="int" />
   </EntityType>
   <EntityType Name="WorkshopServices">
     <Key>

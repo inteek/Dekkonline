@@ -60,6 +60,8 @@ namespace DekkOnlineMVC.Controllers
         {
             var idUser = Security.GetIdUser(this);
             var usuario1 = User.Identity.Name;
+            var products = (dynamic)null;
+            var x = (dynamic)null;
             try
             {
 
@@ -76,7 +78,34 @@ namespace DekkOnlineMVC.Controllers
                 }
                 if (a == true)
                 {
-                    return Json(new { Success = true });
+                    if (usuario1 != "")
+                    {
+                        var id = sh.User(usuario1);
+                        products = sh.ProductsInCart(id);
+
+                        foreach (var item in products)
+                        {
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                        }
+                        return Json(new { x, JsonRequestBehavior.AllowGet });
+                    }
+                    else
+                    {
+                        products = sh.ProductsInCart(idUser);
+                        foreach (var item in products)
+                        {
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                        }
+                        if (x != null)
+                        {
+                            return Json(new { x, JsonRequestBehavior.AllowGet });
+                        }
+                        else
+                        {
+                            return Json(new { Success = "sin articulos" });
+                        }
+
+                    }
                 }
                 else
                 {
@@ -96,6 +125,8 @@ namespace DekkOnlineMVC.Controllers
         {
             var idUser = Security.GetIdUser(this);
             var usuario1 = User.Identity.Name;
+            var products = (dynamic)null;
+            var x = (dynamic)null;
             try
             {
                 var a = (dynamic)null;
@@ -109,9 +140,29 @@ namespace DekkOnlineMVC.Controllers
                 {
                         a = sh.IncreaseProductFromCart(idcart, qty, idUser);
                 } 
-                if (a == true)
+                if (a != null)
                 {
-                    return Json(new { Success = true });
+                    if (usuario1 != "")
+                    {
+                        var id = sh.User(usuario1);
+                        products = sh.ProductsInCart(id);
+
+                        foreach (var item in products)
+                        {
+                          x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                        }
+                        return Json(new { x, qty, a, JsonRequestBehavior.AllowGet });
+                    }
+                    else
+                    {
+                        products = sh.ProductsInCart(idUser);
+                        foreach (var item in products)
+                        {
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                        }
+                        return Json(new { x, qty, a, JsonRequestBehavior.AllowGet });
+                    }
+
                 }
                 else
                 {
@@ -130,6 +181,8 @@ namespace DekkOnlineMVC.Controllers
         public ActionResult ValidatePromo(string Code)
         {
             var idUser = Security.GetIdUser(this);
+            var products = (dynamic)null;
+            var x = (dynamic)null;
             try
             {
                 Code = Code.Trim();
@@ -158,7 +211,26 @@ namespace DekkOnlineMVC.Controllers
 
                     if (a == true)
                     {
-                        return Json(new { Success = true });
+                        if (usuario1 != "")
+                        {
+                            var id = sh.User(usuario1);
+                            products = sh.ProductsInCart(id);
+
+                            foreach (var item in products)
+                            {
+                                x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                            }
+                            return Json(new { x, JsonRequestBehavior.AllowGet });
+                        }
+                        else
+                        {
+                            products = sh.ProductsInCart(idUser);
+                            foreach (var item in products)
+                            {
+                                x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                            }
+                            return Json(new { x, JsonRequestBehavior.AllowGet });
+                        }
                     }
                     else
                     {
@@ -179,6 +251,8 @@ namespace DekkOnlineMVC.Controllers
         {
             var idUser = Security.GetIdUser(this);
             var usuario1 = User.Identity.Name;
+            var products = (dynamic)null;
+            var x = (dynamic)null;
             try
             {
                 ShoppingCart sh = new ShoppingCart();
@@ -194,7 +268,26 @@ namespace DekkOnlineMVC.Controllers
                 }
                     if (a == true)
                 {
-                    return Json(new { Success = true });
+                    if (usuario1 != "")
+                    {
+                        var id = sh.User(usuario1);
+                        products = sh.ProductsInCart(id);
+
+                        foreach (var item in products)
+                        {
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                        }
+                        return Json(new { x, JsonRequestBehavior.AllowGet });
+                    }
+                    else
+                    {
+                        products = sh.ProductsInCart(idUser);
+                        foreach (var item in products)
+                        {
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                        }
+                        return Json(new { x, JsonRequestBehavior.AllowGet });
+                    }
                 }
                 else
                 {

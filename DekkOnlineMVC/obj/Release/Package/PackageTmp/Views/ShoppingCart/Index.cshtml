@@ -12,10 +12,10 @@
         <img src="~/Content/imgs/step1mobile2.PNG" class=" img-responsive imgmobile" />
     </div>
 </div>
-<div class="container">
+<div class="container" style="font-family:Arial">
 
     <div class="row" style="border-bottom:1px solid #ddd">
-        <table id="cart" class="table table-hover table-condensed">
+        <table id="cart" class="table table-hover table-condensed tabl1">
             <thead>
                 @if (Model.cart.Count > 0)
                 {
@@ -38,11 +38,11 @@
                 {
                     foreach (var item in Model.cart)
                     {
-                        <tr>
+                        <tr class="@item.cartid">
 
                             <td data-th="Item">
                                 <div class="row">
-                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" onclick="DelCrt('@item.cartid')" id="@item.cartid"><span class="glyphicon glyphicon-remove"></span></a></div>
+                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" class="remclick" onclick="DelCrt('@item.cartid')"><span class="glyphicon glyphicon-remove"></span></a></div>
                                     <div class="col-sm-2 col-xs-3">
                                         <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
                                     </div>
@@ -53,9 +53,9 @@
                                 </div>
                             </td>
                             <td data-th="QTY">
-                                <input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" onchange="IncrsCart('@item.cartid', this.value)">
+                                <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" onchange="IncrsCart('@item.cartid', this.value)">
                             </td>
-                            <td data-th="Price"><strong>@item.totalpriceprod kr</strong></td>
+                            <td data-th="Price"><strong><label id="@item.cartid">@item.totalpriceprod</label> kr</strong></td>
                         </tr>
                     }
                 }
@@ -80,14 +80,14 @@
         <div class="col-lg-3"></div>
         <div class="col-lg-5" style="width:400px;">
             <form class="form-horizontal ipadst1" role="form">
-                <div class="row">
+                <div class="row alldta">
                     @if (Model.cart.Count > 0)
                     {
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 dtpy">
                             <div class="form-group" style="margin-bottom:10px;">
                                 <label class="col-md-5 col-xs-2 control-label">SUBTOTAL:</label>
                                 <div class="col-md-7 col-xs-2 margininput">
-                                    <label style="margin-top:5px"><strong>@Model.subtotal kr</strong></label>
+                                    <label style="margin-top:5px"><strong><label id="subtotal">@Model.subtotal</label> kr</strong></label>
                                 </div>
                             </div>
                             <div class="form-group" style="margin-bottom:10px;">
@@ -99,29 +99,37 @@
                             <div class="form-group" style="margin-bottom:10px;">
                                 <label class="col-md-5 col-xs-2 control-label">PROMO CODE:</label>
                                 <div class="col-md-4 col-xs-2 margininput">
-                                    <input type="text" class="form-control" id="promocode" value="@Model.promocode" />
+                                    <input type="text" class="form-control promocode" value="@Model.promocode" />
                                 </div>
                                 <div class="col-md-3 col-xs-2">
-                                    <label class="" style="margin-top:7px;color:blue;">
-                                        @if (Model.promocodeapp != true)
-                                        {
-                                            <a onclick="ValPromo(document.getElementById('promocode').value)" id="PromoCode"><span class="linkcolor2">APPLY</span></a>}
-                                        else
-                                        {
-                                            <a  onclick="UndoPromo(document.getElementById('promocode').value)"><span class="linkcolor2">UNDO</span></a>
-                                        }
-                                    </label>
-                                </div>
+                                    <div class="addpromoapp">
+                                        <label class="PromoCodeapp PromoCodeun" style="margin-top:7px;color:blue;">
+                                            @if (Model.promocodeapp != true)
+                                            {
+                                                <a class="PromoCodeapp PromoCodeappaction"><span class="linkcolor2 PromoCodeapp">APPLY</span></a>
 
+                                            }
+                                            else
+                                            {
+
+                                                <a  class="PromoCodeun PromoCodeunaction"><span class="linkcolor2 PromoCodeun">UNDO</span></a>
+
+                                            }
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group hidden prom promo" style="margin-bottom:10px;">
+                                    <label class="col-md-12 col-xs-8 control-label" style="color:red">*Promo code not valid or already used</label>
+                                </div>
                             </div>
                             @*<div class="form-group hidden" style="margin-bottom:10px;">
-                                <label class="col-md-12 col-xs-8 control-label" style="color:red">*Promo code not valid or already used</label>
-                            </div>*@
+                                    <label class="col-md-12 col-xs-8 control-label" style="color:red">*Promo code not valid or already used</label>
+                                </div>*@
 
                             <div class="form-group" style="border-bottom:1px solid #ddd">
                                 <label class="col-md-5 col-xs-2 control-label">Use your Points:</label>
                                 <div class="col-md-3 col-xs-2 margininput">
-                                    <input type="text" class="form-control margintextpoints" id="promopoints" value="@Model.points" style="margin-bottom:5px">
+                                    <input type="text" class="form-control margintextpoints promopoints" value="@Model.points" style="margin-bottom:5px">
                                 </div>
                                 <div class="col-md-4" style="margin-left:-25px;">
                                     <label class="marginlabelpoints" style="margin-top:7px">dekk points <a><span class="linkcolor2">APPLY</span></a></label>
@@ -132,20 +140,20 @@
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-2 control-label">TOTAL:</label>
                                 <div class="col-md-7 col-xs-2 margininput">
-                                    <label style="margin-top:5px"><strong>@Model.total kr</strong></label>
+                                    <label style="margin-top:5px"><strong><label id="total">@Model.total</label> kr</strong></label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-2 control-label"><a><span class="linkcolor keep">KEEP SHOPPING</span></a></label>
                                 <div class="col-md-7 col-xs-3 margininput">
-                                    <input type="button" class="btn btn-secundary form-control st2" id="inputEmail" value="Continue to Checkout">
+                                    <input type="button" class="btn btn-secundary form-control st2 inemail" id="inputEmail" value="Continue to Checkout">
                                 </div>
                             </div>
                         </div>
                     }
                     else
                     {
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 dtcte">
                             @*<div class="form-group" style="margin-bottom:10px;">
                                     <label class="col-md-5 col-xs-2 control-label">SUBTOTAL:</label>
                                     <div class="col-md-7 col-xs-2 margininput">
@@ -187,7 +195,7 @@
                                         <input type="button" class="btn btn-secundary form-control" id="inputEmail" value="Continue to Checkout">
                                     </div>
                                 </div>*@
-                            <div class="form-group">
+                            <div class="form-group keep1">
                                 <label class="col-md-12 col-xs-2 control-label"><a><span class="linkcolor keep" style="color:steelblue;">KEEP SHOPPING</span></a></label>
                             </div>
                         </div>
@@ -199,11 +207,40 @@
 
 </div>
 
+<div class="modal fade  del" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="font-family:Arial">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>You are about to delete one product from the cart, this procedure is irreversible.</p>
+                <p>Do you want to proceed?</p>
+                <p class="debug-url"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default dee" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok del1">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=4")
+@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=3")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");
         $("#mainContainDiv").attr("class", "prMainContentSub");
+    });
+
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
 </script>

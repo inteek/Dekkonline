@@ -42,7 +42,7 @@ namespace Framework
                     decimal price = Convert.ToDecimal(productPrice) * id_quantity;
                     var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
                     Entity.ShoppingCart productShoppingCart = db.ShoppingCart.Where(s => s.proId == id_dekk && s.IdUser.Equals(idUser) && s.Status == false).FirstOrDefault();
-
+                    price = (int)Math.Floor(price);
                     if (productShoppingCart == null)
                     {
                         Entity.ShoppingCart addCart = new Entity.ShoppingCart();
@@ -103,6 +103,26 @@ namespace Framework
                         }
                         db.ShoppingCart.Remove(d);
                         db.SaveChanges();
+                        var user = db.ShoppingCart.Where(s => s.IdUser == idUser && s.Status == false).FirstOrDefault();
+                        if (user != null)
+                        {
+                            return true;
+                        }
+                        else if (user == null)
+                        {
+                            var promocodeused2 = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
+                            if (promocodeused2 != null)
+                            {
+                                db.PromoCodeUsed.Remove(promocodeused2);
+                                db.SaveChanges();
+                                return true;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+
+                        }
                         return true;
                     }
                     else
@@ -119,7 +139,7 @@ namespace Framework
             }
         }
 
-        public bool IncreaseProductFromCart(string idcart, int qty, string idUser)
+        public string IncreaseProductFromCart(string idcart, int qty, string idUser)
         {
             Framework.encryptdecrypt en = new encryptdecrypt();
             try
@@ -170,13 +190,16 @@ namespace Framework
                             promocodeused.TotalPrice = promocodeused.TotalPrice + (final - promocodeused.TotalPrice);
                             promocodeused.TotalPriceFinal = promocodeused.TotalPrice - (percent * (promocodeused.TotalPrice));
                             db.Entry(promocodeused).State = EntityState.Modified;
+                            db.Entry(d).State = EntityState.Modified;
                         }
                         db.SaveChanges();
-                        return true;
+                        var qtyfinal = db.ShoppingCart.Where(s => s.Id == id).Select(s => s.Price).FirstOrDefault();
+                        qtyfinal = (decimal)Math.Truncate((double)qtyfinal);
+                        return qtyfinal.ToString();
                     }
                     else
                     {
-                        return false;
+                        return null;
                     }
 
                 }
@@ -185,7 +208,7 @@ namespace Framework
             catch (Exception ex)
             {
 
-                return false;
+                return null;
             }
 
         }
@@ -310,7 +333,8 @@ namespace Framework
                     if (promocodediscount != null)
                     {
                         var usercode = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.PromoCode == code && s.Used == true).FirstOrDefault();
-                        if (usercode != null)
+                        var usercodenotused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
+                        if (usercode != null || usercodenotused != null)
                         {
                             return false;
                         }
@@ -322,6 +346,7 @@ namespace Framework
                                         totalpriceprod = Math.Round((double)cart.Price, 2),
                                     }).ToList();
                         double? totalprice = products.Select(p => p.totalpriceprod).Sum();
+                        totalprice = (int)Math.Floor((decimal)totalprice);
                         double? totalprice2 = products.Select(p => p.totalpriceprod).Sum();
                         promocodediscount = promocodediscount / 100;
                         decimal totalpricepromocode = promocodediscount * (decimal)totalprice;
@@ -460,7 +485,9 @@ namespace Framework
                         promocodeusedck.idUser = IdUser1;
                         percent = percent / 100;
                         promocodeusedck.TotalPrice = promocodeusedck.TotalPrice + price;
-                        promocodeusedck.TotalPriceFinal = promocodeusedck.TotalPrice - (percent * promocodeusedck.TotalPrice);
+                        var totalfinal = promocodeusedck.TotalPrice - (percent * promocodeusedck.TotalPrice);
+                        totalfinal = (int)Math.Floor((decimal)totalfinal);
+                        promocodeusedck.TotalPriceFinal = (decimal)totalfinal;
                         if (promocodeusedus != null)
                         {
                             db.PromoCodeUsed.Remove(promocodeusedus);
@@ -472,7 +499,9 @@ namespace Framework
                         var percent = db.PromotionCode.Where(s => s.IdCode == promocodeusedus.PromoCode).Select(s => s.PercentCode).FirstOrDefault();
                         percent = percent / 100;
                         promocodeusedus.TotalPrice = promocodeusedus.TotalPrice + price;
-                        promocodeusedus.TotalPriceFinal = promocodeusedus.TotalPrice - (percent * promocodeusedus.TotalPrice);
+                        var totalfinal = promocodeusedus.TotalPrice - (percent * promocodeusedus.TotalPrice);
+                        totalfinal = (int)Math.Floor((decimal)totalfinal);
+                        promocodeusedus.TotalPriceFinal = (decimal)totalfinal;
                     }
 
                     db.SaveChanges();

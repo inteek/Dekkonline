@@ -427,5 +427,102 @@ namespace Framework
             return result;
         }
 
+        public bool ValidateUserEmail(string email1, string iduser)
+        {
+            bool result = false;
+            try
+            {
+                using (dekkOnlineEntities db = new dekkOnlineEntities())
+                {
+                    var emailuser = db.AspNetUsers.Where(s => s.Id == iduser).Select(s=>s.Email).FirstOrDefault().ToString();
+                    var emailnew = db.AspNetUsers.Where(s=>s.Email == email1).Select(s => s.Email).FirstOrDefault().ToString();
+                    if (emailnew != null && emailuser != emailnew)
+                    {
+                        result = true;
+                    }
+                    else if (emailnew == null || emailuser == emailnew)
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+        public bool UpdateDataUser(string zipcore, string name, string lastname, string address, string email, string mobile, string idUser1) {
+            bool result = false;
+            try
+            {
+                using (dekkOnlineEntities db = new dekkOnlineEntities())
+                {
+                    var userdata = db.UserAddress.Where(s => s.IdUser == idUser1).FirstOrDefault();
+                    var useremail = db.AspNetUsers.Where(s => s.Id == idUser1).FirstOrDefault();
+                    if (userdata != null && useremail != null)
+                    {
+                        userdata.FirstName = name;
+                        userdata.LastName = lastname;
+                        userdata.Address = address;
+                        userdata.Phone = mobile;
+                        userdata.ZipCode = Convert.ToInt32(zipcore);
+                        useremail.Email = email;
+                        useremail.UserName = email;
+                        db.Entry(userdata).State = EntityState.Modified;
+                        db.Entry(useremail).State = EntityState.Modified;
+                        db.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+        }
+
+        public bool UpdateUserImage(string path, string idUser1)
+        {
+            bool result = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var UserInfo = db.UserAddress.Where(s => s.IdUser == idUser1).FirstOrDefault();
+                    if (UserInfo != null)
+                    {
+                        UserInfo.Image = path;
+                        db.Entry(UserInfo).State = EntityState.Modified;
+                        db.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+
+        }
+
     }
 }

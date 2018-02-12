@@ -1,32 +1,30 @@
 ﻿$(document).ready(function () {
-    $(".confirmpay").attr("disabled", "disabled");
     $(".st2").click(function () {
         var url = "/ShoppingCart/Step2";
         window.location = url;
     });
-    $(".terms2").change(function () {
-        if ($(".terms2").is(":checked")) {
- 
-            $(".confirmpay").removeAttr("disabled");
-            $(".confirmpay").removeAttr("title");
-        }
-        else {
-            $(".confirmpay").prop("disabled", "disabled");
-            $(".confirmpay").attr("title", "Accept terms and conditions");
-        }
-    });
-    if ($(".confirmpay").attr("disabled", "disabled")) {
-        $(".confirmpay").attr("title", "Accept terms and conditions");
-    }
 
 
     $(".confirmpay").click(function () {
+        $("#required").addClass("hidden");
+        $(".req1").addClass("hidden");
+        $(".req2").addClass("hidden");
+        $(".req3").addClass("hidden");
+        $(".req4").addClass("hidden");
+        $(".req5").addClass("hidden");
+        $(".req6").addClass("hidden");
       if (validate() == false) {
           $("#required").removeClass("hidden");
             return false;
         }
       else {
           $("#required").addClass("hidden");
+          $(".req1").addClass("hidden");
+          $(".req2").addClass("hidden");
+          $(".req3").addClass("hidden");
+          $(".req4").addClass("hidden");
+          $(".req5").addClass("hidden");
+          $(".req6").addClass("hidden");
       }
         var tar;
         if ($(".oneradio").is(":checked")) {
@@ -68,22 +66,33 @@ function Confirm(tar, cn, edm, edy, sc, chn) {
 }
 
 function validate() {
-    if (!$(".oneradio").is(":checked") && !$(".tworadio").is(":checked")) {
-        return false;
+    var error = true;
+    if (error == true) {
+        if (!$(".oneradio").is(":checked") && !$(".tworadio").is(":checked")) {
+            $(".req1").removeClass("hidden");
+            error = false;
+        }
+        if (!$(".cn").val() || $(".cn").val().length != 16) {
+            $(".req2").removeClass("hidden");
+            error = false;
+        }
+        if (!$(".monthp").val() || !$(".yeary").val()) {
+            $(".req3").removeClass("hidden");
+            error = false;
+        }
+        if (!$(".sc").val() || $(".sc").val().length != 3) {
+            $(".req4").removeClass("hidden");
+            error = false;
+        }
+        if (!$(".nombretg").val()) {
+            $(".req5").removeClass("hidden");
+            error = false;
+        }
+        if (!$("#terms2").prop("checked")) {
+            $(".req6").removeClass("hidden");
+            error = false;
+        }
     }
-    if (!$(".cn").val() || $(".cn").val().length != 16) {
-        return false;
-    }
-    if (!$(".monthp").val()) {
-        return false;
-    }
-    if (!$(".yeary").val()) {
-        return false;
-    }
-    if (!$(".sc").val() || $(".sc").val().length != 3) {
-        return false;
-    }
-    if (!$(".nombretg").val()) {
-        return false;
-    }
+    return error;
+  
 }

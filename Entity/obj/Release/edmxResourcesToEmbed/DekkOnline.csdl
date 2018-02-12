@@ -211,7 +211,6 @@
     <EntitySet Name="PromotionCode" EntityType="dekkOnlineModel.PromotionCode" />
     <EntitySet Name="PromotionCodeUser" EntityType="dekkOnlineModel.PromotionCodeUser" />
     <EntitySet Name="TypesServices" EntityType="dekkOnlineModel.TypesServices" />
-    <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
     <EntitySet Name="WorkshopAppointment" EntityType="dekkOnlineModel.WorkshopAppointment" />
     <AssociationSet Name="fk_CodepromUser" Association="dekkOnlineModel.fk_CodepromUser">
       <End Role="PromotionCode" EntitySet="PromotionCode" />
@@ -256,7 +255,6 @@
     <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
     <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
     <EntitySet Name="Appointments" EntityType="dekkOnlineModel.Appointments" />
-    <EntitySet Name="Orders" EntityType="dekkOnlineModel.Orders" />
     <EntitySet Name="OrdersDetail" EntityType="dekkOnlineModel.OrdersDetail" />
     <EntitySet Name="Payment" EntityType="dekkOnlineModel.Payment" />
     <EntitySet Name="PromoCodeUsed" EntityType="dekkOnlineModel.PromoCodeUsed" />
@@ -269,6 +267,8 @@
       <End Role="DeliveryType" EntitySet="DeliveryType" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
     </AssociationSet>
+    <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
+    <EntitySet Name="Orders" EntityType="dekkOnlineModel.Orders" />
   </EntityContainer>
   <EntityType Name="ShoppingCart">
     <Key>
@@ -323,19 +323,7 @@
     </Key>
     <Property Name="IdService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="Workshop">
-    <Key>
-      <PropertyRef Name="IdWorkshop" />
-    </Key>
-    <Property Name="IdWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ZipCode" Type="Int32" />
-    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="WorkshopAppointment">
     <Key>
@@ -347,6 +335,7 @@
     <Property Name="Date" Type="DateTime" Precision="0" />
     <Property Name="Time" Type="Time" Precision="4" />
     <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DayAppointment" Type="Int32" />
   </EntityType>
   <Association Name="fk_CodepromUser">
     <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
@@ -549,18 +538,6 @@
     <Property Name="Schedule" Type="DateTime" Precision="3" />
     <Property Name="IdWorkShop" Type="Int32" />
   </EntityType>
-  <EntityType Name="Orders">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="Payment" Type="Int32" />
-    <Property Name="DeliveryAddress" Type="Int32" />
-    <Property Name="PromoCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="DateS" Type="DateTime" Precision="3" />
-  </EntityType>
   <EntityType Name="OrdersDetail">
     <Key>
       <PropertyRef Name="id" />
@@ -633,4 +610,33 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Workshop">
+    <Key>
+      <PropertyRef Name="IdWorkshop" />
+    </Key>
+    <Property Name="IdWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Average" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Payment" Type="Int32" />
+    <Property Name="DeliveryAddress" Type="Int32" />
+    <Property Name="PromoCode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DateS" Type="DateTime" Precision="3" />
+    <Property Name="EstimatedDate" Type="DateTime" Precision="3" />
+    <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
+    <Property Name="Delivered" Type="Boolean" />
+  </EntityType>
 </Schema>

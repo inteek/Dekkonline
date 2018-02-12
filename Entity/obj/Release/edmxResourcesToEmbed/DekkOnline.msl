@@ -177,28 +177,16 @@
     <EntitySetMapping Name="TypesServices">
       <EntityTypeMapping TypeName="dekkOnlineModel.TypesServices">
         <MappingFragment StoreEntitySet="TypesServices">
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="IdService" ColumnName="IdService" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Workshop">
-      <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
-        <MappingFragment StoreEntitySet="Workshop">
-          <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
-          <ScalarProperty Name="Length" ColumnName="Length" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="WorkshopAppointment">
       <EntityTypeMapping TypeName="dekkOnlineModel.WorkshopAppointment">
         <MappingFragment StoreEntitySet="WorkshopAppointment">
+          <ScalarProperty Name="DayAppointment" ColumnName="DayAppointment" />
           <ScalarProperty Name="Comments" ColumnName="Comments" />
           <ScalarProperty Name="Time" ColumnName="Time" />
           <ScalarProperty Name="Date" ColumnName="Date" />
@@ -308,19 +296,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="dekkOnlineModel.Orders">
-        <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="DateS" ColumnName="DateS" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
-          <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
-          <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
-          <ScalarProperty Name="Payment" ColumnName="Payment" />
-          <ScalarProperty Name="idUser" ColumnName="idUser" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="OrdersDetail">
       <EntityTypeMapping TypeName="dekkOnlineModel.OrdersDetail">
         <MappingFragment StoreEntitySet="OrdersDetail">
@@ -368,6 +343,37 @@
           <ScalarProperty Name="IdUser" ColumnName="IdUser" />
           <ScalarProperty Name="DeliveryType1" ColumnName="DeliveryType" />
           <ScalarProperty Name="IdDelivery" ColumnName="IdDelivery" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Workshop">
+      <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
+        <MappingFragment StoreEntitySet="Workshop">
+          <ScalarProperty Name="Average" ColumnName="Average" />
+          <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="dekkOnlineModel.Orders">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Delivered" ColumnName="Delivered" />
+          <ScalarProperty Name="DeliveredDate" ColumnName="DeliveredDate" />
+          <ScalarProperty Name="EstimatedDate" ColumnName="EstimatedDate" />
+          <ScalarProperty Name="DateS" ColumnName="DateS" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+          <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
