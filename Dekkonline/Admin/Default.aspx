@@ -3,10 +3,68 @@
 <%@ Register Assembly="DevExpress.Web.v16.1, Version=16.1.13.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-  
+  <script type="text/javascript">
+      function ShowLoginWindow(s, e) {
+          var id = xgvOrders.GetRowKey(e.visibleIndex);
+          pcLogin.PerformCallback("Load|" + id, function () {
+              pcLogin.Show();
+              $("#lblOrder").text(id);
+          });
+
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+
+    <div class="col-md-1  hidden-xs hidden-sm"></div>
+
+    
+    <div class="col-xs-10 col-md-10">
+        <div class="tableTitle subTitle">
+            <div class="pad5 floatLt">
+                <div style="padding: 10px;">ORDERS</div>
+            </div>
+
+        </div>
+        <div class="gridBox floatLt BoxGeneral">
+
+            <dx:ASPxGridView runat="server" ID="xgvOrders" ClientInstanceName="xgvOrders" KeyFieldName="IdOrder" Width="100%"
+                SettingsPager-PageSize="5" Border-BorderStyle="None" AutoGenerateColumns="false" Settings-GridLines="None"  >
+                <Styles>
+                    <Header CssClass="subTitle" HorizontalAlign="Center"></Header>
+                    <AlternatingRow BackColor="WhiteSmoke"></AlternatingRow>
+                    <Table CssClass="tableGeneral"></Table>
+                    <PagerBottomPanel BackColor="White" ForeColor="#dd1730">
+                    </PagerBottomPanel>
+                </Styles>
+                <StylesPager PageNumber-HorizontalAlign="Right">
+                    <CurrentPageNumber Font-Bold="true"></CurrentPageNumber>
+                    <PageNumber ForeColor="#dd1730">
+                    </PageNumber>
+                </StylesPager>
+                <SettingsPager Visible="true"></SettingsPager>
+                <Columns>
+                    <dx:GridViewDataColumn Caption="Order" FieldName="IdOrder" CellStyle-HorizontalAlign="Center" ></dx:GridViewDataColumn> 
+                    <dx:GridViewDataDateColumn Caption="Date" FieldName="DateOrder" CellStyle-HorizontalAlign="Center" PropertiesDateEdit-DisplayFormatString="{0:dd/MM/yy HH:mm}"></dx:GridViewDataDateColumn>
+                    <dx:GridViewDataColumn Caption="Products" FieldName="Products" CellStyle-HorizontalAlign="Center"></dx:GridViewDataColumn>
+                    <dx:GridViewDataColumn Caption="CodeProm" FieldName="CodeProm" CellStyle-HorizontalAlign="Center"></dx:GridViewDataColumn>
+                    <dx:GridViewDataColumn Caption="Total" FieldName="Total" CellStyle-HorizontalAlign="Center"></dx:GridViewDataColumn>
+                    <dx:GridViewDataColumn Caption="IdUser" FieldName="IdUser" Visible="false" CellStyle-HorizontalAlign="Center" ></dx:GridViewDataColumn>
+                    <dx:GridViewDataColumn Caption="Customer" FieldName="NameUser" CellStyle-HorizontalAlign="Center"></dx:GridViewDataColumn>
+                    <dx:GridViewDataColumn Caption="Email" FieldName="EmailUser" CellStyle-HorizontalAlign="Center" ></dx:GridViewDataColumn>
+                </Columns>
+                <ClientSideEvents RowDblClick="ShowLoginWindow" />
+            </dx:ASPxGridView>
+            <div class="clearfix"></div>
+            <div style="height: 8px"></div>
+        </div>
+    </div>
+    
+    
+    <div class="clearfix"></div>
+    <div class="spacer20"></div>
+    <div class="clearfix"></div>
 
     <div class="col-md-1  hidden-xs hidden-sm"></div>
 
@@ -260,6 +318,7 @@
         </div>
     </div>
 
+    
 
 
     <dx:ASPxPopupControl runat="server" ID="popImg" ClientInstanceName="popImg" ShowHeader="false" ShowFooter="false" Width="300px" CloseAction="MouseOut">
@@ -307,6 +366,55 @@
     </div>
 
 
+
+    <dx:ASPxPopupControl ID="pcLogin" ClientInstanceName="pcLogin" runat="server" Width="720"  CloseAction="CloseButton" CloseOnEscape="true" Modal="True"
+        PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter"  OnWindowCallback="popOrder_WindowCallback"
+        HeaderText="ORDER DETAILS" AllowDragging="True" PopupAnimationType="None" EnableViewState="False" AutoUpdatePosition="true">
+       
+        <ContentCollection>
+            <dx:PopupControlContentControl runat="server">
+                <div class="col-xs-12 col-md-12" style="height:350px">
+                    <div class="tableTitle subTitle">
+                        <div class="pad5 floatLt">
+                            <div style="padding: 10px; font-size:20px">ORDER #<span id="lblOrder"></span></div>
+                        </div>
+                    </div>
+                    <div class="gridBox floatLt BoxGeneral">
+                        <dx:ASPxGridView runat="server" ID="xgvOrderDetails" ClientInstanceName="xgvOrderDetails" KeyFieldName="IdProduct" Width="100%"
+                            SettingsPager-PageSize="7" Border-BorderStyle="None" AutoGenerateColumns="false" Settings-GridLines="None"  >
+                            <Styles>
+                                <Header CssClass="subTitle" HorizontalAlign="Center"></Header>
+                                <AlternatingRow BackColor="WhiteSmoke"></AlternatingRow>
+                                <Table CssClass="tableGeneral"></Table>
+                                <PagerBottomPanel BackColor="White" ForeColor="#dd1730">
+                                </PagerBottomPanel>
+                            </Styles>
+                            <StylesPager PageNumber-HorizontalAlign="Right">
+                                <CurrentPageNumber Font-Bold="true"></CurrentPageNumber>
+                                <PageNumber ForeColor="#dd1730">
+                                </PageNumber>
+                            </StylesPager>
+                            <SettingsPager Visible="true"></SettingsPager>
+                            <Columns>
+                                <dx:GridViewDataColumn Caption="Id" FieldName="IdProduct" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" ></dx:GridViewDataColumn> 
+                                <dx:GridViewDataColumn Caption="Nmae" FieldName="Nmae" CellStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" ></dx:GridViewDataColumn>
+                                <dx:GridViewDataColumn Caption="Brand" FieldName="Brand" CellStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"></dx:GridViewDataColumn>
+                                <dx:GridViewDataColumn Caption="TyreSize" FieldName="TyreSize" CellStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"></dx:GridViewDataColumn>
+                                <dx:GridViewDataColumn Caption="Quantity" FieldName="Quantity" Visible="true" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center"></dx:GridViewDataColumn>
+                                <dx:GridViewDataColumn Caption="Price" FieldName="Price" CellStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="Right"></dx:GridViewDataColumn>
+                            </Columns>
+                        </dx:ASPxGridView>
+                        <div class="clearfix"></div>
+                        <div style="height: 8px"></div>
+                    </div>
+                </div>
+            </dx:PopupControlContentControl>
+        </ContentCollection>
+        <ContentStyle>
+            <Paddings PaddingBottom="20px" />
+        </ContentStyle>
+
+    </dx:ASPxPopupControl>
 
     <div class="clear"></div>
 
