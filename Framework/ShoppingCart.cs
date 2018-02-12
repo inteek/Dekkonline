@@ -462,7 +462,7 @@ namespace Framework
             {
                 decimal? price = 0.00m;
                 var user = db.ShoppingCart.Where(s => s.IdUser == idUserCookies && s.Status == false).ToList();
-                var promocodeusedck = db.PromoCodeUsed.Where(s => s.idUser == idUserCookies && s.Used == false).FirstOrDefault();
+                var promocodeusedck = db.PromoCodeUsed.Where(s => s.idUser == idUserCookies && s.Used == false).FirstOrDefault();                
                 if (user.Count > 0)
                 {
                     foreach (var item in user)
@@ -505,6 +505,10 @@ namespace Framework
                     }
 
                     db.SaveChanges();
+                    result = true;
+                }
+                else if (user.Count == 0)
+                {
                     result = true;
                 }
                 else

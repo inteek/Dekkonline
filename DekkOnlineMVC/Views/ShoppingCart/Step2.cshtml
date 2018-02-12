@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX6wD6FcmE4ZEFB2gEVka9qNkdsA4eqeg"></script>
+@*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX6wD6FcmE4ZEFB2gEVka9qNkdsA4eqeg"></script>*@
 
 @Styles.Render("~/Styles/Dimension.css?v=4")
 @Styles.Render("~/Styles/Shoppingcart.css?v=8")
@@ -33,11 +33,36 @@
         margin: 0;
         padding: 0;
     }
+
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+
+    input[type=date]::-webkit-outer-spin-button,
+    input[type=date]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+
+
+    input[type=date] {
+        -moz-appearance: textfield;
+    }
 </style>
 
 
 
-<div class="content">
+<div class="content" style="font-family:Arial;">
     <div class="row">
         <div class="col-lg-12">
             <img src="~/Content/step2.JPG" class="imgRespons1" />
@@ -99,84 +124,100 @@
                                                 settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
                                             }).GetHtml()*@
                                     </div>
+                                    <label id="validateZipcode" class="textValidateFalse">The zipcode field is required</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="Firstname" class="col-lg-3 col-xs-4 control-label textoAzul">First name</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="Firstname" value="@Model.firstName" placeholder="">
                                     </div>
+                                    <label id="validateFirstname" class="textValidateFalse">The first name field is required</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="Lastname" class="col-lg-3 col-xs-4 control-label textoAzul">Last name</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="Lastname" value="@Model.lastName" placeholder="">
                                     </div>
+                                    <label id="validateLastname" class="textValidateFalse">The fast name field is required</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="text" class="form-control borderInput address" id="address" value="@Model.address" placeholder="">
                                     </div>
+                                    <label id="validateAddress" class="textValidateFalse">The address field is required</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="col-lg-3 col-xs-4 control-label textoAzul">Email</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="email" class="form-control borderInput" id="email" value="@Model.email" placeholder="">
                                     </div>
+                                    <label id="validateEmail" class="textValidateFalse">Enter a valid email</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="mobile" class="col-lg-3 col-xs-4 control-label textoAzul">Mobile</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="mobile" value="@Model.mobile" placeholder="">
                                     </div>
+                                    <label id="validateMobile" class="textValidateFalse">The mobile field is required</label>
+                                    <label id="validateMobile2" class="textValidateFalse">Number of characters required are from 8 to 10</label>
                                 </div>
                             </form>
                         }
                         else
                         {
-                            <form class="form-horizontal rowInfoPer2" role="form">
+                            <form class="form-horizontal rowInfoPer2" role="form" name="formulario2">
                                 <div class="form-group">
                                     <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
                                     <div class="col-lg-2 col-xs-6">
-                                        @*<input type="text" class="form-control borderInput" id="zipcode" placeholder="">*@
+                                        <input type="text" class="form-control borderInput" id="txtZipCode" placeholder="">
                                         @Html.DevExpress().TextBox(settings =>
-                                             {
-                                                 settings.Name = "txtZipCode";
-                                                 settings.Height = Unit.Pixel(30);
-                                                 settings.Width = Unit.Percentage(130);
-                                                 settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
-                                             }).GetHtml()
+                                                  {
+                                                      settings.Name = "txtZipCode";
+                                                      settings.Height = Unit.Pixel(30);
+                                                      settings.Width = Unit.Percentage(130);
+                                                      settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
+                                                      settings.ClientVisible = false;
+                                                  }).GetHtml()
                                     </div>
+                                    <label id="validateZipcode" class="textValidateFalse">The zipcode field is required</label>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="Firstname" class="col-lg-3 col-xs-4 control-label textoAzul">First name</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="Firstname" placeholder="">
                                     </div>
+                                    <label id="validateFirstname" class="textValidateFalse">The first name field is required</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="Lastname" class="col-lg-3 col-xs-4 control-label textoAzul">Last name</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="Lastname" placeholder="">
                                     </div>
+                                    <label id="validateLastname" class="textValidateFalse">The fast name field is required</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="address" class="col-lg-3 col-xs-4 control-label textoAzul">Address</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="text" class="form-control borderInput address" id="address" placeholder="">
                                     </div>
+                                    <label id="validateAddress" class="textValidateFalse">The address field is required</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="col-lg-3 col-xs-4 control-label textoAzul">Email</label>
                                     <div class="col-lg-6 col-xs-6">
                                         <input type="email" class="form-control borderInput" id="email" placeholder="">
                                     </div>
+                                    <label id="validateEmail" class="textValidateFalse">Enter a valid email</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="mobile" class="col-lg-3 col-xs-4 control-label textoAzul">Mobile</label>
                                     <div class="col-lg-6 col-xs-6">
-                                        <input type="text" class="form-control borderInput" id="mobile" placeholder="">
+                                        <input type="number" class="form-control borderInput" id="mobile" min="1" max="10">
                                     </div>
+                                    <label id="validateMobile" class="textValidateFalse">The mobile field is required</label>
+                                    <label id="validateMobile2" class="textValidateFalse">Number of characters required are from 8 to 10</label>
                                 </div>
                             </form>
                         }
@@ -223,10 +264,10 @@
                             <div class="form-group alinearSrotBy">
                                 <label class="col-lg-2 col-xs-3 alinearSort">SORT BY</label>
                                 <div class="col-lg-3 col-xs-5 alinearCombo">
-                                    <select class="form-control">
-                                        <option value="">Seleccione</option>
-                                        <option value="">Seleccione</option>
-                                        <option value="">Seleccione</option>
+                                    <select class="form-control reco">
+                                        <option value="0">Select</option>
+                                        <option value="1">Recommended</option>
+                                        <option value="2">Nearest</option>
                                     </select>
                                 </div>
                             </div>
@@ -238,24 +279,29 @@
                         {
                             foreach (var item in Model.workshop)
                             {
-                                <div class="row blanco rowcat" id="@item.IdWorkshop" onclick="popouWorkShop('@item.Name','@item.IdWorkshop')" style="cursor:pointer;">
-                                    <div class="col-lg-2 col-xs-3">
-                                        <img src="~/Content/WorkShop/t1.jpg" style="width:110px; height:105px;" />
-                                    </div>
-                                    <div class="col-lg-5 col-xs-8 catalago">
-                                        <h4 class="nameWorkshop" id="nameWorkshop" style="color: #2471A3;"><strong><span></span> @item.Name</strong></h4>
-                                        <p class="">@item.Address</p>
-                                        <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
-                                    </div>
-                                    <div class="col-lg-2 catHiden">
-                                        <h3><strong>60 kr</strong></h3>
+                                <div id="divWorkShop">
+                                    <div class="row blanco rowcat ocultarWorkshop" id="@item.IdWorkshop" onclick="popouWorkShop('@item.Name','@item.IdWorkshop')" style="cursor:pointer;">
+                                        <div class="col-lg-2 col-xs-3">
+                                            <img src="~/Content/WorkShop/t1.jpg" style="width:110px; height:105px;" />
+                                        </div>
+                                        <div class="col-lg-5 col-xs-8 catalago">
+                                            <h4 class="nameWorkshop" id="nameWorkshop" style="color: #2471A3;"><strong><span></span> @item.Name</strong></h4>
+                                            <p class="">@item.Address</p>
+                                            <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                        </div>
+                                        <div class="col-lg-2 catHiden">
+                                            <h3><strong>60 kr</strong></h3>
+                                        </div>
                                     </div>
                                 </div>
                             }
                         }
                         else
                         {
-                            <div class="row blanco rowcat">
+                            <div id="divWorkShop">
+
+                            </div>
+                            <div class="row blanco rowcat" id="lableWorkShop">
                                 <div class="col-lg-2 col-xs-3">
                                 </div>
                                 <div class="col-lg-5 col-xs-8 catalago">
@@ -265,6 +311,7 @@
                                 </div>
                             </div>
                         }
+                        <label id="validateWorkshop" class="">No workshops were found with this postal code</label>
                         @*<div class="row blanco rowcat">
                                 <div class="col-lg-2 col-xs-3">
                                     <img src="~/Content/t1.jpg" style="width:110px; height:105px;" />
@@ -316,6 +363,7 @@
                                 </button>
                             </div>
                         </div>
+                        <label class="direccion" id="direccion"></label>
                     </form>
 
                     <!-- display google map -->
@@ -350,7 +398,10 @@
                 </div>
                 <div class="row" style="float:right; margin-right:100px; margin-top:20px;">
                     <div class="col-lg-12">
-                        <button class="btn btn-default btn-lg" id="next">NEXT</button>
+                        <label id="validateDateMapa" class="textValidateDataModal">The date must be greater than the current</label>
+                        <label id="validateDateMapaPasada" class="textValidateDataModal">The date must be less than the current date</label>
+                        <label id="EmailExistente" class="textValidateDataModal">Please enter another email the current one already exists</label>
+                        <button type="submit" class="btn btn-default btn-lg" id="next">NEXT</button>
                     </div>
                 </div>
             </div>
@@ -422,11 +473,11 @@
 <div class="modal fade" id="modalWorkShop" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content modal-xs">
-            @*<div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>*@
+            <div class="modal-header" style="background-color:#C84647">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
                 <div class="row">
                     <div style="float:left">
@@ -446,47 +497,53 @@
                 </div>
                 <div class="row" style="margin-top:15px;">
                     <div class="col-lg-12">
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date1" value="option1" aria-label="...">
-                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                Friday 19 of may -10:00 am
-                            </label>
+                        <div id="datesModal">
+
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date2" value="option1" aria-label="...">
-                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                Friday 19 of may - 4:00 pm
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="radio" name="blankRadio1" id="Date3" value="option1" aria-label="...">
-                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                Saturday 21 of may - 10:30 am
-                            </label>
-                        </div>
+                        @*<div class="form-check">
+                                <input class="form-check-input position-static" type="checkbox" name="blankRadio1" id="Date1" value="option1" aria-label="...">
+                                <label class="form-check-label" for="Date1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Friday 19 of may -10:00 am
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="checkbox" name="blankRadio1" id="Date2" value="option1" aria-label="...">
+                                <label class="form-check-label" for="Date2" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Friday 19 of may - 4:00 pm
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="checkbox" name="blankRadio1" id="Date3" value="option1" aria-label="...">
+                                <label class="form-check-label" for="Date3" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Saturday 21 of may - 10:30 am
+                                </label>
+                            </div>*@
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <h4>More services:</h4>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service1" value="1" aria-label="...">
-                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                Tire Hotel
-                            </label>
+                        <div id="servicesModal">
+
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service2" value="2" aria-label="...">
-                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                Wheel Cleaner
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="radio" name="blankRadio2" id="Service3" value="3" aria-label="...">
-                            <label class="form-check-label" for="exampleRadios1" style="color:#C0392B; font-size:16px; font-family:arial;">
-                                Full service
-                            </label>
-                        </div>
+                        @*<div class="form-check">
+                                <input class="form-check-input position-static" type="checkbox" name="blankRadio2" id="Service1" value="1" aria-label="...">
+                                <label class="form-check-label" for="Service1" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Tire Hotel
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="checkbox" name="blankRadio2" id="Service2" value="2" aria-label="...">
+                                <label class="form-check-label" for="Service2" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Wheel Cleaner
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input position-static" type="checkbox" name="blankRadio2" id="Service3" value="3" aria-label="...">
+                                <label class="form-check-label" for="Service3" style="color:#C0392B; font-size:16px; font-family:arial;">
+                                    Full service
+                                </label>
+                            </div>*@
                     </div>
                 </div>
                 <div class="row">
@@ -500,7 +557,7 @@
                             <div class="form-group">
                                 <label for="" class="col-lg-1 control-label">Date</label>
                                 <div class="col-lg-5">
-                                    <input type="date" class="form-control" id="modEmail" style="margin-left:10px;">
+                                    <input type="date" class="form-control" id="modDate" style="margin-left:10px;">
                                 </div>
                                 <label for="" class="col-lg-1 control-label">Time</label>
                                 <div class="col-lg-4">
@@ -522,6 +579,8 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <label id="validateDateModal" class="textValidateDataModal">The date and time are required</label>
+                <label id="validateDateModalPasada" class="textValidateDataModal">The date must be greater than the current</label>
                 <button type="button" class="btn btn-danger" id="MakeAppoint">MAKE APPOINTMENT</button>
             </div>
         </div>
@@ -532,8 +591,8 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=8")
-@Scripts.Render("~/Scripts/Map.js?v=4")
+@Scripts.Render("~/Scripts/Step2.js?v=1")
+@Scripts.Render("~/Scripts/Map.js?v=1")
 @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
 @Scripts.Render("~/Scripts/Login.js?v=2")
 @Scripts.Render("~/Scripts/connectAsy.js?v=1")
@@ -545,7 +604,6 @@
         $("#mainContainDiv").attr("class", "prMainContentSub");
     });
 </script>
-
 
 <script>
     function initPage() {
@@ -560,5 +618,11 @@
         $("#advancedIcon").toggleClass("moreIcon");
         $("#advancedIcon").toggleClass("lessIcon");
     }
+
+</script>
+
+
+<script>
+
 
 </script>

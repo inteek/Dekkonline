@@ -20,6 +20,9 @@ namespace DekkOnlineMVC.Controllers
 
         public ActionResult Products()
         {
+            string path = Request.Url.AbsolutePath;
+            ViewBag.ReturnUrl = path;
+
             GetFilters();
 
             ViewBag.IsCardView = false;

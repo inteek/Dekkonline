@@ -112,9 +112,8 @@ namespace Framework
                         if (idDelivery.IdAppointments != 0 && idDelivery.IdAppointments != null)
                         {
                             deliverydate = (from iap in db.WorkshopAppointment
-                                            join ap in db.Appointments on iap.IdAppointment equals ap.IdAppointment
-                                            where iap.IdWorkshop == idDelivery.IdWorkshop && iap.IdAppointment == idDelivery.IdAppointments
-                                            select new { Date = ap.Schedule, iap.IdAppointment }).FirstOrDefault();
+                                            where iap.IdWorkshop == idDelivery.IdWorkshop && iap.Id == idDelivery.IdAppointments
+                                            select new { Date = iap.Date, iap.IdAppointment, iap.Time }).FirstOrDefault();
                         }
                         else if (idDelivery.IdAppointments == 0)
                         {
@@ -127,7 +126,13 @@ namespace Framework
                         }
                         else
                         {
-                            addOrder.EstimatedDate = deliverydate.Date;
+                            DateTime f = deliverydate.Date;
+
+                            string a = f.ToString("d");
+                            a = a + " " + deliverydate.Time;                           
+
+                            //DateTime newDateTime = fecha.Add(TimeSpan.Parse(deliverydate.Time));
+                            addOrder.EstimatedDate = Convert.ToDateTime(a);
                         }
                         addOrder.idUser = idUser;
                         addOrder.Payment = payment.id;
@@ -362,6 +367,7 @@ namespace Framework
         //ORDER CONFIRMATION DE-20 TASK 1YY
 
         //ORDER CONFIRMATION DE-20 TASK 1YY
+
         public List<ResultProductsConfirmation> ObtainProductsConfirmed(string idUser)
         {
             List<ResultProductsConfirmation> AddressWorkshop = (dynamic)null;
@@ -440,9 +446,7 @@ namespace Framework
                             }
                             else
                             {
-                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
-                                DateTime dat = (DateTime)appointmentpre.Schedule;
-                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
@@ -458,7 +462,7 @@ namespace Framework
                                     Image = workshop.WorkImage,
                                     Rating = "as",
                                     Date = dat.ToString("D"),
-                                    Time = dat2.ToString("t"),
+                                    Time = Delivery.Time,
                                     Comments = Delivery.Comments,
                                    Total = (decimal)Total2}
                                 };
@@ -519,9 +523,7 @@ namespace Framework
                             }
                             else
                             {
-                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
-                                DateTime dat = (DateTime)appointmentpre.Schedule;
-                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
@@ -537,7 +539,7 @@ namespace Framework
                                     Image = workshop.WorkImage,
                                     Rating = "as",
                                     Date = dat.ToString("D"),
-                                    Time = dat2.ToString("t"),
+                                    Time = Delivery.Time,
                                     Comments = Delivery.Comments,
                                    Total = promocodeused.TotalPriceFinal}
                                 };
@@ -661,9 +663,7 @@ namespace Framework
                             }
                             else
                             {
-                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
-                                DateTime dat = (DateTime)appointmentpre.Schedule;
-                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
                                    new ResultPaidProducts{ cart = products,
@@ -679,7 +679,7 @@ namespace Framework
                                     Image = workshop.WorkImage,
                                     Rating = "as",
                                     Date = dat.ToString("D"),
-                                    Time = dat2.ToString("t"),
+                                    Time = Delivery.Time,
                                     Comments = Delivery.Comments,
                                    Total = (decimal)Total2,
                                    TypeTarget = payment.TargetType,
@@ -752,9 +752,7 @@ namespace Framework
                             }
                             else
                             {
-                                var appointmentpre = db.Appointments.Where(s => s.IdAppointment == appointment.IdAppointment).FirstOrDefault();
-                                DateTime dat = (DateTime)appointmentpre.Schedule;
-                                DateTime dat2 = (DateTime)appointmentpre.Schedule;
+                                DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
                                    new ResultPaidProducts{ cart = products,
@@ -770,7 +768,7 @@ namespace Framework
                                     Image = workshop.WorkImage,
                                     Rating = "as",
                                     Date = dat.ToString("D"),
-                                    Time = dat2.ToString("t"),
+                                    Time = Delivery.Time,
                                     Comments = Delivery.Comments,
                                    Total = promocodeused.TotalPriceFinal,
                                    TypeTarget = payment.TargetType,
@@ -818,7 +816,6 @@ namespace Framework
             }
 
         }
-
 
     }
 }

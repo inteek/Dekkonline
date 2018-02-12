@@ -75,6 +75,8 @@
     <Compile Include="Libraies\ResultUserOrder.cs" />
     <Compile Include="Libraies\ResultUserPoints.cs" />
     <Compile Include="Libraies\ResultWorkshop.cs" />
+    <Compile Include="Libraies\ResultWorkshopAppointment.cs" />
+    <Compile Include="Libraies\ResultWorkshopDateAppointment.cs" />
     <Compile Include="Libraies\ResulUserWorkShop.cs" />
     <Compile Include="Orders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

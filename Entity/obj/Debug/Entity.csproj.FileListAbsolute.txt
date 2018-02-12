@@ -82,3 +82,14 @@ C:\Productos\DekkOnline5\Entity\bin\Debug\EntityFramework.SqlServer.xml
 C:\Productos\DekkOnline5\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
 C:\Productos\DekkOnline5\Entity\obj\Debug\Entity.dll
 C:\Productos\DekkOnline5\Entity\obj\Debug\Entity.pdb
+C:\DekkonlineNueva1202\Entity\bin\Debug\Entity.dll.config
+C:\DekkonlineNueva1202\Entity\bin\Debug\Entity.dll
+C:\DekkonlineNueva1202\Entity\bin\Debug\Entity.pdb
+C:\DekkonlineNueva1202\Entity\bin\Debug\EntityFramework.dll
+C:\DekkonlineNueva1202\Entity\bin\Debug\EntityFramework.SqlServer.dll
+C:\DekkonlineNueva1202\Entity\bin\Debug\EntityFramework.xml
+C:\DekkonlineNueva1202\Entity\bin\Debug\EntityFramework.SqlServer.xml
+C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
+C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
+C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.dll
+C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.pdb

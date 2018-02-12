@@ -525,33 +525,6 @@ namespace DekkOnlineMVC.Controllers
         //}
 
         [HttpPost]
-        public JsonResult NewUser(string idUser, string firstName, string lastName, string address, string email, string phone, int zipCode, string latitude, string length)
-        {
-            Users users = new Users();
-
-            users.addNetUser(email);
-
-            users.addToUserAddress(idUser, firstName, lastName, address, phone, zipCode, latitude, length);
-
-            //Cookies
-            encryptdecrypt en = new encryptdecrypt();
-            var cookie = Request.QueryString["UserInfo"];
-            var descookie = en.DesEncriptar(cookie);
-
-
-
-            //if (result != null && result.Count != 0)
-            //{
-            //    return Json(new { error = false, noError = 0, msg = "Sesion iniciada", page = Url.Action("Step2", "ShoppingCart"), resultado = result });
-            //}
-            //else
-            //{
-            //    return Json(new { error = true, noError = 0, msg = "Usuario y/o contraseña no validos", page = "" });
-            //}
-            return Json(new { error = true });
-        }
-
-        [HttpPost]
         public async Task<ActionResult> Next(string zipCode, string firstName, string lastName, string mobile, string address, string email, string choose, string date, string comments, string dateMapa, string timeMapa, string commentsMapa, int IdWorkshop, int radio, string latitude, string longitude)
         {
             bool error = false;
@@ -567,22 +540,34 @@ namespace DekkOnlineMVC.Controllers
             {
                 if (idUser == null || idUser == "")
                 {
-                    string pass = users.GeneratePassword();
+                    //Validar si el correo ingreado existe
+                    bool existeCorreo = users.existingMail(email);
 
-                    RegisterViewModel model = new RegisterViewModel();
+                    if (existeCorreo == true)
+                    {
+                        error = true;
+                        noError = 2;
+                        msg = "Correo Existente";
+                        page = "";
+                    }
+                    else
+                    {
+                        string pass = users.GeneratePassword();
 
-                    model.Email1 = email;
-                    model.Password1 = pass;
+                        RegisterViewModel model = new RegisterViewModel();
 
-                    AccountController account = new AccountController(this);
-                    await account.Register(model);
+                        model.Email1 = email;
+                        model.Password1 = pass;
 
+                        AccountController account = new AccountController(this);
+                        await account.Register(model);
 
+                        error = false;
+                        noError = 0;
+                        msg = "Registro Exitoso";
+                        page = Url.Action("Step3", "ShoppingCart");
 
-                    error = false;
-                    noError = 0;
-                    msg = "Registro Exitoso";
-                    page = Url.Action("Step3", "ShoppingCart");
+                    }
                 }
                 else
                 {
@@ -596,7 +581,7 @@ namespace DekkOnlineMVC.Controllers
                             if (result == true)
                             {
                                 error = false;
-                                noError = 0;
+                                noError = 1;
                                 msg = "Registro Exitoso";
                                 page = Url.Action("Step3", "ShoppingCart");
                             }
@@ -627,14 +612,90 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult MakeApponitment(int fecha, int servicio, string date, string time, string comments, int workshop, int idWorkShop, string address)
+        public JsonResult RegisterUser(string zipCode, string firstName, string lastName, string mobile, string address, string email, string choose, string date, string comments, string dateMapa, string timeMapa, string commentsMapa, int IdWorkshop, int radio, string latitude, string longitude)
         {
+            bool error = false;
+            int noError = 0;
+            string msg = "";
+            string page = "";
+
+            Users users = new Users();
+            Workshop Workshop = new Workshop();
+            ShoppingCart shoppingCart = new ShoppingCart();
+
+            string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+
+            string user = users.IdUser(email);
+
+            //Registro de datos del usuario en la tabla UserAddress
+            bool insertUser = users.addToUserAddress(idUser, firstName, lastName, address, mobile, Convert.ToInt32(zipCode), latitude, longitude);
+            if (insertUser == true)
+            {
+                //Actualizar cookies por el id del user
+                var usercookie = Security.GetIdUser(this);
+                bool updateCookie = shoppingCart.UpdateShoppingCart(idUser, usercookie);
+
+                if (updateCookie == true)
+                {
+                    if (radio == 1)
+                    {
+                        //Registro de datos del usuario en la tabla DeliveryType
+                        bool result = Workshop.addDeliveryType(1, idUser, 0, 0, 0, dateMapa, timeMapa, commentsMapa, address);
+                        if (result == true)
+                        {
+                            error = false;
+                            noError = 0;
+                            msg = "Registro Exitoso";
+                            page = Url.Action("Step3", "ShoppingCart");
+                        }
+                        else
+                        {
+                            error = true;
+                            noError = 0;
+                            msg = "Error al insertar un usuario en el metodo addDeliveryType";
+                            page = "";
+                        }
+                    }
+
+                }
+                else
+                {
+                    error = true;
+                    noError = 0;
+                    msg = "Error al insertar un usuario en el metodo shoppingCart";
+                    page = "";
+                }
+            }
+            else
+            {
+                error = true;
+                noError = 0;
+                msg = "Error al insertar un usuario en el metodo addToUserAddress";
+                page = "";
+            }
+
+            return Json(new { error, noError, msg, page });
+
+        }
+
+        [HttpPost]
+        public JsonResult MakeApponitment(int fecha, int servicio, string date, string time, string comments, int workshop, int idWorkShop, string address, string fechaSeleccionadaNumeros)
+        {
+            bool result = false;
             Workshop Workshop = new Workshop();
             string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
 
             try
             {
-                bool result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, date, time, comments, address);
+                if (date == "")
+                {
+                    result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, fechaSeleccionadaNumeros, time, comments, address);
+
+                }
+                else
+                {
+                    result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, date, time, comments, address);
+                }
 
                 if (result == true)
                 {
@@ -771,6 +832,61 @@ namespace DekkOnlineMVC.Controllers
 
                 throw;
             }
+        }
+
+        [HttpPost]
+        public JsonResult cargarWorkShop(string zipCode)
+        {
+            bool error = false;
+            int noError = 0;
+            Workshop workshop = new Workshop();
+            List<ResultWorkshop> result = null;
+
+            try
+            {
+                result = workshop.loadWorkshopAddress(Convert.ToInt32(zipCode));
+
+                if (result.Count != 0)
+                {
+                    error = false;
+                    noError = 0;
+                }
+                else
+                {
+                    error = true;
+                    noError = 0;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return Json(new { error, noError, resultado = result });
+
+        }
+
+        [HttpPost]
+        public JsonResult DataWorkShop(int idWorkShop)
+        {
+            Workshop workshop = new Workshop();
+
+            List<ResultWorkshopDateAppointment> dates = null;
+            List<ResultTypesServices> services = null;
+
+            try
+            {
+                dates = workshop.dateWorkshop(idWorkShop);
+                services = workshop.detailWorkshopServices(idWorkShop);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return Json(new { error = false, noError = 0, dates, services });
         }
     }
 }

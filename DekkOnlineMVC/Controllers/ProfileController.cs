@@ -14,7 +14,6 @@ namespace DekkOnlineMVC.Controllers
     public class ProfileController : Controller
     {
         // GET: /Profile/
-
         public ActionResult Index()
         {
             string path = Request.Url.AbsolutePath;
@@ -33,7 +32,8 @@ namespace DekkOnlineMVC.Controllers
                 {
                     foreach (var item in UserData)
                     {
-                        pro = new Framework.Libraies.ResultDataUser {
+                        pro = new Framework.Libraies.ResultDataUser
+                        {
                             IdUser = item.IdUser,
                             FirstName = item.FirstName,
                             LastName = item.LastName,
@@ -49,13 +49,14 @@ namespace DekkOnlineMVC.Controllers
             }
             else
             {
-                Response.Redirect("~/Home/Index");
+                return View();
             }
-            
+
 
             return View(pro);
 
         }
+
         [HttpPost]
         public ActionResult Create(HttpPostedFileBase file)
         {

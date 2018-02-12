@@ -113,40 +113,40 @@ namespace Framework
             return result;
         }
 
-        //DE-23 1
-        public List<ResultDataUser> dataUser(string idUser)
-        {
+        ////DE-23 1
+        //public List<ResultDataUser> dataUser(string idUser)
+        //{
 
-            List<ResultDataUser> user = null;
-            try
-            {
-                using (var db = new dekkOnlineEntities())
-                {
+        //    List<ResultDataUser> user = null;
+        //    try
+        //    {
+        //        using (var db = new dekkOnlineEntities())
+        //        {
                    
-                    user = (from us in db.UserAddress
-                            join aspuser in db.AspNetUsers on us.IdUser equals aspuser.Id
-                            where us.IdUser == idUser
-                            select new ResultDataUser
-                            {
-                                IdUser = us.IdUser,
-                                FirstName = us.FirstName,
-                                LastName = us.LastName,
-                                Address = us.Address,
-                                Phone = us.Phone,
-                                ZipCode = us.ZipCode.ToString(),
-                                Latitude = us.Latitude,
-                                length = us.Length,
-                                Image = us.Image,
-                                Email = aspuser.Email
-                            }).ToList();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return user;
-        }
+        //            user = (from us in db.UserAddress
+        //                    join aspuser in db.AspNetUsers on us.IdUser equals aspuser.Id
+        //                    where us.IdUser == idUser
+        //                    select new ResultDataUser
+        //                    {
+        //                        IdUser = us.IdUser,
+        //                        FirstName = us.FirstName,
+        //                        LastName = us.LastName,
+        //                        Address = us.Address,
+        //                        Phone = us.Phone,
+        //                        ZipCode = us.ZipCode.ToString(),
+        //                        Latitude = us.Latitude,
+        //                        length = us.Length,
+        //                        Image = us.Image,
+        //                        Email = aspuser.Email
+        //                    }).ToList();
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //    return user;
+        //}
 
         public bool validaLogin(string user, string pass)
         {
@@ -179,7 +179,33 @@ namespace Framework
             return true;
         }
 
+        public bool existingMail(string email)
+        {
+            bool result = false;
 
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var user = db.AspNetUsers.Where(s => s.Email == email).FirstOrDefault();
+
+                    if (user != null)
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+            return result;
+        }
 
         // Define default min and max password lengths.
         private  int DEFAULT_MIN_PASSWORD_LENGTH = 7;
@@ -393,25 +419,39 @@ namespace Framework
         {
             List<ResulUserWorkShop> result = null;
             List<ResultWorkshop> listWorkshop = null;
-            var userAddress = (dynamic)null;
+            
 
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
-                    userAddress = db.UserAddress.Where(s => s.IdUser == User).FirstOrDefault();
+                    var userAddress = db.UserAddress.Where(s => s.IdUser == User).FirstOrDefault();
                     string userEmail = db.AspNetUsers.Where(s => s.Id == User).Select(s => s.UserName).FirstOrDefault();
 
                     Workshop workshop = new Workshop();
 
-                    listWorkshop = workshop.loadWorkshopAddress(userAddress.ZipCode);
-
-                    if (userAddress != null || userAddress != "")
+                    if (userAddress == null)
                     {
+                        listWorkshop = workshop.loadWorkshopAddress(0);
+
                         result = new List<ResulUserWorkShop> {
                         new ResulUserWorkShop{
                         workshop = listWorkshop,
-                        zipcode = userAddress.ZipCode,
+                        zipcode = 0,
+                        firstName = "",
+                        lastName = "",
+                        address = "",
+                        email = "",
+                        mobile = ""} };
+                    }
+                    else
+                    {
+                        listWorkshop = workshop.loadWorkshopAddress((int)userAddress.ZipCode);
+
+                        result = new List<ResulUserWorkShop> {
+                        new ResulUserWorkShop{
+                        workshop = listWorkshop,
+                        zipcode = (int)userAddress.ZipCode,
                         firstName = userAddress.FirstName,
                         lastName = userAddress.LastName,
                         address = userAddress.Address,
@@ -454,8 +494,8 @@ namespace Framework
             }
         }
 
-
-        public bool UpdateDataUser(string zipcore, string name, string lastname, string address, string email, string mobile, string idUser1) {
+        public bool UpdateDataUser(string zipcore, string name, string lastname, string address, string email, string mobile, string idUser1)
+        {
             bool result = false;
             try
             {
@@ -463,7 +503,23 @@ namespace Framework
                 {
                     var userdata = db.UserAddress.Where(s => s.IdUser == idUser1).FirstOrDefault();
                     var useremail = db.AspNetUsers.Where(s => s.Id == idUser1).FirstOrDefault();
-                    if (userdata != null && useremail != null)
+                    if (userdata == null && useremail != null)
+                    {
+                        UserAddress us = new UserAddress();
+                        us.IdUser = idUser1;
+                        us.FirstName = name;
+                        us.LastName = lastname;
+                        us.Address = address;
+                        us.Phone = mobile;
+                        us.ZipCode = Convert.ToInt32(zipcore);
+                        useremail.Email = email;
+                        useremail.UserName = email;
+                        db.Entry(useremail).State = EntityState.Modified;
+                        db.UserAddress.Add(us);
+                        db.SaveChanges();
+                        result = true;
+                    }
+                    else if (userdata != null && useremail != null)
                     {
                         userdata.FirstName = name;
                         userdata.LastName = lastname;
@@ -522,6 +578,50 @@ namespace Framework
                 return false;
             }
 
+        }
+
+        //DE-23 1
+        public List<ResultDataUser> dataUser(string idUser)
+        {
+
+            List<ResultDataUser> user = null;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+
+                    user = (from us in db.UserAddress
+                            join aspuser in db.AspNetUsers on us.IdUser equals aspuser.Id
+                            where us.IdUser == idUser
+                            select new ResultDataUser
+                            {
+                                IdUser = us.IdUser,
+                                FirstName = us.FirstName,
+                                LastName = us.LastName,
+                                Address = us.Address,
+                                Phone = us.Phone,
+                                ZipCode = us.ZipCode.ToString(),
+                                Latitude = us.Latitude,
+                                length = us.Length,
+                                Image = us.Image,
+                                Email = aspuser.Email
+                            }).ToList();
+                    if (user.Count == 0)
+                    {
+                        user = (from us in db.AspNetUsers
+                                where us.Id == idUser
+                                select new ResultDataUser
+                                {
+                                    Email = us.Email
+                                }).ToList();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return user;
         }
 
     }

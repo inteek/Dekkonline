@@ -41,6 +41,7 @@ namespace Framework
                                 where ws.IdWorkshop == idWorkshop
                                 select new ResultTypesServices
                                 {
+                                    idWorkshop = ws.Id,
                                     IdService = ser.IdService,
                                     Description = ser.Description,
                                     Price = ws.Price
@@ -136,6 +137,7 @@ namespace Framework
             }
             return result;
         }
+
         public List<ResultWorkshop> loadWorkshopreco(int zipCode, int filter)
         {
             List<ResultWorkshop> result = null;
@@ -183,6 +185,7 @@ namespace Framework
             }
             return result;
         }
+
         //DE-26 1
         public List<ResultWorkshop> loadWorkshop(int workshop)
         {
@@ -215,17 +218,6 @@ namespace Framework
             bool result = false;
             bool work = false;
 
-            var resuldata = (dynamic)null;
-
-            if (date == "")
-            {
-                resuldata = null;
-            }
-            else
-            {
-                resuldata = date;
-            }
-
             try
             {
                 using (var db = new dekkOnlineEntities())
@@ -235,15 +227,19 @@ namespace Framework
 
                     if (fecha != 0)
                     {
+                        var hora = db.WorkshopAppointment.Where(s => s.Id == fecha).FirstOrDefault();
+                        TimeSpan timeSpan = (TimeSpan)hora.Time;
+                        string hora2 = timeSpan.ToString(@"hh\:mm");
+
                         var addwork = new Entity.DeliveryType();
                         addwork.DeliveryType1 = work;
                         addwork.IdUser = idUser;
                         addwork.IdWorkshop = idWorkShop;
                         addwork.IdServiceWorkshop = servicio;
                         addwork.IdAppointments = fecha;
-                        addwork.Date = resuldata;
-                        addwork.Time = null;
-                        addwork.Comments = null;
+                        addwork.Date = Convert.ToDateTime(date);
+                        addwork.Time = hora2;
+                        addwork.Comments = comments;
                         addwork.Address = null;
                         db.DeliveryType.Add(addwork);
                         db.SaveChanges();
@@ -256,7 +252,7 @@ namespace Framework
                         addwork.IdWorkshop = idWorkShop;
                         addwork.IdServiceWorkshop = servicio;
                         addwork.IdAppointments = fecha;
-                        addwork.Date = Convert.ToDateTime(resuldata);
+                        addwork.Date = Convert.ToDateTime(date);
                         addwork.Time = time;
                         addwork.Comments = comments;
                         addwork.Address = address;
@@ -275,6 +271,98 @@ namespace Framework
             return result;
         }
 
+        public List<ResultWorkshopAppointment> loadAppoinment(int idWorkShop)
+        {
+            List<ResultWorkshopAppointment> result = null;
+            try
+            {
+
+                using (var db = new dekkOnlineEntities())
+                {
+                    result = (from date in db.WorkshopAppointment
+                              where (date.IdWorkshop >= idWorkShop)
+                              select new ResultWorkshopAppointment
+                              {
+                                  Id = date.Id,
+                                  Date = (DateTime)date.Date,
+                                  Time = (TimeSpan)date.Time,
+                                  Comments = date.Comments
+                              }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return result;
+        }
+
+        public List<ResultWorkshopDateAppointment> dateWorkshop(int Workshop)
+        {
+            DateTime fecha_actual = DateTime.Today;
+            fecha_actual = fecha_actual.AddDays(5);
+            string nombreDia = "";
+            string fecha = "";
+            string Nuevafecha = "";
+            List<ResultWorkshopDateAppointment> result = null;
+            List<ResultWorkshopDateAppointment> result2 = new List<ResultWorkshopDateAppointment>();
+
+
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var diasTaller = (from wsa in db.WorkshopAppointment
+                                      where wsa.IdWorkshop == Workshop
+                                      select new
+                                      {
+                                          Id = (int)wsa.Id,
+                                          DayAppointment = (int)wsa.DayAppointment,
+                                          Time = wsa.Time
+                                          
+                                      }).ToList();
+
+
+
+                    if (diasTaller != null)
+                    {
+                        foreach (var item in diasTaller)
+                        {
+                            TimeSpan timeSpan = (TimeSpan)item.Time;
+                            string hora = timeSpan.ToString(@"hh\:mm");
+
+                            int fechaCercana = ((int)item.DayAppointment - (int)fecha_actual.DayOfWeek + 7) % 7;
+                            DateTime nextTuesday = fecha_actual.AddDays(fechaCercana);
+                            Nuevafecha = nextTuesday.ToString("d");
+                            nombreDia = nextTuesday.ToString("dddd");
+                            fecha = nextTuesday.ToString("M");
+                            string fechaCompleta = nombreDia + " " + fecha + " - " + hora;
+
+                            result = new List<ResultWorkshopDateAppointment>
+                            {
+                                new ResultWorkshopDateAppointment
+                                {
+                                    IdAppointment = item.Id,
+                                    DateGet = fechaCompleta,
+                                    Date = Nuevafecha
+                                }
+                            };
+
+                            result2.AddRange(result);
+                        }
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return result2;
+        }
 
     }
 }
