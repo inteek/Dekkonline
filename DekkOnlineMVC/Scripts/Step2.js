@@ -65,7 +65,11 @@ $("#nearestWoekshop").click(function () {
 
 $("#myplace").click(function () {
     $(".workshopDisplay").hide();
+
     $(".myPlace").show();
+
+    initialize();
+    google.maps.event.trigger(map, 'resize');
 });
 
 $("#LoginIn").click(function () {

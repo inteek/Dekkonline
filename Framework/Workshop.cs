@@ -222,43 +222,108 @@ namespace Framework
             {
                 using (var db = new dekkOnlineEntities())
                 {
+                    var order = db.Orders.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).Select(s => s.DeliveryAddress).FirstOrDefault();
+                    var delivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).Select(s => s.IdDelivery).FirstOrDefault();
+
                     if (workshop == 0) work = false;
                     else work = true;
 
-                    if (fecha != 0)
+                    if (order == delivery)
                     {
-                        var hora = db.WorkshopAppointment.Where(s => s.Id == fecha).FirstOrDefault();
-                        TimeSpan timeSpan = (TimeSpan)hora.Time;
-                        string hora2 = timeSpan.ToString(@"hh\:mm");
+                        if (fecha != 0)
+                        {
+                            var hora = db.WorkshopAppointment.Where(s => s.Id == fecha).FirstOrDefault();
+                            TimeSpan timeSpan = (TimeSpan)hora.Time;
+                            string hora2 = timeSpan.ToString(@"hh\:mm");
 
-                        var addwork = new Entity.DeliveryType();
-                        addwork.DeliveryType1 = work;
-                        addwork.IdUser = idUser;
-                        addwork.IdWorkshop = idWorkShop;
-                        addwork.IdServiceWorkshop = servicio;
-                        addwork.IdAppointments = fecha;
-                        addwork.Date = Convert.ToDateTime(date);
-                        addwork.Time = hora2;
-                        addwork.Comments = comments;
-                        addwork.Address = null;
-                        db.DeliveryType.Add(addwork);
-                        db.SaveChanges();
+                            var addwork = new Entity.DeliveryType();
+                            addwork.DeliveryType1 = work;
+                            addwork.IdUser = idUser;
+                            addwork.IdWorkshop = idWorkShop;
+                            addwork.IdServiceWorkshop = servicio;
+                            addwork.IdAppointments = fecha;
+                            addwork.Date = Convert.ToDateTime(date);
+                            addwork.Time = hora2;
+                            addwork.Comments = comments;
+                            addwork.Address = null;
+                            db.DeliveryType.Add(addwork);
+                            db.SaveChanges();
+
+                            result = true;
+                        }
+                        else
+                        {
+                            var addwork = new Entity.DeliveryType();
+                            addwork.DeliveryType1 = work;
+                            addwork.IdUser = idUser;
+                            addwork.IdWorkshop = idWorkShop;
+                            addwork.IdServiceWorkshop = servicio;
+                            addwork.IdAppointments = fecha;
+                            addwork.Date = Convert.ToDateTime(date);
+                            addwork.Time = time;
+                            addwork.Comments = comments;
+                            addwork.Address = address;
+                            db.DeliveryType.Add(addwork);
+                            db.SaveChanges();
+
+                            result = true;
+                        }
                     }
                     else
-                    {
-                        var addwork = new Entity.DeliveryType();
-                        addwork.DeliveryType1 = work;
-                        addwork.IdUser = idUser;
-                        addwork.IdWorkshop = idWorkShop;
-                        addwork.IdServiceWorkshop = servicio;
-                        addwork.IdAppointments = fecha;
-                        addwork.Date = Convert.ToDateTime(date);
-                        addwork.Time = time;
-                        addwork.Comments = comments;
-                        addwork.Address = address;
-                        db.DeliveryType.Add(addwork);
-                        db.SaveChanges();
-                    }
+                    {                       
+                        var update = db.DeliveryType.Where(s => s.IdDelivery == delivery).FirstOrDefault();
+
+                        if (fecha != 0)
+                        {
+                            var hora = db.WorkshopAppointment.Where(s => s.Id == fecha).FirstOrDefault();
+                            TimeSpan timeSpan = (TimeSpan)hora.Time;
+                            string hora2 = timeSpan.ToString(@"hh\:mm");
+
+                            if (update != null)
+                            {
+                                update.DeliveryType1 = work;
+                                update.IdWorkshop = idWorkShop;
+                                update.IdServiceWorkshop = servicio;
+                                update.IdAppointments = fecha;
+                                update.Date = Convert.ToDateTime(date);
+                                update.Time = hora2;
+                                update.Comments = comments;
+                                update.Address = address;
+
+                                db.Entry(update).State = EntityState.Modified;
+                                db.SaveChanges();
+                                result = true;
+                            }
+                            else
+                            {
+                                result = false;
+                            }
+                        }
+                        else
+                        {
+                            if (update != null)
+                            {
+                                update.DeliveryType1 = work;
+                                update.IdWorkshop = idWorkShop;
+                                update.IdServiceWorkshop = servicio;
+                                update.IdAppointments = fecha;
+                                update.Date = Convert.ToDateTime(date);
+                                update.Time = time;
+                                update.Comments = comments;
+                                update.Address = address;
+
+                                db.Entry(update).State = EntityState.Modified;
+                                db.SaveChanges();
+                                result = true;
+                            }
+                            else
+                            {
+                                result = false;
+                            }
+                        }
+
+                        
+                    }                    
 
                     result = true;
                 }

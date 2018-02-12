@@ -581,7 +581,7 @@ namespace DekkOnlineMVC.Controllers
                             if (result == true)
                             {
                                 error = false;
-                                noError = 1;
+                                noError = 0;
                                 msg = "Registro Exitoso";
                                 page = Url.Action("Step3", "ShoppingCart");
                             }
