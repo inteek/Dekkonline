@@ -86,15 +86,15 @@ namespace DekkOnlineMVC.Controllers
                     }
                     ViewBag.FilePath = filePath.ToString();
                     file.SaveAs(filePath);
-                   var userupdate= us.UpdateUserImage(filePath, id);
-                    if (userupdate == true)
-                    {
-                        return RedirectToAction("Index", new { Message = "Upload Success" });
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", new { Message = "Upload Failed" });
-                    }
+                    //var userupdate= us.UpdateUserImage(filePath, id);
+                    //if (userupdate == true)
+                    //{
+                    //    return RedirectToAction("Index", new { Message = "Upload Success" });
+                    //}
+                    //else
+                    //{
+                    //    return RedirectToAction("Index", new { Message = "Upload Failed" });
+                    //}
 
                 }
                 else

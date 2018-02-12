@@ -149,6 +149,9 @@ namespace Framework
                                     && (profile == null || pro.proDimensionProfile == profile)
                                     && (diameter == null || pro.proDimensionDiameter == diameter)
                                     && (braId.HasValue == false || pro.braId == braId))
+                                    && (!pro.proNameDP.ToUpper().Contains("TEST"))
+                                    && (!pro.proNameDP.ToUpper().Contains("TESET"))
+                              //&& (!pro.proNameDP.Contains("Test"))
                               select new ResultProduct
                               {
                                   Id = pro.proId,
