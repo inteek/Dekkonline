@@ -114,7 +114,7 @@
                                 <div class="form-group">
                                     <label for="zipcode" class="col-lg-3 col-xs-4 control-label textoAzul">zip code</label>
                                     <div class="col-lg-2 col-xs-6">
-                                        <input type="text" class="form-control borderInput" id="zipcode" value="@Model.zipcode" placeholder="">
+                                        <input type="text" class="form-control borderInput" id="zipcode" value="@Model.zipcode" placeholder="" style="width:80px;">
                                         @*@Html.DevExpress().TextBox(settings =>
                                             {
                                                 settings.Name = "txtZipCode";
@@ -265,7 +265,7 @@
                                 <label class="col-lg-2 col-xs-3 alinearSort">SORT BY</label>
                                 <div class="col-lg-3 col-xs-5 alinearCombo">
                                     <select class="form-control reco">
-                                        <option value="0">Select</option>
+                                        <option value="0"></option>
                                         <option value="1">Recommended</option>
                                         <option value="2">Nearest</option>
                                     </select>
@@ -305,7 +305,7 @@
                                 <div class="col-lg-2 col-xs-3">
                                 </div>
                                 <div class="col-lg-5 col-xs-8 catalago">
-                                    <h4>WorkShop</h4>
+                                    @*<h4>WorkShop</h4>*@
                                 </div>
                                 <div class="col-lg-2 catHiden">
                                 </div>
@@ -546,13 +546,13 @@
                             </div>*@
                     </div>
                 </div>
-                <div class="row">
+                <div class="row ocultardivChoose">
                     <div class="col-lg-12">
                         <h4>Or choose the best date and time for you.</h4>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 ocultardivDate">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label for="" class="col-lg-1 control-label">Date</label>
@@ -576,7 +576,7 @@
                                 <textarea class="form-control col-lg-5" rows="3" id="modComment" style="width:309px;"></textarea>
                             </div>*@
                     </div>
-                </div>
+                </div>                
             </div>
             <div class="modal-footer">
                 <label id="validateDateModal" class="textValidateDataModal">The date and time are required</label>
@@ -591,7 +591,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=3")
+@Scripts.Render("~/Scripts/Step2.js?v=8")
 @Scripts.Render("~/Scripts/Map.js?v=4")
 @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
 @Scripts.Render("~/Scripts/Login.js?v=2")

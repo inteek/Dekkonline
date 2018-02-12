@@ -533,6 +533,7 @@ namespace DekkOnlineMVC.Controllers
             string page = "";
             Users users = new Users();
             Workshop Workshop = new Workshop();
+            ShoppingCart shoppingCart = new ShoppingCart();
 
             string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
 
@@ -562,11 +563,26 @@ namespace DekkOnlineMVC.Controllers
                         AccountController account = new AccountController(this);
                         await account.Register(model);
 
-                        error = false;
-                        noError = 0;
-                        msg = "Registro Exitoso";
-                        page = Url.Action("Step3", "ShoppingCart");
 
+                        var user = users.userId(email);
+                        var usercookie = Security.GetIdUser(this);
+
+                        bool updateCookieDelevery = shoppingCart.updateDeleveryType(user, usercookie);
+
+                        if (updateCookieDelevery == true)
+                        {
+                            error = false;
+                            noError = 0;
+                            msg = "Registro Exitoso";
+                            page = Url.Action("Step3", "ShoppingCart");
+                        }
+                        else
+                        {
+                            error = true;
+                            noError = 0;
+                            msg = "Error en el metodo updateCookieDelevery";
+                            page = "";
+                        }                       
                     }
                 }
                 else
@@ -625,7 +641,7 @@ namespace DekkOnlineMVC.Controllers
 
             string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
 
-            string user = users.IdUser(email);
+            //string user = users.IdUser(email);
 
             //Registro de datos del usuario en la tabla UserAddress
             bool insertUser = users.addToUserAddress(idUser, firstName, lastName, address, mobile, Convert.ToInt32(zipCode), latitude, longitude);
@@ -683,20 +699,38 @@ namespace DekkOnlineMVC.Controllers
         {
             bool result = false;
             Workshop Workshop = new Workshop();
+
+            var cookie = Security.GetIdUser(this);
+
             string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
 
             try
             {
-                if (date == "")
-                {
-                    result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, fechaSeleccionadaNumeros, time, comments, address);
+                if (idUser == null || idUser == "")
+                {                  
+                    if (date == "")
+                    {
+                        result = Workshop.addDeliveryType(workshop, cookie, idWorkShop, servicio, fecha, fechaSeleccionadaNumeros, time, comments, address);
 
+                    }
+                    else
+                    {
+                        result = Workshop.addDeliveryType(workshop, cookie, idWorkShop, servicio, fecha, date, time, comments, address);
+                    }
                 }
                 else
                 {
-                    result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, date, time, comments, address);
-                }
+                    if (date == "")
+                    {
+                        result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, fechaSeleccionadaNumeros, time, comments, address);
 
+                    }
+                    else
+                    {
+                        result = Workshop.addDeliveryType(workshop, idUser, idWorkShop, servicio, fecha, date, time, comments, address);
+                    }
+                }
+                
                 if (result == true)
                 {
                     return Json(new { error = false, noError = 0, msg = "Registro Correcto" });

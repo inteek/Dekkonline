@@ -519,7 +519,35 @@ namespace Framework
 
             return result;
         }
-        //VALIDATE POINTS
 
+
+        public bool updateDeleveryType(string IdUser1, string idUserCookies)
+        {
+            bool result = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var registro = db.DeliveryType.Where(s => s.IdUser == idUserCookies).OrderByDescending(s => s.IdUser).FirstOrDefault();
+                    if (registro != null)
+                    {
+                        registro.IdUser = IdUser1;
+                        db.Entry(registro).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+            return result;
+        }
     }
 }

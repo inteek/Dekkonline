@@ -374,7 +374,31 @@ namespace Framework
             return new string(password);
         }
 
+        public string userId(string email)
+        {
+            string result = "";
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var user = db.AspNetUsers.Where(s => s.Email == email).Select(s => s.Id).FirstOrDefault();
+                    if (user != null)
+                    {
+                        result = user;
+                    }
+                    else
+                    {
+                        result = "";
+                    }
+                }
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+            return result;
+        }
 
         public string CreateRandomPassword(int PasswordLength)
         {

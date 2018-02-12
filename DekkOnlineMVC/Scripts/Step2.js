@@ -438,15 +438,19 @@ function validCheck1(IdAppointment, Date) {
         if ($('#a' + IdAppointment).prop('checked')) {
             if (IdAppointment != valorDate[i]) {
                 $("#a" + valorDate[i]).attr('disabled', true);
-                disableDateTime();
             }
+            disableDateTime();
+            $(".ocultardivChoose").hide();
+            $(".ocultardivDate").hide();
             fechaSeleccionadaNumeros = Date;
         }
         else if (!$('#a' + IdAppointment).prop('checked')) {
             if (IdAppointment != valorDate[i]) {
                 $("#a" + valorDate[i]).attr('disabled', false);
-                habilitarDateTime();
             }
+            habilitarDateTime();
+            $(".ocultardivChoose").show();
+            $(".ocultardivDate").show();
             fechaSeleccionada = 0;
             fechaSeleccionadaNumeros = "";
         }

@@ -228,7 +228,7 @@ namespace Framework
                     if (workshop == 0) work = false;
                     else work = true;
 
-                    if (order == delivery)
+                    if (order == delivery || (order == null && delivery == 0))
                     {
                         if (fecha != 0)
                         {
