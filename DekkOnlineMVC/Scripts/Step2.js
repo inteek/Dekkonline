@@ -8,6 +8,7 @@ var valorDate = [];
 var servicioSeleccionado = 0;
 var fechaSeleccionada = 0;
 var fechaSeleccionadaNumeros = "";
+var tiempoSeleccionado = "";
 var work = 0;
 var zipcodeLocal = localStorage.getItem("zipCode");
 var TimeWorkshop = "";
@@ -224,7 +225,6 @@ $("#MakeAppoint").click(function () {
     var time = "";
     var comments = $("#modComment").val();
 
-
     if (fechaSeleccionada == 0) {
         date = $("#modDate").val();
         time = $("#modTime").val();
@@ -270,6 +270,13 @@ $("#MakeAppoint").click(function () {
     conectarAsy("MakeApponitment", data, function (result) {
 
         if (result.error == false) {
+
+            if (fechaSeleccionadaNumeros != "") {
+                date = fechaSeleccionadaNumeros;
+            }
+            if (tiempoSeleccionado != "") {
+                time = tiempoSeleccionado;
+            }
 
             $("#choose").val(nombretaller);
             $("#date").val(date);
@@ -400,7 +407,7 @@ function popouWorkShop(name, idWorkshop) {
                 for (var i = 0; i < result.dates.length; i++) {
                     $("#datesModal").append(
                         "<div class='form-check ocultarcheck1'>" +
-                        "<input class='form-check-input position-static checkService' type='checkbox' name='blankRadio1' id='" + "a" + result.dates[i].IdAppointment + "' value='" + result.dates[i].IdAppointment + "' onclick='validCheck1(\"" + result.dates[i].IdAppointment + "\",\"" + result.dates[i].Date + "\")'>" +
+                        "<input class='form-check-input position-static checkService' type='checkbox' name='blankRadio1' id='" + "a" + result.dates[i].IdAppointment + "' value='" + result.dates[i].IdAppointment + "' onclick='validCheck1(\"" + result.dates[i].IdAppointment + "\",\"" + result.dates[i].Date + "\",\"" + result.dates[i].Time + "\")'>" +
                         "<label class='form-check-label' for='" + "a" + result.dates[i].IdAppointment + "' style='color:#C0392B; font-size:16px; font-family:arial; margin-left:10px;'>" + result.dates[i].DateGet + "</label>" +
                         "</div>"
                     );
@@ -429,7 +436,7 @@ function popouWorkShop(name, idWorkshop) {
     $('#modalWorkShop').modal('show');
 }
 
-function validCheck1(IdAppointment, Date) {
+function validCheck1(IdAppointment, Date, Time) {
 
     fechaSeleccionada = IdAppointment;
 
@@ -443,6 +450,7 @@ function validCheck1(IdAppointment, Date) {
             $(".ocultardivChoose").hide();
             $(".ocultardivDate").hide();
             fechaSeleccionadaNumeros = Date;
+            tiempoSeleccionado = Time;
         }
         else if (!$('#a' + IdAppointment).prop('checked')) {
             if (IdAppointment != valorDate[i]) {
@@ -453,6 +461,7 @@ function validCheck1(IdAppointment, Date) {
             $(".ocultardivDate").show();
             fechaSeleccionada = 0;
             fechaSeleccionadaNumeros = "";
+            tiempoSeleccionado = "";
         }
     }
 }

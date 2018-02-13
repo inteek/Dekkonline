@@ -7,6 +7,7 @@ using Entity;
 using Framework.Libraies;
 using System.Data.Entity;
 using System.Security.Cryptography;
+using System.Net.Mail;
 
 namespace Framework
 {
@@ -646,6 +647,55 @@ namespace Framework
                 throw;
             }
             return user;
+        }
+
+
+        public void EnvioCorreo(string correo, string pass)
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient("inteekdev.com");
+
+            mail.From = new MailAddress("infomdm@dienomdm.com");
+            mail.To.Add(correo);
+            mail.Subject = string.Format("Account info Dekkonline");
+            mail.IsBodyHtml = true;
+
+
+            string body = "<!DOCTYPE html>";
+            body += "<html lang='es'>";
+            body += "<head>";
+            body += "<meta name='viewport' content='width=device-width'>";
+            body += "<style>";
+            body += "@media only screen and (max-width:319px)  { body{font-size:8px}}";
+            body += "@media only screen and (min-width:320px) and (max-width:767px)  { body{font-size:10px} }";
+            body += "@media only screen and (min-width:768px) and (max-width:1023px)  { body{font-size:12px} }";
+            body += "@media only screen and (min-width:1024px) and (max-width:1899px) { body{font-size:14px} }";
+            body += "@media only screen and (min-width:1900px) { body{font-size:16px} }";
+            body += "</style>";
+            body += "</head>";
+            body += "<body>";
+            body += "<div style='width:100%;' style='margin-left: 30px; margin-top: 20px;'>";
+            body += "<div style='height:180px; width:621px;'>";
+            //body += "<div>Hola,<strong> " + nombre + "</strong></div></br>";
+            body += "<div> Thanks for subscribing to dekkonline </div>";
+            body += "<div>User: " + correo + "</div>";
+            body += "<div>Password: " + pass + "</div>";
+            //body += "<a href='" + url + "?Data=" + urlencriptada + "'>Restablecer contraseña</a>";
+            body += "</div>";
+            body += "</div>";
+            body += "</body>";
+            body += "<html>";
+
+
+            mail.Body = body;
+
+
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("agalindo@inteekdev.com", "kPy-97w-Vxr-3ea");
+            //SmtpServer.EnableSsl = true;
+
+
+            SmtpServer.Send(mail);
         }
 
     }

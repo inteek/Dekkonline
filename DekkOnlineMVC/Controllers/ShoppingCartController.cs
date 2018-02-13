@@ -917,7 +917,6 @@ namespace DekkOnlineMVC.Controllers
             }
             catch (Exception ex)
             {
-
                 throw;
             }
             return Json(new { error = false, noError = 0, dates, services });

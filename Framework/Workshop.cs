@@ -409,7 +409,8 @@ namespace Framework
                                 {
                                     IdAppointment = item.Id,
                                     DateGet = fechaCompleta,
-                                    Date = Nuevafecha
+                                    Date = Nuevafecha,
+                                    Time = item.Time.ToString()
                                 }
                             };
 

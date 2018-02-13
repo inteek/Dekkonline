@@ -11,5 +11,6 @@ namespace Framework.Libraies
         public int IdAppointment { get; set; }
         public string DateGet { get; set; }
         public string Date { get; set; }
+        public string Time { get; set; }
     }
 }

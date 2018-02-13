@@ -191,6 +191,8 @@ namespace DekkOnlineMVC.Controllers
                     string idUser = users.IdUser(model.Email1);
                     System.Web.HttpContext.Current.Session["SessionUser"] = idUser;
 
+                    users.EnvioCorreo(model.Email1, model.Password1);
+                    
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
