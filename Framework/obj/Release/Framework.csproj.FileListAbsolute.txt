@@ -26,3 +26,17 @@ C:\Productos\DekkOnline5\Framework\obj\Release\Framework.csprojResolveAssemblyRe
 C:\Productos\DekkOnline5\Framework\obj\Release\Framework.csproj.CoreCompileInputs.cache
 C:\Productos\DekkOnline5\Framework\obj\Release\Framework.dll
 C:\Productos\DekkOnline5\Framework\obj\Release\Framework.pdb
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\Framework.dll.config
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\Framework.dll
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\Framework.pdb
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\Entity.dll
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\EntityFramework.dll
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\EntityFramework.SqlServer.dll
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\Entity.pdb
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\Entity.dll.config
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\EntityFramework.xml
+C:\Productos\Dekkonlinecasifinal\Framework\bin\Release\EntityFramework.SqlServer.xml
+C:\Productos\Dekkonlinecasifinal\Framework\obj\Release\Framework.csprojResolveAssemblyReference.cache
+C:\Productos\Dekkonlinecasifinal\Framework\obj\Release\Framework.csproj.CoreCompileInputs.cache
+C:\Productos\Dekkonlinecasifinal\Framework\obj\Release\Framework.dll
+C:\Productos\Dekkonlinecasifinal\Framework\obj\Release\Framework.pdb

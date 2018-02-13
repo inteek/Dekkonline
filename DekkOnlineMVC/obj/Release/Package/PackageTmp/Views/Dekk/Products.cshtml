@@ -45,6 +45,22 @@
 
              settings.ClientEnabled = true;
              settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+             settings.PreRender = (sender, e) =>
+             {
+                 if (ViewBag.SizeWidth != null)
+                 {
+                     MVCxComboBox cbo = sender as MVCxComboBox;
+                     var item = cbo.Properties.Items.FindByValue(ViewBag.SizeWidth.ToString());
+                     if (item != null)
+                     {
+                         item.Selected = true;
+                         cbo.SelectedIndex = item.Index;
+                     }
+                 }
+             };
+
          }
      ).BindList(ViewData["BagWidth"]).GetHtml()
                     </div>
@@ -72,6 +88,22 @@
 
              settings.ClientEnabled = true;
              settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+             settings.PreRender = (sender, e) =>
+             {
+                 if (ViewBag.Profile != null)
+                 {
+                     MVCxComboBox cbo = sender as MVCxComboBox;
+                     var item = cbo.Properties.Items.FindByValue(ViewBag.Profile.ToString());
+                     if (item != null)
+                     {
+                         item.Selected = true;
+                         cbo.SelectedIndex = item.Index;
+                     }
+                 }
+             };
+
          }
      ).BindList(ViewData["BagProfile"]).GetHtml()
                     </div>
@@ -98,6 +130,22 @@
 
              settings.ClientEnabled = true;
              settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+             settings.PreRender = (sender, e) =>
+             {
+                 if (ViewBag.SizeDiameter != null)
+                 {
+                     MVCxComboBox cbo = sender as MVCxComboBox;
+                     var item = cbo.Properties.Items.FindByValue(ViewBag.SizeDiameter.ToString());
+                     if (item != null)
+                     {
+                         item.Selected = true;
+                         cbo.SelectedIndex = item.Index;
+                     }
+                 }
+             };
+
          }
      ).BindList(ViewData["BagDiameter"]).GetHtml()
                     </div>
@@ -126,6 +174,23 @@
 
                  settings.ClientEnabled = true;
                  settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+                 settings.PreRender = (sender, e) =>
+                 {
+                     if (ViewBag.IdCategory != null)
+                     {
+                         MVCxComboBox cbo = sender as MVCxComboBox;
+                         var item = cbo.Properties.Items.FindByValue(ViewBag.IdCategory.ToString());
+                         if (item != null)
+                         {
+                             item.Selected = true;
+                             cbo.SelectedIndex = item.Index;
+                         }
+                     }
+                 };
+
+
              }
          ).BindList(ViewData["BagCategories"]).GetHtml()
                 </div>
@@ -153,6 +218,22 @@
 
                  settings.ClientEnabled = true;
                  settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
+
+
+                 settings.PreRender = (sender, e) =>
+                 {
+                     if (ViewBag.IdBrand != null)
+                     {
+                         MVCxComboBox cbo = sender as MVCxComboBox;
+                         var item = cbo.Properties.Items.FindByValue(ViewBag.IdBrand.ToString());
+                         if (item != null)
+                         {
+                             item.Selected = true;
+                             cbo.SelectedIndex = item.Index;
+                         }
+                     }
+                 };
+
              }
          ).BindList(ViewData["BagBrands"]).GetHtml()
                 </div>
@@ -178,7 +259,7 @@
                         @Html.DevExpress().ComboBox(
          settings =>
          {
-             settings.Name = "cmbPrice";
+             settings.Name = "cmbOrderPrice";
              settings.Width = Unit.Percentage(100);
              settings.ControlStyle.CssClass = "BoxGeneral";
              //settings.SelectedIndex = 0;
@@ -194,6 +275,21 @@
 
              settings.Properties.Items.Add("Lowest - Highest", 0);
              settings.Properties.Items.Add("Highest - Lowest", 1);
+
+             
+            settings.PreRender = (sender, e) =>
+            {
+                if (ViewBag.SortMode != null)
+                {
+                    MVCxComboBox cbo = sender as MVCxComboBox;
+                    var item = cbo.Properties.Items.FindByValue(((int)ViewBag.SortMode).ToString());
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                        cbo.SelectedIndex = item.Index;
+                    }
+                }
+            };
 
          }
      ).GetHtml()
@@ -298,6 +394,17 @@
                 <script>
                     var cardView = '@ViewBag.IsCardView';
                     var sortMode = '@ViewBag.SortMode';
+                    @*$(document).ready(function () {
+                        if ("@ViewBag.IdCategory" != null) {
+                            //var item = settings.Properties.Items.FindByValue(ViewBag.IdCategory.ToString());
+                            debugger
+                            var item = cmbCategory.FindItemByValue("@ViewBag.IdCategory");
+                            item.Selected = true;
+                            //settings.SelectedIndex = item.Index;
+                            cmbCategory.SetSelectedIndex(item.index);
+                            //cmbCategory.SetValue("@ViewBag.IdCategory");
+                        }
+                    })*@
                 </script>
 
                 <div id="xcpProducts" style="text-align:center; margin-left:0px; padding-right:0px">
@@ -463,84 +570,84 @@
                             <span style="color:white; font-size:15px;" >More details</span>
                         </div>
                         <div class="col-xs-6 col-md-6" style="height:25px;">
-                            <i class="glyphicon glyphicon-chevron-up" style="color:#fff; float:right; margin-top:2px;" ></i>
+                            <i id="btnCollapsDetails" class="glyphicon glyphicon-chevron-up" style="color:#fff; float:right; margin-top:2px; cursor:pointer;" ></i>
                         </div>
                     </div>
 
-
-                    <div class="col-xs-12 col-md-8" style=" padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-7 col-md-8" style="height:45px; padding-left:0px; padding-right:0px; ">
-                            <div class="col-xs-3 col-md-2" style="height:45px;  text-align:left;  padding-left:7px; ">
-                                <img id="productDetails_CategoryImg2" src="@Url.Content("/Content/imgs/Summer_red-01.png")" style="width:35px; margin-top:3px;">
+                    <div id="divCollapsDetails" class="collapse show">
+                        <div class="col-xs-12 col-md-8" style=" padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-7 col-md-8" style="height:45px; padding-left:0px; padding-right:0px; ">
+                                <div class="col-xs-3 col-md-2" style="height:45px;  text-align:left;  padding-left:7px; ">
+                                    <img id="productDetails_CategoryImg2" src="@Url.Content("/Content/imgs/Summer_red-01.png")" style="width:35px; margin-top:3px;">
+                                </div>
+                                <div class="col-xs-9 col-md-10" style="text-align:left;  padding-left:10px;">
+                                    <p id="productDetails_CategoryName" style="color:gray; font-size:25px; ">summer</p>
+                                </div>
                             </div>
-                            <div class="col-xs-9 col-md-10" style="text-align:left;  padding-left:10px;">
-                                <p id="productDetails_CategoryName" style="color:gray; font-size:25px; ">summer</p>
+                            <div class="col-xs-5 col-md-4" style="height:45px; padding-right:0px; padding-left:0px;">
+                                <p style="color:darkseagreen; font-weight:bold; font-size:14px; float:right;  ">In stock (<span id="productDetails_InStock">16</span>)</p>
                             </div>
                         </div>
-                        <div class="col-xs-5 col-md-4" style="height:45px; padding-right:0px; padding-left:0px;">
-                            <p  style="color:darkseagreen; font-weight:bold; font-size:14px; float:right;  ">In stock (<span id="productDetails_InStock">16</span>)</p>
+                        <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-12 col-md-12" style="height:35px;">
+                                <h3 style="margin-top:7px;">Tire Size</h3>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-8" style="height:45px; padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-7 col-md-8" style="height:45px;">
+                                <p style="color:gray; font-size:20px; margin-top:5px; ">
+                                    <span id="productDetails_LblWidth"></span>
+                                    <span>/</span>
+                                    <span id="productDetails_LblProfile"></span>
+                                    <span id="productDetails_LblDiameter"></span>
+                                </p>
+                            </div>
+                            <div class="col-xs-5 col-md-4" style="padding-left:0px; padding-right:0px;">
+                                <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
+                                    <img src="@Url.Content("~/Content/imgs/tyreFuel.png")" style="width:30px">
+                                </div>
+                                <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
+                                    <span id="productDetails_TyreFuel" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>B</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-12 col-md-12" style="height:35px;">
+                                <h3 style="margin-top:7px;">Speed Index</h3>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-7 col-md-8" style="height:45px;">
+                                <p id="productDetails_SpeedIndex" style="color:gray; font-size:20px; margin-top:5px;">94</p>
+                            </div>
+                            <div class="col-xs-5 col-md-4" style="height:45px; padding-left:0px; padding-right:0px;">
+                                <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
+                                    <img src="@Url.Content("~/Content/imgs/tyreNoise.png")" style="width:30px">
+                                </div>
+                                <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
+                                    <span id="productDetails_TyreNoise" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>71</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-12 col-md-12" style="height:35px;">
+                                <h3 style="margin-top:7px;">Index load back</h3>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-7 col-md-8" style="height:45px;">
+                                <p id="productDetails_Indexload" style="color:gray; font-size:20px; margin-top:5px; ">70</p>
+                            </div>
+                            <div class="col-xs-5 col-md-4" style="height:45px; padding-left:0px; padding-right:0px;">
+                                <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
+                                    <img src="@Url.Content("~/Content/imgs/tyreWet.png")" style="width:30px">
+                                </div>
+                                <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
+                                    <span id="productDetails_TyreWet" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>A</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-12 col-md-12" style="height:35px;">
-                            <h3 style="margin-top:7px;">Tire Size</h3>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-8" style="height:45px; padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-7 col-md-8" style="height:45px;">
-                            <p style="color:gray; font-size:20px; margin-top:5px; ">
-                                <span id="productDetails_LblWidth">205</span> 
-                                <span >/</span> 
-                                <span id="productDetails_LblProfile">55</span>
-                                <span id="productDetails_LblDiameter">16</span>
-                            </p>
-                        </div>
-                        <div class="col-xs-5 col-md-4" style="padding-left:0px; padding-right:0px;">
-                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
-                                <img src="@Url.Content("~/Content/imgs/tyreFuel.png")" style="width:30px">
-                            </div>
-                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
-                                <span id="productDetails_TyreFuel" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>B</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-12 col-md-12" style="height:35px;">
-                            <h3 style="margin-top:7px;">Speed Index</h3>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-7 col-md-8" style="height:45px;">
-                            <p id="productDetails_SpeedIndex" style="color:gray; font-size:20px; margin-top:5px;">94</p>
-                        </div>
-                        <div class="col-xs-5 col-md-4" style="height:45px; padding-left:0px; padding-right:0px;">
-                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
-                                <img src="@Url.Content("~/Content/imgs/tyreNoise.png")" style="width:30px">
-                            </div>
-                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
-                                <span id="productDetails_TyreNoise" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>71</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-12 col-md-12" style="height:35px;">
-                            <h3 style="margin-top:7px;">Index load back</h3>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-md-8" style="padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-7 col-md-8" style="height:45px;">
-                            <p id="productDetails_Indexload" style="color:gray; font-size:20px; margin-top:5px; ">70</p>
-                        </div>
-                        <div class="col-xs-5 col-md-4" style="height:45px; padding-left:0px; padding-right:0px;">
-                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:right;">
-                                <img src="@Url.Content("~/Content/imgs/tyreWet.png")" style="width:30px">
-                            </div>
-                            <div class="col-xs-6 col-md-6" style="height:45px; text-align:left; padding-left:0px; padding-right:0px;">
-                                <span id="productDetails_TyreWet" class='badge badge-pill badge-default' style='color:gray; margin-top:5px; font-size:18px; background-color:#fff; border:1px solid grey; min-width:30px;'>A</span>
-                            </div>
-                        </div>
-                    </div>
-
 
 
                 </div>
@@ -553,22 +660,27 @@
                             <span style="color:white; font-size:15px;">Rating details</span>
                         </div>
                         <div class="col-xs-6 col-md-6" style="height:25px;">
-                            <i class="glyphicon glyphicon-chevron-up" style="color:#fff; float:right; margin-top:2px;"></i>
+                            <i id="btnCollapsRating" class="glyphicon glyphicon-chevron-up" style="color:#fff; float:right; margin-top:2px;cursor:pointer;"></i>
                         </div>
                     </div> 
-                    <div class="col-xs-12 col-md-8" style=" padding-left:0px; padding-right:0px; float:right;">
-                        <div class="col-xs-5 col-md-2" style="height:45px;">
-                            <p style="color:gray; font-size:20px; margin-top:5px; ">Ratings:</p>
-                        </div>
-                        <div id="productDetails_Ratings" class="col-xs-7 col-md-10" style="height:45px; padding-top:10px; padding-left:5px; padding-right:0px;">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
+
+                    <div id="divCollapsRating" class="collapse show">
+                        <div class="col-xs-12 col-md-8" style=" padding-left:0px; padding-right:0px; float:right;">
+                            <div class="col-xs-5 col-md-2" style="height:45px;">
+                                <p style="color:gray; font-size:20px; margin-top:5px; ">Ratings:</p>
+                            </div>
+                            <div id="productDetails_Ratings" class="col-xs-7 col-md-10" style="height:45px; padding-top:10px; padding-left:5px; padding-right:0px;">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+
+                    </div>
                                 
                 
                 
@@ -608,8 +720,8 @@
                                 settings.Properties.Items.Add("4", 4);
                                 settings.Properties.Items.Add("5", 5);
 
-                                settings.Properties.Items[0].Selected = true;
-                                settings.SelectedIndex = 0;
+                                settings.Properties.Items[3].Selected = true;
+                                settings.SelectedIndex = 3;
                             }
                         ).GetHtml()
                     </div>

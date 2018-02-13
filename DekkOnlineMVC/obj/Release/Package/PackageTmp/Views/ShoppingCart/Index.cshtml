@@ -47,13 +47,13 @@
                                         <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
                                     </div>
                                     <div class="col-sm-8 col-xs-5">
-                                        <h4 class="nomargin"><strong style="color:red">@item.Name</strong></h4>
+                                        <h4 class="nomargin"><strong style="color:#e72e31">@item.Name</strong></h4>
                                         <div class="deschide"><p>@item.Description.</p></div>
                                     </div>
                                 </div>
                             </td>
                             <td data-th="QTY">
-                                <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" onchange="IncrsCart('@item.cartid', this.value)">
+                                <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" onchange="IncrsCart('@item.cartid', this.value)">
                             </td>
                             <td data-th="Price"><strong><label id="@item.cartid">@item.totalpriceprod</label> kr</strong></td>
                         </tr>
@@ -146,7 +146,7 @@
                             <div class="form-group">
                                 <label class="col-md-5 col-xs-2 control-label"><a><span class="linkcolor keep">KEEP SHOPPING</span></a></label>
                                 <div class="col-md-7 col-xs-3 margininput">
-                                    <input type="button" class="btn btn-secundary form-control st2 inemail" id="inputEmail" value="Continue to Checkout">
+                                    <input type="button" class="btn btn-success form-control st2 inemail" id="inputEmail" value="Continue to Checkout">
                                 </div>
                             </div>
                         </div>

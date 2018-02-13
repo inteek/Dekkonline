@@ -47,7 +47,7 @@
                                         <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
                                     </div>
                                     <div class="col-sm-8 col-xs-5">
-                                        <h4 class="nomargin"><strong style="color:red">@item.Name</strong></h4>
+                                        <h4 class="nomargin"><strong style="color:#176292">@item.Name</strong></h4>
                                         <div class="deschide"><p>@item.Description.</p></div>
                                     </div>
                                 </div>
@@ -82,11 +82,11 @@
                 <strong style="font-size:larger;">
                     PROMO CODE: @if (Model.Promo != null)
                     {
-                        <strong style="color:steelblue">APPLIED</strong>
+                        <strong style="color:#1a64a1">APPLIED</strong>
                     }
                     else
                     {
-                        <strong style="color:steelblue">NO APPLIED</strong>
+                        <strong style="color:#1a64a1">NO APPLIED</strong>
                     }
                 </strong>
             </div>
@@ -148,7 +148,7 @@
                                 <img src="@Model.Image" style="width:100px; height:100px;" />
                             </div>
                             <div class="col-lg-5">
-                                <h4 style="color: #2471A3; "><strong>@Model.WorkshopName</strong></h4>
+                                <h4 style="color: #105786; "><strong>@Model.WorkshopName</strong></h4>
                                 <p><strong>@Model.WorkshopAddress</strong></p>
                                 <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
                             </div>
@@ -267,7 +267,7 @@
                     <div class="form-group col-lg-12" id="card-number-field">
                         <div class="form-group CVV col-sm-6 col-xs-3">
                             <label for="cvv" class="textoAzul">Security Code:</label>
-                            <div class="input-group"><input  class="form-control sc no-spinners" id="cvv" maxlength="4" minlength="3" pattern="^[0-9]+$" autocomplete="off" spellcheck="false" data-hj-masked="data-hj-masked" type="tel"><span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" style="cursor:pointer"></i></span></div><span class="req4 hidden" style="color:red">*Security Code</span>
+                            <div class="input-group"><input  class="form-control sc no-spinners" id="cvv" maxlength="3" minlength="3" pattern="^[0-9]+$" autocomplete="off" spellcheck="false" data-hj-masked="data-hj-masked" type="tel"><span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" style="cursor:pointer"></i></span></div><span class="req4 hidden" style="color:red">*Security Code</span>
                         </div>
                         <div class="form-group owner col-sm-6 col-xs-8">
                             <label for="owner" class="textoAzul">CardHolder name:</label>

@@ -122,7 +122,7 @@ namespace Framework
                         }
                         if (deliverydate == null)
                         {
-                            addOrder.EstimatedDate = Convert.ToDateTime(deliverydate2);
+                            addOrder.EstimatedDate = idDelivery.Date;
                         }
                         else
                         {

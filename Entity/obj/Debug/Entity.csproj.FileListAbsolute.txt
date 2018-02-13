@@ -93,3 +93,14 @@ C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.ca
 C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
 C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.dll
 C:\DekkonlineNueva1202\Entity\obj\Debug\Entity.pdb
+C:\Productos\Dekkonlinecasifinal\Entity\bin\Debug\Entity.dll.config
+C:\Productos\Dekkonlinecasifinal\Entity\bin\Debug\Entity.dll
+C:\Productos\Dekkonlinecasifinal\Entity\bin\Debug\Entity.pdb
+C:\Productos\Dekkonlinecasifinal\Entity\bin\Debug\EntityFramework.dll
+C:\Productos\Dekkonlinecasifinal\Entity\bin\Debug\EntityFramework.SqlServer.dll
+C:\Productos\Dekkonlinecasifinal\Entity\bin\Debug\EntityFramework.xml
+C:\Productos\Dekkonlinecasifinal\Entity\bin\Debug\EntityFramework.SqlServer.xml
+C:\Productos\Dekkonlinecasifinal\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
+C:\Productos\Dekkonlinecasifinal\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
+C:\Productos\Dekkonlinecasifinal\Entity\obj\Debug\Entity.dll
+C:\Productos\Dekkonlinecasifinal\Entity\obj\Debug\Entity.pdb

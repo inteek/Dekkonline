@@ -93,7 +93,7 @@ $("#next").click(function () {
         radio = 0;
 
         if (fechaSeleccionada == 0) {
-            date = $("#modEmail").val();
+            date = $("#modDate").val();
             time = $("#modTime").val();
             comments = $("#modComment").val();
 

@@ -101,8 +101,15 @@ namespace DekkOnlineMVC.Controllers
             {
                 case SignInStatus.Success:
                     Users user = new Users();
+                    ShoppingCart shoppingCart = new ShoppingCart();
                     string isUser = user.IdUser(model.Email);
                     System.Web.HttpContext.Current.Session["SessionUser"] = isUser;
+                    var usercookie = Security.GetIdUser(this);
+                    if (usercookie != null || usercookie != "" || usercookie.Length < 1)
+                    {
+                            bool updateCookieDelevery = shoppingCart.updateDeleveryType(isUser, usercookie);
+                    }
+                    
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
