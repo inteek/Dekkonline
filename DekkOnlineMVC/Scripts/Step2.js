@@ -625,7 +625,7 @@ function Workshopreco() {
 
                     "<div class='row blanco rowcat ocultarWorkshop' id='" + result.b.workshop[i].IdWorkshop + "' style='cursor:pointer;' onclick='popouWorkShop(\"" + result.b.workshop[i].Name + "\",\"" + result.b.workshop[i].IdWorkshop + "\")'>" +
                     "<div class='col-lg-2 col-xs-3'>" +
-                    "<img src='../Content/WorkShop/t1.jpg' style='width:110px; height: 105px;' />" +
+                    "<img src='" + result.b.workshop[i].WorkImage + "' style='width:110px; height: 105px;' />" +
                     "</div>" +
                     "<div class='col-lg-5 col-xs-8 catalago'>" +
                     "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.b.workshop[i].Name + "</strong></h4>" +

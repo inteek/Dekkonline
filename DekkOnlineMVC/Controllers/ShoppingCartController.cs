@@ -303,6 +303,7 @@ namespace DekkOnlineMVC.Controllers
         }
 
         public ActionResult Step2()
+
         {
             string path = Request.Url.AbsolutePath;
             ViewBag.ReturnUrl = path;
@@ -840,7 +841,7 @@ namespace DekkOnlineMVC.Controllers
 
         [HttpPost]
         public JsonResult workshopreco(string zipCode, string selection)
-        {
+        {        
             List<ResultWorkshop> workshop = null;
 
             Workshop workShop = new Workshop();
@@ -853,7 +854,7 @@ namespace DekkOnlineMVC.Controllers
                 b = new Framework.Libraies.ResulUserWorkShop { workshop = workshop, zipcode = Convert.ToInt32(null), firstName = null, lastName = null, address = null, email = null, mobile = null };
                 if (b != null)
                 {
-                    return Json(b, JsonRequestBehavior.AllowGet);
+                    return Json(new { error = false, noError = 0, b, JsonRequestBehavior.AllowGet });
                 }
                 else
                 {

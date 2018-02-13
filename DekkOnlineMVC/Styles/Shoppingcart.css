@@ -145,8 +145,13 @@
 }
 
 .blanco:hover {
-    background-color: white;
+    background-color: #E5E7E9;
 }
+
+.tallerSeleccionado {
+    background-color: #E5E7E9;
+}
+
 
 .borderInput {
     border: 1px solid #BFC9CA;

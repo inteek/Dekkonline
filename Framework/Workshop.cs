@@ -151,7 +151,7 @@ namespace Framework
                     if (filter == 1)
                     {
                         result = (from address in db.Workshop
-                                                  where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                                                  //where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
                                                   orderby address.Average descending
                                                   select new ResultWorkshop
                                                   {
@@ -160,8 +160,25 @@ namespace Framework
                                                       Address = address.Address,
                                                       ZipCode = address.ZipCode,
                                                       Latitude = address.Latitude,
-                                                      Length = address.Length
+                                                      Length = address.Length,
+                                                      WorkImage = address.WorkImage
                                                   }).ToList();
+                    }
+                    else if (filter == 2)
+                    {
+                        result = (from address in db.Workshop
+                                  where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                                  orderby address.ZipCode descending
+                                  select new ResultWorkshop
+                                  {
+                                      IdWorkshop = address.IdWorkshop,
+                                      Name = address.Name,
+                                      Address = address.Address,
+                                      ZipCode = address.ZipCode,
+                                      Latitude = address.Latitude,
+                                      Length = address.Length,
+                                      WorkImage = address.WorkImage
+                                  }).ToList();
                     }
                     else
                     {
@@ -174,7 +191,8 @@ namespace Framework
                                       Address = address.Address,
                                       ZipCode = address.ZipCode,
                                       Latitude = address.Latitude,
-                                      Length = address.Length
+                                      Length = address.Length,
+                                      WorkImage = address.WorkImage
                                   }).ToList();
                     }
                 
