@@ -127,7 +127,8 @@ namespace Framework
                                   Address = address.Address,
                                   ZipCode = address.ZipCode,
                                   Latitude = address.Latitude,
-                                  Length = address.Length
+                                  Length = address.Length,
+                                  WorkImage = address.WorkImage
                               }).ToList();
                 }
             }

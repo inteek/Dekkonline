@@ -282,7 +282,7 @@
                                 <div id="divWorkShop">
                                     <div class="row blanco rowcat ocultarWorkshop" id="@item.IdWorkshop" onclick="popouWorkShop('@item.Name','@item.IdWorkshop')" style="cursor:pointer;">
                                         <div class="col-lg-2 col-xs-3">
-                                            <img src="~/Content/WorkShop/t1.jpg" style="width:110px; height:105px;" />
+                                            <img src="@item.WorkImage" style="width:110px; height:105px;" />
                                         </div>
                                         <div class="col-lg-5 col-xs-8 catalago">
                                             <h4 class="nameWorkshop" id="nameWorkshop" style="color: #185d8a;"><strong><span></span> @item.Name</strong></h4>
@@ -591,7 +591,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=4")
+@Scripts.Render("~/Scripts/Step2.js?v=5")
 @Scripts.Render("~/Scripts/Map.js?v=4")
 @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
 @Scripts.Render("~/Scripts/Login.js?v=2")

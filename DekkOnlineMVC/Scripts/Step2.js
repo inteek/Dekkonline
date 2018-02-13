@@ -312,7 +312,7 @@ $("#zipcode").on('keyup', function () {
 
                         "<div class='row blanco rowcat ocultarWorkshop' id='" + result.resultado[i].IdWorkshop + "' style='cursor:pointer;' onclick='popouWorkShop(\"" + result.resultado[i].Name + "\",\"" + result.resultado[i].IdWorkshop + "\")'>" +
                         "<div class='col-lg-2 col-xs-3'>" +
-                        "<img src='../Content/WorkShop/t1.jpg' style='width:110px; height: 105px;' />" +
+                        "<img src='" + result.resultado[i].WorkImage + "' style='width:110px; height: 105px;' />" +
                         "</div>" +
                         "<div class='col-lg-5 col-xs-8 catalago'>" +
                         "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.resultado[i].Name + "</strong></h4>" +
@@ -356,7 +356,7 @@ $("#txtZipCode").on('keyup', function () {
 
                         "<div class='row blanco rowcat ocultarWorkshop' id='" + result.resultado[i].IdWorkshop + "' style='cursor:pointer;' onclick='popouWorkShop(\"" + result.resultado[i].Name + "\",\"" + result.resultado[i].IdWorkshop + "\")'>" +
                         "<div class='col-lg-2 col-xs-3'>" +
-                        "<img src='../Content/WorkShop/t1.jpg' style='width:110px; height: 105px;' />" +
+                        "<img src='" + result.resultado[i].WorkImage + "' style='width:110px; height: 105px;' />" +
                         "</div>" +
                         "<div class='col-lg-5 col-xs-8 catalago'>" +
                         "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.resultado[i].Name + "</strong></h4>" +
