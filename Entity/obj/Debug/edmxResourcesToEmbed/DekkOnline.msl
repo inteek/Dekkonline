@@ -377,5 +377,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="WorkshopUser">
+      <EntityTypeMapping TypeName="dekkOnlineModel.WorkshopUser">
+        <MappingFragment StoreEntitySet="WorkshopUser">
+          <ScalarProperty Name="idWorkshop" ColumnName="idWorkshop" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -2,155 +2,276 @@
 @model Framework.Libraies.ResultUserOrder
 
 @{
-    ViewBag.Title = "Pending";    
+    ViewBag.Title = "Pending";
 }
-@Styles.Render("~/Styles/Dimensiones.css?v=6")
+@Styles.Render("~/Styles/Dimensiones.css?v=7")
 
 <div class="contentPage">
     <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-2 movilPerfil">
             @foreach (var item in Model.user)
-    {
+            {
 
-        <div class="form-group">
-            <img src="~/fonts/user.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
-        </div>
-        <div class="form-group">
-            <h4><strong><label id="titlenamepe">@item.FirstName @item.LastName</label></strong></h4>
+                <div class="form-group">
+                    <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
                 </div>
-        <div class="form-group">
-            <h6><label id="titleemailpe">@item.Email</label> </h6>
+                <div class="form-group">
+                    <h4 style="color:#393e44;"><strong><label id="titlenamepe">@item.FirstName @item.LastName</label></strong></h4>
+                </div>
+                <div class="form-group" style="margin-top:-13px;">
+                    <h6 style="color:#393e44;"><label id="titleemailpe">@item.Email</label> </h6>
+                </div>
+                @*<br />
+                    <div class="form-group" style="margin-top:-20px;">
+                        <h4 style="color:#393e44;"><strong>Your cars</strong></h4>
+                    </div>
+                    <div class="form-group" style="margin-top:-11px;">
+                        <h6 style="color:#393e44;">Audi TT 2017</h6>
+                    </div>
+                    <div class="form-group" style="margin-top:-11px;">
+                        <h6 style="color:#393e44;">AB12345</h6>
+                    </div>*@
+            }
         </div>
-        <br />
-        <div class="form-group">
-            <h4><strong>Your cars</strong></h4>
-        </div>
-        <div class="form-group">
-            <h6>Audi TT 2017</h6>
-        </div>
-        <div class="form-group">
-            <h6>AB12345</h6>
-        </div>
-}
-        </div>
-        <div class="col-lg-8">
-            <div class="table-responsive">
-                <table class="table">
-                    <tbody>
-                        @if (Model.product.Count > 0)
-    {
-                    foreach (var item in Model.product)
-{
-                    <tr>
-                        <td class="vertical" style="width:150px;">
-                            <div class="form-group" style="margin-top:40px; ">
+        <div class="col-lg-8" style="margin-top:20px;">
+
+            @if (Model.product.Count > 0)
+            {
+                foreach (var item in Model.product)
+                {
+
+                    <div class="row borderProduct">
+                        <div class="col-lg-2 col-sm-2 col-xs-12 leftTablet">
+                            <div class="form-group titlePending">
                                 <h5>Audi TT 2017</h5>
                             </div>
-                            <div class="form-group">
-                                <h5>Order number:</h5>
+                            <div class="form-group numerOrder">
+                                <h5>Order number:<span> @item.orders</span></h5>
                             </div>
-                            <div class="form-group">
-                                <h5>@item.orders</h5>
+                            <div class="form-group numerOrder">
+                                <h5>Quantity:<span> @item.quantity</span></h5>
                             </div>
-                        </td>
-                        <td class="vertical2">
-                            <div class="col-lg-4">
-                                <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width: 90px; height: 90px;" />
+                        </div>
+                        <div class="col-lg-5 col-sm-5 col-xs-12">
+                            <div class="col-lg-4 col-sm-4 col-xs-4">
+                                <img src="http://admin.dekkonline.sonetworks.no/@item.Image" class="responsImageLLanta" />
                             </div>
-                            <div class="col-lg-8">
+                            <div class="col-lg-8 col-sm-8 col-xs-8">
                                 <div class="form-group">
-                                    <h4><strong>@item.Name</strong></h4>
+                                    <h4 style="font-size:20px;"><strong>@item.Name</strong></h4>
                                 </div>
                                 <div class="form-group">
                                     <h6><strong>@item.Description</strong></h6>
                                 </div>
                             </div>
-                        </td>
-                        <td style="margin-left:40px;">
-                            <div style="margin-left:30px;">
-                                <div class="form-group">
-                                    <h5>Total: <strong> <span style="font-size:16px;">@item.totalpriceprod kr</span> </strong></h5>
-                                </div>
-                                <div class="form-group">
-                                    <h5>Status: Pending</h5>
-                                </div>
-                                <div class="form-group">
-                                    <h5>Order date: @item.orderdte2</h5>
-                                </div>
-                                <div class="form-group">
-                                    <h5>Due Date: @item.estimated2</h5>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-danger btn-sm">CONTACT THE SHOP</button>
-                                </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                            <div class="form-group marginTotal">
+                                <h5>Total: <strong> <span style="font-size:18px;">@item.totalpriceprod kr</span> </strong></h5>
                             </div>
-                        </td>
-                    </tr>
-}
-}
-else
-{
-                    <tr>
-                        <td class="vertical2">
-                            <div class="col-lg-8">
-                                <div class="form-group">
-                                    <h4><strong>No pending products.</strong></h4>
-                                </div>
+                            <div class="form-group marginTotal">
+                                <h5>Status: Pending</h5>
                             </div>
-                        </td>
-                    </tr>
-}
-                    </tbody>
-                </table>
-            </div>
+                            <div class="form-group marginTotal">
+                                <h5>Order date: @item.orderdte2</h5>
+                            </div>
+                            <div class="form-group marginTotal">
+                                <h5>Due Date: @item.estimated2</h5>
+                            </div>
+                            @if (item.idWorkShop != 0)
+                            {
+                                <div class="form-group marginTotal">
+                                    <button class="btn btn-danger btn-sm" id="ContactWorkShop" onclick="popouContactWorkShop('@item.orders')">CONTACT THE SHOP</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group marginTotal">
+                                    <h5>Delivery address : @item.Address</h5>
+                                </div>
+                            }
+                        </div>
+                        <div class="lineHorizontal"><hr style="width: 85%; height: 1px; background-color: black;" /></div>
+                    </div>
+                    <br />
+                }
+            }
+
+
+            @*<div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        @if (Model.product.Count > 0)
+                                {
+                                    foreach (var item in Model.product)
+                                    {
+                                        <tr>
+                                            <td class="vertical" style="width:150px;">
+                                                <div class="form-group" style="margin-top:40px; ">
+                                                    <h5>Audi TT 2017</h5>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h5>Order number:<span> @item.orders</span></h5>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h5>@item.orders</h5>
+                                                </div>
+                                            </td>
+                                            <td class="vertical2">
+                                                <div class="col-lg-3">
+                                                    <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width: 90px; height: 90px;" />
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    <div class="form-group">
+                                                        <h4 style="font-size:20px;"><strong>@item.Name</strong></h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h6><strong>@item.Description</strong></h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="margin-left:40px;">
+                                                <div style="margin-left:30px;">
+                                                    <div class="form-group">
+                                                        <h5>Total: <strong> <span style="font-size:16px;">@item.totalpriceprod kr</span> </strong></h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h5>Status: Pending</h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h5>Order date: @item.orderdte2</h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h5>Due Date: @item.estimated2</h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-danger btn-sm">CONTACT THE SHOP</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="vertical2">
+                                    <div class="col-lg-8">
+                                        <div class="form-group">
+                                            <h4><strong>No pending products.</strong></h4>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                }
+                                    </tbody>
+                                </table>
+                            </div>*@
         </div>
 
         @*<div class="col-lg-9">
-            <div class="row" style="margin-top:50px;">
-                <div class="col-lg-2">
-                    <div class="form-group" style="margin-top:40px;">
-                        <h5>Audi TT 2017</h5>
-                    </div>
-                    <div class="form-group">
-                        <h5>Order number:</h5>
-                    </div>
-                    <div class="form-group">
-                        <h5>870923</h5>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="col-lg-12">
-                        <div class="col-lg-4">
-                            <img src="~/fonts/170712093714.jpg" style="width: 120px; height: 120px;" />
+                <div class="row" style="margin-top:50px;">
+                    <div class="col-lg-2">
+                        <div class="form-group" style="margin-top:40px;">
+                            <h5>Audi TT 2017</h5>
                         </div>
-                        <div class="col-lg-8">
-                            <div class="form-group">
-                                <h4><strong>Contlnenal EcoContact 5 185/65 R15 88T</strong></h4>                                
-                            </div>
-                            <div class="form-group">
-                                <h6><strong>Contlnenal - Englneered Germany Lore more using to addres to list foreach while array int</strong></h6>
-                            </div>
+                        <div class="form-group">
+                            <h5>Order number:</h5>
+                        </div>
+                        <div class="form-group">
+                            <h5>870923</h5>
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="col-lg-12">
+                            <div class="col-lg-4">
+                                <img src="~/fonts/170712093714.jpg" style="width: 120px; height: 120px;" />
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <h4><strong>Contlnenal EcoContact 5 185/65 R15 88T</strong></h4>
+                                </div>
+                                <div class="form-group">
+                                    <h6><strong>Contlnenal - Englneered Germany Lore more using to addres to list foreach while array int</strong></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <h5>Total:<strong>450 kr</strong></h5>
+                        </div>
+                        <div class="form-group">
+                            <h5>Status: Pending</h5>
+                        </div>
+                        <div class="form-group">
+                            <h5>Order date: April 20, 2017</h5>
+                        </div>
+                        <div class="form-group">
+                            <h5>Due Date: April 30, 2017</h5>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger btn-sm">CONTACT THE SHOP</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <h5>Total:<strong>450 kr</strong></h5>
-                    </div>
-                    <div class="form-group">
-                        <h5>Status: Pending</h5>
-                    </div>
-                    <div class="form-group">
-                        <h5>Order date: April 20, 2017</h5>
-                    </div>
-                    <div class="form-group">
-                        <h5>Due Date: April 30, 2017</h5>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-danger btn-sm">CONTACT THE SHOP</button>
-                    </div>
-                </div>
-            </div>           
-        </div>*@
+            </div>*@
     </div>
 </div>
+
+
+<div class="modal fade" id="modalContactWorkShop" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-xs">
+            <div class="modal-header" style="background-color:#C84647">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" style="color:#fff;">Workshop Info</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <img id="indoImagen" src="" style="width:100px; height:100px;" />
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="textoAzul" id="infoName" style="font-size:24px; margin-top:70px; font-weight:bold;"></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="" style="margin-left:20px; margin-top:20px; font-size:16px;">Address: </label>
+                            </div>
+                            <div class="col-lg-8" style="word-wrap: break-word;">
+                                <label id="infoAddres" style="margin-left:-40px; margin-top:20px; font-size:16px; color:#878585"></label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="" style="margin-left:20px; margin-top:20px; font-size:16px;">Email: </label>
+                            </div>
+                            <div class="col-lg-8" style="word-wrap: break-word;">
+                                <label id="infoEmail" style="margin-left:-40px; margin-top:20px; font-size:16px; color:#878585"></label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="" style="margin-left:20px; margin-top:20px; font-size:16px;">Phone: </label>
+                            </div>
+                            <div class="col-lg-8" style="word-wrap: break-word;">
+                                <label id="infoPhone" style="margin-left:-40px; margin-top:20px; font-size:16px; color:#878585"></label>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Scripts/Site/Profile.js?v=3")

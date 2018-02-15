@@ -12,5 +12,6 @@ namespace Framework.Libraies
         public string DateGet { get; set; }
         public string Date { get; set; }
         public string Time { get; set; }
+        public string Dayint { get; set; }
     }
 }

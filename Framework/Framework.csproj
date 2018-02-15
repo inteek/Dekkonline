@@ -61,6 +61,7 @@
     <Compile Include="Libraies\ResultBrands.cs" />
     <Compile Include="Libraies\ResultCategories.cs" />
     <Compile Include="Libraies\ResultPaidProducts.cs" />
+    <Compile Include="Libraies\ResultPendingOrderWorkshop.cs" />
     <Compile Include="Libraies\ResultProduct.cs" />
     <Compile Include="Libraies\ResultProductsConfirmation.cs">
       <SubType>Code</SubType>

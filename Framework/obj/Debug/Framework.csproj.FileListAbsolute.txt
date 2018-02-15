@@ -139,3 +139,17 @@ C:\Dekkonline130218\Framework\obj\Debug\Framework.csprojResolveAssemblyReference
 C:\Dekkonline130218\Framework\obj\Debug\Framework.csproj.CoreCompileInputs.cache
 C:\Dekkonline130218\Framework\obj\Debug\Framework.dll
 C:\Dekkonline130218\Framework\obj\Debug\Framework.pdb
+C:\Productos\dekkonline14022018\Framework\bin\Debug\Framework.dll.config
+C:\Productos\dekkonline14022018\Framework\bin\Debug\Framework.dll
+C:\Productos\dekkonline14022018\Framework\bin\Debug\Framework.pdb
+C:\Productos\dekkonline14022018\Framework\bin\Debug\Entity.dll
+C:\Productos\dekkonline14022018\Framework\bin\Debug\EntityFramework.dll
+C:\Productos\dekkonline14022018\Framework\bin\Debug\EntityFramework.SqlServer.dll
+C:\Productos\dekkonline14022018\Framework\bin\Debug\Entity.pdb
+C:\Productos\dekkonline14022018\Framework\bin\Debug\Entity.dll.config
+C:\Productos\dekkonline14022018\Framework\bin\Debug\EntityFramework.xml
+C:\Productos\dekkonline14022018\Framework\bin\Debug\EntityFramework.SqlServer.xml
+C:\Productos\dekkonline14022018\Framework\obj\Debug\Framework.csprojResolveAssemblyReference.cache
+C:\Productos\dekkonline14022018\Framework\obj\Debug\Framework.csproj.CoreCompileInputs.cache
+C:\Productos\dekkonline14022018\Framework\obj\Debug\Framework.dll
+C:\Productos\dekkonline14022018\Framework\obj\Debug\Framework.pdb

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Framework;
@@ -86,24 +87,88 @@ namespace DekkOnlineMVC.Controllers
                     }
                     ViewBag.FilePath = filePath.ToString();
                     file.SaveAs(filePath);
-                    //var userupdate= us.UpdateUserImage(filePath, id);
-                    //if (userupdate == true)
-                    //{
-                    //    return RedirectToAction("Index", new { Message = "Upload Success" });
-                    //}
-                    //else
-                    //{
-                    //    return RedirectToAction("Index", new { Message = "Upload Failed" });
-                    //}
+                    var userupdate = us.UpdateUserImage(filePath, id);
+                    if (userupdate != null || userupdate.Length > 1)
+                    {
+                        return Json(new { userupdate, JsonRequestBehavior.AllowGet });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { Message = "Upload Failed" });
+                        //return Json(new { x, JsonRequestBehavior.AllowGet });
+                    }
 
                 }
                 else
                 {
                     return RedirectToAction("Index", new { Message = "Upload Success" });
                 }
-                return RedirectToAction("Index");
             }
             return Json(new { Success = true });
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult UploadFile()
+        {
+            ShoppingCart sh = new ShoppingCart();
+            Users us = new Users();
+            var usuario1 = User.Identity.Name;
+            var id = sh.User(usuario1);
+
+            string _imgname = string.Empty;
+            if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                var pic = System.Web.HttpContext.Current.Request.Files["MyImages"];
+                if (pic.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(pic.FileName);
+                    var _ext = Path.GetExtension(pic.FileName);
+                    if (fileName.ToLower().EndsWith(".png") || fileName.ToLower().EndsWith(".jpg"))
+                    {
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { Message = "Upload Success" });
+                    }
+                    _imgname = Guid.NewGuid().ToString().Replace("-", "");
+                    var _comPath = Server.MapPath("~/Content/Uploads/Photo/") + _imgname + _ext;
+
+                    ViewBag.Msg = _comPath;
+                    var path = _comPath;
+
+                    // Saving Image in Original Mode
+                    pic.SaveAs(path);
+
+                    // resizing image
+                    MemoryStream ms = new MemoryStream();
+                    WebImage img = new WebImage(_comPath);
+
+                    if (img.Width > 130)
+                        img.Resize(130, 130);
+                    img.Save(_comPath);
+                    // end resize
+                    var userupdate = us.UpdateUserImage(_comPath, id);
+                    if (userupdate != null || userupdate.Length > 1)
+                    {
+                        return Json(userupdate, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { Message = "Upload Failed" });
+                        //return Json(new { x, JsonRequestBehavior.AllowGet });
+                    }
+
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { Message = "Upload Failed" });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", new { Message = "Upload Failed" });
+            }
         }
 
         //public PartialViewResult Index()
@@ -130,7 +195,7 @@ namespace DekkOnlineMVC.Controllers
                         pro = new Framework.Libraies.ResultUserOrder
                         {
                             product = item.product,
-                        user = item.user
+                            user = item.user
                         };
                     }
                 }
@@ -191,7 +256,7 @@ namespace DekkOnlineMVC.Controllers
             {
                 string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
                 Users us = new Users();
-               var emailvalidate = us.ValidateUserEmail(email, idUser);
+                var emailvalidate = us.ValidateUserEmail(email, idUser);
                 if (emailvalidate == false)
                 {
                     return Json(new { Success = true });
@@ -219,13 +284,13 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Users us = new Users();
-                  var update =  us.UpdateDataUser(zipcore, name, lastname, address, email, mobile, idUser);
+                    var update = us.UpdateDataUser(zipcore, name, lastname, address, email, mobile, idUser);
                     if (update == true)
                     {
                         user = us.dataUser(idUser);
                         foreach (var item in user)
                         {
-                            b = new Framework.Libraies.ResultDataUser { ZipCode = item.ZipCode, FirstName=item.FirstName, LastName = item.LastName, Address=item.Address, Email = item.Email, Phone = item.Phone };
+                            b = new Framework.Libraies.ResultDataUser { ZipCode = item.ZipCode, FirstName = item.FirstName, LastName = item.LastName, Address = item.Address, Email = item.Email, Phone = item.Phone };
                         }
                         return Json(b, JsonRequestBehavior.AllowGet);
                     }
@@ -247,5 +312,43 @@ namespace DekkOnlineMVC.Controllers
             }
 
         }
+
+
+        [HttpPost]
+        public JsonResult InfoWorkShop(int Orden)
+        {
+            List<ResultWorkshop> lista = null;
+            bool error = false;
+            var resultado = (dynamic)null;
+            try
+            {
+                Workshop workshop = new Workshop();
+
+                lista = workshop.infoWorkShop(Orden);
+
+                if (lista != null)
+                {
+                    foreach (var item in lista)
+                    {
+                        resultado = new Framework.Libraies.ResultWorkshop { IdWorkshop = item.IdWorkshop, Name = item.Name, Address = item.Address, Phone = item.Phone, Email = item.Email, WorkImage = item.WorkImage };
+                    }
+                    error = false;
+                }
+                else
+                {
+                    error = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return Json(new { error, resultado });
+
+        }
+
     }
 }

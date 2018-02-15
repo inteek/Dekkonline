@@ -307,7 +307,7 @@
     <Property Name="ZipCode" Type="int" />
     <Property Name="Latitude" Type="varchar" MaxLength="50" />
     <Property Name="Length" Type="varchar" MaxLength="50" />
-    <Property Name="Image" Type="nvarchar" MaxLength="128" />
+    <Property Name="Image" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="UserPoints">
     <Key>
@@ -351,6 +351,14 @@
     <Property Name="IdWorkshop" Type="int" />
     <Property Name="IdService" Type="int" />
     <Property Name="Price" Type="money" />
+  </EntityType>
+  <EntityType Name="WorkshopUser">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="idWorkshop" Type="int" />
   </EntityType>
   <Association Name="fk_CodepromUser">
     <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
@@ -569,6 +577,7 @@
     <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopAppointment" EntityType="Self.WorkshopAppointment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopServices" EntityType="Self.WorkshopServices" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkshopUser" EntityType="Self.WorkshopUser" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fk_CodepromUser" Association="Self.fk_CodepromUser">
       <End Role="PromotionCode" EntitySet="PromotionCode" />
       <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />

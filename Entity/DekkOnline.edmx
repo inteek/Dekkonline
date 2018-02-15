@@ -312,7 +312,7 @@
           <Property Name="ZipCode" Type="int" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Length" Type="varchar" MaxLength="50" />
-          <Property Name="Image" Type="nvarchar" MaxLength="128" />
+          <Property Name="Image" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="UserPoints">
           <Key>
@@ -330,6 +330,7 @@
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Address" Type="varchar" MaxLength="150" />
           <Property Name="Phone" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="ZipCode" Type="int" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Length" Type="varchar" MaxLength="50" />
@@ -356,6 +357,14 @@
           <Property Name="IdWorkshop" Type="int" />
           <Property Name="IdService" Type="int" />
           <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="WorkshopUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUser" Type="nvarchar" MaxLength="128" />
+          <Property Name="idWorkshop" Type="int" />
         </EntityType>
         <Association Name="fk_CodepromUser">
           <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
@@ -574,6 +583,7 @@
           <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkshopAppointment" EntityType="Self.WorkshopAppointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkshopServices" EntityType="Self.WorkshopServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkshopUser" EntityType="Self.WorkshopUser" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_CodepromUser" Association="Self.fk_CodepromUser">
             <End Role="PromotionCode" EntitySet="PromotionCode" />
             <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
@@ -906,8 +916,9 @@
             <End Role="DeliveryType" EntitySet="DeliveryType" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
-          <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
           <EntitySet Name="Orders" EntityType="dekkOnlineModel.Orders" />
+          <EntitySet Name="WorkshopUser" EntityType="dekkOnlineModel.WorkshopUser" />
+          <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
           </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -1167,7 +1178,7 @@
           <Property Name="ZipCode" Type="Int32" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Appointments">
           <Key>
@@ -1249,20 +1260,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Workshop">
-          <Key>
-            <PropertyRef Name="IdWorkshop" />
-          </Key>
-          <Property Name="IdWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="Int32" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Average" Type="Int32" />
-        </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="id" />
@@ -1277,6 +1274,29 @@
           <Property Name="EstimatedDate" Type="DateTime" Precision="3" />
           <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
           <Property Name="Delivered" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="WorkshopUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="idWorkshop" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Workshop">
+          <Key>
+            <PropertyRef Name="IdWorkshop" />
+          </Key>
+          <Property Name="IdWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Average" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1629,21 +1649,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Workshop">
-            <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
-              <MappingFragment StoreEntitySet="Workshop">
-                <ScalarProperty Name="Average" ColumnName="Average" />
-                <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="dekkOnlineModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
@@ -1657,6 +1662,31 @@
                 <ScalarProperty Name="Payment" ColumnName="Payment" />
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkshopUser">
+            <EntityTypeMapping TypeName="dekkOnlineModel.WorkshopUser">
+              <MappingFragment StoreEntitySet="WorkshopUser">
+                <ScalarProperty Name="idWorkshop" ColumnName="idWorkshop" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workshop">
+            <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
+              <MappingFragment StoreEntitySet="Workshop">
+                <ScalarProperty Name="Average" ColumnName="Average" />
+                <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

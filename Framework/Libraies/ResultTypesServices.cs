@@ -10,6 +10,7 @@ namespace Framework.Libraies
     {
         public int IdService { get; set; }
         public string Description { get; set; }
+        public string Name { get; set; }
         public Nullable<decimal> Price { get; set; }
         public int idWorkshop { get; set; }
 

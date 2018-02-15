@@ -269,6 +269,7 @@
     </AssociationSet>
     <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
     <EntitySet Name="Orders" EntityType="dekkOnlineModel.Orders" />
+    <EntitySet Name="WorkshopUser" EntityType="dekkOnlineModel.WorkshopUser" />
   </EntityContainer>
   <EntityType Name="ShoppingCart">
     <Key>
@@ -528,7 +529,7 @@
     <Property Name="ZipCode" Type="Int32" />
     <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Appointments">
     <Key>
@@ -638,5 +639,13 @@
     <Property Name="EstimatedDate" Type="DateTime" Precision="3" />
     <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
     <Property Name="Delivered" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="WorkshopUser">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="idWorkshop" Type="Int32" />
   </EntityType>
 </Schema>

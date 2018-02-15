@@ -50,7 +50,8 @@ namespace Entity
         public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<PromoCodeUsed> PromoCodeUsed { get; set; }
         public virtual DbSet<DeliveryType> DeliveryType { get; set; }
-        public virtual DbSet<Workshop> Workshop { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<WorkshopUser> WorkshopUser { get; set; }
+        public virtual DbSet<Workshop> Workshop { get; set; }
     }
 }

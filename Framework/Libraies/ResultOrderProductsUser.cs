@@ -24,5 +24,7 @@ namespace Framework.Libraies
         public string estimated2 { get; set; }
         public Nullable<DateTime> Datedelivered1 { get; set; }
         public string Datedelivered2 { get; set; }
+        public int idWorkShop { get; set; }
+        public string Address { get; set; }
     }
 }

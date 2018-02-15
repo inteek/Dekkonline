@@ -19,6 +19,11 @@ namespace Framework.Libraies
         public Nullable<System.DateTime> DeliveredDate { get; set; }
         public string UsedPromo { get; set; }
         public string Comments { get; set; }
+        public int Total { get; set; }
+        public Nullable<System.DateTime> datesale { get; set; }
+        public Nullable<System.DateTime> dateest { get; set; }
+        public string datesale2 { get; set; }
+        public string dateest2 { get; set; }
 
     }
 }

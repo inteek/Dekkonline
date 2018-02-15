@@ -574,9 +574,8 @@ namespace Framework
 
         }
 
-        public bool UpdateUserImage(string path, string idUser1)
+        public string UpdateUserImage(string path, string idUser1)
         {
-            bool result = false;
             try
             {
                 using (var db = new dekkOnlineEntities())
@@ -587,20 +586,20 @@ namespace Framework
                         UserInfo.Image = path;
                         db.Entry(UserInfo).State = EntityState.Modified;
                         db.SaveChanges();
-                        result = true;
+                        var image = db.UserAddress.Where(s => s.IdUser == idUser1).Select(s => s.Image).FirstOrDefault();
+                        return image;
                     }
                     else
                     {
-                        result = false;
+                        return null;
                     }
 
-                    return result;
                 }
             }
             catch (Exception ex)
             {
 
-                return false;
+                return null;
             }
 
         }

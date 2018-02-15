@@ -232,6 +232,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\WorkshopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -429,6 +430,8 @@
     <Content Include="Scripts\plugins\bootstrap-slider.min.js" />
     <Content Include="Scripts\plugins\c3.min.js" />
     <Content Include="Scripts\plugins\d3.min.js" />
+    <Content Include="Scripts\plugins\datatables.js" />
+    <Content Include="Scripts\plugins\datatables.min.js" />
     <Content Include="Scripts\plugins\fullcalendar.min.js" />
     <Content Include="Scripts\plugins\jquery.dataTables.min.js" />
     <Content Include="Scripts\plugins\jquery.easypiechart.min.js" />
@@ -449,6 +452,7 @@
     <Content Include="Scripts\Site\Profile.js" />
     <Content Include="Scripts\Site\ShoppingCartIndex.js" />
     <Content Include="Scripts\Site\ShoppingCartStep3.js" />
+    <Content Include="Scripts\Site\Workshop.js" />
     <Content Include="Scripts\Step2.js" />
     <Content Include="Scripts\vendors.js" />
     <Content Include="Styles\bootstrap-switch.css" />
@@ -456,6 +460,8 @@
     <Content Include="Styles\bootstrap-theme.min.css" />
     <Content Include="Styles\bootstrap.css" />
     <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\datatables.css" />
+    <Content Include="Styles\datatables.min.css" />
     <Content Include="Styles\Dimension.css" />
     <Content Include="Styles\Dimensiones.css" />
     <Content Include="Styles\main.min.css" />
@@ -534,6 +540,11 @@
     <Content Include="Views\ShoppingCart\Step2.cshtml" />
     <Content Include="Views\ShoppingCart\Step3.cshtml" />
     <Content Include="Views\ShoppingCart\Step4.cshtml" />
+    <Content Include="Views\Workshop\Index.cshtml" />
+    <Content Include="Views\Workshop\Past.cshtml" />
+    <Content Include="Views\Workshop\Pending.cshtml" />
+    <Content Include="Views\Workshop\Schedule.cshtml" />
+    <Content Include="Views\Workshop\Services.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

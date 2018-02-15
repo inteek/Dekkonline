@@ -299,6 +299,9 @@
     <Content Include="photos\categories\a8ce9610-8011-46bc-9abe-00bc358defac12.png" />
     <Content Include="photos\noPhoto.png" />
     <Content Include="photos\ourCategories\0.png" />
+    <Content Include="photos\products\202.jpg" />
+    <Content Include="photos\products\multiple\170712094118\llanta1.jpg" />
+    <Content Include="photos\products\multiple\170712094118\llanta2.png" />
     <Content Include="Scripts\bootstrap-growl.js" />
     <Content Include="Scripts\bootstrap-growl.min.js" />
     <Content Include="Scripts\bootstrap-switch.js" />
@@ -749,7 +752,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="photos\brands\" />
-    <Folder Include="photos\products\multiple\" />
     <Folder Include="photos\thumbs\" />
     <Folder Include="photos\tmp\" />
   </ItemGroup>

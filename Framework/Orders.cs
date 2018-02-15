@@ -122,14 +122,14 @@ namespace Framework
                         }
                         if (deliverydate == null)
                         {
-                            addOrder.EstimatedDate = idDelivery.Date;
+                            addOrder.EstimatedDate = Convert.ToDateTime(deliverydate2);
                         }
                         else
                         {
-                            DateTime f = deliverydate.Date;
+                            DateTime f = (DateTime)idDelivery.Date;
 
                             string a = f.ToString("d");
-                            a = a + " " + deliverydate.Time;                           
+                            a = a + " " + idDelivery.Time;
 
                             //DateTime newDateTime = fecha.Add(TimeSpan.Parse(deliverydate.Time));
                             addOrder.EstimatedDate = Convert.ToDateTime(a);
@@ -180,6 +180,7 @@ namespace Framework
             }
         }
 
+
         //DE-25 1
         public List<ResultUserOrder> loadOrderPending(string idUser)
         {
@@ -201,6 +202,7 @@ namespace Framework
                     products = (from pro in db.products
                                 join ord in db.OrdersDetail on pro.proId equals ord.proId
                                 join or in db.Orders on ord.OrderMain equals or.id
+                                join de in db.DeliveryType on or.DeliveryAddress equals de.IdDelivery
                                 where or.idUser.Equals(idUser) && or.Delivered == false && or.DeliveredDate == null
                                 select new ResultOrderProductsUser
                                 {
@@ -213,7 +215,9 @@ namespace Framework
                                     totalpriceprod = Math.Truncate((double)ord.price),
                                     orders = or.id.ToString(),
                                     estimated1 = (DateTime)or.EstimatedDate,
-                                    orderdte1 = (DateTime)or.DateS
+                                    orderdte1 = (DateTime)or.DateS,
+                                    idWorkShop = (int)de.IdWorkshop,
+                                    Address = de.Address
                                 }).ToList();
                     foreach (var item in products)
                     {

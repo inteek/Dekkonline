@@ -6,9 +6,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Styles.Render("~/Styles/Dimension.css?v=8")
+@Styles.Render("~/Styles/Dimension.css?v=5")
 
-<div class="col-md-12 mb30" style="font-family:Arial">
+<div class="col-md-12 mb30" style="font-family:Arial; margin-top:20px; margin-bottom:20px;">
     <!-- tab style -->
     <div class="clearfix">
         <ul class="nav nav-tabs">
@@ -26,8 +26,8 @@
                     <div class="container">
                         <div class="row dimension">
                             <div class="insidebox">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
+                                <div class="col-lg-2  col-sm-2 col-xs-12 infoPerfilrespons">
+                                    <div class="form-group" style="margin-top:10px;">
                                         @*@if (Model.Image == null)
                                             {*@
                                         <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
@@ -38,19 +38,19 @@
                                                 <img src="@Model.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
                                             }*@
                                     </div>
-                                    <div class="form-group ">
-                                        <h4><strong><label id="titlename">@Model.FirstName @Model.LastName</label></strong></h4>
-                                    </div>
                                     <div class="form-group">
-                                        <h6><label id="titleemail">@Model.Email</label> </h6>
+                                        <h4 class="colorGris"><strong><label id="titlename">@Model.FirstName @Model.LastName</label></strong></h4>
+                                    </div>
+                                    <div class="form-group colorGris" style="margin-top:-13px;">
+                                        <h6 class="colorGris"><label id="titleemail">@Model.Email</label> </h6>
                                     </div>
                                     <br />
-                                    <div class="form-group ">
-                                        <h4><strong>Your cars</strong></h4>
+                                    @*<div class="form-group colorGris ocultarYourcard" style="margin-top:-20px;">
+                                        <h4 class="colorGris"><strong>Your cars</strong></h4>
                                     </div>
-                                    <div class="form-group ">
-                                        <h6>pendiente</h6>
-                                    </div>
+                                    <div class="form-group colorGris ocultarYourcard" style="margin-top:-11px;">
+                                        <h6 class="colorGris"></h6>
+                                    </div>*@
                                     <div class="form-group">
                                         @*<form action="" method="post" enctype="multipart/form-data">
                                                 <fieldset>
@@ -73,39 +73,39 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-10">
-                                    <div class="col-sm-6">
-                                        <h3><span class="title"><strong style="color:#e51111">Personal Information: </strong></span><span class="glyphicon glyphicon-edit" style="color:darkgray;cursor:pointer"></span></h3>
-                                        <div class="col-sm-9">
+                                <div class="col-lg-10  col-sm-2 col-xs-12 margintopperonalinfo">
+                                    <div class="col-sm-6 marginTextInfo">
+                                        <h3 class="marginInformation movertextoleft"><span class="title"><strong class="personInformation">Personal Information: </strong></span><span class="glyphicon glyphicon-edit" style="color:darkgray;cursor:pointer"></span></h3>
+                                        <div class="col-sm-9 marginleftInfo">
                                             <div class="left2">
                                                 <div class="form-group">
-                                                    <label style="color:#1167af">Zip Code: </label> <label class="lab" id="zip">@Model.ZipCode</label>
+                                                    <label class="perfilInfo">Zip Code: </label> <label class="lab perfilInfo2" id="zip">@Model.ZipCode</label>
                                                     <input type="number" class="form-control borderInput e hidden" id="ZipCode" placeholder="">
                                                     <span class="req1 hidden" style="color:red">*Insert a valid Zip Code(4 digits)</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af"> Name: </label> <label class="lab" id="fname">@Model.FirstName</label>
+                                                    <label class="perfilInfo"> Name: </label> <label class="lab  perfilInfo2" id="fname">@Model.FirstName</label>
                                                     <input type="text" class="form-control borderInput e hidden" id="Firstname" placeholder="">
                                                     <span class="req2 hidden" style="color:red">*Insert a Name(50 characters max)</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af"> Last Name: </label> <label class="lab" id="lname">@Model.LastName</label>
+                                                    <label class="perfilInfo"> Last Name: </label> <label class="lab  perfilInfo2" id="lname">@Model.LastName</label>
                                                     <input type="text" class="form-control borderInput e hidden" id="LastName" placeholder="">
                                                     <span class="req3 hidden" style="color:red">*Insert a Lastname(50 characters max)</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af">  Address: </label> <label class="lab" id="adrs">@Model.Address</label>
+                                                    <label class="perfilInfo">  Address: </label> <label class="lab  perfilInfo2" id="adrs">@Model.Address</label>
                                                     <input type="text" class="form-control borderInput e hidden" id="Address" placeholder="">
                                                     <span class="req4 hidden" style="color:red">*Insert a Address(150 characters max)</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af">  E-mail: </label> <label class="lab" id="em">@Model.Email</label>
+                                                    <label class="perfilInfo">  E-mail: </label> <label class="lab  perfilInfo2" id="em">@Model.Email</label>
                                                     <input type="text" class="form-control borderInput e hidden" id="Email1" placeholder="">
                                                     <span class="req5 hidden" style="color:red">*Insert a valid Email</span>
                                                     <span class="req7 hidden" style="color:red">*Email already taken</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af"> Mobile: </label> <label class="lab" id="movil">@Model.Phone</label>
+                                                    <label class="perfilInfo"> Mobile: </label> <label class="lab  perfilInfo2" id="movil">@Model.Phone</label>
                                                     <input type="number" class="form-control borderInput e hidden" id="Phone" placeholder="" value="@Model.Phone">
                                                     <span class="req6 hidden" style="color:red">*Insert a valide phone(15 digits)</span>
                                                 </div>
@@ -114,13 +114,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-1 vl"></div>
+                                    @*<div class="col-sm-1 vl"></div>
                                     <div class="col-sm-3">
-                                        <h3><span class="title"><strong style="color:#e51111">Your cars:</strong></span></h3>
-                                        <div class="form-group">
-                                            pendiente @*MOdel*@
+                                        <h3><span class="title"><strong style="color:#d51d1d">Your cars:</strong></span></h3>
+                                        <div class="form-group" style="color:#635b5b;">
+                                            <span class="glyphicon glyphicon-plus-sign" style="color:#595555;cursor:pointer"></span>
+                                            <label>Add car</label>
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
