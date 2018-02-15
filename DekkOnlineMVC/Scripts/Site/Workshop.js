@@ -220,7 +220,6 @@ return false;
         var data_row = oTable4.row($(this).closest('tr')).data();
         var id = data_row["IdOrderDetail"];
         filltablePendingdetail(id);
-        $("#modalpending").modal('show');
     });
     $("#closependingdetail").on("click", function () {
         $("#txtidorder").text("");
@@ -777,14 +776,13 @@ function filltablePendingdetail(id) {
     };
     conectarAsy("../Workshop/ResultPendingOrderWorkshop", data, function (result) {
         if (result != null && result.Success != false) {
-            var order = result['orders'];
-            var fname = result['FirstName'];
-            var lname = result['LastName'];
-            var email = result['Email'];
-            $("#txtidorder").text(order);
+            var fname = result['0'].FirstName;
+            var lname = result['0'].LastName;
+            var email = result['0'].Email;
             $("#txtname").text(fname + " " + lname);
             $("#txtemail").text(email);
             configGridPendingdetail(result);
+            $("#modalpending").modal('show');
         }
         else if (result.Success == false) {
             return false;

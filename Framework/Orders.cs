@@ -268,7 +268,6 @@ namespace Framework
                     products = (from pro in db.products
                                 join ord in db.OrdersDetail on pro.proId equals ord.proId
                                 join or in db.Orders on ord.OrderMain equals or.id
-                                join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
                                 where or.idUser.Equals(idUser) && or.DeliveredDate != null && or.Delivered == true
                                 select new ResultOrderProductsUser
                                 {

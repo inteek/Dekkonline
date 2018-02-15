@@ -325,6 +325,7 @@
     <Property Name="Name" Type="varchar" MaxLength="100" />
     <Property Name="Address" Type="varchar" MaxLength="150" />
     <Property Name="Phone" Type="varchar" MaxLength="30" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
     <Property Name="ZipCode" Type="int" />
     <Property Name="Latitude" Type="varchar" MaxLength="50" />
     <Property Name="Length" Type="varchar" MaxLength="50" />

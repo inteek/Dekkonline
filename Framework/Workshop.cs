@@ -936,8 +936,7 @@ namespace Framework
                     products = (from pro in db.products
                                 join ord in db.OrdersDetail on pro.proId equals ord.proId
                                 join or in db.Orders on ord.OrderMain equals or.id
-                                join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
-                                where del.IdWorkshop.ToString() == idWork && or.Delivered == false && or.DeliveredDate == null && or.id == orderid
+                                where or.Delivered == false && or.DeliveredDate == null && or.id == orderid
                                 select new ResultOrderProductsUser
                                 {
                                     proId = ord.proId,
@@ -968,8 +967,8 @@ namespace Framework
                             LastName = userdata2.LastName,
                             Email = userdata2.Email,
                             proId = item.proId,
-                            Name = item.proName,
-                            Description = item.proDescription,
+                            Name = item.Name,
+                            Description = item.Description,
                             quantity = item.quantity,
                             totalpriceprod = item.totalpriceprod,
                             orders = item.orders }

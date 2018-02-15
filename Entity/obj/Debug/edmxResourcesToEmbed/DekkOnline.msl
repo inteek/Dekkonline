@@ -346,21 +346,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Workshop">
-      <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
-        <MappingFragment StoreEntitySet="Workshop">
-          <ScalarProperty Name="Average" ColumnName="Average" />
-          <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
-          <ScalarProperty Name="Length" ColumnName="Length" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="dekkOnlineModel.Orders">
         <MappingFragment StoreEntitySet="Orders">
@@ -383,6 +368,22 @@
           <ScalarProperty Name="idWorkshop" ColumnName="idWorkshop" />
           <ScalarProperty Name="idUser" ColumnName="idUser" />
           <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Workshop">
+      <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
+        <MappingFragment StoreEntitySet="Workshop">
+          <ScalarProperty Name="Average" ColumnName="Average" />
+          <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
