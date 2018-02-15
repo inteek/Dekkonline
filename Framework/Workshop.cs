@@ -1147,5 +1147,125 @@ namespace Framework
         }
 
 
+        //DE-25 1
+        public List<ResultPendingOrderWorkshop> loadOrderPastdata(string idWork, int orderid)
+        {
+            try
+            {
+                var products = (dynamic)null;
+                List<ResultPendingOrderWorkshop> order = null;
+                List<ResultPendingOrderWorkshop> order2 = new List<ResultPendingOrderWorkshop>();
+                using (var db = new dekkOnlineEntities())
+                {
+                    var userdata2 = (from us in db.AspNetUsers
+                                     join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                     join or in db.Orders on us.Id equals or.idUser
+                                     join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
+                                     where del.IdWorkshop.ToString() == idWork && or.id == orderid
+                                     select new
+                                     {
+                                         FirstName = us2.FirstName,
+                                         LastName = us2.LastName,
+                                         Email = us.Email
+                                     }).FirstOrDefault();
+                    products = (from pro in db.products
+                                join ord in db.OrdersDetail on pro.proId equals ord.proId
+                                join or in db.Orders on ord.OrderMain equals or.id
+                                where or.Delivered == true && or.DeliveredDate != null && or.id == orderid
+                                select new ResultOrderProductsUser
+                                {
+                                    proId = ord.proId,
+                                    Image = pro.proImage,
+                                    Name = pro.proName,
+                                    Description = pro.proDescription,
+                                    quantity = ord.quantity,
+                                    totalpriceprod = Math.Truncate((double)ord.price),
+                                    orders = or.id.ToString(),
+                                    estimated1 = (DateTime)or.DeliveredDate,
+                                    orderdte1 = (DateTime)or.DateS
+                                }).ToList();
+                    foreach (var item in products)
+                    {
+                        var dateE = item.estimated1;
+                        dateE = dateE.ToString("D");
+                        var dateO = item.orderdte1;
+                        dateO = dateO.ToString("D");
+                        item.estimated2 = dateE;
+                        item.orderdte2 = dateO;
+                    }
+                    foreach (var item in products)
+                    {
+                        order = new List<ResultPendingOrderWorkshop>
+                        {
+                            new ResultPendingOrderWorkshop{
+                            FirstName = userdata2.FirstName,
+                            LastName = userdata2.LastName,
+                            Email = userdata2.Email,
+                            proId = item.proId,
+                            Name = item.Name,
+                            Description = item.Description,
+                            quantity = item.quantity,
+                            totalpriceprod = item.totalpriceprod,
+                            orders = item.orders }
+                        };
+                        order2.AddRange(order);
+                    }
+
+                    return order2;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+        //DE-25 1
+        public List<ResultOrders> loadOrderPastmain(string idWork)
+        {
+            try
+            {
+                var products = (dynamic)null;
+                List<ResultDataUser> userdata = new List<ResultDataUser>();
+                using (var db = new dekkOnlineEntities())
+                {
+
+                    products = (from or in db.Orders
+                                join ord in db.OrdersDetail on or.id equals ord.OrderMain
+                                join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
+                                where del.IdWorkshop.ToString() == idWork && or.Delivered == true && or.DeliveredDate != null
+
+                                select new ResultOrders
+                                {
+                                    IdOrderDetail = or.id,
+                                    UsedPromo = or.PromoCode,
+                                    TotalPrice = (int)or.Total,
+                                    datesale = or.DateS,
+                                    dateest = or.DeliveredDate
+
+                                }).ToList();
+                    foreach (var item in products)
+                    {
+                        var dateE = item.dateest;
+                        dateE = dateE.ToString("D");
+                        var dateO = item.datesale;
+                        dateO = dateO.ToString("D");
+                        item.dateest2 = dateE;
+                        item.datesale2 = dateO;
+                    };
+                    return products;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+
     }
 }

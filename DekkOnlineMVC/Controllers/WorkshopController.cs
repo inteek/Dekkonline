@@ -544,7 +544,78 @@ namespace DekkOnlineMVC.Controllers
             return PartialView();
         }
 
+        [HttpPost]
+        public JsonResult ResultPastOrderWorkshop(string idwo, string order)
+        {
+            try
+            {
+                var user = (dynamic)null;
+                var user2 = (dynamic)null;
+                string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+                if (idUser != null && idUser != "")
+                {
+                    Workshop us = new Workshop();
+                    user = us.loadOrderPastdata(idwo, Convert.ToInt32(order));
+                    if (user != null || user.Count >= 0)
+                    {
 
+                        return Json(user, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { Success = false });
+                    }
+
+                }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult ResultPastOrderWorkshopmain(string idwo)
+        {
+            try
+            {
+                var user = (dynamic)null;
+                string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+                if (idUser != null && idUser != "")
+                {
+                    Workshop us = new Workshop();
+                    user = us.loadOrderPastmain(idwo);
+                    if (user != null || user.Count >= 0)
+                    {
+
+                        return Json(user, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { Success = false });
+                    }
+
+                }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
 
 
 

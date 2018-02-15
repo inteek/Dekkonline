@@ -4,6 +4,8 @@ var oTable2 = null;
 var oTable3 = null;
 var oTable4 = null;
 var oTable5 = null;
+var oTable6 = null;
+var oTable7 = null;
 var serviceasc;
 $(document).ready(function () {
 
@@ -222,9 +224,18 @@ return false;
         filltablePendingdetail(id);
     });
     $("#closependingdetail").on("click", function () {
-        $("#txtidorder").text("");
         $("#txtname").text("");
         $("#txtemail").text("");
+    });
+
+    $("#tblPast").on("click", ".detailorderpa", function () {
+        var data_row = oTable6.row($(this).closest('tr')).data();
+        var id = data_row["IdOrderDetail"];
+        filltablePastdetail(id);
+    });
+    $("#closependingdetail").on("click", function () {
+        $("#txtnamepast").text("");
+        $("#txtemailpast").text("");
     });
 
 });
@@ -783,6 +794,147 @@ function filltablePendingdetail(id) {
             $("#txtemail").text(email);
             configGridPendingdetail(result);
             $("#modalpending").modal('show');
+        }
+        else if (result.Success == false) {
+            return false;
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+};
+
+
+function configGridPast(dataSet) {
+    if (oTable6 != null) {
+        oTable6.destroy();
+    }
+    oTable6 = $('#tblPast')
+        .DataTable({
+            data: dataSet,
+            //language: {
+            //    "sProcessing": "Procesando...",
+            //    "sZeroRecords": "No file found",
+            //    "sInfoPostFix": "",
+            //    "sUrl": "",
+            //    "sInfoThousands": ",",
+            //    "sLoadingRecords": "Loading...",
+            //    "oPaginate": {
+            //        "sFirst": "First",
+            //        "sLast": "Last",
+            //        "sNext": "Next",
+            //        "sPrevious": "Prev"
+            //    },
+            //},
+            dom: 'Bfrtlip',
+            Columns: [
+                { "data": "IdOrderDetail" },
+                { "data": "UsedPromo" },
+                { "data": "TotalPrice" },
+                { "data": "datesale2" },
+                { "data": "dateest2" },
+            ],
+            bAutoWidth: false,
+            aoColumns: [
+                { sTitle: "ID", mData: "IdOrderDetail", bSortable: true },
+                { sTitle: "Promo", mData: "UsedPromo", bSortable: true },
+                { sTitle: "Total", mData: "TotalPrice", bSortable: true },
+                { sTitle: "Date Sale", mData: "datesale2", bSortable: true },
+                { sTitle: "Date delivered", mData: "dateest2", bSortable: true }
+
+            ],
+            "aoColumnDefs": [
+                {
+                    "aTargets": [5],
+                    "mData": null,
+                    "mRender": function (data, type, full) {
+                        return '<button class="detailorderpa"><span class="glyphicon glyphicon-list-alt"></span></button>';
+                    }
+                }
+            ],
+            "aaSorting": []
+
+            //"iDisplayLength": 50
+        });
+
+};
+
+function filltablePast() {
+    var data = {
+        idwo: idWork
+    };
+    conectarAsy("../Workshop/ResultPastOrderWorkshopmain", data, function (result) {
+        if (result != null && result.Success != false) {
+            configGridPast(result);
+        }
+        else if (result.Success == false) {
+            return false;
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+};
+
+function configGridPastdetail(dataSet) {
+    if (oTable7 != null) {
+        oTable7.destroy();
+    }
+    oTable7 = $('#tblPastdetail')
+        .DataTable({
+            data: dataSet,
+            //language: {
+            //    "sProcessing": "Procesando...",
+            //    "sZeroRecords": "No file found",
+            //    "sInfoPostFix": "",
+            //    "sUrl": "",
+            //    "sInfoThousands": ",",
+            //    "sLoadingRecords": "Loading...",
+            //    "oPaginate": {
+            //        "sFirst": "First",
+            //        "sLast": "Last",
+            //        "sNext": "Next",
+            //        "sPrevious": "Prev"
+            //    },
+            //},
+            dom: 'Bfrtlip',
+            Columns: [
+                { "data": "proId" },
+                { "data": "Name" },
+                { "data": "Description" },
+                { "data": "quantity" },
+                { "data": "totalpriceprod" }
+            ],
+            bAutoWidth: false,
+            aoColumns: [
+                { sTitle: "ID", mData: "proId", bSortable: true },
+                { sTitle: "Name", mData: "Name", bSortable: true },
+                { sTitle: "Description", mData: "Description", bSortable: true },
+                { sTitle: "Quantity", mData: "quantity", bSortable: true },
+                { sTitle: "Total", mData: "totalpriceprod", bSortable: true }
+
+            ],
+            "aaSorting": []
+
+            //"iDisplayLength": 50
+        });
+
+};
+
+function filltablePastdetail(id) {
+    var data = {
+        idwo: idWork,
+        order: id
+    };
+    conectarAsy("../Workshop/ResultPastOrderWorkshop", data, function (result) {
+        if (result != null && result.Success != false) {
+            var fname = result['0'].FirstName;
+            var lname = result['0'].LastName;
+            var email = result['0'].Email;
+            $("#txtnamepast").text(fname + " " + lname);
+            $("#txtemailpast").text(email);
+            configGridPastdetail(result);
+            $("#modalpast").modal('show');
         }
         else if (result.Success == false) {
             return false;

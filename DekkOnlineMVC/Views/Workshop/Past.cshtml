@@ -1,104 +1,70 @@
 ﻿@using System.Web.Optimization;
-@model Framework.Libraies.ResultUserOrder
+
 @{
     ViewBag.Title = "Past";
 }
-
-
+@Styles.Render("~/Styles/Dimensiones.css?v=6")
 <div class="contentPage">
     <div class="row">
-        <div class="col-lg-2">
-            @foreach (var item in Model.user)
-            {
-
-                <div class="form-group">
-                    <img src="~/fonts/user.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
-                </div>
-                <div class="form-group">
-                    <h4><strong><label id="titlenamep">@item.FirstName @item.LastName</label></strong></h4>
-                </div>
-                <div class="form-group">
-                    <h6><label id="titleemailp">@item.Email</label> </h6>
-                </div>
-                <br />
-                <div class="form-group">
-                    <h4><strong>Your cars</strong></h4>
-                </div>
-                <div class="form-group">
-                    <h6>Audi TT 2017</h6>
-                </div>
-                <div class="form-group">
-                    <h6>AB12345</h6>
-                </div>
-            }
+        <br />
+        <div class="row">
+            <div class="col-lg-9"></div>
+            <div class="col-lg-1">
+            </div>
         </div>
-        <div class="col-lg-8">
-            <div class="table-responsive">
-                <table class="table">
-                    <tbody>
-                        @if (Model.product.Count > 0)
-                        {
-                            foreach (var item in Model.product)
-                            {
-                        <tr>
-                            <td class="vertical" style="width:150px;">
-                                <div class="form-group" style="margin-top:40px; ">
-                                    <h5>Audi TT 2017</h5>
-                                </div>
-                                <div class="form-group">
-                                    <h5>Order number:</h5>
-                                </div>
-                                <div class="form-group">
-                                    <h5>@item.orders</h5>
-                                </div>
-                            </td>
-                            <td class="vertical2">
-                                <div class="col-lg-4">
-                                    <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width: 90px; height: 90px;" />
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="form-group">
-                                        <h4><strong>@item.Name</strong></h4>
-                                    </div>
-                                    <div class="form-group">
-                                        <h6><strong>@item.Description</strong></h6>
-                                    </div>
-                                </div>
-                            </td>
-                            <td style="margin-left:40px;">
-                                <div style="margin-left:30px;">
-                                    <div class="form-group">
-                                        <h5>Total: <strong> <span style="font-size:16px;">@item.totalpriceprod kr</span> </strong></h5>
-                                    </div>
-                                    <div class="form-group">
-                                        <h5>Status:<span style="font-size:12px;"> @item.Datedelivered2</span></h5>
-                                    </div>
-                                    <div class="form-group">
-                                        <h5 style="color:red; font-size:12px;">Rate:</h5>
-                                    </div>
-                                    <div class="form-group">
-                                        <h5 style="font-size:12px;">Workshop:</h5>
-                                    </div>
-                                </div>
-                            </td>
+        <br />
+        <div class="row">
+            <div class="col-lg-8"> <table id="tblPast" class="table table-striped table-bordered"> </table></div>
+        </div>
+    </div>
+</div>
 
-                        </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td class="vertical2">
-                                    <div class="col-lg-8">
-                                        <div class="form-group">
-                                            <h4><strong>No orders completed.</strong></h4>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+<div id="modalpast" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-xs">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Order Detail</h4>
+            </div>
+            <div id="bodyTT" class="modal-body">
+                <div class="row">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="div-form">
+                                    <label>
+                                        Customer  Name:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label id="txtnamepast" class="label-form"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="div-form">
+                                    <label>
+                                        Customer Email:
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label id="txtemailpast" class="label-form"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <strong class="modal-title">Order products</strong>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8"> <table id="tblPastdetail" class="table table-striped table-bordered"> </table></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closepastdetail" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
