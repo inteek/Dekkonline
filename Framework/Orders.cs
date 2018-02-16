@@ -7,6 +7,7 @@ using Entity;
 using Framework.Libraies;
 using System.Data.Entity;
 
+
 namespace Framework
 {
     public class Orders
@@ -60,6 +61,9 @@ namespace Framework
         //DE-8 2 cambios
         public bool addToPurchaseOrder(string idUser, int tar, string cn, string edm, string edy, int sc, string chn)
         {
+            var ivapor = System.Configuration.ConfigurationManager.AppSettings["ivapre"];
+            int ivpre = Convert.ToInt32(ivapor);
+            double ivapor2 = Convert.ToDouble((double)ivpre / 100);
             try
             {
                 using (var db = new dekkOnlineEntities())
@@ -67,7 +71,7 @@ namespace Framework
                     DbContextTransaction transaction = db.Database.BeginTransaction();
                     try
                     {
-
+                        var totaliva = (dynamic)null;
                         var idDelivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
                         var Address = db.UserAddress.Where(s => s.IdUser == idUser).OrderByDescending(s => s.Id).FirstOrDefault();
                         var product = db.ShoppingCart.Where(s => s.IdUser == idUser && s.Status == false).ToList();
@@ -98,12 +102,16 @@ namespace Framework
                         if (Procmocode != null)
                         {
                             prom = Procmocode.PromoCode;
-                            total = Procmocode.TotalPriceFinal;
+                            totaliva = Procmocode.TotalPriceFinal;
                         }
                         else
                         {
                             prom = "No promo";
                             total = product.Select(p => p.Price).Sum();
+                           totaliva = total;
+                            var iva = (double)totaliva * ivapor2;//TAX
+                            totaliva = (double)totaliva + iva;
+                            totaliva = (int)Math.Floor((decimal)totaliva);
                         }
                         var payment = db.Payment.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).FirstOrDefault();
                         var addOrder = new Entity.Orders();
@@ -138,7 +146,7 @@ namespace Framework
                         addOrder.Payment = payment.id;
                         addOrder.DeliveryAddress = idDelivery.IdDelivery;
                         addOrder.PromoCode = prom;
-                        addOrder.Total = total;
+                        addOrder.Total = totaliva;
                         addOrder.DateS = DateTime.Now;
                         addOrder.Delivered = false;
                         db.Orders.Add(addOrder);
@@ -373,6 +381,9 @@ namespace Framework
 
         public List<ResultProductsConfirmation> ObtainProductsConfirmed(string idUser)
         {
+            var ivapor = System.Configuration.ConfigurationManager.AppSettings["ivapre"];
+            int ivpre = Convert.ToInt32(ivapor);
+            double ivapor2 = Convert.ToDouble((double)ivpre / 100);
             List<ResultProductsConfirmation> AddressWorkshop = (dynamic)null;
             List<ResultShoppingCartProduct> products = null;
             try
@@ -417,6 +428,7 @@ namespace Framework
                                            Mobile = us2.Phone,
                                        }).FirstOrDefault();
                     double? Total2 = products.Select(p => p.totalpriceprod).Sum();
+                    Total2 = (int)Math.Floor((decimal)Total2);
                     var Delivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
                     var workshop = db.Workshop.Where(s => s.IdWorkshop == Delivery.IdWorkshop).FirstOrDefault();
                     if (promocodeused == null)
@@ -427,6 +439,10 @@ namespace Framework
                             if (Delivery.IdAppointments == 0)
                             {
                                 DateTime dat = (DateTime)Delivery.Date;
+                                var totalnodec = Total2;
+                                var iva = totalnodec * ivapor2;//TAX
+                                totalnodec = totalnodec + iva;
+                                totalnodec = (int)Math.Floor((decimal)totalnodec);
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
@@ -444,12 +460,16 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (decimal)Total2}
+                                   Total = (int)totalnodec}
                                 };
                             }
                             else
                             {
                                 DateTime dat = (DateTime)Delivery.Date;
+                                var totalnodec = Total2;
+                                var iva = totalnodec * ivapor2;//TAX
+                                totalnodec = totalnodec + iva;
+                                totalnodec = (int)Math.Floor((decimal)totalnodec);
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
@@ -467,7 +487,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (decimal)Total2}
+                                   Total = (int)totalnodec}
                                 };
                             }
 
@@ -475,6 +495,10 @@ namespace Framework
                         else
                         {
                             DateTime dat = (DateTime)Delivery.Date;
+                            var totalnodec = Total2;
+                            var iva = totalnodec * ivapor2;//TAX
+                            totalnodec = totalnodec + iva;
+                            totalnodec = (int)Math.Floor((decimal)totalnodec);
                             AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
                            new ResultProductsConfirmation{ cart = products,
@@ -492,7 +516,7 @@ namespace Framework
                             Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
-                           Total = (decimal)Total2 }
+                           Total = (int)totalnodec }
                         };
                         }
                     }////promocode null
@@ -503,6 +527,9 @@ namespace Framework
                         {
                             if (Delivery.IdAppointments == 0)
                             {
+                                var totalpromo = promocodeused.TotalPriceFinal;
+                                totalpromo = (int)Math.Floor((decimal)totalpromo);
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
@@ -521,11 +548,13 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = promocodeused.TotalPriceFinal}
+                                   Total = (int)totalpromo}
                                 };
                             }
                             else
                             {
+                                var totalpromo = promocodeused.TotalPriceFinal;
+                                totalpromo = (int)Math.Floor((decimal)totalpromo);
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
@@ -544,13 +573,15 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = promocodeused.TotalPriceFinal}
+                                   Total = (int)totalpromo}
                                 };
                             }
                         }
                         else
                         {
                             DateTime dat = (DateTime)Delivery.Date;
+                            var totalpromo = promocodeused.TotalPriceFinal;
+                          totalpromo =   (int)Math.Floor((decimal)totalpromo);
                             AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
                            new ResultProductsConfirmation{ cart = products,
@@ -568,7 +599,7 @@ namespace Framework
                             Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
-                           Total = promocodeused.TotalPriceFinal }
+                           Total = (int)totalpromo }
                         };
                         }
                     }

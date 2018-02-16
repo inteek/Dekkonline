@@ -23,6 +23,6 @@ namespace Framework.Libraies
         public string Comments { get; set; }
         public string Rating { get; set; }
         public string Image { get; set; }
-        public decimal? Total { get; set; }
+        public int Total { get; set; }
     }
 }

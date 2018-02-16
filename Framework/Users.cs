@@ -697,5 +697,33 @@ namespace Framework
             SmtpServer.Send(mail);
         }
 
+        public bool ValidateUserworkshop(string id)
+        {
+           bool result = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var user = db.WorkshopUser.Where(s => s.idUser == id).FirstOrDefault();
+                    if (user != null)
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                return result;
+                throw;
+            }
+            return result;
+
+        }
+
     }
 }

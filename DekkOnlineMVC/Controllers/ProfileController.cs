@@ -28,6 +28,12 @@ namespace DekkOnlineMVC.Controllers
             if (usuario1 != "")
             {
                 var id = sh.User(usuario1);
+                var userworkshop = us.ValidateUserworkshop(id);
+                if (userworkshop == true)
+                {
+                    return RedirectToAction("Index", "Workshop");
+                }
+                else {
                 UserData = us.dataUser(id);
                 if (UserData != null)
                 {
@@ -46,7 +52,7 @@ namespace DekkOnlineMVC.Controllers
                         };
                     }
                 }
-
+                }
             }
             else
             {

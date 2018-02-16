@@ -217,7 +217,9 @@ namespace Framework
         //PRODUCTS IN CART DE-11 TASK 1 cambios
         public List<ResultAllCart> ProductsInCart(string User)//
         {
-
+            var ivapor = System.Configuration.ConfigurationManager.AppSettings["ivapre"];
+            int ivpre = Convert.ToInt32(ivapor);
+            double ivapor2 = Convert.ToDouble((double)ivpre / 100);
             List<ResultShoppingCartProduct> products = null;
             List<ResultAllCart> allcart = null;
             try
@@ -257,13 +259,17 @@ namespace Framework
                     }
                     if (promocodeused == null)
                     {
+                        var subtotal2 = subtotal1;
+                        var iva = subtotal2 * ivapor2;//TAX
+                        subtotal2 = subtotal2 + iva;
+                        subtotal2 = (int)Math.Floor((decimal)subtotal2);
                         allcart = new List<ResultAllCart> {
                         new ResultAllCart{
                         cart = products,
                         subtotal = (decimal)subtotal1,
                         promocode = promocode1,
                         points = points1,
-                        total = (decimal)subtotal1,
+                        total = (decimal)subtotal2,
                         promocodeapp = false} };
                     }
                     else
@@ -322,6 +328,9 @@ namespace Framework
         //VALIDATE PROMO CODE DE-11 cambios
         public bool ValidatePromoCode(string code, string idUser)
         {
+            var ivapor = System.Configuration.ConfigurationManager.AppSettings["ivapre"];
+            int ivpre = Convert.ToInt32(ivapor);
+            double ivapor2 = Convert.ToDouble((double)ivpre / 100);
             var promocodediscount = (dynamic)null;
             List<ResultShoppingCartProduct> products = null;
             try
@@ -351,6 +360,9 @@ namespace Framework
                         promocodediscount = promocodediscount / 100;
                         decimal totalpricepromocode = promocodediscount * (decimal)totalprice;
                         totalprice = totalprice - (double)totalpricepromocode;
+                        var iva = totalprice * ivapor2;//TAX
+                        totalprice = totalprice + iva;
+                        totalprice = (int)Math.Floor((decimal)totalprice);
                         Entity.PromoCodeUsed addpromo = new Entity.PromoCodeUsed();
                         addpromo.idUser = idUser;
                         addpromo.PromoCode = code;
@@ -457,6 +469,9 @@ namespace Framework
 
         public bool UpdateShoppingCart(string IdUser1, string idUserCookies)
         {
+            var ivapor = System.Configuration.ConfigurationManager.AppSettings["ivapre"];
+            int ivpre = Convert.ToInt32(ivapor);
+            double ivapor2 = Convert.ToDouble((double)ivpre / 100);
             bool result = false;
             using (var db = new dekkOnlineEntities())
             {
@@ -487,6 +502,9 @@ namespace Framework
                         promocodeusedck.TotalPrice = promocodeusedck.TotalPrice + price;
                         var totalfinal = promocodeusedck.TotalPrice - (percent * promocodeusedck.TotalPrice);
                         totalfinal = (int)Math.Floor((decimal)totalfinal);
+                        var iva = (double)totalfinal * ivapor2;//TAX
+                        totalfinal = totalfinal + (decimal)iva;
+                        totalfinal = (int)Math.Floor((decimal)totalfinal);
                         promocodeusedck.TotalPriceFinal = (decimal)totalfinal;
                         if (promocodeusedus != null)
                         {
@@ -500,6 +518,9 @@ namespace Framework
                         percent = percent / 100;
                         promocodeusedus.TotalPrice = promocodeusedus.TotalPrice + price;
                         var totalfinal = promocodeusedus.TotalPrice - (percent * promocodeusedus.TotalPrice);
+                        totalfinal = (int)Math.Floor((decimal)totalfinal);
+                        var iva = (double)totalfinal * ivapor2;//TAX
+                        totalfinal = totalfinal + (decimal)iva;
                         totalfinal = (int)Math.Floor((decimal)totalfinal);
                         promocodeusedus.TotalPriceFinal = (decimal)totalfinal;
                     }

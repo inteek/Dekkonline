@@ -8,7 +8,7 @@
 }
 @Styles.Render("~/Styles/Dimension.css?v=9")
 
-<div class="col-md-12 mb30" style="font-family:Arial">
+<div class="col-md-12 mb30" style="font-family:Arial; margin-top:20px; margin-bottom:20px;">
     <!-- tab style -->
     <div class="clearfix">
         <ul class="nav nav-tabs">
@@ -27,8 +27,8 @@
                     <div class="container">
                         <div class="row dimension">
                             <div class="insidebox">
-                                <div class="col-lg-2">
-                                    <div class="form-group imgup">
+                                <div class="col-lg-2 col-sm-2 col-xs-12 infoPerfilrespons">
+                                    <div class="form-group" style="margin-top:10px;">
                                         @if (Model.WorkImage != null)
                                         {
                                             <img src="@Model.WorkImage" class="imgdel" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
@@ -40,7 +40,7 @@
                                         }
                                     </div>
                                     <div class="form-group">
-                                        <h4><strong><label id="titlenamep">@Model.Name</label></strong></h4>
+                                        <h4 class="colorGris"><strong><label id="titlenamep">@Model.Name</label></strong></h4>
                                     </div>
                                     <br />
                                     @*<div class="form-group">
@@ -65,28 +65,35 @@
                                         </div>*@
                                 </div>
 
-                                <div class="col-lg-10">
-                                    <div class="col-sm-6">
-                                        <h3><span class="title"><strong style="color:#e51111">Workshop Information: </strong></span><span class="glyphicon glyphicon-edit" style="color:darkgray;cursor:pointer"></span></h3>
-                                        <div class="col-sm-9">
+                                <div class="col-lg-10 col-sm-2 col-xs-12 margintopperonalinfo">
+                                    <div class="col-sm-6 marginTextInfo">
+                                        <h3 class="marginInformation movertextoleft"><span class="title"><strong class="personInformation">Workshop Information: </strong></span><span class="glyphicon glyphicon-edit" style="color:darkgray;cursor:pointer"></span></h3>
+                                        <div class="col-sm-9 marginleftInfo">
                                             <div class="left2">
                                                 <div class="form-group">
-                                                    <label style="color:#1167af">Zip Code: </label> <label class="lab" id="zip">@Model.ZipCode</label>
+                                                    <label class="perfilInfo">Zip Code: </label> <label class="lab perfilInfo2"" id="zip">@Model.ZipCode</label>
                                                     <input type="number" class="form-control borderInput e hidden" id="ZipCode" placeholder="">
                                                     <span class="req1 hidden" style="color:red">*Insert a valid Zip Code(4 digits)</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af"> Name: </label> <label class="lab" id="fname">@Model.Name</label>
+                                                    <label class="perfilInfo"> Name: </label> <label class="lab perfilInfo2" id="fname">@Model.Name</label>
                                                     <input type="text" class="form-control borderInput e hidden" id="Firstname" placeholder="">
                                                     <span class="req2 hidden" style="color:red">*Insert a Name(50 characters max)</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af">  Address: </label> <label class="lab" id="adrs">@Model.Address</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-2 col-sm-2 col-xs-2">
+                                                            <label class="perfilInfo">  Address: </label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-sm-8 col-xs-6" style="word-wrap: break-word;">
+                                                            <label class="lab perfilInfo2" id="adrs" style="word-wrap: break-word;">@Model.Address</label>
+                                                        </div>
+                                                    </div>                                                    
                                                     <input type="text" class="form-control borderInput e hidden" id="Address" placeholder="">
                                                     <span class="req4 hidden" style="color:red">*Insert a Address(150 characters max)</span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label style="color:#1167af"> Mobile: </label> <label class="lab" id="movil">@Model.Phone</label>
+                                                    <label class="perfilInfo"> Mobile: </label> <label class="lab perfilInfo2" id="movil">@Model.Phone</label>
                                                     <input type="number" class="form-control borderInput e hidden" id="Phone" placeholder="" value="@Model.Phone">
                                                     <span class="req6 hidden" style="color:red">*Insert a valide phone(15 digits)</span>
                                                 </div>
@@ -95,13 +102,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-1 vl"></div>
+                                    @*<div class="col-sm-1 vl"></div>
                                     <div class="col-sm-3">
                                         <h3><span class="title"><strong style="color:#e51111">Your cars:</strong></span></h3>
                                         <div class="form-group">
-                                            pendiente @*MOdel*@
+                                            pendiente 
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -134,7 +141,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Site/Workshop.js?v=4")
+@Scripts.Render("~/Scripts/Site/Workshop.js?v=8")
 
 <script>
     $(document).ready(function () {

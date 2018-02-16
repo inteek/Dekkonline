@@ -331,10 +331,11 @@ function configGridschedule(dataSet) {
             ],
         "aoColumnDefs": [
             {
+                "width": "20%", "targets": 4,
                 "aTargets": [4],
                 "mData": null,
                 "mRender": function (data, type, full) {
-                    return '<button class="editsche"><span class="glyphicon glyphicon-edit"></span></button><button class="delsche"><span class="glyphicon glyphicon-remove"></span></button>';
+                    return '<button class="btn editsche"><span class="glyphicon glyphicon-edit"></span></button>&nbsp;&nbsp;<button class="btn delsche"><span class="glyphicon glyphicon-remove"></span></button>';
                 }
             }
         ],
@@ -383,10 +384,11 @@ function configGridservice(dataSet) {
             ],
             "aoColumnDefs": [
                 {
+                    "width": "20%", "targets": 4,
                     "aTargets": [4],
                     "mData": null,
                     "mRender": function (data, type, full) {
-                        return '<button class="editserv"><span class="glyphicon glyphicon-edit"></span></button><button class="delserv"><span class="glyphicon glyphicon-remove"></span></button>';
+                        return '<button class="btn editserv"><span class="glyphicon glyphicon-edit"></span></button>&nbsp;&nbsp;<button class="btn delserv"><span class="glyphicon glyphicon-remove"></span></button>';
                     }
                 }
             ],
