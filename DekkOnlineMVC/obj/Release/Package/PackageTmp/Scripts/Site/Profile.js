@@ -60,7 +60,60 @@ $(document).ready(function () {
         }
 
     });
+
+    $("#upload").on("click", function () {
+        var data = new FormData();
+        var files = $("#imageup").get(0).files;
+        if (files.length > 0) {
+            data.append("MyImages", files[0]);
+        }
+        else {
+            return false;
+        }
+
+        $.ajax({
+            url: "/Profile/UploadFile",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                //code after success
+                $(".imgup").remove();
+                $(".addpromoapp").append("<img src='" + response + "' class='imgdel' style='width: 130px; height: 130px; border: 1px solid #7F8C8D;' />");
+            },
+            error: function (er) {
+                alert(er);
+            }
+
+        });
+    });
+
 });
+
+
+
+function popouContactWorkShop(Orden) {
+
+    var data = {
+        Orden: Orden        
+    };
+    conectarAsy("../Profile/InfoWorkShop", data, function (result) {
+        if (result.error == false) {
+            
+            document.getElementById('indoImagen').src = result.resultado['WorkImage'];
+            $("#infoName").text(result.resultado['Name']);
+            $("#infoAddres").text(result.resultado['Address']);
+            $("#infoEmail").text(result.resultado['Email']);
+            $("#infoPhone").text(result.resultado['Phone']);               
+        }
+        else if (result.error == true) {
+            alert("Error");
+        }
+    });
+
+    $('#modalContactWorkShop').modal('show');
+}
 
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;

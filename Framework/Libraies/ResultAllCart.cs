@@ -15,5 +15,6 @@ namespace Framework.Libraies
         public bool promocodeapp { get; set; }
         public int points { get; set; }
         public decimal total { get; set; }
+        public string tax { get; set; }
     }
 }

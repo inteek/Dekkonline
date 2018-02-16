@@ -13,7 +13,7 @@
         <img src="~/Content/imgs/step3mobile.PNG" class="img-responsive imgmobile" />
     </div>
 </div>
-<div class="container" style="font-family:Arial">
+<div class="container" style="font-family:Arial;margin-bottom:50px;">
 
     <div class="row" style="border-bottom:1px solid #ddd">
         <table id="cart" class="table table-hover table-condensed">
@@ -150,7 +150,7 @@
                             <div class="col-lg-5">
                                 <h4 style="color: #105786; "><strong>@Model.WorkshopName</strong></h4>
                                 <p><strong>@Model.WorkshopAddress</strong></p>
-                                <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                @*<h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>*@
                             </div>
                         }
                         else
@@ -283,7 +283,7 @@
     <div class="row">
         <div class="form-group col-lg-12">
             <div class="col-sm-5 col-xs-8 terms">
-                <input type="checkbox" name="terms" class="terms2" id="terms2"> <a><span class="linkcolor2 textoAzul">I have read and accepted terms & conditions</span></a>
+                <input type="checkbox" name="terms" class="terms2" id="terms2"><span class="linkcolor3 textoAzul">I have read and accepted terms & conditions</span>
             </div>
             <div class="col-sm-8 col-xs-7 confirm">
                 <br />

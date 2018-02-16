@@ -252,7 +252,36 @@ namespace DekkOnlineMVC.Controllers
 
         public PartialViewResult Promos()
         {
-            return PartialView();
+            Orders or = new Orders();
+            ShoppingCart sh = new ShoppingCart();
+            var pending = (dynamic)null;
+            var idUser = Security.GetIdUser(this);
+            var usuario1 = User.Identity.Name;
+            var pro = (dynamic)null;
+            if (usuario1 != "")
+            {
+                var id = sh.User(usuario1);
+                pending = or.loadOrderPending(id);
+                if (pending != null)
+                {
+                    foreach (var item in pending)
+                    {
+                        pro = new Framework.Libraies.ResultUserOrder
+                        {
+                            product = item.product,
+                            user = item.user
+                        };
+                    }
+                }
+
+            }
+            else
+            {
+                Response.Redirect("~/Home/Index");
+            }
+
+
+            return PartialView(pro);
         }
 
         [HttpPost]

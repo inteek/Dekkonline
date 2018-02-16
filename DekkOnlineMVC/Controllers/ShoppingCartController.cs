@@ -41,7 +41,7 @@ namespace DekkOnlineMVC.Controllers
             {
                foreach (var item in pro)
                 {
-                     b = new Framework.Libraies.ResultAllCart { cart = item.cart, subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                     b = new Framework.Libraies.ResultAllCart { cart = item.cart, subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                    
                 }
                 return View(b);
@@ -85,7 +85,7 @@ namespace DekkOnlineMVC.Controllers
 
                         foreach (var item in products)
                         {
-                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         return Json(new { x, JsonRequestBehavior.AllowGet });
                     }
@@ -94,7 +94,7 @@ namespace DekkOnlineMVC.Controllers
                         products = sh.ProductsInCart(idUser);
                         foreach (var item in products)
                         {
-                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         if (x != null)
                         {
@@ -149,7 +149,7 @@ namespace DekkOnlineMVC.Controllers
 
                         foreach (var item in products)
                         {
-                          x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                          x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         return Json(new { x, qty, a, JsonRequestBehavior.AllowGet });
                     }
@@ -158,7 +158,7 @@ namespace DekkOnlineMVC.Controllers
                         products = sh.ProductsInCart(idUser);
                         foreach (var item in products)
                         {
-                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         return Json(new { x, qty, a, JsonRequestBehavior.AllowGet });
                     }
@@ -218,7 +218,7 @@ namespace DekkOnlineMVC.Controllers
 
                             foreach (var item in products)
                             {
-                                x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                                x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                             }
                             return Json(new { x, JsonRequestBehavior.AllowGet });
                         }
@@ -227,7 +227,7 @@ namespace DekkOnlineMVC.Controllers
                             products = sh.ProductsInCart(idUser);
                             foreach (var item in products)
                             {
-                                x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                                x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                             }
                             return Json(new { x, JsonRequestBehavior.AllowGet });
                         }
@@ -275,7 +275,7 @@ namespace DekkOnlineMVC.Controllers
 
                         foreach (var item in products)
                         {
-                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         return Json(new { x, JsonRequestBehavior.AllowGet });
                     }
@@ -284,7 +284,7 @@ namespace DekkOnlineMVC.Controllers
                         products = sh.ProductsInCart(idUser);
                         foreach (var item in products)
                         {
-                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp };
+                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         return Json(new { x, JsonRequestBehavior.AllowGet });
                     }

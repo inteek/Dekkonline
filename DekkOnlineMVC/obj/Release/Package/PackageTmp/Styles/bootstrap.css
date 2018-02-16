@@ -2253,7 +2253,7 @@ pre code {
   }
 }
 table {
-  background-color: transparent;
+    background-color: transparent;
 }
 caption {
   padding-top: 8px;
@@ -2278,7 +2278,7 @@ th {
   padding: 8px;
   line-height: 1.42857143;
   vertical-align: top;
-  border-top: 1px solid #ddd;
+  /*border-top: 1px solid #ddd;*/
 }
 .table > thead > tr > th {
   vertical-align: bottom;
@@ -4038,11 +4038,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #555;
-  cursor: default;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-bottom-color: transparent;
+    color: #555;
+    cursor: default;
+    background-color: #f3f2f2;
+    border: 1px solid #f3f2f2;
+    border-bottom-color: transparent;
 }
 .nav-tabs.nav-justified {
   width: 100%;

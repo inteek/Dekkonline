@@ -40,6 +40,9 @@ $(document).ready(function () {
 
     $("#txtZipCode").val(zipcodeLocal);
 });
+$(".reco").change(function () {
+    Workshopreco();
+});
 
 $("#comboPerson").click(function () {
     DeshabilitarInput();
@@ -312,12 +315,12 @@ $("#zipcode").on('keyup', function () {
 
                         "<div class='row blanco rowcat ocultarWorkshop' id='" + result.resultado[i].IdWorkshop + "' style='cursor:pointer;' onclick='popouWorkShop(\"" + result.resultado[i].Name + "\",\"" + result.resultado[i].IdWorkshop + "\")'>" +
                         "<div class='col-lg-2 col-xs-3'>" +
-                        "<img src='../Content/WorkShop/t1.jpg' style='width:110px; height: 105px;' />" +
+                        "<img src='" + result.resultado[i].WorkImage + "' style='width:110px; height: 105px;' />" +
                         "</div>" +
                         "<div class='col-lg-5 col-xs-8 catalago'>" +
                         "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.resultado[i].Name + "</strong></h4>" +
                         "<p class=''>" + result.resultado[i].Address + "</p>" +
-                        "<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
+                        //"<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
                         "</div>" +
                         "<div class='col-lg-2 catHiden'>" +
                         "<h3><strong>60 kr</strong></h3>" +
@@ -356,12 +359,12 @@ $("#txtZipCode").on('keyup', function () {
 
                         "<div class='row blanco rowcat ocultarWorkshop' id='" + result.resultado[i].IdWorkshop + "' style='cursor:pointer;' onclick='popouWorkShop(\"" + result.resultado[i].Name + "\",\"" + result.resultado[i].IdWorkshop + "\")'>" +
                         "<div class='col-lg-2 col-xs-3'>" +
-                        "<img src='../Content/WorkShop/t1.jpg' style='width:110px; height: 105px;' />" +
+                        "<img src='" + result.resultado[i].WorkImage + "' style='width:110px; height: 105px;' />" +
                         "</div>" +
                         "<div class='col-lg-5 col-xs-8 catalago'>" +
                         "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.resultado[i].Name + "</strong></h4>" +
                         "<p class=''>" + result.resultado[i].Address + "</p>" +
-                        "<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
+                        //"<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
                         "</div>" +
                         "<div class='col-lg-2 catHiden'>" +
                         "<h3><strong>60 kr</strong></h3>" +
@@ -378,9 +381,7 @@ $("#txtZipCode").on('keyup', function () {
     }
 }).keyup();
 
-$(".reco").change(function () {
-    Workshopreco();
-});
+
 
 function popouWorkShop(name, idWorkshop) {
     IdWorkshop = idWorkshop;
@@ -604,13 +605,12 @@ function Workshopreco() {
     var zipCode = $("#zipcode").val();
     var sel = $(".reco").val();
 
-    if (codeZip != null || codeZip != "") {
-        ZIPCODE = codeZip;
-    }
-    else {
+    if (zipCode != null || zipCode != "") {
         ZIPCODE = zipCode;
     }
-
+    else {
+        ZIPCODE = codeZip;
+    }
     var data = {
         zipCode: ZIPCODE,
         selection: sel
@@ -625,12 +625,12 @@ function Workshopreco() {
 
                     "<div class='row blanco rowcat ocultarWorkshop' id='" + result.b.workshop[i].IdWorkshop + "' style='cursor:pointer;' onclick='popouWorkShop(\"" + result.b.workshop[i].Name + "\",\"" + result.b.workshop[i].IdWorkshop + "\")'>" +
                     "<div class='col-lg-2 col-xs-3'>" +
-                    "<img src='../Content/WorkShop/t1.jpg' style='width:110px; height: 105px;' />" +
+                    "<img src='" + result.b.workshop[i].WorkImage + "' style='width:110px; height: 105px;' />" +
                     "</div>" +
                     "<div class='col-lg-5 col-xs-8 catalago'>" +
                     "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.b.workshop[i].Name + "</strong></h4>" +
                     "<p class=''>" + result.b.workshop[i].Address + "</p>" +
-                    "<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
+                    //"<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
                     "</div>" +
                     "<div class='col-lg-2 catHiden'>" +
                     "<h3><strong>60 kr</strong></h3>" +

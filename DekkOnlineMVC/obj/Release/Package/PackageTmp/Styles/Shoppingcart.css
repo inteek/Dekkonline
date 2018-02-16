@@ -119,10 +119,6 @@
     color: #1A5276;
     cursor: pointer;
 }
-.linkcolor3 {
-    color: #1A5276;
-
-}
 .ipadst1 {
     margin-right: -570px;
 }
@@ -149,8 +145,13 @@
 }
 
 .blanco:hover {
-    background-color: white;
+    background-color: #E5E7E9;
 }
+
+.tallerSeleccionado {
+    background-color: #E5E7E9;
+}
+
 
 .borderInput {
     border: 1px solid #BFC9CA;

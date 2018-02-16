@@ -267,8 +267,9 @@
       <End Role="DeliveryType" EntitySet="DeliveryType" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
     </AssociationSet>
-    <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
     <EntitySet Name="Orders" EntityType="dekkOnlineModel.Orders" />
+    <EntitySet Name="WorkshopUser" EntityType="dekkOnlineModel.WorkshopUser" />
+    <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
   </EntityContainer>
   <EntityType Name="ShoppingCart">
     <Key>
@@ -528,7 +529,7 @@
     <Property Name="ZipCode" Type="Int32" />
     <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Appointments">
     <Key>
@@ -610,20 +611,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Workshop">
-    <Key>
-      <PropertyRef Name="IdWorkshop" />
-    </Key>
-    <Property Name="IdWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ZipCode" Type="Int32" />
-    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="Average" Type="Int32" />
-  </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="id" />
@@ -638,5 +625,28 @@
     <Property Name="EstimatedDate" Type="DateTime" Precision="3" />
     <Property Name="DeliveredDate" Type="DateTime" Precision="3" />
     <Property Name="Delivered" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="WorkshopUser">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="idWorkshop" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Workshop">
+    <Key>
+      <PropertyRef Name="IdWorkshop" />
+    </Key>
+    <Property Name="IdWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Average" Type="Int32" />
   </EntityType>
 </Schema>

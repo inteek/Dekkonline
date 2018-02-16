@@ -270,10 +270,14 @@ namespace Framework
                         promocode = promocode1,
                         points = points1,
                         total = (decimal)subtotal2,
-                        promocodeapp = false} };
+                        promocodeapp = false,
+                        tax = (Math.Truncate((double)iva)).ToString()} };
                     }
                     else
                     {
+                        var subtotal2 = subtotal1;
+                        var iva = subtotal2 * ivapor2;//TAX
+                        subtotal2 = subtotal2 + iva;
                         allcart = new List<ResultAllCart> {
                         new ResultAllCart{
                         cart = products,
@@ -281,7 +285,8 @@ namespace Framework
                         promocode = promocodeused.PromoCode,
                         points = points1,
                         total = (decimal)Math.Truncate((double)promocodeused.TotalPriceFinal),
-                        promocodeapp = true} };
+                        promocodeapp = true,
+                        tax = (Math.Truncate((double)iva)).ToString()} };
 
                     }
 

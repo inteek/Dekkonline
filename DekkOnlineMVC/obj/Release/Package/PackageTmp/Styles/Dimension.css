@@ -2,6 +2,9 @@
     margin-left: -70px;
 }
 
+.linkEdit {
+    cursor: pointer;
+}
 .vl {
     width:10px;
     border-left: 2px solid #ABB2B9;
@@ -50,7 +53,9 @@
 
 .left2 {
     text-align: left;
-    color: black;
+    color: #635b5b;
+    font-size: 16px;
+    width:400px;
 }
 
 .rowLeft1{
@@ -111,6 +116,98 @@
     color: #1A5276;
 }
 
+.colorGris {
+    color: #393e44;
+    margin-top: 0px;
+}
+
+.perfilInfo {
+    color: #0b5da1;
+    font-size: 16px;
+}
+
+.perfilInfo2 {
+    font-size: 16px;
+}
+
+.colorTitle {
+    color: #363434;
+}
+
+.infoPerfilrespons {
+    margin-top: 0px;
+    margin-left: 0px;
+}
+.ocultarYourcard{
+    display:initial;
+}
+
+.personInformation {
+    color: #d51d1d;
+    font-size: 23px;
+}
+
+.marginInformation {
+    margin-top: 10px;
+    width: 300px;
+}
+
+.movilPerfil {
+    margin-left: 35px;
+    margin-top: 10px;
+    display:initial;
+}
+
+.titlePending {
+    margin-top: 20px;
+    margin-left: 0px;
+}
+
+.numerOrder {
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+.marginTotal {
+    margin-top: -10px;
+    margin-left: 0px;
+}
+
+.responsImageLLanta {
+    width: 75px;
+    height: 90px;
+    margin-left: 0px;
+}
+
+.marginTextInfo{
+    margin-left: 0px;
+}
+
+.borderProduct {
+    border-bottom: 1px solid #7F8C8D;
+}
+
+.lineHorizontal {
+    display: none;
+}
+
+.marginPast {
+    margin-top: -7px;
+    margin-left: 0px;
+}
+
+.marginPromos {
+    margin-left: 0px;
+    font-size: 18px;
+}
+
+.margginCard1{
+    margin-left:0px;
+}
+
+.marginleftInfo {
+    margin-left: -10px;
+}
 
 @media screen and (max-width: 768px) {
     .dimension {
@@ -204,8 +301,162 @@
         font-size:18px;
         color: #1A5276;
     }
+
+    .infoPerfilrespons {
+        margin-top: 10px;
+        margin-left: 26px;
+    }
+
+    .ocultarYourcard {
+        display: none;
+    }
+
+    .perfilInfo {
+        color: #0b5da1;
+        font-size: 13px;
+    }
+
+    .perfilInfo2 {
+        font-size: 13px;
+    }
+
+    .personInformation {
+        color: #d51d1d;
+        font-size: 18px;
+    }
+
+    .marginInformation {
+        margin-top: -45px;
+        width: 0px;
+    }
+
+    .movilPerfil {
+        margin-left: 0px;
+        margin-top: 0px;
+        display: none;
+    }
+
+    .titlePending {
+        margin-top: 0px;
+        margin-left:20px;
+    }
+
+    .numerOrder {
+        margin-top: -10px;
+        margin-left: 20px;
+    }
+
+    .marginTotal {
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .responsImageLLanta {
+        width: 75px;
+        height: 90px;
+        margin-left: 4px;
+    }
+
+    .marginTextInfo {
+        margin-left: 25px;
+        margin-top:-55px;
+    }
+
+    .borderProduct {
+        border-bottom: 0px solid #7F8C8D;
+    }
+
+    .lineHorizontal {
+        display:initial;
+    }
+
+    .marginPast {
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    .marginPromos {
+        margin-left: 10px;
+        font-size:14px;
+    }
+
+    .margginCard1 {
+        margin-left: 15px;
+    }
+
+    .marginleftInfo {
+        margin-left: 20px;
+    }
+
+    .movertextoleft{
+        margin-left:30px;
+    }
+
+    .margintopperonalinfo {
+        margin-top: -55px;
+    }
 }
 
 @media screen and (max-width: 1024px) and (min-width: 768px) {
+
+    .marginPromos {
+        margin-left: 70px;
+        font-size: 16px;
+    }
+
+    .margginCard1 {
+        margin-left: 35px;
+    }
+
+    .leftTablet {
+        margin-left: 50px;
+    }
+
+    .marginInformation {
+        margin-top: 20px;
+        width:300px;
+    }
+
+    .marginTextInfo {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+
+    .margintopperonalinfo {
+        margin-top: 0px;
+    }
+
+    .vl2 {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width:1200px) {
+
+    .movilPerfil {
+        margin-left: 0px;
+        margin-top: 0px;
+        display: none;
+    }
+
+    .infoPerfilrespons {
+        margin-top: 10px;
+        margin-left: 40px;
+    }
+
+    .marginInformation {
+        margin-top: 20px;
+        width: 300px;
+    }
+
+    .marginTextInfo {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+
+    .vl2 {
+        display: none;
+    }
 
 }

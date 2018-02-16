@@ -17,6 +17,17 @@
             $(".prom").addClass("hidden");
             ValPromo(promo);
         }
+    }); 
+
+    $(".dee").click(function () {
+        $(".del1").removeAttr('disabled');
+        $(".dee").removeAttr('disabled');
+        $(".del").modal('hide');
+        $(".qtyprodcart").removeAttr('disabled');
+        $(".PromoCodeunaction").removeAttr('disabled');
+        $(".keep").removeAttr('disabled');
+        $(".inemail").removeAttr('disabled');
+        $(".remclick").removeAttr('disabled');
     });
     $(".addpromoapp").on("click", ".PromoCodeunaction", function () {
         var promo = $(".promocode").val();
@@ -50,6 +61,7 @@ function DelCrt(id) {
                 $("#total").text(b['total']);
                 $(".promocode").val(b['promocode']);
                 $(".promopoints").val(b['points']);
+                $("#tax").text(b['tax']);
                 if (b['promocodeapp'] == false) {
                     $(".PromoCodeapp").remove();
                     $(".addpromoapp").append("<label class='PromoCodeapp PromoCodeun' style='margin-top:7px;color:blue;'><a class='PromoCodeap PromoCodeappaction'><span class='linkcolor2 PromoCodeapp'>APPLY</span></a></label>");
@@ -61,7 +73,6 @@ function DelCrt(id) {
                 $(".del1").removeAttr('disabled');
                 $(".dee").removeAttr('disabled');
                 $(".del").modal('hide');
-                $(".qtyprodcart").removeAttr('disabled');
                 $(".qtyprodcart").removeAttr('disabled');
                 $(".PromoCodeunaction").removeAttr('disabled');
                 $(".keep").removeAttr('disabled');
@@ -127,6 +138,7 @@ function IncrsCart(id, qty1) {
                 $("#total").text(b['total']);
                 $(".promocode").val(b['promocode']);
                 $(".promopoints").val(b['points']);
+                $("#tax").text(b['tax']);
                 if (b['promocodeapp'] == false) {
                     $(".PromoCodeapp").remove();
                     $(".addpromoapp").append("<label class='PromoCodeapp PromoCodeun' style='margin-top:7px;color:blue;'><a class='PromoCodeap PromoCodeappaction'><span class='linkcolor2 PromoCodeapp'>APPLY</span></a></label>");
@@ -176,6 +188,7 @@ function ValPromo(id) {
             $("#total").text(b['total']);
             $(".promocode").val(b['promocode']);
             $(".promopoints").val(b['points']);
+            $("#tax").text(b['tax']);
             if (b['promocodeapp'] == false) {
                 $(".PromoCodeapp").remove();
                 $(".addpromoapp").append("<label class='PromoCodeapp PromoCodeun' style='margin-top:7px;color:blue;'><a class='PromoCodeap PromoCodeappaction'><span class='linkcolor2 PromoCodeapp'>APPLY</span></a></label>");
@@ -224,6 +237,7 @@ function UndoPromo(id) {
             $("#total").text(b['total']);
             $(".promocode").val(b['promocode']);
             $(".promopoints").val(b['points']);
+            $("#tax").text(b['tax']);
             if (b['promocodeapp'] == false) {
                 $(".PromoCodeapp").remove();
                 $(".addpromoapp").append("<label class='PromoCodeapp PromoCodeun' style='margin-top:7px;color:blue;'><a class='PromoCodeap PromoCodeappaction'><span class='linkcolor2 PromoCodeapp'>APPLY</span></a></label>");

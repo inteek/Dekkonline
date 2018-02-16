@@ -89,6 +89,7 @@ $(document).ready(function () {
     filltableschedule();
     filltableservice();
     filltablePending();
+    filltablePast();
     $("#tblSchedule").on("click", ".editsche", function () {
         var data_row = oTable1.row($(this).closest('tr')).data();
         var dayvalue = data_row["Dayint"];

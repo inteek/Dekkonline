@@ -18,7 +18,7 @@
 @*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX6wD6FcmE4ZEFB2gEVka9qNkdsA4eqeg"></script>*@
 
 @Styles.Render("~/Styles/Dimension.css?v=4")
-@Styles.Render("~/Styles/Shoppingcart.css?v=8")
+@Styles.Render("~/Styles/Shoppingcart.css?v=1")
 
 
 <style>
@@ -62,7 +62,7 @@
 
 
 
-<div class="content" style="font-family:Arial;">
+<div class="content" style="font-family:Arial;margin-bottom:50px;">
     <div class="row">
         <div class="col-lg-12">
             <img src="~/Content/step2.JPG" class="imgRespons1" />
@@ -282,12 +282,12 @@
                                 <div id="divWorkShop">
                                     <div class="row blanco rowcat ocultarWorkshop" id="@item.IdWorkshop" onclick="popouWorkShop('@item.Name','@item.IdWorkshop')" style="cursor:pointer;">
                                         <div class="col-lg-2 col-xs-3">
-                                            <img src="~/Content/WorkShop/t1.jpg" style="width:110px; height:105px;" />
+                                            <img src="@item.WorkImage" style="width:110px; height:105px;" />
                                         </div>
                                         <div class="col-lg-5 col-xs-8 catalago">
                                             <h4 class="nameWorkshop" id="nameWorkshop" style="color: #185d8a;"><strong><span></span> @item.Name</strong></h4>
                                             <p class="">@item.Address</p>
-                                            <h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>
+                                            @*<h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>*@
                                         </div>
                                         <div class="col-lg-2 catHiden">
                                             <h3><strong>60 kr</strong></h3>
@@ -591,7 +591,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=4")
+@Scripts.Render("~/Scripts/Step2.js?v=2")
 @Scripts.Render("~/Scripts/Map.js?v=4")
 @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
 @Scripts.Render("~/Scripts/Login.js?v=2")

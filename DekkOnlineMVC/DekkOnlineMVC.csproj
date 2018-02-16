@@ -312,6 +312,7 @@
     <Content Include="Content\HeadphonesPhoto\8_s.jpg" />
     <Content Include="Content\HeadphonesPhoto\9_l.jpg" />
     <Content Include="Content\HeadphonesPhoto\9_s.jpg" />
+    <Content Include="Content\iconoLogo.png" />
     <Content Include="Content\imgs\arrowGray.png" />
     <Content Include="Content\imgs\arrowWhite.png" />
     <Content Include="Content\imgs\ATV-01.png" />
