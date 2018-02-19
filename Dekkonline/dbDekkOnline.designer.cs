@@ -69,6 +69,12 @@ namespace DekkOnline
     partial void InsertUserAddress(UserAddress instance);
     partial void UpdateUserAddress(UserAddress instance);
     partial void DeleteUserAddress(UserAddress instance);
+    partial void InsertWorkshop(Workshop instance);
+    partial void UpdateWorkshop(Workshop instance);
+    partial void DeleteWorkshop(Workshop instance);
+    partial void InsertWorkshopUser(WorkshopUser instance);
+    partial void UpdateWorkshopUser(WorkshopUser instance);
+    partial void DeleteWorkshopUser(WorkshopUser instance);
     #endregion
 		
 		public dbDekkOnlineDataContext() : 
@@ -202,6 +208,22 @@ namespace DekkOnline
 			get
 			{
 				return this.GetTable<UserAddress>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Workshop> Workshop
+		{
+			get
+			{
+				return this.GetTable<Workshop>();
+			}
+		}
+		
+		public System.Data.Linq.Table<WorkshopUser> WorkshopUser
+		{
+			get
+			{
+				return this.GetTable<WorkshopUser>();
 			}
 		}
 	}
@@ -4086,6 +4108,394 @@ namespace DekkOnline
 					this._Image = value;
 					this.SendPropertyChanged("Image");
 					this.OnImageChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Workshop")]
+	public partial class Workshop : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdWorkshop;
+		
+		private string _Name;
+		
+		private string _Address;
+		
+		private string _Phone;
+		
+		private string _Email;
+		
+		private System.Nullable<int> _ZipCode;
+		
+		private string _Latitude;
+		
+		private string _Length;
+		
+		private string _WorkImage;
+		
+		private System.Nullable<int> _Average;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdWorkshopChanging(int value);
+    partial void OnIdWorkshopChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnAddressChanging(string value);
+    partial void OnAddressChanged();
+    partial void OnPhoneChanging(string value);
+    partial void OnPhoneChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnZipCodeChanging(System.Nullable<int> value);
+    partial void OnZipCodeChanged();
+    partial void OnLatitudeChanging(string value);
+    partial void OnLatitudeChanged();
+    partial void OnLengthChanging(string value);
+    partial void OnLengthChanged();
+    partial void OnWorkImageChanging(string value);
+    partial void OnWorkImageChanged();
+    partial void OnAverageChanging(System.Nullable<int> value);
+    partial void OnAverageChanged();
+    #endregion
+		
+		public Workshop()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdWorkshop", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdWorkshop
+		{
+			get
+			{
+				return this._IdWorkshop;
+			}
+			set
+			{
+				if ((this._IdWorkshop != value))
+				{
+					this.OnIdWorkshopChanging(value);
+					this.SendPropertyChanging();
+					this._IdWorkshop = value;
+					this.SendPropertyChanged("IdWorkshop");
+					this.OnIdWorkshopChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(100)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Address", DbType="VarChar(150)")]
+		public string Address
+		{
+			get
+			{
+				return this._Address;
+			}
+			set
+			{
+				if ((this._Address != value))
+				{
+					this.OnAddressChanging(value);
+					this.SendPropertyChanging();
+					this._Address = value;
+					this.SendPropertyChanged("Address");
+					this.OnAddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Phone", DbType="VarChar(30)")]
+		public string Phone
+		{
+			get
+			{
+				return this._Phone;
+			}
+			set
+			{
+				if ((this._Phone != value))
+				{
+					this.OnPhoneChanging(value);
+					this.SendPropertyChanging();
+					this._Phone = value;
+					this.SendPropertyChanged("Phone");
+					this.OnPhoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Email", DbType="VarChar(50)")]
+		public string Email
+		{
+			get
+			{
+				return this._Email;
+			}
+			set
+			{
+				if ((this._Email != value))
+				{
+					this.OnEmailChanging(value);
+					this.SendPropertyChanging();
+					this._Email = value;
+					this.SendPropertyChanged("Email");
+					this.OnEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ZipCode", DbType="Int")]
+		public System.Nullable<int> ZipCode
+		{
+			get
+			{
+				return this._ZipCode;
+			}
+			set
+			{
+				if ((this._ZipCode != value))
+				{
+					this.OnZipCodeChanging(value);
+					this.SendPropertyChanging();
+					this._ZipCode = value;
+					this.SendPropertyChanged("ZipCode");
+					this.OnZipCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Latitude", DbType="VarChar(50)")]
+		public string Latitude
+		{
+			get
+			{
+				return this._Latitude;
+			}
+			set
+			{
+				if ((this._Latitude != value))
+				{
+					this.OnLatitudeChanging(value);
+					this.SendPropertyChanging();
+					this._Latitude = value;
+					this.SendPropertyChanged("Latitude");
+					this.OnLatitudeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Length", DbType="VarChar(50)")]
+		public string Length
+		{
+			get
+			{
+				return this._Length;
+			}
+			set
+			{
+				if ((this._Length != value))
+				{
+					this.OnLengthChanging(value);
+					this.SendPropertyChanging();
+					this._Length = value;
+					this.SendPropertyChanged("Length");
+					this.OnLengthChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WorkImage", DbType="VarChar(200)")]
+		public string WorkImage
+		{
+			get
+			{
+				return this._WorkImage;
+			}
+			set
+			{
+				if ((this._WorkImage != value))
+				{
+					this.OnWorkImageChanging(value);
+					this.SendPropertyChanging();
+					this._WorkImage = value;
+					this.SendPropertyChanged("WorkImage");
+					this.OnWorkImageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Average", DbType="Int")]
+		public System.Nullable<int> Average
+		{
+			get
+			{
+				return this._Average;
+			}
+			set
+			{
+				if ((this._Average != value))
+				{
+					this.OnAverageChanging(value);
+					this.SendPropertyChanging();
+					this._Average = value;
+					this.SendPropertyChanged("Average");
+					this.OnAverageChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkshopUser")]
+	public partial class WorkshopUser : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _idUser;
+		
+		private System.Nullable<int> _idWorkshop;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnidUserChanging(string value);
+    partial void OnidUserChanged();
+    partial void OnidWorkshopChanging(System.Nullable<int> value);
+    partial void OnidWorkshopChanged();
+    #endregion
+		
+		public WorkshopUser()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUser", DbType="NVarChar(128)")]
+		public string idUser
+		{
+			get
+			{
+				return this._idUser;
+			}
+			set
+			{
+				if ((this._idUser != value))
+				{
+					this.OnidUserChanging(value);
+					this.SendPropertyChanging();
+					this._idUser = value;
+					this.SendPropertyChanged("idUser");
+					this.OnidUserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idWorkshop", DbType="Int")]
+		public System.Nullable<int> idWorkshop
+		{
+			get
+			{
+				return this._idWorkshop;
+			}
+			set
+			{
+				if ((this._idWorkshop != value))
+				{
+					this.OnidWorkshopChanging(value);
+					this.SendPropertyChanging();
+					this._idWorkshop = value;
+					this.SendPropertyChanged("idWorkshop");
+					this.OnidWorkshopChanged();
 				}
 			}
 		}

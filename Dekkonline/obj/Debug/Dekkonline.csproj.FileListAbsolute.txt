@@ -1034,7 +1034,6 @@ C:\Productos\dekkonline2\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyRe
 C:\Productos\dekkonline2\DekkOnline\obj\Debug\DekkOnline.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline2\DekkOnline\obj\Debug\DekkOnline.dll
 C:\Productos\dekkonline2\DekkOnline\obj\Debug\DekkOnline.pdb
-C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.dll.licenses
 C:\Productos\dekkonline14022018\DekkOnline\bin\ApplicationInsights.config
 C:\Productos\dekkonline14022018\DekkOnline\bin\roslyn\csc.exe
 C:\Productos\dekkonline14022018\DekkOnline\bin\roslyn\csc.exe.config
@@ -1176,3 +1175,4 @@ C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.csprojResolveAss
 C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.dll
 C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.pdb
+C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.dll.licenses

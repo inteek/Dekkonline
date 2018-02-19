@@ -188,4 +188,25 @@
       <Column Name="Image" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Workshop" Member="Workshop">
+    <Type Name="Workshop">
+      <Column Name="IdWorkshop" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ZipCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Latitude" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Length" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="WorkImage" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Average" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkshopUser" Member="WorkshopUser">
+    <Type Name="WorkshopUser">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idUser" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="idWorkshop" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

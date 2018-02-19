@@ -282,7 +282,9 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\Brands.aspx" />
     <Content Include="Admin\Categories.aspx" />
+    <Content Include="Admin\Workshop.aspx" />
     <Content Include="Admin\Default.aspx" />
+    <Content Include="Admin\Customers.aspx" />
     <Content Include="Admin\ourCategories.aspx" />
     <Content Include="Admin\Products.aspx" />
     <Content Include="Contact.aspx" />
@@ -672,12 +674,26 @@
     <Compile Include="Admin\Categories.aspx.designer.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Workshop.aspx.cs">
+      <DependentUpon>Workshop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Workshop.aspx.designer.cs">
+      <DependentUpon>Workshop.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Customers.aspx.cs">
+      <DependentUpon>Customers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Customers.aspx.designer.cs">
+      <DependentUpon>Customers.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ourCategories.aspx.cs">
       <DependentUpon>ourCategories.aspx</DependentUpon>
@@ -768,6 +784,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -10,105 +10,97 @@
 namespace DekkOnline.Admin {
     
     
-    public partial class SiteAdmin {
+    public partial class Workshop
+    {
         
         /// <summary>
-        /// Control HeadContent.
+        /// Control txtImgUrl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
+        protected global::DevExpress.Web.ASPxTextBox txtImgUrl;
         
         /// <summary>
-        /// Control KeywordsTag.
+        /// Control txtCatId.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlMeta KeywordsTag;
+        protected global::DevExpress.Web.ASPxTextBox txtCatId;
         
         /// <summary>
-        /// Control DescriptionTag.
+        /// Control xcpCategories.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlMeta DescriptionTag;
+        protected global::DevExpress.Web.ASPxCallbackPanel xcpCategories;
         
         /// <summary>
-        /// Control GeneratorTag.
+        /// Control xgvCategories.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlMeta GeneratorTag;
+        protected global::DevExpress.Web.ASPxGridView xgvCategories;
         
         /// <summary>
-        /// Control CopyrightTag.
+        /// Control popCategories.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlMeta CopyrightTag;
+        protected global::DevExpress.Web.ASPxPopupControl popCategories;
         
         /// <summary>
-        /// Control form1.
+        /// Control UploadControl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::DevExpress.Web.ASPxUploadControl UploadControl;
         
         /// <summary>
-        /// Control ScriptManager1.
+        /// Control txtCategories.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::DevExpress.Web.ASPxTextBox txtCategories;
         
         /// <summary>
-        /// Control HeadLoginView.
+        /// Control txtDescription.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LoginView HeadLoginView;
+        protected global::DevExpress.Web.ASPxMemo txtDescription;
         
         /// <summary>
-        /// Control txtCurrentPage.
+        /// Control xcaStatus.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCurrentPage;
+        protected global::DevExpress.Web.ASPxCallback xcaStatus;
         
         /// <summary>
-        /// Control MainContent.
+        /// Control lnqCategories1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
-        
-        /// <summary>
-        /// Control lblMessage.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessage;
+        protected global::System.Web.UI.WebControls.LinqDataSource lnqCategories1;
     }
 }

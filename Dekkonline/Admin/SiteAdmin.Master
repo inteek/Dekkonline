@@ -311,6 +311,8 @@
                             <a id="" class="" href="/Admin/Categories.aspx">CATEGORIES</a><div class="clearfix"></div>
                             <a id="" class="" href="/Admin/Brands.aspx">BRANDS</a><div class="clearfix"></div>
                             <a id="" class="" href="/Admin/Products.aspx">PRODUCTS</a><div class="clearfix"></div>
+                            <a id="" class="" href="/Admin/Brands.aspx">Workshop</a><div class="clearfix"></div>
+                            <a id="" class="" href="/Admin/Workshop.aspx">Customers</a><div class="clearfix"></div>
                             <%--<a id="" class="" href="/Admin/cloud.aspx">MY FILES</a><div class="clearfix"></div>--%>
                             <%--<asp:LinkButton ID="LinkButton2" runat="server" CssClass="" OnClick="LinkButtonMyadminAcc_Click">MY ACCOUNT</asp:LinkButton>--%>
                         </div>
@@ -394,6 +396,35 @@
 
                         <a id="divPagesLink" class="menuLink" href="/Admin/PRODUCTS">PRODUCTS</a>
 
+                    </div>
+
+                    
+                    <div class="menuTD">
+                        <div class="menuDiv">
+                            <a href="/Admin/Workshop">
+                                <div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="spacer10"></div>
+                        <div class="clearfix"></div>
+
+                        <a id="divBlogLink" class="menuLink" href="/Admin/Workshop">WORKSHOP</a>
+                    </div>
+
+                    
+                    
+                    <div class="menuTD">
+                        <div class="menuDiv">
+                            <a href="/Admin/Customers">
+                                <div id="divBlog" class="menuIcon" style="background-image: url(/Scripts/menu/blogposts.png);"></div>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="spacer10"></div>
+                        <div class="clearfix"></div>
+
+                        <a id="divBlogLink" class="menuLink" href="/Admin/Customers">CUSTOMERS</a>
                     </div>
 
 
