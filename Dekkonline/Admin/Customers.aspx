@@ -11,16 +11,16 @@
 
         function editRow(s, e) {
             var id = s.GetRowKey(e.visibleIndex);
-            txtCatId.SetText(id);
+            txtId.SetText(id);
             saved = false;
-            popCategories.PerformCallback("Load|" + id);
+            popCustomers.PerformCallback("Load|" + id);
         }
 
         function newRow() {
             var id = 0;
-            txtCatId.SetText(id);
+            txtId.SetText(id);
             saved = false;
-            popCategories.PerformCallback("Load|" + id);
+            popCustomers.PerformCallback("Load|" + id);
         }
 
         function initEdit(s, e) {
@@ -31,12 +31,12 @@
                     document.getElementById("uploadedImage").src = img;
                     setElementVisible("uploadedImage", true);
                 }
-                popCategories.Show();
+                popCustomers.Show();
             } else {
                 txtImgUrl.SetText("");
-                txtCatId.SetText("");
-                popCategories.Hide();
-                xcpCategories.PerformCallback();
+                txtId.SetText("");
+                popCustomers.Hide();
+                xcpCustomers.PerformCallback();
             }
         }
 
@@ -63,17 +63,17 @@
         }
 
 
-        function saveCategories() {
+        function saveCustomers() {
             if (ASPxClientEdit.ValidateGroup('Save')) {
                 saved = true;
-                var id = txtCatId.GetText();
-                popCategories.PerformCallback("Save|" + id);
+                var id = txtId.GetText();
+                popCustomers.PerformCallback("Save|" + id);
             }
         }
 
         function copyData() {
-            var id = txtCatId.GetText();
-            popCategories.PerformCallback("Copy|" + id);
+            var id = txtId.GetText();
+            popCustomers.PerformCallback("Copy|" + id);
         }
 
         function changeStatus(id) {
@@ -85,19 +85,19 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="floatLt pad20">
-        <h4>Sections</h4>
-        <dx:ASPxTextBox runat="server" ID="txtImgUrl" ClientInstanceName="txtImgUrl" CssClass="hidden"></dx:ASPxTextBox>
-        <dx:ASPxTextBox runat="server" ID="txtCatId" ClientInstanceName="txtCatId" CssClass="hidden"></dx:ASPxTextBox>
+        <h4>Customers</h4>
+        <%--<dx:ASPxTextBox runat="server" ID="txtImgUrl" ClientInstanceName="txtImgUrl" CssClass="hidden"></dx:ASPxTextBox>
+        <dx:ASPxTextBox runat="server" ID="txtId" ClientInstanceName="txtId" CssClass="hidden"></dx:ASPxTextBox>--%>
     </div>
     
     <div class="clearfix"></div>
     <div >
-        <dx:ASPxCallbackPanel runat="server" ID="xcpCategories" ClientInstanceName="xcpCategories" OnCallback="xcpCategories_Callback" Width="100%">
+        <dx:ASPxCallbackPanel runat="server" ID="xcpCustomers" ClientInstanceName="xcpCustomers" OnCallback="xcpCustomers_Callback" Width="100%">
             <PanelCollection>
                 <dx:PanelContent>
                     <div class="col-md-12">
                         <div class="pad10">
-                            <dx:ASPxGridView ID="xgvCategories" ClientInstanceName="xgvCategories" runat="server" Width="100%" Settings-ShowFilterRow="true" SettingsPager-PageSize="50" Settings-AutoFilterCondition="Contains" SettingsBehavior-AllowFocusedRow="true" KeyFieldName="catId" DataSourceID="lnqCategories1">
+                            <dx:ASPxGridView ID="xgvCustomers" ClientInstanceName="xgvCustomers" runat="server" Width="100%" Settings-ShowFilterRow="true" SettingsPager-PageSize="50" Settings-AutoFilterCondition="Contains" SettingsBehavior-AllowFocusedRow="true" KeyFieldName="Id" DataSourceID="lnqCustomers">
                                 <Styles>
                                     <Header VerticalAlign="Top" BackColor="#f5f5f5" HorizontalAlign="Center" Paddings-PaddingTop="3px" Font-Bold="true" Font-Size="1em"></Header>
                                     <FilterRow BackColor="#f5f5f5"></FilterRow>
@@ -106,29 +106,34 @@
                                 </Styles>
                                 <SettingsPager Position="TopAndBottom"></SettingsPager>
                                 <Columns>
-                                    <dx:GridViewDataColumn Width="100">
+                                    <%--<dx:GridViewDataColumn Width="100">
                                          <HeaderTemplate>
-
                                             <button type="button" class="btn btn-success floatLt" onclick="newRow()" title="Add New">
                                                 <i class="glyphicon glyphicon-plus-sign"></i>
                                             </button>
                                         </HeaderTemplate>
                                         <DataItemTemplate>
                                             <img style="width: 70px" src="<%# Eval("catImage").ToString() == "" ? "/photos/noPhoto.png" :  Eval("catImage") %>" alt="<%# Eval("catName") %>" />
-                                        </DataItemTemplate>
-                                    </dx:GridViewDataColumn>
-                                    <dx:GridViewDataColumn FieldName="catName" Caption="Name" SortIndex="0"></dx:GridViewDataColumn>
-                                    <dx:GridViewDataColumn FieldName="catDescription" Caption="Status " Width="70">
-                                        <FilterTemplate></FilterTemplate>
+                                        </DataItemTemplate>--%>
+                                            <dx:GridViewDataColumn>
+                                                <DataItemTemplate>
+                                                    <img style="width: 70px" src="<%# Eval("Image") == null || Eval("Image").ToString() == "" ? "/photos/noPhoto.png" : ConfigurationManager.AppSettings["URLSTORE"] + Eval("Image") %>" alt="<%# Eval("FirstName") %>" />
+                                                </DataItemTemplate>
+                                            </dx:GridViewDataColumn>
+                                            <dx:GridViewDataColumn FieldName="FirstName" Caption="FirstName" SortIndex="0"></dx:GridViewDataColumn>
+                                            <dx:GridViewDataColumn FieldName="LastName" Caption="LastName" SortIndex="0"></dx:GridViewDataColumn>
+                                            <dx:GridViewDataColumn FieldName="Address" Caption="Address" SortIndex="0"></dx:GridViewDataColumn>
+                                            <dx:GridViewDataColumn FieldName="Phone" Caption="Phone" SortIndex="0"></dx:GridViewDataColumn>
+                                            <dx:GridViewDataColumn FieldName="ZipCode" Caption="ZipCode" SortIndex="0"></dx:GridViewDataColumn>
+                                        <%--<FilterTemplate></FilterTemplate>--%>
                                        
-                                        <DataItemTemplate>
+                                        <%--<DataItemTemplate>
                                             <div class="BoxGeneral text-center">
-                                            <button type="button" class="btn btn-<%# (bool)Eval("catStatus")==true?"success":"danger" %>" onclick="changeStatus('<%# Eval("catId") %>')" title="Change Status">
+                                            <button type="button" class="btn btn-<%# (bool)Eval("catStatus")==true?"success":"danger" %>" onclick="changeStatus('<%# Eval("Id") %>')" title="Change Status">
                                                 <i class="glyphicon glyphicon-<%# (bool)Eval("catStatus")==true?"check":"minus-sign" %>"></i>
                                             </button>
                                             </div>
-                                        </DataItemTemplate>
-                                    </dx:GridViewDataColumn>
+                                        </DataItemTemplate>--%>
                                 </Columns>
                                 <ClientSideEvents RowDblClick="editRow" />
                             </dx:ASPxGridView>
@@ -139,8 +144,8 @@
         </dx:ASPxCallbackPanel>
     </div>
 
-    <dx:ASPxPopupControl runat="server" ID="popCategories" ClientInstanceName="popCategories" Width="1000px" OnWindowCallback="popCategories_WindowCallback"
-        PopupVerticalAlign="WindowCenter" PopupHorizontalAlign="WindowCenter" HeaderText="Edit Categories" Modal="true" AllowDragging="true">
+    <%--<dx:ASPxPopupControl runat="server" ID="popCustomers" ClientInstanceName="popCustomers" Width="1000px" OnWindowCallback="popCustomers_WindowCallback"
+        PopupVerticalAlign="WindowCenter" PopupHorizontalAlign="WindowCenter" HeaderText="Edit Customers" Modal="true" AllowDragging="true">
         <ContentCollection>
             <dx:PopupControlContentControl>
 
@@ -193,7 +198,7 @@
                                         </UploadSettings>
                                         <ButtonPanelSettings Position="Bottom" Visibility="OnMouseOver" ButtonPosition="Center" />
                                     </EditingSettings>
-                                </dx:ASPxBinaryImage>--%>
+                                </dx:ASPxBinaryImage>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +206,7 @@
                 </div>
 
                 <div class="col-xs-12  col-md-9">
-                    <dx:ASPxTextBox runat="server" NullText="Category" ID="txtCategories" onkeydown="return onlyAN(this,event);" CssClass="tableInput BoxGeneral fontRed" Font-Size="X-Large" ForeColor="#dd1730">
+                    <dx:ASPxTextBox runat="server" NullText="Customer" ID="txtCustomers" onkeydown="return onlyAN(this,event);" CssClass="tableInput BoxGeneral fontRed" Font-Size="X-Large" ForeColor="#dd1730">
                         <ValidationSettings ErrorFrameStyle-CssClass="redBorder" ErrorDisplayMode="None" ValidationGroup="Save">
                             <RequiredField IsRequired="true" />
                         </ValidationSettings>
@@ -212,7 +217,7 @@
                         <div class="spacer20"></div>
                         <div class="clearfix"></div>
                         <b>Description:</b><br />
-                        <dx:ASPxMemo runat="server" ID="txtDescription" CssClass="BoxGeneral" Height="50px"></dx:ASPxMemo>
+                        <%--<dx:ASPxMemo runat="server" ID="txtDescription" CssClass="BoxGeneral" Height="50px"></dx:ASPxMemo>
                         <div class="clearfix"></div>
                         <div class="spacer20"></div>
                         <div class="clearfix"></div>
@@ -221,7 +226,7 @@
                     <div class="spacer10"></div>
                     <div class="clearfix"></div>
                     <div class="floatRt pad5">
-                        <input type="button" class="btnBorder" value="SAVE" onclick="saveCategories();" />
+                        <input type="button" class="btnBorder" value="SAVE" onclick="saveCustomers();" />
                     </div>
 
                 </div>
@@ -229,13 +234,13 @@
             </dx:PopupControlContentControl>
         </ContentCollection>
         <ClientSideEvents EndCallback="initEdit" />
-    </dx:ASPxPopupControl>
+    </dx:ASPxPopupControl>--%>
 
 
     <dx:ASPxCallback runat="server" ID="xcaStatus" ClientInstanceName="xcaStatus" OnCallback="xcaStatus_Callback">
-        <ClientSideEvents EndCallback="function(s,e){xgvCategories.Refresh(); xgvCategories2.Refresh();}" />
+        <ClientSideEvents EndCallback="function(s,e){xgvCustomers.Refresh(); xgvCustomers2.Refresh();}" />
     </dx:ASPxCallback>
-    <asp:LinqDataSource ID="lnqCategories1" runat="server" ContextTypeName="DekkOnline.dbDekkOnlineDataContext" TableName="categories"></asp:LinqDataSource>
+    <asp:LinqDataSource ID="lnqCustomers" runat="server" ContextTypeName="DekkOnline.dbDekkOnlineDataContext" TableName="UserAddress" OnSelecting="lnqCustomers_Selecting"></asp:LinqDataSource>
     
 
 </asp:Content>

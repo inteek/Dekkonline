@@ -25,19 +25,16 @@ namespace DekkOnline.Admin
 
         }
 
-
-        protected void xcpCategories_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        protected void xcpCustomers_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
-            xgvCategories.DataBind();
+            xgvCustomers.DataBind();
         }
 
         protected void btnUpdateCats_Click(object sender, EventArgs e)
         {
-           
-            xgvCategories.DataBind();
+
+            xgvCustomers.DataBind();
         }
-
-
 
         protected void UploadControl_FileUploadComplete(object sender, FileUploadCompleteEventArgs e)
         {
@@ -49,14 +46,14 @@ namespace DekkOnline.Admin
             try
             {
 
-                string strCategoriesImage = uploadSelectedImage(e.UploadedFile, e.UploadedFile.FileName);
-                Session["imgOurCategoriesURL"] = strCategoriesImage;
-                e.CallbackData = strCategoriesImage;
+                string strCustomersImage = uploadSelectedImage(e.UploadedFile, e.UploadedFile.FileName);
+                Session["imgOurCustomersURL"] = strCustomersImage;
+                e.CallbackData = strCustomersImage;
 
             }
             catch (Exception ex)
             {
-                engine.Global_settings.saveErrors(ex.ToString() + " UploadControl_FileUploadComplete admin/ourCategories.aspx", true);
+                engine.Global_settings.saveErrors(ex.ToString() + " UploadControl_FileUploadComplete admin/ourCustomers.aspx", true);
             }
         }
 
@@ -65,7 +62,7 @@ namespace DekkOnline.Admin
 
             string posted = "notPosted";
 
-            string sSavePath = "/photos/ourCategories/";
+            string sSavePath = "/photos/ourCustomers/";
 
             long nFileLen = myFile.PostedFile.ContentLength;
 
@@ -109,41 +106,41 @@ namespace DekkOnline.Admin
             return posted;
         }
 
-        protected void popCategories_WindowCallback(object source, PopupWindowCallbackArgs e)
+        protected void popCustomers_WindowCallback(object source, PopupWindowCallbackArgs e)
         {
             int catId = int.Parse(e.Parameter.Split('|')[1]);
             Session["lastCatId"] = catId;
             var cCat = new category();
 
-            if(catId > 0) cCat = (from cdp in db.categories where cdp.catId == catId select cdp).FirstOrDefault();
+            //if (catId > 0) cCat = (from cdp in db.UserAddress where cdp.catId == catId select cdp).FirstOrDefault();
 
             if (e.Parameter.Split('|')[0] == "Load")
             {
                 if (catId == 0)
                 {
-                    txtCategories.Text = "";
-                    txtDescription.Text = "";
-                    Session["imgOurCategoriesURL"] = "";
-                    popCategories.JSProperties.Add("cpImage", "");
+                    //txtCustomers.Text = "";
+                    //txtDescription.Text = "";
+                    Session["imgOurCustomersURL"] = "";
+                    //popCustomers.JSProperties.Add("cpImage", "");
                 }
                 else
                 {
-                    txtCategories.Text = cCat.catName;
-                    txtDescription.Text = cCat.catDescription;
-                    Session["imgOurCategoriesURL"] = cCat.catImage;
-                    popCategories.JSProperties.Add("cpImage", cCat.catImage);
+                    //txtCustomers.Text = cCat.catName;
+                    //txtDescription.Text = cCat.catDescription;
+                    Session["imgOurCustomersURL"] = cCat.catImage;
+                    //popCustomers.JSProperties.Add("cpImage", cCat.catImage);
                 }
             }
             else if (e.Parameter.Split('|')[0] == "Save")
             {
-                cCat.catName = txtCategories.Text;
-                cCat.catDescription = txtDescription.Text;
-                cCat.catImage = Session["imgOurCategoriesURL"].ToString();
+                //cCat.catName = txtCustomers.Text;
+                //cCat.catDescription = txtDescription.Text;
+                cCat.catImage = Session["imgOurCustomersURL"].ToString();
 
                 if (catId == 0)
                 {
                     cCat.catStatus = true;
-                    db.categories.InsertOnSubmit(cCat);
+                    //db.UserAddress.InsertOnSubmit(cCat);
                 }
 
                 db.SubmitChanges();
@@ -152,16 +149,20 @@ namespace DekkOnline.Admin
 
         protected void xcaStatus_Callback(object source, CallbackEventArgs e)
         {
-
-
+            
             int catId = int.Parse(e.Parameter);
 
-            var cCategorie = db.categories.Where(c => c.catId == catId).FirstOrDefault();
-            cCategorie.catStatus = !cCategorie.catStatus;
+            var cCustomer = db.UserAddress.Where(c => c.Id == catId).FirstOrDefault();
+            //cCustomer.catStatus = !cCustomer.catStatus;
 
             db.SubmitChanges();
-            xgvCategories.DataBind();
-            
+            xgvCustomers.DataBind();
+
+        }
+
+        protected void lnqCustomers_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        {
+
         }
     }
 }
