@@ -13,14 +13,14 @@
             var id = s.GetRowKey(e.visibleIndex);
             txtCatId.SetText(id);
             saved = false;
-            popCategories.PerformCallback("Load|" + id);
+            popWorkshop.PerformCallback("Load|" + id);
         }
 
         function newRow() {
             var id = 0;
             txtCatId.SetText(id);
             saved = false;
-            popCategories.PerformCallback("Load|" + id);
+            popWorkshop.PerformCallback("Load|" + id);
         }
 
         function initEdit(s, e) {
@@ -31,11 +31,11 @@
                     document.getElementById("uploadedImage").src = img;
                     setElementVisible("uploadedImage", true);
                 }
-                popCategories.Show();
+                popWorkshop.Show();
             } else {
                 txtImgUrl.SetText("");
                 txtCatId.SetText("");
-                popCategories.Hide();
+                popWorkshop.Hide();
                 xcpCategories.PerformCallback();
             }
         }
@@ -67,13 +67,13 @@
             if (ASPxClientEdit.ValidateGroup('Save')) {
                 saved = true;
                 var id = txtCatId.GetText();
-                popCategories.PerformCallback("Save|" + id);
+                popWorkshop.PerformCallback("Save|" + id);
             }
         }
 
         function copyData() {
             var id = txtCatId.GetText();
-            popCategories.PerformCallback("Copy|" + id);
+            popWorkshop.PerformCallback("Copy|" + id);
         }
 
         function changeStatus(id) {
@@ -85,7 +85,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="floatLt pad20">
-        <h4>Sections</h4>
+        <h4>WORKSHOP</h4>
         <dx:ASPxTextBox runat="server" ID="txtImgUrl" ClientInstanceName="txtImgUrl" CssClass="hidden"></dx:ASPxTextBox>
         <dx:ASPxTextBox runat="server" ID="txtCatId" ClientInstanceName="txtCatId" CssClass="hidden"></dx:ASPxTextBox>
     </div>
@@ -97,7 +97,7 @@
                 <dx:PanelContent>
                     <div class="col-md-12">
                         <div class="pad10">
-                            <dx:ASPxGridView ID="xgvCategories" ClientInstanceName="xgvCategories" runat="server" Width="100%" Settings-ShowFilterRow="true" SettingsPager-PageSize="50" Settings-AutoFilterCondition="Contains" SettingsBehavior-AllowFocusedRow="true" KeyFieldName="catId" DataSourceID="lnqCategories1">
+                            <dx:ASPxGridView ID="xgvWorkshop" ClientInstanceName="xgvWorkshop" runat="server" Width="100%" Settings-ShowFilterRow="true" SettingsPager-PageSize="50" Settings-AutoFilterCondition="Contains" SettingsBehavior-AllowFocusedRow="true" KeyFieldName="IdWorkshop" DataSourceID="lnqCategories1">
                                 <Styles>
                                     <Header VerticalAlign="Top" BackColor="#f5f5f5" HorizontalAlign="Center" Paddings-PaddingTop="3px" Font-Bold="true" Font-Size="1em"></Header>
                                     <FilterRow BackColor="#f5f5f5"></FilterRow>
@@ -106,29 +106,47 @@
                                 </Styles>
                                 <SettingsPager Position="TopAndBottom"></SettingsPager>
                                 <Columns>
-                                    <dx:GridViewDataColumn Width="100">
+                                    <dx:GridViewDataColumn Width="55" CellStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center">
                                          <HeaderTemplate>
-
                                             <button type="button" class="btn btn-success floatLt" onclick="newRow()" title="Add New">
                                                 <i class="glyphicon glyphicon-plus-sign"></i>
                                             </button>
                                         </HeaderTemplate>
-                                     <%--   <DataItemTemplate>
-                                            <img style="width: 70px" src="<%# Eval("catImage").ToString() == "" ? "/photos/noPhoto.png" :  Eval("catImage") %>" alt="<%# Eval("catName") %>" />
-                                        </DataItemTemplate>--%>
+                                        <DataItemTemplate>
+                                            <img style="width:45px" src="<%# Eval("WorkImage") == null || Eval("WorkImage").ToString() == "" ? "/photos/noPhoto.png" : ConfigurationManager.AppSettings["URLSTORE"] + Eval("WorkImage") %>" alt="<%# Eval("Name") %>" />
+                                        </DataItemTemplate>
                                     </dx:GridViewDataColumn>
                                     <dx:GridViewDataColumn FieldName="Name" Caption="Name" SortIndex="0"></dx:GridViewDataColumn>
-                                    <dx:GridViewDataColumn FieldName="Address" Caption="Status " Width="70">
-                                      <%--  <FilterTemplate></FilterTemplate>
-                                       
+                                    <dx:GridViewDataColumn FieldName="Address" Caption="Address" ></dx:GridViewDataColumn>
+                                    <dx:GridViewDataColumn FieldName="Phone" Caption="Phone" ></dx:GridViewDataColumn>
+                                    <dx:GridViewDataColumn FieldName="Email" Caption="Email" ></dx:GridViewDataColumn>
+
+                                   <%-- IdWorkshop, 
+                                    Name, 
+                                    Address, 
+                                    Phone, 
+                                    Email, 
+                                    Latitude, 
+                                    Length, 
+                                    WorkImage, 
+                                    Average, 
+                                    Average, 
+                                    Status, 
+                                    RegistrationDate--%>
+
+
+                                   <dx:GridViewDataColumn FieldName="Status" Caption="Status" Width="70">
+                                      <FilterTemplate></FilterTemplate>
                                         <DataItemTemplate>
                                             <div class="BoxGeneral text-center">
-                                            <button type="button" class="btn btn-<%# (bool)Eval("catStatus")==true?"success":"danger" %>" onclick="changeStatus('<%# Eval("catId") %>')" title="Change Status">
-                                                <i class="glyphicon glyphicon-<%# (bool)Eval("catStatus")==true?"check":"minus-sign" %>"></i>
-                                            </button>
+                                                <button type="button" class="btn btn-<%# (bool)Eval("Status")==true?"success":"danger" %>" onclick="changeStatus('<%# Eval("IdWorkshop") %>')" title="Change Status">
+                                                    <i class="glyphicon glyphicon-<%# (bool)Eval("Status")==true?"check":"minus-sign" %>"></i>
+                                                </button>
                                             </div>
-                                        </DataItemTemplate>--%>
+                                        </DataItemTemplate>
+
                                     </dx:GridViewDataColumn>
+
                                 </Columns>
                                 <ClientSideEvents RowDblClick="editRow" />
                             </dx:ASPxGridView>
@@ -139,7 +157,7 @@
         </dx:ASPxCallbackPanel>
     </div>
 
-    <dx:ASPxPopupControl runat="server" ID="popCategories" ClientInstanceName="popCategories" Width="1000px" OnWindowCallback="popCategories_WindowCallback"
+    <dx:ASPxPopupControl runat="server" ID="popWorkshop" ClientInstanceName="popWorkshop" Width="1000px" OnWindowCallback="popWorkshop_WindowCallback"
         PopupVerticalAlign="WindowCenter" PopupHorizontalAlign="WindowCenter" HeaderText="Edit Categories" Modal="true" AllowDragging="true">
         <ContentCollection>
             <dx:PopupControlContentControl>
@@ -152,8 +170,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" href="#collapse1">MAIN IMAGE&nbsp;&nbsp;
-                            <img src="../Scripts/imgs/icons/exp.png" /></a>
-
+                                    <img src="../Scripts/imgs/icons/exp.png" /></a>
                                 </h4>
                             </div>
                             <div id="collapse1" class="panel-collapse collapse in ">
@@ -233,7 +250,7 @@
 
 
     <dx:ASPxCallback runat="server" ID="xcaStatus" ClientInstanceName="xcaStatus" OnCallback="xcaStatus_Callback">
-        <ClientSideEvents EndCallback="function(s,e){xgvCategories.Refresh(); xgvCategories2.Refresh();}" />
+        <ClientSideEvents EndCallback="function(s,e){xgvWorkshop.Refresh(); xgvWorkshop2.Refresh();}" />
     </dx:ASPxCallback>
     <asp:LinqDataSource ID="lnqCategories1" runat="server" ContextTypeName="DekkOnline.dbDekkOnlineDataContext" TableName="Workshop"></asp:LinqDataSource>
     
