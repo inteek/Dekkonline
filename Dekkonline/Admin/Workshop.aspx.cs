@@ -28,13 +28,13 @@ namespace DekkOnline.Admin
 
         protected void xcpCategories_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
-            xgvCategories.DataBind();
+            xgvWorkshop.DataBind();
         }
 
         protected void btnUpdateCats_Click(object sender, EventArgs e)
         {
            
-            xgvCategories.DataBind();
+            xgvWorkshop.DataBind();
         }
 
 
@@ -109,13 +109,13 @@ namespace DekkOnline.Admin
             return posted;
         }
 
-        protected void popCategories_WindowCallback(object source, PopupWindowCallbackArgs e)
+        protected void popWorkshop_WindowCallback(object source, PopupWindowCallbackArgs e)
         {
             int catId = int.Parse(e.Parameter.Split('|')[1]);
             Session["lastCatId"] = catId;
             var cCat = new category();
 
-            if(catId > 0) cCat = (from cdp in db.categories where cdp.catId == catId select cdp).FirstOrDefault();
+            if (catId > 0) cCat = (from cdp in db.categories where cdp.catId == catId select cdp).FirstOrDefault();
 
             if (e.Parameter.Split('|')[0] == "Load")
             {
@@ -124,14 +124,14 @@ namespace DekkOnline.Admin
                     txtCategories.Text = "";
                     txtDescription.Text = "";
                     Session["imgOurCategoriesURL"] = "";
-                    popCategories.JSProperties.Add("cpImage", "");
+                    popWorkshop.JSProperties.Add("cpImage", "");
                 }
                 else
                 {
                     txtCategories.Text = cCat.catName;
                     txtDescription.Text = cCat.catDescription;
                     Session["imgOurCategoriesURL"] = cCat.catImage;
-                    popCategories.JSProperties.Add("cpImage", cCat.catImage);
+                    popWorkshop.JSProperties.Add("cpImage", cCat.catImage);
                 }
             }
             else if (e.Parameter.Split('|')[0] == "Save")
@@ -154,13 +154,13 @@ namespace DekkOnline.Admin
         {
 
 
-            int catId = int.Parse(e.Parameter);
+            int WorkshopId = int.Parse(e.Parameter);
 
-            var cCategorie = db.categories.Where(c => c.catId == catId).FirstOrDefault();
-            cCategorie.catStatus = !cCategorie.catStatus;
+            var wWorkshop = db.Workshop.Where(w => w.IdWorkshop == WorkshopId).FirstOrDefault();
+            wWorkshop.Status = !wWorkshop.Status;
 
             db.SubmitChanges();
-            xgvCategories.DataBind();
+            xgvWorkshop.DataBind();
             
         }
     }

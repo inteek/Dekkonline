@@ -10,8 +10,7 @@
 namespace DekkOnline.Admin {
     
     
-    public partial class Workshop
-    {
+    public partial class Workshop {
         
         /// <summary>
         /// Control txtImgUrl.
@@ -41,22 +40,22 @@ namespace DekkOnline.Admin {
         protected global::DevExpress.Web.ASPxCallbackPanel xcpCategories;
         
         /// <summary>
-        /// Control xgvCategories.
+        /// Control xgvWorkshop.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxGridView xgvCategories;
+        protected global::DevExpress.Web.ASPxGridView xgvWorkshop;
         
         /// <summary>
-        /// Control popCategories.
+        /// Control popWorkshop.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxPopupControl popCategories;
+        protected global::DevExpress.Web.ASPxPopupControl popWorkshop;
         
         /// <summary>
         /// Control UploadControl.

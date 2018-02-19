@@ -69,12 +69,12 @@ namespace DekkOnline
     partial void InsertUserAddress(UserAddress instance);
     partial void UpdateUserAddress(UserAddress instance);
     partial void DeleteUserAddress(UserAddress instance);
-    partial void InsertWorkshop(Workshop instance);
-    partial void UpdateWorkshop(Workshop instance);
-    partial void DeleteWorkshop(Workshop instance);
     partial void InsertWorkshopUser(WorkshopUser instance);
     partial void UpdateWorkshopUser(WorkshopUser instance);
     partial void DeleteWorkshopUser(WorkshopUser instance);
+    partial void InsertWorkshop(Workshop instance);
+    partial void UpdateWorkshop(Workshop instance);
+    partial void DeleteWorkshop(Workshop instance);
     #endregion
 		
 		public dbDekkOnlineDataContext() : 
@@ -211,19 +211,19 @@ namespace DekkOnline
 			}
 		}
 		
-		public System.Data.Linq.Table<Workshop> Workshop
-		{
-			get
-			{
-				return this.GetTable<Workshop>();
-			}
-		}
-		
 		public System.Data.Linq.Table<WorkshopUser> WorkshopUser
 		{
 			get
 			{
 				return this.GetTable<WorkshopUser>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Workshop> Workshop
+		{
+			get
+			{
+				return this.GetTable<Workshop>();
 			}
 		}
 	}
@@ -4133,6 +4133,116 @@ namespace DekkOnline
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkshopUser")]
+	public partial class WorkshopUser : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _idUser;
+		
+		private System.Nullable<int> _idWorkshop;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnidUserChanging(string value);
+    partial void OnidUserChanged();
+    partial void OnidWorkshopChanging(System.Nullable<int> value);
+    partial void OnidWorkshopChanged();
+    #endregion
+		
+		public WorkshopUser()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUser", DbType="NVarChar(128)")]
+		public string idUser
+		{
+			get
+			{
+				return this._idUser;
+			}
+			set
+			{
+				if ((this._idUser != value))
+				{
+					this.OnidUserChanging(value);
+					this.SendPropertyChanging();
+					this._idUser = value;
+					this.SendPropertyChanged("idUser");
+					this.OnidUserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idWorkshop", DbType="Int")]
+		public System.Nullable<int> idWorkshop
+		{
+			get
+			{
+				return this._idWorkshop;
+			}
+			set
+			{
+				if ((this._idWorkshop != value))
+				{
+					this.OnidWorkshopChanging(value);
+					this.SendPropertyChanging();
+					this._idWorkshop = value;
+					this.SendPropertyChanged("idWorkshop");
+					this.OnidWorkshopChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Workshop")]
 	public partial class Workshop : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4159,6 +4269,10 @@ namespace DekkOnline
 		
 		private System.Nullable<int> _Average;
 		
+		private System.Nullable<bool> _Status;
+		
+		private System.Nullable<System.DateTime> _RegistrationDate;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -4183,6 +4297,10 @@ namespace DekkOnline
     partial void OnWorkImageChanged();
     partial void OnAverageChanging(System.Nullable<int> value);
     partial void OnAverageChanged();
+    partial void OnStatusChanging(System.Nullable<bool> value);
+    partial void OnStatusChanged();
+    partial void OnRegistrationDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnRegistrationDateChanged();
     #endregion
 		
 		public Workshop()
@@ -4390,112 +4508,42 @@ namespace DekkOnline
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkshopUser")]
-	public partial class WorkshopUser : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _idUser;
-		
-		private System.Nullable<int> _idWorkshop;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnidUserChanging(string value);
-    partial void OnidUserChanged();
-    partial void OnidWorkshopChanging(System.Nullable<int> value);
-    partial void OnidWorkshopChanged();
-    #endregion
-		
-		public WorkshopUser()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Bit")]
+		public System.Nullable<bool> Status
 		{
 			get
 			{
-				return this._id;
+				return this._Status;
 			}
 			set
 			{
-				if ((this._id != value))
+				if ((this._Status != value))
 				{
-					this.OnidChanging(value);
+					this.OnStatusChanging(value);
 					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUser", DbType="NVarChar(128)")]
-		public string idUser
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RegistrationDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> RegistrationDate
 		{
 			get
 			{
-				return this._idUser;
+				return this._RegistrationDate;
 			}
 			set
 			{
-				if ((this._idUser != value))
+				if ((this._RegistrationDate != value))
 				{
-					this.OnidUserChanging(value);
+					this.OnRegistrationDateChanging(value);
 					this.SendPropertyChanging();
-					this._idUser = value;
-					this.SendPropertyChanged("idUser");
-					this.OnidUserChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idWorkshop", DbType="Int")]
-		public System.Nullable<int> idWorkshop
-		{
-			get
-			{
-				return this._idWorkshop;
-			}
-			set
-			{
-				if ((this._idWorkshop != value))
-				{
-					this.OnidWorkshopChanging(value);
-					this.SendPropertyChanging();
-					this._idWorkshop = value;
-					this.SendPropertyChanged("idWorkshop");
-					this.OnidWorkshopChanged();
+					this._RegistrationDate = value;
+					this.SendPropertyChanged("RegistrationDate");
+					this.OnRegistrationDateChanged();
 				}
 			}
 		}
