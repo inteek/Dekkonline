@@ -26,7 +26,7 @@ namespace DekkOnline.Admin
         }
 
 
-        protected void xcpCategories_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        protected void xcpWorkshop_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
         {
             xgvWorkshop.DataBind();
         }
@@ -50,7 +50,7 @@ namespace DekkOnline.Admin
             {
 
                 string strCategoriesImage = uploadSelectedImage(e.UploadedFile, e.UploadedFile.FileName);
-                Session["imgOurCategoriesURL"] = strCategoriesImage;
+                Session["imgOurWorkshopURL"] = strCategoriesImage;
                 e.CallbackData = strCategoriesImage;
 
             }
@@ -74,7 +74,7 @@ namespace DekkOnline.Admin
 
             string sFilename = System.IO.Path.GetFileName(myFile.FileName);
             int file_append = 0;
-            string sFilenameF = Session["lastCatId"].ToString() + sFilename.Substring(fileName.LastIndexOf('.'));
+            string sFilenameF = Session["lastWorkshopId"].ToString() + sFilename.Substring(fileName.LastIndexOf('.'));
             while (System.IO.File.Exists(Server.MapPath("~/" + sSavePath + sFilenameF)))
             {
                 file_append++;
@@ -111,39 +111,54 @@ namespace DekkOnline.Admin
 
         protected void popWorkshop_WindowCallback(object source, PopupWindowCallbackArgs e)
         {
-            int catId = int.Parse(e.Parameter.Split('|')[1]);
-            Session["lastCatId"] = catId;
-            var cCat = new category();
+            int workshopId = int.Parse(e.Parameter.Split('|')[1]);
+            Session["lastWorkshopId"] = workshopId;
+            var wWorkshop = new DekkOnline.Workshop();
 
-            if (catId > 0) cCat = (from cdp in db.categories where cdp.catId == catId select cdp).FirstOrDefault();
+            if (workshopId > 0) wWorkshop = (from w in db.Workshop where w.IdWorkshop == workshopId select w).FirstOrDefault();
 
             if (e.Parameter.Split('|')[0] == "Load")
             {
-                if (catId == 0)
+                if (workshopId == 0)
                 {
-                    txtCategories.Text = "";
-                    txtDescription.Text = "";
-                    Session["imgOurCategoriesURL"] = "";
+                    txtName.Text = "";
+                    txtAddress.Text = "";
+                    txtPhone.Text = "";
+                    txtEmail.Text = "";
+                    Session["imgOurWorkshopURL"] = "";
                     popWorkshop.JSProperties.Add("cpImage", "");
                 }
                 else
                 {
-                    txtCategories.Text = cCat.catName;
-                    txtDescription.Text = cCat.catDescription;
-                    Session["imgOurCategoriesURL"] = cCat.catImage;
-                    popWorkshop.JSProperties.Add("cpImage", cCat.catImage);
+                    txtName.Text = wWorkshop.Name;
+                    txtAddress.Text = wWorkshop.Address;
+                    txtPhone.Text = wWorkshop.Phone;
+                    txtEmail.Text = wWorkshop.Email;
+                    Session["imgOurWorkshopURL"] = wWorkshop.WorkImage == null || wWorkshop.WorkImage == "" ? "" : wWorkshop.WorkImage;
+
+                    if (wWorkshop.WorkImage != null && wWorkshop.WorkImage.IndexOf("/photos/ourCategories/") == 0)
+                    {
+                        popWorkshop.JSProperties.Add("cpImage", wWorkshop.WorkImage);
+                    }
+                    else
+                    {
+                        popWorkshop.JSProperties.Add("cpImage", wWorkshop.WorkImage == null || wWorkshop.WorkImage == "" ? "" : ConfigurationManager.AppSettings["URLSTORE"] + wWorkshop.WorkImage);
+                    }
+
                 }
             }
             else if (e.Parameter.Split('|')[0] == "Save")
             {
-                cCat.catName = txtCategories.Text;
-                cCat.catDescription = txtDescription.Text;
-                cCat.catImage = Session["imgOurCategoriesURL"].ToString();
+                wWorkshop.Name = txtName.Text;
+                wWorkshop.Address = txtAddress.Text;
+                wWorkshop.Phone = txtPhone.Text;
+                wWorkshop.Email = txtEmail.Text;
+                wWorkshop.WorkImage = Session["imgOurWorkshopURL"].ToString();
 
-                if (catId == 0)
+                if (workshopId == 0)
                 {
-                    cCat.catStatus = true;
-                    db.categories.InsertOnSubmit(cCat);
+                    wWorkshop.Status = true;
+                    db.Workshop.InsertOnSubmit(wWorkshop);
                 }
 
                 db.SubmitChanges();

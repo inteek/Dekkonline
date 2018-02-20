@@ -11,14 +11,14 @@
 
         function editRow(s, e) {
             var id = s.GetRowKey(e.visibleIndex);
-            txtCatId.SetText(id);
+            txtWorkshopId.SetText(id);
             saved = false;
             popWorkshop.PerformCallback("Load|" + id);
         }
 
         function newRow() {
             var id = 0;
-            txtCatId.SetText(id);
+            txtWorkshopId.SetText(id);
             saved = false;
             popWorkshop.PerformCallback("Load|" + id);
         }
@@ -34,9 +34,9 @@
                 popWorkshop.Show();
             } else {
                 txtImgUrl.SetText("");
-                txtCatId.SetText("");
+                txtWorkshopId.SetText("");
                 popWorkshop.Hide();
-                xcpCategories.PerformCallback();
+                xcpWorkshop.PerformCallback();
             }
         }
 
@@ -66,13 +66,13 @@
         function saveCategories() {
             if (ASPxClientEdit.ValidateGroup('Save')) {
                 saved = true;
-                var id = txtCatId.GetText();
+                var id = txtWorkshopId.GetText();
                 popWorkshop.PerformCallback("Save|" + id);
             }
         }
 
         function copyData() {
-            var id = txtCatId.GetText();
+            var id = txtWorkshopId.GetText();
             popWorkshop.PerformCallback("Copy|" + id);
         }
 
@@ -87,12 +87,12 @@
     <div class="floatLt pad20">
         <h4>WORKSHOP</h4>
         <dx:ASPxTextBox runat="server" ID="txtImgUrl" ClientInstanceName="txtImgUrl" CssClass="hidden"></dx:ASPxTextBox>
-        <dx:ASPxTextBox runat="server" ID="txtCatId" ClientInstanceName="txtCatId" CssClass="hidden"></dx:ASPxTextBox>
+        <dx:ASPxTextBox runat="server" ID="txtWorkshopId" ClientInstanceName="txtWorkshopId" CssClass="hidden"></dx:ASPxTextBox>
     </div>
     
     <div class="clearfix"></div>
     <div >
-        <dx:ASPxCallbackPanel runat="server" ID="xcpCategories" ClientInstanceName="xcpCategories" OnCallback="xcpCategories_Callback" Width="100%">
+        <dx:ASPxCallbackPanel runat="server" ID="xcpWorkshop" ClientInstanceName="xcpWorkshop" OnCallback="xcpWorkshop_Callback" Width="100%">
             <PanelCollection>
                 <dx:PanelContent>
                     <div class="col-md-12">
@@ -113,7 +113,7 @@
                                             </button>
                                         </HeaderTemplate>
                                         <DataItemTemplate>
-                                            <img style="width:45px" src="<%# Eval("WorkImage") == null || Eval("WorkImage").ToString() == "" ? "/photos/noPhoto.png" : ConfigurationManager.AppSettings["URLSTORE"] + Eval("WorkImage") %>" alt="<%# Eval("Name") %>" />
+                                            <img style="width:45px" src="<%# Eval("WorkImage") != null && Eval("WorkImage").ToString().IndexOf("/photos/ourCategories/")  == 0 ? Eval("WorkImage").ToString() : Eval("WorkImage") == null || Eval("WorkImage").ToString() == "" ? "/photos/noPhoto.png" : ConfigurationManager.AppSettings["URLSTORE"] + Eval("WorkImage") %>" alt="<%# Eval("Name") %>" />
                                         </DataItemTemplate>
                                     </dx:GridViewDataColumn>
                                     <dx:GridViewDataColumn FieldName="Name" Caption="Name" SortIndex="0"></dx:GridViewDataColumn>
@@ -158,7 +158,7 @@
     </div>
 
     <dx:ASPxPopupControl runat="server" ID="popWorkshop" ClientInstanceName="popWorkshop" Width="1000px" OnWindowCallback="popWorkshop_WindowCallback"
-        PopupVerticalAlign="WindowCenter" PopupHorizontalAlign="WindowCenter" HeaderText="Edit Categories" Modal="true" AllowDragging="true">
+        PopupVerticalAlign="WindowCenter" PopupHorizontalAlign="WindowCenter" HeaderText="Edit Workshop" Modal="true" AllowDragging="true">
         <ContentCollection>
             <dx:PopupControlContentControl>
 
@@ -202,15 +202,7 @@
                                                 FileUploadComplete="onUploadControlFileUploadComplete"></ClientSideEvents>
                                         </dx:ASPxUploadControl>
                                     </div>
-                                    <%--<dx:ASPxBinaryImage ID="imgArticle"  CssClass="BoxGeneral" 
-                             ShowLoadingImage="true" AlternateText="Pick Image"  runat="server">     
-                             <EditingSettings Enabled="true" DropZoneText="Drop Image" EmptyValueText="Pick Image" > 
-                                        <UploadSettings UploadMode="Auto" TemporaryFolder="~\ImagesTmp">
-                                            <UploadValidationSettings MaxFileSize="4194304"></UploadValidationSettings>
-                                        </UploadSettings>
-                                        <ButtonPanelSettings Position="Bottom" Visibility="OnMouseOver" ButtonPosition="Center" />
-                                    </EditingSettings>
-                                </dx:ASPxBinaryImage>--%>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -218,21 +210,46 @@
                 </div>
 
                 <div class="col-xs-12  col-md-9">
-                    <dx:ASPxTextBox runat="server" NullText="Category" ID="txtCategories" onkeydown="return onlyAN(this,event);" CssClass="tableInput BoxGeneral fontRed" Font-Size="X-Large" ForeColor="#dd1730">
+                    <dx:ASPxTextBox runat="server" NullText="Name" ID="txtName" onkeydown="return onlyAN(this,event);" CssClass="tableInput BoxGeneral fontRed" Font-Size="X-Large" ForeColor="#dd1730">
                         <ValidationSettings ErrorFrameStyle-CssClass="redBorder" ErrorDisplayMode="None" ValidationGroup="Save">
                             <RequiredField IsRequired="true" />
                         </ValidationSettings>
                     </dx:ASPxTextBox>
                     <div class="col-sm-12">
                         
+                      <%--  Name, 
+                        Address, 
+                        Phone, 
+                        Email, --%>
+
                         <div class="clearfix"></div>
                         <div class="spacer20"></div>
                         <div class="clearfix"></div>
-                        <b>Description:</b><br />
-                        <dx:ASPxMemo runat="server" ID="txtDescription" CssClass="BoxGeneral" Height="50px"></dx:ASPxMemo>
+                        <b>Address:</b><br />
+                        <dx:ASPxMemo runat="server" ID="txtAddress" CssClass="BoxGeneral" Height="50px"></dx:ASPxMemo>
                         <div class="clearfix"></div>
                         <div class="spacer20"></div>
                         <div class="clearfix"></div>
+                        
+                        <dx:ASPxTextBox runat="server" NullText="Phone" ID="txtPhone" onkeydown="return onlyAN(this,event);" CssClass="BoxGeneral" Height="30px" Width="100%" >
+                            <ValidationSettings ErrorFrameStyle-CssClass="redBorder" ErrorDisplayMode="None" ValidationGroup="Save">
+                                <RequiredField IsRequired="true" />
+                            </ValidationSettings>
+                        </dx:ASPxTextBox>
+                        <div class="clearfix"></div>
+                        <div class="spacer20"></div>
+                        <div class="clearfix"></div>
+
+                        
+                        <dx:ASPxTextBox runat="server" NullText="Email" ID="txtEmail" onkeydown="return onlyAN(this,event);" CssClass="BoxGeneral" Height="30px" Width="100%" >
+                            <ValidationSettings ErrorFrameStyle-CssClass="redBorder" ErrorDisplayMode="None" ValidationGroup="Save">
+                                <RequiredField IsRequired="true" />
+                            </ValidationSettings>
+                        </dx:ASPxTextBox>
+                        <div class="clearfix"></div>
+                        <div class="spacer20"></div>
+                        <div class="clearfix"></div>
+
                     </div>
                     <div class="clearfix"></div>
                     <div class="spacer10"></div>

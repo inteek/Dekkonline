@@ -22,22 +22,22 @@ namespace DekkOnline.Admin {
         protected global::DevExpress.Web.ASPxTextBox txtImgUrl;
         
         /// <summary>
-        /// Control txtCatId.
+        /// Control txtWorkshopId.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtCatId;
+        protected global::DevExpress.Web.ASPxTextBox txtWorkshopId;
         
         /// <summary>
-        /// Control xcpCategories.
+        /// Control xcpWorkshop.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxCallbackPanel xcpCategories;
+        protected global::DevExpress.Web.ASPxCallbackPanel xcpWorkshop;
         
         /// <summary>
         /// Control xgvWorkshop.
@@ -67,22 +67,40 @@ namespace DekkOnline.Admin {
         protected global::DevExpress.Web.ASPxUploadControl UploadControl;
         
         /// <summary>
-        /// Control txtCategories.
+        /// Control txtName.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtCategories;
+        protected global::DevExpress.Web.ASPxTextBox txtName;
         
         /// <summary>
-        /// Control txtDescription.
+        /// Control txtAddress.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxMemo txtDescription;
+        protected global::DevExpress.Web.ASPxMemo txtAddress;
+        
+        /// <summary>
+        /// Control txtPhone.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTextBox txtPhone;
+        
+        /// <summary>
+        /// Control txtEmail.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxTextBox txtEmail;
         
         /// <summary>
         /// Control xcaStatus.
