@@ -8,6 +8,7 @@
 }
 @Styles.Render("~/Styles/Dimension.css?v=9")
 
+
 <div class="col-md-12 mb30" style="font-family:Arial; margin-top:20px; margin-bottom:20px;">
     <!-- tab style -->
     <div class="clearfix">
@@ -71,9 +72,14 @@
                                         <div class="col-sm-9 marginleftInfo">
                                             <div class="left2">
                                                 <div class="form-group">
-                                                    <label class="perfilInfo">Zip Code: </label> <label class="lab perfilInfo2"" id="zip">@Model.ZipCode</label>
-                                                    <input type="number" class="form-control borderInput e hidden" id="ZipCode" placeholder="">
+                                                    <label class="perfilInfo">Zip Code: </label> <label class="lab perfilInfo2 hidden" id="zip">@Model.ZipCode</label>
+                                                    <select id="multiSelectzip" class="js-example-basic-multiple" name="states[]" multiple="multiple" style="width:250px;height:150px"></select>
+                                                    @*<input type="number" class="form-control borderInput e hidden" id="ZipCode" placeholder="">*@
+                                                    <input type="number" class="form-control borderInput hidden" id="ZipCode" placeholder="">
                                                     <span class="req1 hidden" style="color:red">*Insert a valid Zip Code(4 digits)</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="perfilInfo"> Name: </label> <label class="lab perfilInfo2" id="fname">@Model.Name</label>
@@ -88,7 +94,7 @@
                                                         <div class="col-lg-8 col-sm-8 col-xs-6" style="word-wrap: break-word;">
                                                             <label class="lab perfilInfo2" id="adrs" style="word-wrap: break-word;">@Model.Address</label>
                                                         </div>
-                                                    </div>                                                    
+                                                    </div>
                                                     <input type="text" class="form-control borderInput e hidden" id="Address" placeholder="">
                                                     <span class="req4 hidden" style="color:red">*Insert a Address(150 characters max)</span>
                                                 </div>
@@ -103,12 +109,12 @@
                                         </div>
                                     </div>
                                     @*<div class="col-sm-1 vl"></div>
-                                    <div class="col-sm-3">
-                                        <h3><span class="title"><strong style="color:#e51111">Your cars:</strong></span></h3>
-                                        <div class="form-group">
-                                            pendiente 
-                                        </div>
-                                    </div>*@
+                                        <div class="col-sm-3">
+                                            <h3><span class="title"><strong style="color:#e51111">Your cars:</strong></span></h3>
+                                            <div class="form-group">
+                                                pendiente
+                                            </div>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
@@ -118,18 +124,18 @@
             </div>
             <!-- tab PENDING -->
             <div class="tab-pane" id="tab-pending">
-                    @Html.Action("Pending", "Workshop")
+                @Html.Action("Pending", "Workshop")
 
-                </div>
+            </div>
             <!-- tab PAST -->
             <div class="tab-pane" id="tab-past">
-                    @Html.Action("Past", "Workshop")
+                @Html.Action("Past", "Workshop")
 
-                </div>
+            </div>
             <!-- tab SERVICES -->
             <div class="tab-pane" id="tab-services">
-                    @Html.Action("Services", "Workshop")
-                </div>
+                @Html.Action("Services", "Workshop")
+            </div>
             <!-- tab SCHEDULE -->
             <div class="tab-pane" id="tab-schedules">
                 @Html.Action("Schedule", "Workshop")
@@ -141,7 +147,9 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Site/Workshop.js?v=9")
+@Scripts.Render("~/Scripts/Site/Workshop.js?v=5")
+
+
 
 <script>
     $(document).ready(function () {

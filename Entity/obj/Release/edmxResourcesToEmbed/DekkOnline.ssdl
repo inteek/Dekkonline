@@ -134,6 +134,21 @@
     <Property Name="StatusofPromo" Type="bit" />
     <Property Name="PointsEarned" Type="int" />
   </EntityType>
+  <EntityType Name="fylker">
+    <Key>
+      <PropertyRef Name="fylkeID" />
+    </Key>
+    <Property Name="fylkeID" Type="smallint" Nullable="false" />
+    <Property Name="fylkeNavn" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="kommuner">
+    <Key>
+      <PropertyRef Name="kommuneID" />
+    </Key>
+    <Property Name="kommuneID" Type="smallint" Nullable="false" />
+    <Property Name="fylkeID" Type="smallint" Nullable="false" />
+    <Property Name="kommuneNavn" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="id" />
@@ -308,6 +323,7 @@
     <Property Name="Latitude" Type="varchar" MaxLength="50" />
     <Property Name="Length" Type="varchar" MaxLength="50" />
     <Property Name="Image" Type="varchar(max)" />
+    <Property Name="WorkShopManager" Type="bit" />
   </EntityType>
   <EntityType Name="UserPoints">
     <Key>
@@ -331,6 +347,8 @@
     <Property Name="Length" Type="varchar" MaxLength="50" />
     <Property Name="WorkImage" Type="varchar" MaxLength="200" />
     <Property Name="Average" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="RegistrationDate" Type="datetime" />
   </EntityType>
   <EntityType Name="WorkshopAppointment">
     <Key>
@@ -343,6 +361,7 @@
     <Property Name="Time" Type="time" Precision="4" />
     <Property Name="Comments" Type="varchar" MaxLength="100" />
     <Property Name="DayAppointment" Type="int" />
+    <Property Name="TimeEnd" Type="time" Precision="4" />
   </EntityType>
   <EntityType Name="WorkshopServices">
     <Key>
@@ -361,6 +380,18 @@
     <Property Name="idUser" Type="nvarchar" MaxLength="128" />
     <Property Name="idWorkshop" Type="int" />
   </EntityType>
+  <Association Name="fk_city">
+    <End Role="fylker" Type="Self.fylker" Multiplicity="1" />
+    <End Role="kommuner" Type="Self.kommuner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="fylker">
+        <PropertyRef Name="fylkeID" />
+      </Principal>
+      <Dependent Role="kommuner">
+        <PropertyRef Name="fylkeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_CodepromUser">
     <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
     <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
@@ -438,6 +469,18 @@
       </Principal>
       <Dependent Role="PurchaseOrder">
         <PropertyRef Name="IdDelivery" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_iduserref">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+    <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserAddress">
+        <PropertyRef Name="IdUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -562,6 +605,8 @@
     <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="fylker" EntityType="Self.fylker" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="kommuner" EntityType="Self.kommuner" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrdersDetail" EntityType="Self.OrdersDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
@@ -579,6 +624,10 @@
     <EntitySet Name="WorkshopAppointment" EntityType="Self.WorkshopAppointment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopServices" EntityType="Self.WorkshopServices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopUser" EntityType="Self.WorkshopUser" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_city" Association="Self.fk_city">
+      <End Role="fylker" EntitySet="fylker" />
+      <End Role="kommuner" EntitySet="kommuner" />
+    </AssociationSet>
     <AssociationSet Name="fk_CodepromUser" Association="Self.fk_CodepromUser">
       <End Role="PromotionCode" EntitySet="PromotionCode" />
       <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
@@ -602,6 +651,10 @@
     <AssociationSet Name="fk_delivery" Association="Self.fk_delivery">
       <End Role="DeliveryType" EntitySet="DeliveryType" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="fk_iduserref" Association="Self.fk_iduserref">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="UserAddress" EntitySet="UserAddress" />
     </AssociationSet>
     <AssociationSet Name="fk_product" Association="Self.fk_product">
       <End Role="products" EntitySet="products" />

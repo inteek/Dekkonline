@@ -5,31 +5,31 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-            <div class="prLogin" style="overflow-x:hidden;">
-                <table class="tableLogin">
-                    <tr>
-                        <td>
-                            <div id="HeadLoginView">
-                                <div id="AnonymousTemplate">
-                                    @Html.ActionLink("Hello! " + User.Identity.GetUserName() + "!", "Index", "Profile", routeValues: null, htmlAttributes: new { title = "Profile" })
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                                </div>
+        <div class="prLogin" style="overflow-x:hidden;">
+            <table class="tableLogin">
+                <tr>
+                    <td>
+                        <div id="HeadLoginView">
+                            <div id="AnonymousTemplate">
+                                @Html.ActionLink("Hello! " + Getname.name() + "!", "Index", "Profile", routeValues: null, htmlAttributes: new { title = "Profile" })
+                                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                             </div>
-                        </td>
-                       
-                    </tr>
-                </table>
-            </div>
-            <div class="prMenuClosed" onclick="openMenu()"></div>
-            <div class="prMenuOpen" onclick="closeMenu()"></div>
-            <div class="prMenuItems" runat="server" id="menu">
-                <div class="prMenuCI prItemDekk"><a href="@Url.Action("Products", "Dekk")">DEKK</a></div>
-                <div class="prMenuCI"><a href="/FELGER">FELGER</a></div>
-                <div class="prMenuCI"><a href="/REKVISITA">REKVISITA</a></div>
-                <div class="prMenuCI"><a href="/MOTORSPORT">MOTORSPORT</a></div>
-                <div class="prMenuCI"><a href="/TIRE GUIDE">TIRE GUIDE</a></div>
-                <div class="prMenuCI"><a href="/KONTAKT">KONTAKT</a></div>
-            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+        <div class="prMenuClosed" onclick="openMenu()"></div>
+        <div class="prMenuOpen" onclick="closeMenu()"></div>
+        <div class="prMenuItems" runat="server" id="menu">
+            <div class="prMenuCI prItemDekk"><a href="@Url.Action("Products", "Dekk")">DEKK</a></div>
+            <div class="prMenuCI"><a href="/FELGER">FELGER</a></div>
+            <div class="prMenuCI"><a href="/REKVISITA">REKVISITA</a></div>
+            <div class="prMenuCI"><a href="/MOTORSPORT">MOTORSPORT</a></div>
+            <div class="prMenuCI"><a href="/TIRE GUIDE">TIRE GUIDE</a></div>
+            <div class="prMenuCI"><a href="/KONTAKT">KONTAKT</a></div>
+        </div>
     }
 }
 else

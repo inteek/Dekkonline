@@ -44,7 +44,6 @@ namespace Entity
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrder { get; set; }
         public virtual DbSet<WorkshopServices> WorkshopServices { get; set; }
-        public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<Appointments> Appointments { get; set; }
         public virtual DbSet<OrdersDetail> OrdersDetail { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
@@ -52,6 +51,9 @@ namespace Entity
         public virtual DbSet<DeliveryType> DeliveryType { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<WorkshopUser> WorkshopUser { get; set; }
+        public virtual DbSet<fylker> fylker { get; set; }
+        public virtual DbSet<kommuner> kommuner { get; set; }
+        public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<Workshop> Workshop { get; set; }
     }
 }

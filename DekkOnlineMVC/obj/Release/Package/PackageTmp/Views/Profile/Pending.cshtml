@@ -267,11 +267,22 @@
                             </div>
                         </div>
                         <br />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="comment">Send mail to the workshop :</label>
+                                    <textarea class="form-control" rows="5" id="emailWorkshop"></textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="table-responsive">
+                    <button type="button" id="sendEmail" class="btn btn-danger" data-dismiss="modal">Send</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-@Scripts.Render("~/Scripts/Site/Profile.js?v=3")

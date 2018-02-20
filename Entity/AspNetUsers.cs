@@ -25,6 +25,7 @@ namespace Entity
             this.DetailUserPoints = new HashSet<DetailUserPoints>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
             this.PurchaseOrder = new HashSet<PurchaseOrder>();
+            this.UserAddress = new HashSet<UserAddress>();
         }
     
         public string Id { get; set; }
@@ -56,5 +57,7 @@ namespace Entity
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAddress> UserAddress { get; set; }
     }
 }

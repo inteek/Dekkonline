@@ -24,5 +24,7 @@ namespace Entity
         public string Length { get; set; }
         public string WorkImage { get; set; }
         public Nullable<int> Average { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public Nullable<System.DateTime> RegistrationDate { get; set; }
     }
 }

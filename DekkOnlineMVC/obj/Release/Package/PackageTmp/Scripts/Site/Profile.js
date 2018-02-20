@@ -1,4 +1,5 @@
 ﻿var valiemail = false;
+var IdWorkshop = 0;
 $(document).ready(function () {
 
     $(".glyphicon-edit").on("click", function () {
@@ -89,6 +90,30 @@ $(document).ready(function () {
         });
     });
 
+    $("#sendEmail").on("click", function () {
+        var mensaje = "";
+        mensaje = $("#emailWorkshop").val();
+
+        if (mensaje == "") {
+            return false;
+        }
+
+        var data = {
+            idWorkshop: IdWorkshop,
+            mensaje: mensaje
+        }
+
+        conectarAsy("../Profile/emailWorkshop", data, function (result) {
+
+            if (result.error == false) {
+                $('#modalContactWorkShop').modal('hide');
+            }
+            else if (result.error == true) {
+                alert("Error send mail")
+            }
+        });
+    });
+
 });
 
 
@@ -105,7 +130,8 @@ function popouContactWorkShop(Orden) {
             $("#infoName").text(result.resultado['Name']);
             $("#infoAddres").text(result.resultado['Address']);
             $("#infoEmail").text(result.resultado['Email']);
-            $("#infoPhone").text(result.resultado['Phone']);               
+            $("#infoPhone").text(result.resultado['Phone']); 
+            IdWorkshop = result.resultado['IdWorkshop'];
         }
         else if (result.error == true) {
             alert("Error");

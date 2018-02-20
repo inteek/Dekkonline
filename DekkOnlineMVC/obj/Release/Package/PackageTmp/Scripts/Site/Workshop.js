@@ -8,7 +8,7 @@ var oTable6 = null;
 var oTable7 = null;
 var serviceasc;
 $(document).ready(function () {
-
+    $('.js-example-basic-multiple').select2();
     $(".glyphicon-edit").on("click", function () {
         var labelzip = $("#zip").text();
         var labelname = $("#fname").text();
@@ -90,14 +90,17 @@ $(document).ready(function () {
     filltableservice();
     filltablePending();
     filltablePast();
+    fillzipcodes();
     $("#tblSchedule").on("click", ".editsche", function () {
         var data_row = oTable1.row($(this).closest('tr')).data();
         var dayvalue = data_row["Dayint"];
         var time = data_row["Time"];
+        var timeend = data_row["TimeEnd"];
         var id = data_row["IdAppointment"];
         $("#txt_hour").val(time);
         $("#txt_day").val(dayvalue);
         $("#idappo").val(id);
+        $("#txt_hourEnd").val(timeend);
         $("#modalEditSche").modal('show');
     });
 
@@ -112,14 +115,15 @@ $(document).ready(function () {
     });
 
     $("#btneditsche").on("click", function () {
-      var time=  $("#txt_hour").val();
+        var time = $("#txt_hour").val();
+        var time2 = $("#txt_hourEnd").val();
       var day = $("#txt_day").val();
       var id = $("#idappo").val();
-      if (time == null || time == "undefined" || time == "") {
+      if (time == null || time == "undefined" || time == "" || time2 == null || time2 == "undefined" || time2 == "" ) {
 return false;
       }
       else {
-          UpdateSchedule(id, day, time); 
+          UpdateSchedule(id, day, time, time2); 
       }
 
     });
@@ -130,40 +134,49 @@ return false;
         DeleteSchedule(id);
     })
 
-    $("#btnaltasched").on("click", function() {
+    $("#btnaltasched").on("click", function () {
+        $("#txt_houradd").val("");
+        $("#txt_hourendadd").val("");
+        $("#txt_dayadd").val(1);
         $("#modalAddSche").modal('show');
     });
 
     $("#btnaddsche").on("click", function() {
         var time = $("#txt_houradd").val();
         var day = $("#txt_dayadd").val();
+        var dayend = $("#txt_hourendadd").val();
         if (time == null || time == "undefined" || time == "") {
              return false;
         }
         else {
-            AddSchedule(day, time);
+            AddSchedule(day, time, dayend);
         }
 
     });
 
     $("#btnaltaserv").on("click", function () {
-        filltableserviceasociarlist();
+        //filltableserviceasociarlist();
+       $("#txt_nameadd").val("");
+       $("#txt_descadd").val("");
+       $("#txt_priceadd").val("");
+       $(".req1").addClass("hidden");
+       $(".req2").addClass("hidden");
+       $(".req3").addClass("hidden");
         $("#modalAddServ").modal('show');
     });
 
-    $("#Create").change(function() {
-        if ($("#Create").is(":checked")) {
-            $(".asociar").addClass("hidden");
-            $(".crear").removeClass("hidden");
-        }
-    });
-
-    $("#Add").change(function () {
-        if ($("#Add").is(":checked")) {
-            $(".crear").addClass("hidden");
-            $(".asociar").removeClass("hidden");
-        }
-    });
+    //$("#Create").change(function() {
+    //    if ($("#Create").is(":checked")) {
+    //        $(".asociar").addClass("hidden");
+    //        $(".crear").removeClass("hidden");
+    //    }
+    //});
+    //$("#Add").change(function () {
+    //    if ($("#Add").is(":checked")) {
+    //        $(".crear").addClass("hidden");
+    //        $(".asociar").removeClass("hidden");
+    //    }
+    //});
 
     $("#btnCloseservadd").on("click", function () {
         $("#txt_nameadd").val("");
@@ -187,9 +200,14 @@ return false;
         var id = data_row["IdService"];
         var name = data_row["Name"];
         var desc = data_row["Description"];
+        var price = data_row["Price"];
         $("#txt_nameedit").val(name);
         $("#txt_descedit").val(desc);
+        $("#txt_priceedit").val(price);
         $("#idserved").val(id);
+        $(".req1e").addClass("hidden");
+        $(".req2e").addClass("hidden");
+        $(".req3e").addClass("hidden");
         $("#modalEditServ").modal('show');
 
     });
@@ -200,23 +218,35 @@ return false;
     });
 
     $("#btneditserved").on("click", function () {
+        if (validateserviceedit() == false) {
+            return false;
+        }
+        else {
         var name1 = $("#txt_nameedit").val();
         var desc1 = $("#txt_descedit").val();
         var idserv = $("#idserved").val();
-        UpdateService(idserv, name1, desc1);
+        var price1 = $("#txt_priceedit").val();
+        UpdateService(idserv, name1, desc1, price1);
+        }
     });
 
     $("#btnaddserv").on("click", function () {
-        if ($("#Create").is(":checked")) {
+        //if ($("#Create").is(":checked")) {
+        if (validateservice() == false) {
+            return false;
+        }
+        else {
             var names = $("#txt_nameadd").val();
             var descs = $("#txt_descadd").val();
-            createrservicework(names, descs);
+            var price1 = $("#txt_priceadd").val();
+            createrservicework(names, descs, price1);
         }
-        else if ($("#Add").is(":checked")) {
+        //}
+        //else if ($("#Add").is(":checked")) {
 
-            CreateAsociacionservicework(serviceasc);
+        //    CreateAsociacionservicework(serviceasc);
 
-        }
+        //}
     });
 
     $("#tblPending").on("click", ".detailorderpe", function () {
@@ -320,20 +350,22 @@ function configGridschedule(dataSet) {
                 { "data": "IdAppointment" },
                 { "data": "Date" },
                 { "data": "Time" },
-                { "data": "Dayint" }
+                { "data": "Dayint" },
+                { "data": "TimeEnd" }
             ],
             bAutoWidth: false,
             aoColumns: [
                 { sTitle: "ID", mData: "IdAppointment", bSortable: true },
                 { sTitle: "Date", mData: "Date", bSortable: true },
                 { sTitle: "Time", mData: "Time", bSortable: true },
-                { sTitle: "Dayint", mData: "Dayint", bSortable: false, bVisible: false }
+                { sTitle: "Dayint", mData: "Dayint", bSortable: false, bVisible: false },
+                { sTitle: "TimeEnd", mData: "TimeEnd", bSortable: true }
 
             ],
         "aoColumnDefs": [
             {
-                "width": "20%", "targets": 4,
-                "aTargets": [4],
+                "width": "20%", "targets": 5,
+                "aTargets": [5],
                 "mData": null,
                 "mRender": function (data, type, full) {
                     return '<button class="btn editsche"><span class="glyphicon glyphicon-edit"></span></button>&nbsp;&nbsp;<button class="btn delsche"><span class="glyphicon glyphicon-remove"></span></button>';
@@ -380,7 +412,8 @@ function configGridservice(dataSet) {
                 { sTitle: "ID", mData: "IdService", bSortable: true },
                 { sTitle: "Name", mData: "Name", bSortable: true },
                 { sTitle: "Description", mData: "Description", bSortable: true },
-                { sTitle: "Price", mData: "Price", bSortable: false, bVisible: false }
+                //{ sTitle: "Price", mData: "Price", bSortable: false, bVisible: false }
+                { sTitle: "Price", mData: "Price", bSortable: true }
 
             ],
             "aoColumnDefs": [
@@ -400,55 +433,55 @@ function configGridservice(dataSet) {
 
 };
 
-function configGridserviceadd(dataSet) {
-    if (oTable3 != null) {
-        oTable3.destroy();
-    }
-    oTable3 = $('#tblServiceasociar')
-        .DataTable({
-            data: dataSet,
-            //language: {
-            //    "sProcessing": "Procesando...",
-            //    "sZeroRecords": "No file found",
-            //    "sInfoPostFix": "",
-            //    "sUrl": "",
-            //    "sInfoThousands": ",",
-            //    "sLoadingRecords": "Loading...",
-            //    "oPaginate": {
-            //        "sFirst": "First",
-            //        "sLast": "Last",
-            //        "sNext": "Next",
-            //        "sPrevious": "Prev"
-            //    },
-            //},
-            dom: 'Bfrtlip',
-            Columns: [
-                { "data": "IdService" },
-                { "data": "Name" },
-                { "data": "Description" }
-            ],
-            bAutoWidth: false,
-            aoColumns: [
-                { sTitle: "ID", mData: "IdService", bSortable: true },
-                { sTitle: "Name", mData: "Name", bSortable: true },
-                { sTitle: "Description", mData: "Description", bSortable: true }
+//function configGridserviceadd(dataSet) {
+//    if (oTable3 != null) {
+//        oTable3.destroy();
+//    }
+//    oTable3 = $('#tblServiceasociar')
+//        .DataTable({
+//            data: dataSet,
+//            //language: {
+//            //    "sProcessing": "Procesando...",
+//            //    "sZeroRecords": "No file found",
+//            //    "sInfoPostFix": "",
+//            //    "sUrl": "",
+//            //    "sInfoThousands": ",",
+//            //    "sLoadingRecords": "Loading...",
+//            //    "oPaginate": {
+//            //        "sFirst": "First",
+//            //        "sLast": "Last",
+//            //        "sNext": "Next",
+//            //        "sPrevious": "Prev"
+//            //    },
+//            //},
+//            dom: 'Bfrtlip',
+//            Columns: [
+//                { "data": "IdService" },
+//                { "data": "Name" },
+//                { "data": "Description" }
+//            ],
+//            bAutoWidth: false,
+//            aoColumns: [
+//                { sTitle: "ID", mData: "IdService", bSortable: true },
+//                { sTitle: "Name", mData: "Name", bSortable: true },
+//                { sTitle: "Description", mData: "Description", bSortable: true }
 
-            ],
-            "aoColumnDefs": [
-                {
-                    "aTargets": [3],
-                    "mData": null,
-                    "mRender": function (data, type, full) {
-                        return '<input type="radio" name="asociar" class="asociarservice" />';
-                    }
-                }
-            ],
-            "aaSorting": []
+//            ],
+//            "aoColumnDefs": [
+//                {
+//                    "aTargets": [3],
+//                    "mData": null,
+//                    "mRender": function (data, type, full) {
+//                        return '<input type="radio" name="asociar" class="asociarservice" />';
+//                    }
+//                }
+//            ],
+//            "aaSorting": []
 
-            //"iDisplayLength": 50
-        });
+//            //"iDisplayLength": 50
+//        });
 
-};
+//};
 
 
 function filltableschedule() {
@@ -468,11 +501,12 @@ function filltableschedule() {
     });
 };
 
-function UpdateSchedule(idsche, day, timesche) {
+function UpdateSchedule(idsche, day, timesche, dayend1) {
     var data = {
         idschedule: idsche,
         time: timesche,
         dayint: day,
+        dayend: dayend1,
         idwo: idWork
     };
     conectarAsy("../Workshop/ScheduleWorkshopUpdate", data, function (result) {
@@ -510,10 +544,11 @@ function DeleteSchedule(idsche) {
 
 };
 
-function AddSchedule(day, timesche) {
+function AddSchedule(day, timesche, dayend1) {
     var data = {
         time: timesche,
         dayint: day,
+        dayend: dayend1,
         idwo: idWork
     };
     conectarAsy("../Workshop/ScheduleWorkshopAdd", data, function (result) {
@@ -553,28 +588,29 @@ function filltableservice() {
     });
 };
 
-function filltableserviceasociarlist() {
-    var data = {
-        idwo: idWork
-    };
-    conectarAsy("../Workshop/ServiceWorkshopasociarlist", data, function (result) {
-        if (result != null && result.Success != false) {
-            configGridserviceadd(result);
-        }
-        else if (result.Success == false) {
-            return false;
-        }
-        else if (result.error == true) {
-            alert(result.msg);
-        }
-    });
-};
+//function filltableserviceasociarlist() {
+//    var data = {
+//        idwo: idWork
+//    };
+//    conectarAsy("../Workshop/ServiceWorkshopasociarlist", data, function (result) {
+//        if (result != null && result.Success != false) {
+//            configGridserviceadd(result);
+//        }
+//        else if (result.Success == false) {
+//            return false;
+//        }
+//        else if (result.error == true) {
+//            alert(result.msg);
+//        }
+//    });
+//};
 
-function createrservicework(name1, desc1) {
+function createrservicework(name1, desc1, price1) {
     var data = {
         idwo: idWork,
         name: name1,
-        desc: desc1
+        desc: desc1,
+        price: price1
     };
     conectarAsy("../Workshop/ServiceWorkshopcreate", data, function (result) {
         if (result != null && result.Success != false) {
@@ -638,11 +674,12 @@ function DeleteService(idserv) {
 };
 
 
-function UpdateService(idserv, name1, desc1) {
+function UpdateService(idserv, name1, desc1, price1) {
     var data = {
         idservice: idserv,
         Name: name1,
-        Desc: desc1
+        Desc: desc1,
+        price: price1
     };
     conectarAsy("../Workshop/ServiceWorkshopUpdate", data, function (result) {
         if (result != null && result.Success != false) {
@@ -938,6 +975,87 @@ function filltablePastdetail(id) {
             $("#txtemailpast").text(email);
             configGridPastdetail(result);
             $("#modalpast").modal('show');
+        }
+        else if (result.Success == false) {
+            return false;
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+};
+
+
+function validateservice() {
+    var error = true;
+    if (error == true) {
+        if (!$("#txt_nameadd").val() || $("#txt_nameadd").val() == "") {
+            $(".req1").removeClass("hidden");
+            error = false;
+        }
+        else {
+            $(".req1").addClass("hidden");
+        }
+        if (!$("#txt_descadd").val() || $("#txt_descadd").val() == "") {
+            $(".req3").removeClass("hidden");
+            error = false;
+        }
+        else {
+            $(".req3").addClass("hidden");
+        }
+        if (!$("#txt_priceadd").val() || $("#txt_priceadd").val() == "") {
+            $(".req2").removeClass("hidden");
+            error = false;
+        }
+        else {
+            $(".req2").addClass("hidden");
+        }
+    }
+    return error;
+
+}
+
+function validateserviceedit() {
+    var error = true;
+    if (error == true) {
+        if (!$("#txt_nameedit").val() || $("#txt_nameedit").val() == "") {
+            $(".req1e").removeClass("hidden");
+            error = false;
+        }
+        else {
+            $(".req1e").addClass("hidden");
+        }
+        if (!$("#txt_descedit").val() || $("#txt_descedit").val() == "") {
+            $(".req3e").removeClass("hidden");
+            error = false;
+        }
+        else {
+            $(".req3e").addClass("hidden");
+        }
+        if (!$("#txt_priceedit").val() || $("#txt_priceedit").val() == "") {
+            $(".req2e").removeClass("hidden");
+            error = false;
+        }
+        else {
+            $(".req2e").addClass("hidden");
+        }
+    }
+    return error;
+
+}
+
+function fillzipcodes() {
+    var data = {
+        idwo: idWork
+    };
+    conectarAsy("../Workshop/ZipCodes", data, function (result) {
+        if (result != null && result.Success != false) {
+            var $dropdown = $("#multiSelectzip");
+            $.each(result, function () {
+                $dropdown.append($("<option />").val(this.kommuneID).text(this.kommuneID));
+            });
+            var zipactual = $("#zip").text();
+            $("#multiSelectzip").val(zipactual).change();
         }
         else if (result.Success == false) {
             return false;

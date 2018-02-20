@@ -151,18 +151,18 @@ namespace Framework
                     if (filter == 1)
                     {
                         result = (from address in db.Workshop
-                                                  //where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
-                                                  orderby address.Average descending
-                                                  select new ResultWorkshop
-                                                  {
-                                                      IdWorkshop = address.IdWorkshop,
-                                                      Name = address.Name,
-                                                      Address = address.Address,
-                                                      ZipCode = address.ZipCode,
-                                                      Latitude = address.Latitude,
-                                                      Length = address.Length,
-                                                      WorkImage = address.WorkImage
-                                                  }).ToList();
+                                      //where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                                  orderby address.Average descending
+                                  select new ResultWorkshop
+                                  {
+                                      IdWorkshop = address.IdWorkshop,
+                                      Name = address.Name,
+                                      Address = address.Address,
+                                      ZipCode = address.ZipCode,
+                                      Latitude = address.Latitude,
+                                      Length = address.Length,
+                                      WorkImage = address.WorkImage
+                                  }).ToList();
                     }
                     else if (filter == 2)
                     {
@@ -195,7 +195,7 @@ namespace Framework
                                       WorkImage = address.WorkImage
                                   }).ToList();
                     }
-                
+
                 }
             }
             catch (Exception ex)
@@ -289,7 +289,7 @@ namespace Framework
                         }
                     }
                     else
-                    {                       
+                    {
                         var update = db.DeliveryType.Where(s => s.IdDelivery == delivery).FirstOrDefault();
 
                         if (fecha != 0)
@@ -341,8 +341,8 @@ namespace Framework
                             }
                         }
 
-                        
-                    }                    
+
+                    }
 
                     result = true;
                 }
@@ -403,7 +403,7 @@ namespace Framework
                                           Id = (int)wsa.Id,
                                           DayAppointment = (int)wsa.DayAppointment,
                                           Time = wsa.Time
-                                          
+
                                       }).ToList();
 
 
@@ -558,21 +558,25 @@ namespace Framework
                                     IdAppointment = ws.Id,
                                     Time = ws.Time,
                                     Date = ws.DayAppointment.ToString(),
-                                    Dayint = ws.DayAppointment.ToString()
+                                    Dayint = ws.DayAppointment.ToString(),
+                                    TimeEnd = ws.TimeEnd
                                 }).ToList();
                     if (user != null)
                     {
                         foreach (var item in user)
                         {
                             TimeSpan time1 = (TimeSpan)item.Time;
+                            TimeSpan timeend1 = (TimeSpan)item.TimeEnd;
                             string dia = Enum.GetName(typeof(DayOfWeek), Convert.ToInt32(item.Date));
                             string time2 = time1.ToString(@"hh\:mm");
+                            string timeend2 = timeend1.ToString(@"hh\:mm");
                             result = new List<ResultWorkshopDateAppointment> {
                                 new ResultWorkshopDateAppointment{
                                     IdAppointment = item.IdAppointment,
                                     Time = time2,
                                     Date = dia,
-                                    Dayint = item.Dayint
+                                    Dayint = item.Dayint,
+                                    TimeEnd = timeend2
                                 }
                             };
                             result2.AddRange(result);
@@ -588,18 +592,20 @@ namespace Framework
 
         }
 
-        public bool UpdateWorkshopSchedule(int idschedule, string time, int dayint, int idwo)
+        public bool UpdateWorkshopSchedule(int idschedule, string time, string dayend, int dayint, int idwo)
         {
             bool result = false;
             try
             {
                 TimeSpan time2 = TimeSpan.Parse(time);
+                TimeSpan time3 = TimeSpan.Parse(dayend);
                 using (dekkOnlineEntities db = new dekkOnlineEntities())
                 {
                     var workshopdata = db.WorkshopAppointment.Where(s => s.IdWorkshop == idwo && s.Id == idschedule).FirstOrDefault();
                     if (workshopdata != null)
                     {
                         workshopdata.Time = time2;
+                        workshopdata.TimeEnd = time3;
                         workshopdata.DayAppointment = dayint;
                         db.Entry(workshopdata).State = EntityState.Modified;
                         db.SaveChanges();
@@ -650,21 +656,23 @@ namespace Framework
 
         }
 
-        public bool AddWorkshopSchedule(string time, int dayint, int idwo)
+        public bool AddWorkshopSchedule(string time, string timeend, int dayint, int idwo)
         {
             bool result = false;
             try
             {
                 TimeSpan time2 = TimeSpan.Parse(time);
+                TimeSpan time3 = TimeSpan.Parse(timeend);
                 using (dekkOnlineEntities db = new dekkOnlineEntities())
                 {
                     WorkshopAppointment workshopdata = new WorkshopAppointment();
-                        workshopdata.Time = time2;
-                        workshopdata.DayAppointment = dayint;
-                        workshopdata.IdWorkshop = idwo;
-                        db.WorkshopAppointment.Add(workshopdata);
-                        db.SaveChanges();
-                        result = true;
+                    workshopdata.Time = time2;
+                    workshopdata.DayAppointment = dayint;
+                    workshopdata.IdWorkshop = idwo;
+                    workshopdata.TimeEnd = time3;
+                    db.WorkshopAppointment.Add(workshopdata);
+                    db.SaveChanges();
+                    result = true;
                     return result;
                 }
             }
@@ -691,10 +699,10 @@ namespace Framework
                                 where ws.IdWorkshop.ToString() == workshop
                                 select new
                                 {
-                                   IdService = ws.Id,
-                                   Name = ser.Name,
-                                   Description = ser.Description,
-                                   Price = ws.Price
+                                    IdService = ws.Id,
+                                    Name = ser.Name,
+                                    Description = ser.Description,
+                                    Price = Math.Truncate((double)ws.Price)
                                 }).ToList();
                     if (user != null)
                     {
@@ -705,7 +713,7 @@ namespace Framework
                                    IdService = item.IdService,
                                    Name = item.Name,
                                    Description = item.Description,
-                                   Price = item.Price
+                                   Price = (decimal)item.Price
                                 }
                             };
                             result2.AddRange(result);
@@ -742,7 +750,7 @@ namespace Framework
                                     Price = 0,
                                     service = ser.IdService
                                 }).ToList();
-                    var user2 = (from ser in db.TypesServices 
+                    var user2 = (from ser in db.TypesServices
                                  select new
                                  {
                                      IdService = ser.IdService,
@@ -751,7 +759,7 @@ namespace Framework
                                      Price = 0,
                                      service = ser.IdService
                                  }).ToList();
-                    var serviciosnoeneltaller= user2.Except(user).ToList();
+                    var serviciosnoeneltaller = user2.Except(user).ToList();
                     if (serviciosnoeneltaller != null)
                     {
                         foreach (var item in serviciosnoeneltaller)
@@ -777,13 +785,14 @@ namespace Framework
 
         }
 
-        public bool ServiceWorkshopcreate(int idwork, string service, string desc)
+        public bool ServiceWorkshopcreate(int idwork, string service, string desc, int price)
         {
-           bool result = false;
+            bool result = false;
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
+
                     TypesServices serv = new TypesServices();
                     serv.Name = service;
                     serv.Description = desc;
@@ -796,6 +805,7 @@ namespace Framework
                         WorkshopServices work = new WorkshopServices();
                         work.IdService = servicio.IdService;
                         work.IdWorkshop = idwork;
+                        work.Price = (decimal)Math.Truncate((double)price);
                         db.WorkshopServices.Add(work);
                         db.SaveChanges();
                         result = true;
@@ -881,7 +891,7 @@ namespace Framework
 
         }
 
-        public bool UpdateWorkshopService(int idservice, string Name, string Desc)
+        public bool UpdateWorkshopService(int idservice, string Name, string Desc, int price)
         {
             bool result = false;
             try
@@ -894,6 +904,8 @@ namespace Framework
                         var service = db.TypesServices.Where(s => s.IdService == workshopdataserv.IdService).FirstOrDefault();
                         service.Name = Name;
                         service.Description = Desc;
+                        workshopdataserv.Price = (decimal)Math.Truncate((double)price);
+                        db.Entry(workshopdataserv).State = EntityState.Modified;
                         db.Entry(service).State = EntityState.Modified;
                         db.SaveChanges();
                         result = true;
@@ -923,16 +935,16 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     var userdata2 = (from us in db.AspNetUsers
-                                join us2 in db.UserAddress on us.Id equals us2.IdUser
-                                join or in db.Orders on us.Id equals or.idUser
-                                join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
-                                where del.IdWorkshop.ToString() == idWork && or.id == orderid
-                                     select new 
-                                {
-                                    FirstName = us2.FirstName,
-                                    LastName = us2.LastName,
-                                    Email = us.Email
-                                }).FirstOrDefault();
+                                     join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                     join or in db.Orders on us.Id equals or.idUser
+                                     join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
+                                     where del.IdWorkshop.ToString() == idWork && or.id == orderid
+                                     select new
+                                     {
+                                         FirstName = us2.FirstName,
+                                         LastName = us2.LastName,
+                                         Email = us.Email
+                                     }).FirstOrDefault();
                     products = (from pro in db.products
                                 join ord in db.OrdersDetail on pro.proId equals ord.proId
                                 join or in db.Orders on ord.OrderMain equals or.id
@@ -1001,14 +1013,14 @@ namespace Framework
                                 join ord in db.OrdersDetail on or.id equals ord.OrderMain
                                 join del in db.DeliveryType on or.DeliveryAddress equals del.IdDelivery
                                 where del.IdWorkshop.ToString() == idWork && or.Delivered == false && or.DeliveredDate == null
-                               
+
                                 select new ResultOrders
                                 {
-                                   IdOrderDetail = or.id,
-                                   UsedPromo = or.PromoCode,
-                                   TotalPrice = (int)or.Total,
-                                   datesale = or.DateS,
-                                   dateest = or.EstimatedDate
+                                    IdOrderDetail = or.id,
+                                    UsedPromo = or.PromoCode,
+                                    TotalPrice = (int)or.Total,
+                                    datesale = or.DateS,
+                                    dateest = or.EstimatedDate
 
                                 }).ToList();
                     foreach (var item in products)
@@ -1266,6 +1278,66 @@ namespace Framework
 
         }
 
+        public List<ResultZipCode> GetZipCodes()
+        {
+            List<ResultZipCode> zipc1 = null;
+            List<ResultZipCode> zipc2 = new List<ResultZipCode>();
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var zipcodes = (from zpc in db.kommuner
+                                    select new ResultZipCode
+                                    {
+                                        kommuneID = zpc.kommuneID,
+                                        KommuneNavn = zpc.kommuneNavn
+                                    }).ToList();
+                    foreach (var item in zipcodes)
+                    {
+                        zipc1 = new List<ResultZipCode>
+                        {
+                            new ResultZipCode
+                            {
+                                kommuneID = item.kommuneID,
+                                KommuneNavn = item.KommuneNavn
+                            }
+                        };
+                        zipc2.AddRange(zipc1);
+                    }
+                    return zipc2;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        public bool emailWorkshop(string idUser, int idWorkshop, string mensaje)
+        {
+            bool result = false;
+            var mail = new Mail();
+
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var emailWorkshop = db.Workshop.Where(s => s.IdWorkshop == idWorkshop).Select(s => s.Email).FirstOrDefault();
+                    var emailUser = db.AspNetUsers.Where(s => s.Id == idUser).Select(s => s.Email).FirstOrDefault();
+
+                    mail.sendEmailWorkshop(emailUser, emailWorkshop, mensaje);
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+
+            return result;
+        }
 
     }
 }

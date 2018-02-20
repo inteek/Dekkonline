@@ -24,5 +24,8 @@ namespace Entity
         public string Latitude { get; set; }
         public string Length { get; set; }
         public string Image { get; set; }
+        public Nullable<bool> WorkShopManager { get; set; }
+    
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

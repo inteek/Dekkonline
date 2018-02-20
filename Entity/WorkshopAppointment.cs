@@ -21,5 +21,6 @@ namespace Entity
         public Nullable<System.TimeSpan> Time { get; set; }
         public string Comments { get; set; }
         public Nullable<int> DayAppointment { get; set; }
+        public Nullable<System.TimeSpan> TimeEnd { get; set; }
     }
 }

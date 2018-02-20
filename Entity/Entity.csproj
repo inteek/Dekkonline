@@ -97,6 +97,12 @@
     <Compile Include="DetailUserPoints.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
+    <Compile Include="fylker.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="kommuner.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="Orders.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>

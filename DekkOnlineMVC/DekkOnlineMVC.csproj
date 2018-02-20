@@ -244,6 +244,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UserName.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\170712093714.jpg" />
@@ -416,6 +417,7 @@
     <Content Include="Scripts\connectAsy.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\form-elements.init.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -485,6 +487,8 @@
     <Content Include="Styles\Shoppingcart.css" />
     <Content Include="Styles\Shoppingcart2.css" />
     <Content Include="Styles\Site.css" />
+    <Content Include="Templates\EmailConfirmation.html" />
+    <Content Include="Templates\EmailWorkshop.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -564,6 +568,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{1ea51a11-c582-4ea1-83c1-c87a0161a49d}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{2befc8f0-8a5a-4109-984e-6f966c96fb9a}</Project>
       <Name>Framework</Name>

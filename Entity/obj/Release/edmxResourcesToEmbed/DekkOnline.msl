@@ -186,6 +186,7 @@
     <EntitySetMapping Name="WorkshopAppointment">
       <EntityTypeMapping TypeName="dekkOnlineModel.WorkshopAppointment">
         <MappingFragment StoreEntitySet="WorkshopAppointment">
+          <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
           <ScalarProperty Name="DayAppointment" ColumnName="DayAppointment" />
           <ScalarProperty Name="Comments" ColumnName="Comments" />
           <ScalarProperty Name="Time" ColumnName="Time" />
@@ -267,22 +268,6 @@
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="IdService" ColumnName="IdService" />
           <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserAddress">
-      <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
-        <MappingFragment StoreEntitySet="UserAddress">
-          <ScalarProperty Name="Image" ColumnName="Image" />
-          <ScalarProperty Name="Length" ColumnName="Length" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -371,9 +356,45 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="fylker">
+      <EntityTypeMapping TypeName="dekkOnlineModel.fylker">
+        <MappingFragment StoreEntitySet="fylker">
+          <ScalarProperty Name="fylkeNavn" ColumnName="fylkeNavn" />
+          <ScalarProperty Name="fylkeID" ColumnName="fylkeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="kommuner">
+      <EntityTypeMapping TypeName="dekkOnlineModel.kommuner">
+        <MappingFragment StoreEntitySet="kommuner">
+          <ScalarProperty Name="kommuneNavn" ColumnName="kommuneNavn" />
+          <ScalarProperty Name="fylkeID" ColumnName="fylkeID" />
+          <ScalarProperty Name="kommuneID" ColumnName="kommuneID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAddress">
+      <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
+        <MappingFragment StoreEntitySet="UserAddress">
+          <ScalarProperty Name="WorkShopManager" ColumnName="WorkShopManager" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Workshop">
       <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
         <MappingFragment StoreEntitySet="Workshop">
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Average" ColumnName="Average" />
           <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
           <ScalarProperty Name="Length" ColumnName="Length" />

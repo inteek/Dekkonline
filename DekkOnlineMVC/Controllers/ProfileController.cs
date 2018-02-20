@@ -385,5 +385,30 @@ namespace DekkOnlineMVC.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult emailWorkshop(int idWorkshop, string mensaje)
+        {
+            Workshop workshop = new Workshop();
+            string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+            try
+            {
+                bool email = workshop.emailWorkshop(idUser, idWorkshop, mensaje);
+
+                if (email == true)
+                {
+                    return Json(new { error = false });
+                }
+                else
+                {
+                    return Json(new { error = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
     }
 }

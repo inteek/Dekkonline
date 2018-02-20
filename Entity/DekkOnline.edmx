@@ -139,6 +139,21 @@
           <Property Name="StatusofPromo" Type="bit" />
           <Property Name="PointsEarned" Type="int" />
         </EntityType>
+        <EntityType Name="fylker">
+          <Key>
+            <PropertyRef Name="fylkeID" />
+          </Key>
+          <Property Name="fylkeID" Type="smallint" Nullable="false" />
+          <Property Name="fylkeNavn" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="kommuner">
+          <Key>
+            <PropertyRef Name="kommuneID" />
+          </Key>
+          <Property Name="kommuneID" Type="smallint" Nullable="false" />
+          <Property Name="fylkeID" Type="smallint" Nullable="false" />
+          <Property Name="kommuneNavn" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="id" />
@@ -313,6 +328,7 @@
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Length" Type="varchar" MaxLength="50" />
           <Property Name="Image" Type="varchar(max)" />
+          <Property Name="WorkShopManager" Type="bit" />
         </EntityType>
         <EntityType Name="UserPoints">
           <Key>
@@ -336,6 +352,8 @@
           <Property Name="Length" Type="varchar" MaxLength="50" />
           <Property Name="WorkImage" Type="varchar" MaxLength="200" />
           <Property Name="Average" Type="int" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="RegistrationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="WorkshopAppointment">
           <Key>
@@ -348,6 +366,7 @@
           <Property Name="Time" Type="time" Precision="4" />
           <Property Name="Comments" Type="varchar" MaxLength="100" />
           <Property Name="DayAppointment" Type="int" />
+          <Property Name="TimeEnd" Type="time" Precision="4" />
         </EntityType>
         <EntityType Name="WorkshopServices">
           <Key>
@@ -366,6 +385,18 @@
           <Property Name="idUser" Type="nvarchar" MaxLength="128" />
           <Property Name="idWorkshop" Type="int" />
         </EntityType>
+        <Association Name="fk_city">
+          <End Role="fylker" Type="Self.fylker" Multiplicity="1" />
+          <End Role="kommuner" Type="Self.kommuner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fylker">
+              <PropertyRef Name="fylkeID" />
+            </Principal>
+            <Dependent Role="kommuner">
+              <PropertyRef Name="fylkeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_CodepromUser">
           <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
           <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
@@ -443,6 +474,18 @@
             </Principal>
             <Dependent Role="PurchaseOrder">
               <PropertyRef Name="IdDelivery" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_iduserref">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -567,6 +610,8 @@
           <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="fylker" EntityType="Self.fylker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kommuner" EntityType="Self.kommuner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdersDetail" EntityType="Self.OrdersDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
@@ -584,6 +629,10 @@
           <EntitySet Name="WorkshopAppointment" EntityType="Self.WorkshopAppointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkshopServices" EntityType="Self.WorkshopServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkshopUser" EntityType="Self.WorkshopUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_city" Association="Self.fk_city">
+            <End Role="fylker" EntitySet="fylker" />
+            <End Role="kommuner" EntitySet="kommuner" />
+          </AssociationSet>
           <AssociationSet Name="fk_CodepromUser" Association="Self.fk_CodepromUser">
             <End Role="PromotionCode" EntitySet="PromotionCode" />
             <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
@@ -607,6 +656,10 @@
           <AssociationSet Name="fk_delivery" Association="Self.fk_delivery">
             <End Role="DeliveryType" EntitySet="DeliveryType" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="fk_iduserref" Association="Self.fk_iduserref">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
           </AssociationSet>
           <AssociationSet Name="fk_product" Association="Self.fk_product">
             <End Role="products" EntitySet="products" />
@@ -902,7 +955,6 @@
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
           </AssociationSet>
           <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
-          <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
           <EntitySet Name="Appointments" EntityType="dekkOnlineModel.Appointments" />
           <EntitySet Name="OrdersDetail" EntityType="dekkOnlineModel.OrdersDetail" />
           <EntitySet Name="Payment" EntityType="dekkOnlineModel.Payment" />
@@ -918,7 +970,18 @@
           </AssociationSet>
           <EntitySet Name="Orders" EntityType="dekkOnlineModel.Orders" />
           <EntitySet Name="WorkshopUser" EntityType="dekkOnlineModel.WorkshopUser" />
+          <EntitySet Name="fylker" EntityType="dekkOnlineModel.fylker" />
+          <EntitySet Name="kommuner" EntityType="dekkOnlineModel.kommuner" />
+          <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
           <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
+          <AssociationSet Name="fk_iduserref" Association="dekkOnlineModel.fk_iduserref">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
+          </AssociationSet>
+          <AssociationSet Name="fk_city" Association="dekkOnlineModel.fk_city">
+            <End Role="fylker" EntitySet="fylker" />
+            <End Role="kommuner" EntitySet="kommuner" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -986,6 +1049,7 @@
           <Property Name="Time" Type="Time" Precision="4" />
           <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DayAppointment" Type="Int32" />
+          <Property Name="TimeEnd" Type="Time" Precision="4" />
         </EntityType>
         <Association Name="fk_CodepromUser">
           <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
@@ -1044,6 +1108,7 @@
           <NavigationProperty Name="DetailUserPoints" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="AspNetUsers" ToRole="DetailUserPoints" />
           <NavigationProperty Name="AspNetRoles" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="AspNetUsers" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="UserAddress" Relationship="dekkOnlineModel.fk_iduserref" FromRole="AspNetUsers" ToRole="UserAddress" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -1165,21 +1230,6 @@
           <Property Name="IdService" Type="Int32" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
-        <EntityType Name="UserAddress">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="Int32" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Appointments">
           <Key>
             <PropertyRef Name="IdAppointment" />
@@ -1283,6 +1333,40 @@
           <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="idWorkshop" Type="Int32" />
         </EntityType>
+        <EntityType Name="fylker">
+          <Key>
+            <PropertyRef Name="fylkeID" />
+          </Key>
+          <Property Name="fylkeID" Type="Int16" Nullable="false" />
+          <Property Name="fylkeNavn" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="kommuner" Relationship="dekkOnlineModel.fk_city" FromRole="fylker" ToRole="kommuner" />
+        </EntityType>
+        <EntityType Name="kommuner">
+          <Key>
+            <PropertyRef Name="kommuneID" />
+          </Key>
+          <Property Name="kommuneID" Type="Int16" Nullable="false" />
+          <Property Name="fylkeID" Type="Int16" Nullable="false" />
+          <Property Name="kommuneNavn" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="fylker" Relationship="dekkOnlineModel.fk_city" FromRole="kommuner" ToRole="fylker" />
+        </EntityType>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WorkShopManager" Type="Boolean" />
+          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_iduserref" FromRole="UserAddress" ToRole="AspNetUsers" />
+        </EntityType>
         <EntityType Name="Workshop">
           <Key>
             <PropertyRef Name="IdWorkshop" />
@@ -1297,7 +1381,33 @@
           <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="WorkImage" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Average" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <Association Name="fk_iduserref">
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_city">
+          <End Type="dekkOnlineModel.fylker" Role="fylker" Multiplicity="1" />
+          <End Type="dekkOnlineModel.kommuner" Role="kommuner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fylker">
+              <PropertyRef Name="fylkeID" />
+            </Principal>
+            <Dependent Role="kommuner">
+              <PropertyRef Name="fylkeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1489,6 +1599,7 @@
           <EntitySetMapping Name="WorkshopAppointment">
             <EntityTypeMapping TypeName="dekkOnlineModel.WorkshopAppointment">
               <MappingFragment StoreEntitySet="WorkshopAppointment">
+                <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
                 <ScalarProperty Name="DayAppointment" ColumnName="DayAppointment" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
@@ -1570,22 +1681,6 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="IdService" ColumnName="IdService" />
                 <ScalarProperty Name="IdWorkshop" ColumnName="IdWorkshop" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserAddress">
-            <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
-              <MappingFragment StoreEntitySet="UserAddress">
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1674,9 +1769,45 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="fylker">
+            <EntityTypeMapping TypeName="dekkOnlineModel.fylker">
+              <MappingFragment StoreEntitySet="fylker">
+                <ScalarProperty Name="fylkeNavn" ColumnName="fylkeNavn" />
+                <ScalarProperty Name="fylkeID" ColumnName="fylkeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kommuner">
+            <EntityTypeMapping TypeName="dekkOnlineModel.kommuner">
+              <MappingFragment StoreEntitySet="kommuner">
+                <ScalarProperty Name="kommuneNavn" ColumnName="kommuneNavn" />
+                <ScalarProperty Name="fylkeID" ColumnName="fylkeID" />
+                <ScalarProperty Name="kommuneID" ColumnName="kommuneID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAddress">
+            <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
+              <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="WorkShopManager" ColumnName="WorkShopManager" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Workshop">
             <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
               <MappingFragment StoreEntitySet="Workshop">
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Average" ColumnName="Average" />
                 <ScalarProperty Name="WorkImage" ColumnName="WorkImage" />
                 <ScalarProperty Name="Length" ColumnName="Length" />

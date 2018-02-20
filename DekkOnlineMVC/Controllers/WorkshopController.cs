@@ -111,7 +111,7 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Workshop us = new Workshop();
-                        user = us.SchedulesWorkshop(idwo);
+                    user = us.SchedulesWorkshop(idwo);
                     if (user != null || user.Count > 1)
                     {
                         return Json(user, JsonRequestBehavior.AllowGet);
@@ -137,7 +137,7 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult ScheduleWorkshopUpdate(string idschedule, string time, string dayint, string idwo)
+        public JsonResult ScheduleWorkshopUpdate(string idschedule, string time, string dayint, string dayend, string idwo)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Workshop us = new Workshop();
-                    user = us.UpdateWorkshopSchedule(Convert.ToInt32(idschedule), time, Convert.ToInt32(dayint), Convert.ToInt32(idwo));
+                    user = us.UpdateWorkshopSchedule(Convert.ToInt32(idschedule), time, dayend, Convert.ToInt32(dayint), Convert.ToInt32(idwo));
                     if (user != null || user.Count >= 0)
                     {
                         return Json(user, JsonRequestBehavior.AllowGet);
@@ -207,7 +207,7 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult ScheduleWorkshopAdd(string time, string dayint, string idwo)
+        public JsonResult ScheduleWorkshopAdd(string time, string dayint, string dayend, string idwo)
         {
             try
             {
@@ -216,7 +216,7 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Workshop us = new Workshop();
-                    user = us.AddWorkshopSchedule(time, Convert.ToInt32(dayint), Convert.ToInt32(idwo));
+                    user = us.AddWorkshopSchedule(time, dayend, Convert.ToInt32(dayint), Convert.ToInt32(idwo));
                     if (user != null || user.Count > 1)
                     {
                         return Json(user, JsonRequestBehavior.AllowGet);
@@ -327,7 +327,7 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Workshop us = new Workshop();
-                   user = us.ServiceWorkshopasociradd(Convert.ToInt32(idwo), Convert.ToInt32(service));
+                    user = us.ServiceWorkshopasociradd(Convert.ToInt32(idwo), Convert.ToInt32(service));
                     if (user == true)
                     {
                         return Json(new { Success = true });
@@ -353,7 +353,7 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult ServiceWorkshopcreate(string idwo, string name, string desc)
+        public JsonResult ServiceWorkshopcreate(string idwo, string name, string desc, string price)
         {
             try
             {
@@ -362,7 +362,7 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Workshop us = new Workshop();
-                    user = us.ServiceWorkshopcreate(Convert.ToInt32(idwo), name, desc);
+                    user = us.ServiceWorkshopcreate(Convert.ToInt32(idwo), name, desc, Convert.ToInt32(price));
                     if (user == true)
                     {
                         return Json(new { Success = true });
@@ -425,7 +425,7 @@ namespace DekkOnlineMVC.Controllers
 
 
         [HttpPost]
-        public JsonResult ServiceWorkshopUpdate(string idservice, string Name, string Desc)
+        public JsonResult ServiceWorkshopUpdate(string idservice, string Name, string Desc, string price)
         {
             try
             {
@@ -434,8 +434,8 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Workshop us = new Workshop();
-                    user = us.UpdateWorkshopService(Convert.ToInt32(idservice), Name, Desc);
-                    if (user != null || user.Count >=0)
+                    user = us.UpdateWorkshopService(Convert.ToInt32(idservice), Name, Desc, Convert.ToInt32(price));
+                    if (user != null || user.Count >= 0)
                     {
                         return Json(user, JsonRequestBehavior.AllowGet);
                     }
@@ -516,7 +516,7 @@ namespace DekkOnlineMVC.Controllers
                     user = us.loadOrderPendingmain(idwo);
                     if (user != null || user.Count >= 0)
                     {
-                        
+
                         return Json(user, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -617,7 +617,41 @@ namespace DekkOnlineMVC.Controllers
 
         }
 
+        [HttpPost]
+        public JsonResult ZipCodes(string idwo)
+        {
+            try
+            {
+                var user = (dynamic)null;
+                string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+                if (idUser != null && idUser != "")
+                {
+                    Workshop us = new Workshop();
+                    user = us.GetZipCodes();
+                    if (user != null || user.Count >= 0)
+                    {
 
+                        return Json(user, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { Success = false });
+                    }
+
+                }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
 
     }
 }

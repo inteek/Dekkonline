@@ -49,7 +49,7 @@ namespace Framework
                         result.ZipCode = zipCode;
                         result.Latitude = latitude;
                         result.Length = length;
-
+                        result.WorkShopManager = false;
                         db.Entry(result).State = EntityState.Modified;
                         db.SaveChanges();
                         Result = true;
@@ -87,6 +87,7 @@ namespace Framework
                         addUserAddress.ZipCode = zipCode;
                         addUserAddress.Latitude = latitude;
                         addUserAddress.Length = length;
+                        addUserAddress.WorkShopManager = false;
                         db.UserAddress.Add(addUserAddress);
                         db.SaveChanges();
                         result = true;
@@ -100,7 +101,7 @@ namespace Framework
                         user.ZipCode = zipCode;
                         user.Latitude = latitude;
                         user.Length = length;
-
+                        user.WorkShopManager = false;
                         db.Entry(user).State = EntityState.Modified;
                         db.SaveChanges();
                         result = true;
@@ -123,7 +124,7 @@ namespace Framework
         //    {
         //        using (var db = new dekkOnlineEntities())
         //        {
-                   
+
         //            user = (from us in db.UserAddress
         //                    join aspuser in db.AspNetUsers on us.IdUser equals aspuser.Id
         //                    where us.IdUser == idUser
@@ -209,15 +210,15 @@ namespace Framework
         }
 
         // Define default min and max password lengths.
-        private  int DEFAULT_MIN_PASSWORD_LENGTH = 7;
-        private  int DEFAULT_MAX_PASSWORD_LENGTH = 12;
+        private int DEFAULT_MIN_PASSWORD_LENGTH = 7;
+        private int DEFAULT_MAX_PASSWORD_LENGTH = 12;
 
         // Define supported password characters divided into groups.
         // You can add (or remove) characters to (from) these groups.
-        private  string PASSWORD_CHARS_LCASE = "abcdefgijkmnopqrstwxyz";
-        private  string PASSWORD_CHARS_UCASE = "ABCDEFGHJKLMNPQRSTWXYZ";
-        private  string PASSWORD_CHARS_NUMERIC = "23456789";
-        private  string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
+        private string PASSWORD_CHARS_LCASE = "abcdefgijkmnopqrstwxyz";
+        private string PASSWORD_CHARS_UCASE = "ABCDEFGHJKLMNPQRSTWXYZ";
+        private string PASSWORD_CHARS_NUMERIC = "23456789";
+        private string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
 
 
         public string GeneratePassword()
@@ -416,7 +417,8 @@ namespace Framework
                 {
                     chars[i] = _allowedChars[(int)randomBytes[i] % allowedCharCount];
                 }
-                else {
+                else
+                {
                     chars[i] = '_';
                 }
             }
@@ -444,7 +446,7 @@ namespace Framework
         {
             List<ResulUserWorkShop> result = null;
             List<ResultWorkshop> listWorkshop = null;
-            
+
 
             try
             {
@@ -499,8 +501,8 @@ namespace Framework
             {
                 using (dekkOnlineEntities db = new dekkOnlineEntities())
                 {
-                    var emailuser = db.AspNetUsers.Where(s => s.Id == iduser).Select(s=>s.Email).FirstOrDefault().ToString();
-                    var emailnew = db.AspNetUsers.Where(s=>s.Email == email1).Select(s => s.Email).FirstOrDefault().ToString();
+                    var emailuser = db.AspNetUsers.Where(s => s.Id == iduser).Select(s => s.Email).FirstOrDefault().ToString();
+                    var emailnew = db.AspNetUsers.Where(s => s.Email == email1).Select(s => s.Email).FirstOrDefault().ToString();
                     if (emailnew != null && emailuser != emailnew)
                     {
                         result = true;
@@ -537,6 +539,7 @@ namespace Framework
                         us.Address = address;
                         us.Phone = mobile;
                         us.ZipCode = Convert.ToInt32(zipcore);
+                        us.WorkShopManager = false;
                         useremail.Email = email;
                         useremail.UserName = email;
                         db.Entry(useremail).State = EntityState.Modified;
@@ -551,6 +554,7 @@ namespace Framework
                         userdata.Address = address;
                         userdata.Phone = mobile;
                         userdata.ZipCode = Convert.ToInt32(zipcore);
+                        userdata.WorkShopManager = false;
                         useremail.Email = email;
                         useremail.UserName = email;
                         db.Entry(userdata).State = EntityState.Modified;
@@ -699,7 +703,7 @@ namespace Framework
 
         public bool ValidateUserworkshop(string id)
         {
-           bool result = false;
+            bool result = false;
             try
             {
                 using (var db = new dekkOnlineEntities())

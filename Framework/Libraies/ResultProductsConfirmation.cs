@@ -24,5 +24,6 @@ namespace Framework.Libraies
         public string Rating { get; set; }
         public string Image { get; set; }
         public int Total { get; set; }
+        public int taxproduct { get; set; }
     }
 }

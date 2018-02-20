@@ -41,3 +41,14 @@ C:\Productos\dekkonline14022018\Entity\obj\Release\Entity.csprojResolveAssemblyR
 C:\Productos\dekkonline14022018\Entity\obj\Release\Entity.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline14022018\Entity\obj\Release\Entity.dll
 C:\Productos\dekkonline14022018\Entity\obj\Release\Entity.pdb
+C:\Productos\DekkOnline20022018\Entity\bin\Release\Entity.dll.config
+C:\Productos\DekkOnline20022018\Entity\bin\Release\Entity.dll
+C:\Productos\DekkOnline20022018\Entity\bin\Release\Entity.pdb
+C:\Productos\DekkOnline20022018\Entity\bin\Release\EntityFramework.dll
+C:\Productos\DekkOnline20022018\Entity\bin\Release\EntityFramework.SqlServer.dll
+C:\Productos\DekkOnline20022018\Entity\bin\Release\EntityFramework.xml
+C:\Productos\DekkOnline20022018\Entity\bin\Release\EntityFramework.SqlServer.xml
+C:\Productos\DekkOnline20022018\Entity\obj\Release\Entity.csprojResolveAssemblyReference.cache
+C:\Productos\DekkOnline20022018\Entity\obj\Release\Entity.csproj.CoreCompileInputs.cache
+C:\Productos\DekkOnline20022018\Entity\obj\Release\Entity.dll
+C:\Productos\DekkOnline20022018\Entity\obj\Release\Entity.pdb

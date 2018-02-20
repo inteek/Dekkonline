@@ -108,7 +108,7 @@ namespace Framework
                         {
                             prom = "No promo";
                             total = product.Select(p => p.Price).Sum();
-                           totaliva = total;
+                            totaliva = total;
                             var iva = (double)totaliva * ivapor2;//TAX
                             totaliva = (double)totaliva + iva;
                             totaliva = (int)Math.Floor((decimal)totaliva);
@@ -402,7 +402,8 @@ namespace Framework
                                     Description = pro.proDescription,
                                     quantity = cart.quantity,
                                     totalpriceprod = Math.Truncate((double)cart.Price),
-                                    cartid = cart.Id.ToString()
+                                    cartid = cart.Id.ToString(),
+                                    taxproduct = (int)Math.Truncate((double)cart.Price * ivapor2)
                                 }).ToList();
                     var promocodeused2 = (from promo in db.PromotionCode
                                           join promou in db.PromoCodeUsed on promo.IdCode equals promou.PromoCode
@@ -581,7 +582,7 @@ namespace Framework
                         {
                             DateTime dat = (DateTime)Delivery.Date;
                             var totalpromo = promocodeused.TotalPriceFinal;
-                          totalpromo =   (int)Math.Floor((decimal)totalpromo);
+                            totalpromo = (int)Math.Floor((decimal)totalpromo);
                             AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
                            new ResultProductsConfirmation{ cart = products,
