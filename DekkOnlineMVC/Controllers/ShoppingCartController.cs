@@ -532,6 +532,7 @@ namespace DekkOnlineMVC.Controllers
             int noError = 0;
             string msg = "";
             string page = "";
+            string[] service = { "0" };
             Users users = new Users();
             Workshop Workshop = new Workshop();
             ShoppingCart shoppingCart = new ShoppingCart();
@@ -594,7 +595,7 @@ namespace DekkOnlineMVC.Controllers
                     {
                         if (radio == 1)
                         {
-                            bool result = Workshop.addDeliveryType(1, idUser, 0, 0, 0, dateMapa, timeMapa, commentsMapa, address);
+                            bool result = Workshop.addDeliveryType(1, idUser, 0, service, 0, dateMapa, timeMapa, commentsMapa, address);
                             if (result == true)
                             {
                                 error = false;
@@ -635,7 +636,7 @@ namespace DekkOnlineMVC.Controllers
             int noError = 0;
             string msg = "";
             string page = "";
-
+            string[] service = { "0" };
             Users users = new Users();
             Workshop Workshop = new Workshop();
             ShoppingCart shoppingCart = new ShoppingCart();
@@ -657,7 +658,7 @@ namespace DekkOnlineMVC.Controllers
                     if (radio == 1)
                     {
                         //Registro de datos del usuario en la tabla DeliveryType
-                        bool result = Workshop.addDeliveryType(1, idUser, 0, 0, 0, dateMapa, timeMapa, commentsMapa, address);
+                        bool result = Workshop.addDeliveryType(1, idUser, 0, service, 0, dateMapa, timeMapa, commentsMapa, address);
                         if (result == true)
                         {
                             error = false;
@@ -696,7 +697,7 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult MakeApponitment(int fecha, int servicio, string date, string time, string comments, int workshop, int idWorkShop, string address, string fechaSeleccionadaNumeros)
+        public JsonResult MakeApponitment(int fecha, string[] servicio, string date, string time, string comments, int workshop, int idWorkShop, string address, string fechaSeleccionadaNumeros)
         {
             bool result = false;
             Workshop Workshop = new Workshop();
@@ -777,6 +778,7 @@ namespace DekkOnlineMVC.Controllers
             int noError = 0;
             string msg = "";
             string page = "";
+            string[] service = { "0" };
             Users users = new Users();
             Workshop Workshop = new Workshop();
 
@@ -791,7 +793,7 @@ namespace DekkOnlineMVC.Controllers
                 {
                     if (radio == 1)
                     {
-                        bool result = Workshop.addDeliveryType(1, idUser, 0, 0, 0, dateMapa, timeMapa, commentsMapa, address);
+                        bool result = Workshop.addDeliveryType(1, idUser, 0, service, 0, dateMapa, timeMapa, commentsMapa, address);
                         if (result == true)
                         {
                             ShoppingCart shoppingCart = new ShoppingCart();

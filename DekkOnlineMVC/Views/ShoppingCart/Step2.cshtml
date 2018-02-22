@@ -172,13 +172,13 @@
                                     <div class="col-lg-2 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="txtZipCode" placeholder="">
                                         @Html.DevExpress().TextBox(settings =>
-                                                  {
-                                                      settings.Name = "txtZipCode";
-                                                      settings.Height = Unit.Pixel(30);
-                                                      settings.Width = Unit.Percentage(130);
-                                                      settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
-                                                      settings.ClientVisible = false;
-                                                  }).GetHtml()
+                                                                   {
+                                                                       settings.Name = "txtZipCode";
+                                                                       settings.Height = Unit.Pixel(30);
+                                                                       settings.Width = Unit.Percentage(130);
+                                                                       settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
+                                                                       settings.ClientVisible = false;
+                                                                   }).GetHtml()
                                     </div>
                                     <label id="validateZipcode" class="textValidateFalse">The zipcode field is required</label>
                                 </div>
@@ -275,7 +275,7 @@
                     </div>
                     <br />
                     <div class="widthleftresponse">
-                        @if (Model.workshop != null)
+                        @if (Model.workshop.Count != 0)
                         {
                             foreach (var item in Model.workshop)
                             {
@@ -294,6 +294,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             }
                         }
                         else
@@ -301,15 +302,12 @@
                             <div id="divWorkShop">
 
                             </div>
-                            <div class="row blanco rowcat" id="lableWorkShop">
-                                <div class="col-lg-2 col-xs-3">
-                                </div>
-                                <div class="col-lg-5 col-xs-8 catalago">
-                                    @*<h4>WorkShop</h4>*@
-                                </div>
-                                <div class="col-lg-2 catHiden">
-                                </div>
-                            </div>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    myPlaceInicio();
+                                });
+                            </script>
                         }
                         <label id="validateWorkshop" class="">No workshops were found with this postal code</label>
                         @*<div class="row blanco rowcat">
@@ -396,13 +394,19 @@
                         </div>
                     </form>
                 </div>
-                <div class="row" style="float:right; margin-right:100px; margin-top:20px;">
-                    <div class="col-lg-12">
-                        <label id="validateDateMapa" class="textValidateDataModal">The date must be greater than the current</label>
-                        <label id="validateDateMapaPasada" class="textValidateDataModal">The date must be less than the current date</label>
-                        <label id="EmailExistente" class="textValidateDataModal">Please enter another email the current one already exists</label>
-                        <button type="submit" class="btn btn-default btn-lg" id="next">NEXT</button>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-6">
+                    <button type="submit" class="btn btn-default btn-lg" id="back">BACK</button>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4">
+
+                </div>
+                <div class="col-lg-2 col-sm-2col-xs-2">
+                    <label id="validateDateMapa" class="textValidateDataModal">The date must be greater than the current</label>
+                    <label id="validateDateMapaPasada" class="textValidateDataModal">The date must be less than the current date</label>
+                    <label id="EmailExistente" class="textValidateDataModal">Please enter another email the current one already exists</label>
+                    <button type="submit" class="btn btn-default btn-lg" id="next">NEXT</button>
                 </div>
             </div>
         </div>
@@ -576,7 +580,7 @@
                                 <textarea class="form-control col-lg-5" rows="3" id="modComment" style="width:309px;"></textarea>
                             </div>*@
                     </div>
-                </div>                
+                </div>
             </div>
             <div class="modal-footer">
                 <label id="validateDateModal" class="textValidateDataModal">The date and time are required</label>
@@ -587,11 +591,60 @@
     </div>
 </div>
 
+@*MODAL LOGIN SIN REGISTRO*@
+<div id="modalLoginStep2" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-xs">
+            <div style="margin-right:10px; margin-top:5px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12 loginLogo">
+            </div>
+            <div class="clearfix"></div>
+            <div class="loginContain">
+                <div class="col-md-12">
+                    <div class="modalLoginLt" style="border-right: 0px solid black;">
+                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
 
+                        @Html.Partial("Login")
+
+                    </div>
+                </div>
+            </div>
+            <div class="hidden">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <asp:CheckBox runat="server" ID="RememberMe" />
+                        <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+
+            <div class="BoxGeneral text-center">
+                <h4>LOG IN FASTER</h4>
+                <div class="clearfix"></div>
+                <section id="socialLoginForm">
+                    <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                </section>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=2")
+@Scripts.Render("~/Scripts/Step2.js?v=6")
 @Scripts.Render("~/Scripts/Map.js?v=4")
 @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
 @Scripts.Render("~/Scripts/Login.js?v=2")
@@ -619,6 +672,25 @@
         $("#advancedIcon").toggleClass("lessIcon");
     }
 
+</script>
+
+<script>
+    function myPlaceInicio() {
+        $(".workshopDisplay").hide();
+
+        $(".myPlace").show();
+        $("#myplace").attr('checked', true);
+
+        initialize();
+        google.maps.event.trigger(map, 'resize');
+    }
+</script>
+
+<script>
+    function NearestInicio() {
+
+        $("#nearestWoekshop").attr('checked', true);
+    }
 </script>
 
 

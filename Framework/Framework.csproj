@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Articles.cs" />
     <Compile Include="encryptdecrypt.cs" />
+    <Compile Include="Libraies\Promos.cs" />
     <Compile Include="Libraies\ResultAllCart.cs" />
     <Compile Include="Libraies\ResultDataUser.cs" />
     <Compile Include="Libraies\ResultDeliveryType.cs">
@@ -76,6 +77,7 @@
     <Compile Include="Libraies\ResultTypesServices.cs" />
     <Compile Include="Libraies\ResultUserOrder.cs" />
     <Compile Include="Libraies\ResultUserPoints.cs" />
+    <Compile Include="Libraies\ResultUserPromo.cs" />
     <Compile Include="Libraies\ResultWorkshop.cs" />
     <Compile Include="Libraies\ResultWorkshopAppointment.cs" />
     <Compile Include="Libraies\ResultWorkshopDateAppointment.cs" />

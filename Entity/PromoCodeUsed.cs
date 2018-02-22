@@ -14,12 +14,13 @@ namespace Entity
     
     public partial class PromoCodeUsed
     {
-        public int id { get; set; }
         public string idUser { get; set; }
         public string PromoCode { get; set; }
         public Nullable<bool> Used { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<decimal> TotalPriceFinal { get; set; }
+        public Nullable<System.DateTime> DateUsed { get; set; }
+        public int id { get; set; }
     
         public virtual PromotionCode PromotionCode { get; set; }
     }

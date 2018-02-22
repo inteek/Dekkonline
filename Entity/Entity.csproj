@@ -91,6 +91,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DekkOnline.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DeliveryServices.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="DeliveryType.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
@@ -98,6 +101,9 @@
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="fylker.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="kategorier.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="kommuner.cs">
@@ -112,6 +118,12 @@
     <Compile Include="Payment.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
+    <Compile Include="postnumre.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
+    <Compile Include="poststed.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
     <Compile Include="products.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
@@ -119,9 +131,6 @@
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="PromotionCode.cs">
-      <DependentUpon>DekkOnline.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PromotionCodeUser.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

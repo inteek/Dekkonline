@@ -49,7 +49,7 @@ namespace Framework
                         result.ZipCode = zipCode;
                         result.Latitude = latitude;
                         result.Length = length;
-                        result.WorkShopManager = false;
+                        //result.WorkShopManager = false;
                         db.Entry(result).State = EntityState.Modified;
                         db.SaveChanges();
                         Result = true;
@@ -87,7 +87,7 @@ namespace Framework
                         addUserAddress.ZipCode = zipCode;
                         addUserAddress.Latitude = latitude;
                         addUserAddress.Length = length;
-                        addUserAddress.WorkShopManager = false;
+                        //addUserAddress.WorkShopManager = false;
                         db.UserAddress.Add(addUserAddress);
                         db.SaveChanges();
                         result = true;
@@ -101,7 +101,7 @@ namespace Framework
                         user.ZipCode = zipCode;
                         user.Latitude = latitude;
                         user.Length = length;
-                        user.WorkShopManager = false;
+                        //user.WorkShopManager = false;
                         db.Entry(user).State = EntityState.Modified;
                         db.SaveChanges();
                         result = true;
@@ -539,7 +539,7 @@ namespace Framework
                         us.Address = address;
                         us.Phone = mobile;
                         us.ZipCode = Convert.ToInt32(zipcore);
-                        us.WorkShopManager = false;
+                        //us.WorkShopManager = false;
                         useremail.Email = email;
                         useremail.UserName = email;
                         db.Entry(useremail).State = EntityState.Modified;
@@ -554,7 +554,7 @@ namespace Framework
                         userdata.Address = address;
                         userdata.Phone = mobile;
                         userdata.ZipCode = Convert.ToInt32(zipcore);
-                        userdata.WorkShopManager = false;
+                        //userdata.WorkShopManager = false;
                         useremail.Email = email;
                         useremail.UserName = email;
                         db.Entry(userdata).State = EntityState.Modified;
@@ -726,6 +726,38 @@ namespace Framework
                 throw;
             }
             return result;
+
+        }
+
+        public bool UpdateRoleUser(string email)
+        {
+            bool result = false;
+            try
+            {
+                using (dekkOnlineEntities db = new dekkOnlineEntities())
+                {
+                    var useremail = db.AspNetUsers.Where(s => s.Email == email).FirstOrDefault();
+                    if (useremail != null)
+                    {
+                        useremail.Roles = 1;
+                        useremail.Active = true;
+                        db.Entry(useremail).State = EntityState.Modified;
+                        db.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
 
         }
 

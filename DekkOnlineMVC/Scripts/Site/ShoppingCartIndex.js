@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+
     $(".keep").click(function () {
         var url = "../Dekk/Products";
         window.location = url;
@@ -33,6 +34,7 @@
         var promo = $(".promocode").val();
         UndoPromo(promo);
     });
+    loadWorkShop();
 });
 
 function DelCrt(id) {
@@ -276,7 +278,7 @@ function loadWorkShop() {
 
 
     ////AJAX
-    conectarAsy("loadWorkShop", data, function (result) {
+    conectarAsy("../ShoppingCart/loadWorkShop", data, function (result) {
 
         if (result.error == false) {
 

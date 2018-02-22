@@ -73,6 +73,8 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Roles" Type="smallint" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="brands">
           <Key>
@@ -113,6 +115,14 @@
           <Property Name="cdpStatus" Type="bit" Nullable="false" />
           <Property Name="cdpEdited" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="DeliveryServices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDelivery" Type="int" />
+          <Property Name="idService" Type="int" />
+        </EntityType>
         <EntityType Name="DeliveryType">
           <Key>
             <PropertyRef Name="IdDelivery" />
@@ -145,6 +155,13 @@
           </Key>
           <Property Name="fylkeID" Type="smallint" Nullable="false" />
           <Property Name="fylkeNavn" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="kategorier">
+          <Key>
+            <PropertyRef Name="kategoriID" />
+          </Key>
+          <Property Name="kategoriID" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="kategoriNavn" Type="varchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="kommuner">
           <Key>
@@ -188,6 +205,24 @@
           <Property Name="TargetType" Type="varchar" MaxLength="15" />
           <Property Name="idUser" Type="nvarchar" MaxLength="128" />
           <Property Name="Number" Type="int" />
+        </EntityType>
+        <EntityType Name="postnumre">
+          <Key>
+            <PropertyRef Name="postnummer" />
+          </Key>
+          <Property Name="postnummer" Type="smallint" Nullable="false" />
+          <Property Name="poststedID" Type="smallint" Nullable="false" />
+          <Property Name="kategoriID" Type="char" MaxLength="1" />
+          <Property Name="lat" Type="decimal" Precision="12" Scale="7" />
+          <Property Name="lon" Type="decimal" Precision="12" Scale="7" />
+        </EntityType>
+        <EntityType Name="poststed">
+          <Key>
+            <PropertyRef Name="PoststedID" />
+          </Key>
+          <Property Name="kommuneID" Type="smallint" Nullable="false" />
+          <Property Name="poststedNavn" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="PoststedID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -245,12 +280,13 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idUser" Type="nvarchar" MaxLength="128" />
           <Property Name="PromoCode" Type="varchar" MaxLength="35" />
           <Property Name="Used" Type="bit" />
           <Property Name="TotalPrice" Type="money" />
           <Property Name="TotalPriceFinal" Type="money" />
+          <Property Name="DateUsed" Type="date" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="PromotionCode">
           <Key>
@@ -261,14 +297,7 @@
           <Property Name="PercentCode" Type="decimal" Precision="18" Scale="0" />
           <Property Name="DateStart" Type="datetime" />
           <Property Name="DateEnd" Type="datetime" />
-        </EntityType>
-        <EntityType Name="PromotionCodeUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
-          <Property Name="IdCode" Type="varchar" MaxLength="35" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -328,7 +357,6 @@
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Length" Type="varchar" MaxLength="50" />
           <Property Name="Image" Type="varchar(max)" />
-          <Property Name="WorkShopManager" Type="bit" />
         </EntityType>
         <EntityType Name="UserPoints">
           <Key>
@@ -394,18 +422,6 @@
             </Principal>
             <Dependent Role="kommuner">
               <PropertyRef Name="fylkeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_CodepromUser">
-          <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
-          <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PromotionCode">
-              <PropertyRef Name="IdCode" />
-            </Principal>
-            <Dependent Role="PromotionCodeUser">
-              <PropertyRef Name="IdCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -549,30 +565,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_UserPoints">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="UserPoints" Type="Self.UserPoints" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserPoints">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Userpromcode">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PromotionCodeUser">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_Userpromcodeinvite">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="DetailUserPoints" Type="Self.DetailUserPoints" Multiplicity="*" />
@@ -597,6 +589,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="postnumre_ibfk_1">
+          <End Role="poststed" Type="Self.poststed" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="postnumre" Type="Self.postnumre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poststed">
+              <PropertyRef Name="PoststedID" />
+            </Principal>
+            <Dependent Role="postnumre">
+              <PropertyRef Name="poststedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postnumre_ibfk_2">
+          <End Role="kategorier" Type="Self.kategorier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="postnumre" Type="Self.postnumre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategorier">
+              <PropertyRef Name="kategoriID" />
+            </Principal>
+            <Dependent Role="postnumre">
+              <PropertyRef Name="kategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="poststed_ibfk_1">
+          <End Role="kommuner" Type="Self.kommuner" Multiplicity="1" />
+          <End Role="poststed" Type="Self.poststed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kommuner">
+              <PropertyRef Name="kommuneID" />
+            </Principal>
+            <Dependent Role="poststed">
+              <PropertyRef Name="kommuneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="dekkOnlineModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
@@ -608,17 +640,20 @@
           <EntitySet Name="brands" EntityType="Self.brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryServices" EntityType="Self.DeliveryServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="fylker" EntityType="Self.fylker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kategorier" EntityType="Self.kategorier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="kommuner" EntityType="Self.kommuner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdersDetail" EntityType="Self.OrdersDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postnumre" EntityType="Self.postnumre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="poststed" EntityType="Self.poststed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromoCodeUsed" EntityType="Self.PromoCodeUsed" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromotionCode" EntityType="Self.PromotionCode" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PromotionCodeUser" EntityType="Self.PromotionCodeUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tokens" EntityType="Self.tokens" Schema="dbo" store:Type="Tables" />
@@ -632,10 +667,6 @@
           <AssociationSet Name="fk_city" Association="Self.fk_city">
             <End Role="fylker" EntitySet="fylker" />
             <End Role="kommuner" EntitySet="kommuner" />
-          </AssociationSet>
-          <AssociationSet Name="fk_CodepromUser" Association="Self.fk_CodepromUser">
-            <End Role="PromotionCode" EntitySet="PromotionCode" />
-            <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -681,14 +712,6 @@
             <End Role="PromotionCode" EntitySet="PromotionCode" />
             <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
           </AssociationSet>
-          <AssociationSet Name="fk_UserPoints" Association="Self.fk_UserPoints">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserPoints" EntitySet="UserPoints" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Userpromcode" Association="Self.fk_Userpromcode">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
-          </AssociationSet>
           <AssociationSet Name="fk_Userpromcodeinvite" Association="Self.fk_Userpromcodeinvite">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="DetailUserPoints" EntitySet="DetailUserPoints" />
@@ -696,6 +719,18 @@
           <AssociationSet Name="fk_Userpurchase" Association="Self.fk_Userpurchase">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="postnumre_ibfk_1" Association="Self.postnumre_ibfk_1">
+            <End Role="poststed" EntitySet="poststed" />
+            <End Role="postnumre" EntitySet="postnumre" />
+          </AssociationSet>
+          <AssociationSet Name="postnumre_ibfk_2" Association="Self.postnumre_ibfk_2">
+            <End Role="kategorier" EntitySet="kategorier" />
+            <End Role="postnumre" EntitySet="postnumre" />
+          </AssociationSet>
+          <AssociationSet Name="poststed_ibfk_1" Association="Self.poststed_ibfk_1">
+            <End Role="kommuner" EntitySet="kommuner" />
+            <End Role="poststed" EntitySet="poststed" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -910,59 +945,15 @@
             <End Role="products" EntitySet="products" />
             <End Role="ShoppingCart" EntitySet="ShoppingCart" />
           </AssociationSet>
-          <EntitySet Name="PromotionCode" EntityType="dekkOnlineModel.PromotionCode" />
-          <EntitySet Name="PromotionCodeUser" EntityType="dekkOnlineModel.PromotionCodeUser" />
           <EntitySet Name="TypesServices" EntityType="dekkOnlineModel.TypesServices" />
           <EntitySet Name="WorkshopAppointment" EntityType="dekkOnlineModel.WorkshopAppointment" />
-          <AssociationSet Name="fk_CodepromUser" Association="dekkOnlineModel.fk_CodepromUser">
-            <End Role="PromotionCode" EntitySet="PromotionCode" />
-            <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
-          </AssociationSet>
           <EntitySet Name="DetailUserPoints" EntityType="dekkOnlineModel.DetailUserPoints" />
           <EntitySet Name="UserPoints" EntityType="dekkOnlineModel.UserPoints" />
-          <EntitySet Name="AspNetUsers" EntityType="dekkOnlineModel.AspNetUsers" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="fk_user" Association="dekkOnlineModel.fk_user">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
-          </AssociationSet>
-          <AssociationSet Name="fk_UserPoints" Association="dekkOnlineModel.fk_UserPoints">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserPoints" EntitySet="UserPoints" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Userpromcode" Association="dekkOnlineModel.fk_Userpromcode">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Userpromcodeinvite" Association="dekkOnlineModel.fk_Userpromcodeinvite">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="DetailUserPoints" EntitySet="DetailUserPoints" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="dekkOnlineModel.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
           <EntitySet Name="PurchaseOrder" EntityType="dekkOnlineModel.PurchaseOrder" />
-          <AssociationSet Name="fk_Userpurchase" Association="dekkOnlineModel.fk_Userpurchase">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
-          </AssociationSet>
           <EntitySet Name="WorkshopServices" EntityType="dekkOnlineModel.WorkshopServices" />
           <EntitySet Name="Appointments" EntityType="dekkOnlineModel.Appointments" />
           <EntitySet Name="OrdersDetail" EntityType="dekkOnlineModel.OrdersDetail" />
           <EntitySet Name="Payment" EntityType="dekkOnlineModel.Payment" />
-          <EntitySet Name="PromoCodeUsed" EntityType="dekkOnlineModel.PromoCodeUsed" />
-          <AssociationSet Name="fk_usedpromo" Association="dekkOnlineModel.fk_usedpromo">
-            <End Role="PromotionCode" EntitySet="PromotionCode" />
-            <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
-          </AssociationSet>
           <EntitySet Name="DeliveryType" EntityType="dekkOnlineModel.DeliveryType" />
           <AssociationSet Name="fk_delivery" Association="dekkOnlineModel.fk_delivery">
             <End Role="DeliveryType" EntitySet="DeliveryType" />
@@ -972,15 +963,58 @@
           <EntitySet Name="WorkshopUser" EntityType="dekkOnlineModel.WorkshopUser" />
           <EntitySet Name="fylker" EntityType="dekkOnlineModel.fylker" />
           <EntitySet Name="kommuner" EntityType="dekkOnlineModel.kommuner" />
-          <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
           <EntitySet Name="Workshop" EntityType="dekkOnlineModel.Workshop" />
+          <AssociationSet Name="fk_city" Association="dekkOnlineModel.fk_city">
+            <End Role="fylker" EntitySet="fylker" />
+            <End Role="kommuner" EntitySet="kommuner" />
+          </AssociationSet>
+          <EntitySet Name="kategorier" EntityType="dekkOnlineModel.kategorier" />
+          <EntitySet Name="postnumre" EntityType="dekkOnlineModel.postnumre" />
+          <EntitySet Name="poststed" EntityType="dekkOnlineModel.poststed" />
+          <EntitySet Name="PromoCodeUsed" EntityType="dekkOnlineModel.PromoCodeUsed" />
+          <EntitySet Name="PromotionCode" EntityType="dekkOnlineModel.PromotionCode" />
+          <AssociationSet Name="postnumre_ibfk_2" Association="dekkOnlineModel.postnumre_ibfk_2">
+            <End Role="kategorier" EntitySet="kategorier" />
+            <End Role="postnumre" EntitySet="postnumre" />
+          </AssociationSet>
+          <AssociationSet Name="poststed_ibfk_1" Association="dekkOnlineModel.poststed_ibfk_1">
+            <End Role="kommuner" EntitySet="kommuner" />
+            <End Role="poststed" EntitySet="poststed" />
+          </AssociationSet>
+          <AssociationSet Name="postnumre_ibfk_1" Association="dekkOnlineModel.postnumre_ibfk_1">
+            <End Role="poststed" EntitySet="poststed" />
+            <End Role="postnumre" EntitySet="postnumre" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usedpromo" Association="dekkOnlineModel.fk_usedpromo">
+            <End Role="PromotionCode" EntitySet="PromotionCode" />
+            <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
+          </AssociationSet>
+          <EntitySet Name="DeliveryServices" EntityType="dekkOnlineModel.DeliveryServices" />
+          <EntitySet Name="AspNetUsers" EntityType="dekkOnlineModel.AspNetUsers" />
+          <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
           <AssociationSet Name="fk_iduserref" Association="dekkOnlineModel.fk_iduserref">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserAddress" EntitySet="UserAddress" />
           </AssociationSet>
-          <AssociationSet Name="fk_city" Association="dekkOnlineModel.fk_city">
-            <End Role="fylker" EntitySet="fylker" />
-            <End Role="kommuner" EntitySet="kommuner" />
+          <AssociationSet Name="fk_Userpromcodeinvite" Association="dekkOnlineModel.fk_Userpromcodeinvite">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DetailUserPoints" EntitySet="DetailUserPoints" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Userpurchase" Association="dekkOnlineModel.fk_Userpurchase">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="dekkOnlineModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ShoppingCart">
@@ -994,7 +1028,6 @@
           <NavigationProperty Name="products" Relationship="dekkOnlineModel.fk_product" FromRole="ShoppingCart" ToRole="products" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_user" FromRole="ShoppingCart" ToRole="AspNetUsers" />
         </EntityType>
         <Association Name="fk_product">
           <End Type="dekkOnlineModel.products" Role="products" Multiplicity="0..1" />
@@ -1008,28 +1041,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PromotionCode">
-          <Key>
-            <PropertyRef Name="IdCode" />
-          </Key>
-          <Property Name="IdCode" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
-          <Property Name="DescriptionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PercentCode" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DateStart" Type="DateTime" Precision="3" />
-          <Property Name="DateEnd" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PromotionCodeUser" Relationship="dekkOnlineModel.fk_CodepromUser" FromRole="PromotionCode" ToRole="PromotionCodeUser" />
-          <NavigationProperty Name="PromoCodeUsed" Relationship="dekkOnlineModel.fk_usedpromo" FromRole="PromotionCode" ToRole="PromoCodeUsed" />
-        </EntityType>
-        <EntityType Name="PromotionCodeUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IdCode" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PromotionCode" Relationship="dekkOnlineModel.fk_CodepromUser" FromRole="PromotionCodeUser" ToRole="PromotionCode" />
-          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpromcode" FromRole="PromotionCodeUser" ToRole="AspNetUsers" />
-        </EntityType>
         <EntityType Name="TypesServices">
           <Key>
             <PropertyRef Name="IdService" />
@@ -1051,18 +1062,6 @@
           <Property Name="DayAppointment" Type="Int32" />
           <Property Name="TimeEnd" Type="Time" Precision="4" />
         </EntityType>
-        <Association Name="fk_CodepromUser">
-          <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.PromotionCodeUser" Role="PromotionCodeUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PromotionCode">
-              <PropertyRef Name="IdCode" />
-            </Principal>
-            <Dependent Role="PromotionCodeUser">
-              <PropertyRef Name="IdCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="DetailUserPoints">
           <Key>
             <PropertyRef Name="Id" />
@@ -1082,114 +1081,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Points" Type="Int32" />
-          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_UserPoints" FromRole="UserPoints" ToRole="AspNetUsers" />
         </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="ShoppingCart" Relationship="dekkOnlineModel.fk_user" FromRole="AspNetUsers" ToRole="ShoppingCart" />
-          <NavigationProperty Name="UserPoints" Relationship="dekkOnlineModel.fk_UserPoints" FromRole="AspNetUsers" ToRole="UserPoints" />
-          <NavigationProperty Name="PromotionCodeUser" Relationship="dekkOnlineModel.fk_Userpromcode" FromRole="AspNetUsers" ToRole="PromotionCodeUser" />
-          <NavigationProperty Name="DetailUserPoints" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="AspNetUsers" ToRole="DetailUserPoints" />
-          <NavigationProperty Name="AspNetRoles" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="AspNetUsers" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="UserAddress" Relationship="dekkOnlineModel.fk_iduserref" FromRole="AspNetUsers" ToRole="UserAddress" />
-        </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="dekkOnlineModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="dekkOnlineModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_user">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ShoppingCart">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_UserPoints">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.UserPoints" Role="UserPoints" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserPoints">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Userpromcode">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.PromotionCodeUser" Role="PromotionCodeUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PromotionCodeUser">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Userpromcodeinvite">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.DetailUserPoints" Role="DetailUserPoints" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DetailUserPoints">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="dekkOnlineModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
-        </Association>
         <EntityType Name="PurchaseOrder">
           <Key>
             <PropertyRef Name="IdOrderDetail" />
@@ -1206,21 +1098,9 @@
           <Property Name="UsedPromo" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Shoppingcarts" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="PurchaseOrder" ToRole="AspNetUsers" />
           <NavigationProperty Name="DeliveryType" Relationship="dekkOnlineModel.fk_delivery" FromRole="PurchaseOrder" ToRole="DeliveryType" />
+          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="PurchaseOrder" ToRole="AspNetUsers" />
         </EntityType>
-        <Association Name="fk_Userpurchase">
-          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrder">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="WorkshopServices">
           <Key>
             <PropertyRef Name="Id" />
@@ -1258,30 +1138,6 @@
           <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Number" Type="Int32" />
         </EntityType>
-        <EntityType Name="PromoCodeUsed">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PromoCode" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
-          <Property Name="Used" Type="Boolean" />
-          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TotalPriceFinal" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="PromotionCode" Relationship="dekkOnlineModel.fk_usedpromo" FromRole="PromoCodeUsed" ToRole="PromotionCode" />
-        </EntityType>
-        <Association Name="fk_usedpromo">
-          <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
-          <End Type="dekkOnlineModel.PromoCodeUsed" Role="PromoCodeUsed" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PromotionCode">
-              <PropertyRef Name="IdCode" />
-            </Principal>
-            <Dependent Role="PromoCodeUsed">
-              <PropertyRef Name="PromoCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="DeliveryType">
           <Key>
             <PropertyRef Name="IdDelivery" />
@@ -1349,23 +1205,7 @@
           <Property Name="fylkeID" Type="Int16" Nullable="false" />
           <Property Name="kommuneNavn" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="fylker" Relationship="dekkOnlineModel.fk_city" FromRole="kommuner" ToRole="fylker" />
-        </EntityType>
-        <EntityType Name="UserAddress">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ZipCode" Type="Int32" />
-          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="WorkShopManager" Type="Boolean" />
-          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_iduserref" FromRole="UserAddress" ToRole="AspNetUsers" />
+          <NavigationProperty Name="poststed" Relationship="dekkOnlineModel.poststed_ibfk_1" FromRole="kommuner" ToRole="poststed" />
         </EntityType>
         <EntityType Name="Workshop">
           <Key>
@@ -1384,6 +1224,202 @@
           <Property Name="Status" Type="Boolean" />
           <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <Association Name="fk_city">
+          <End Type="dekkOnlineModel.fylker" Role="fylker" Multiplicity="1" />
+          <End Type="dekkOnlineModel.kommuner" Role="kommuner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fylker">
+              <PropertyRef Name="fylkeID" />
+            </Principal>
+            <Dependent Role="kommuner">
+              <PropertyRef Name="fylkeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="kategorier">
+          <Key>
+            <PropertyRef Name="kategoriID" />
+          </Key>
+          <Property Name="kategoriID" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="kategoriNavn" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="postnumre" Relationship="dekkOnlineModel.postnumre_ibfk_2" FromRole="kategorier" ToRole="postnumre" />
+        </EntityType>
+        <EntityType Name="postnumre">
+          <Key>
+            <PropertyRef Name="postnummer" />
+          </Key>
+          <Property Name="postnummer" Type="Int16" Nullable="false" />
+          <Property Name="poststedID" Type="Int16" Nullable="false" />
+          <Property Name="kategoriID" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="lat" Type="Decimal" Precision="12" Scale="7" />
+          <Property Name="lon" Type="Decimal" Precision="12" Scale="7" />
+          <NavigationProperty Name="kategorier" Relationship="dekkOnlineModel.postnumre_ibfk_2" FromRole="postnumre" ToRole="kategorier" />
+          <NavigationProperty Name="poststed" Relationship="dekkOnlineModel.postnumre_ibfk_1" FromRole="postnumre" ToRole="poststed" />
+        </EntityType>
+        <EntityType Name="poststed">
+          <Key>
+            <PropertyRef Name="PoststedID" />
+          </Key>
+          <Property Name="kommuneID" Type="Int16" Nullable="false" />
+          <Property Name="poststedNavn" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PoststedID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="kommuner" Relationship="dekkOnlineModel.poststed_ibfk_1" FromRole="poststed" ToRole="kommuner" />
+          <NavigationProperty Name="postnumre" Relationship="dekkOnlineModel.postnumre_ibfk_1" FromRole="poststed" ToRole="postnumre" />
+        </EntityType>
+        <EntityType Name="PromoCodeUsed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="idUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PromoCode" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="Used" Type="Boolean" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TotalPriceFinal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateUsed" Type="DateTime" Precision="0" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="PromotionCode" Relationship="dekkOnlineModel.fk_usedpromo" FromRole="PromoCodeUsed" ToRole="PromotionCode" />
+        </EntityType>
+        <EntityType Name="PromotionCode">
+          <Key>
+            <PropertyRef Name="IdCode" />
+          </Key>
+          <Property Name="IdCode" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="DescriptionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PercentCode" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DateStart" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PromoCodeUsed" Relationship="dekkOnlineModel.fk_usedpromo" FromRole="PromotionCode" ToRole="PromoCodeUsed" />
+        </EntityType>
+        <Association Name="postnumre_ibfk_2">
+          <End Type="dekkOnlineModel.kategorier" Role="kategorier" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dekkOnlineModel.postnumre" Role="postnumre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategorier">
+              <PropertyRef Name="kategoriID" />
+            </Principal>
+            <Dependent Role="postnumre">
+              <PropertyRef Name="kategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="poststed_ibfk_1">
+          <End Type="dekkOnlineModel.kommuner" Role="kommuner" Multiplicity="1" />
+          <End Type="dekkOnlineModel.poststed" Role="poststed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kommuner">
+              <PropertyRef Name="kommuneID" />
+            </Principal>
+            <Dependent Role="poststed">
+              <PropertyRef Name="kommuneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postnumre_ibfk_1">
+          <End Type="dekkOnlineModel.poststed" Role="poststed" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dekkOnlineModel.postnumre" Role="postnumre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="poststed">
+              <PropertyRef Name="PoststedID" />
+            </Principal>
+            <Dependent Role="postnumre">
+              <PropertyRef Name="poststedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usedpromo">
+          <End Type="dekkOnlineModel.PromotionCode" Role="PromotionCode" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.PromoCodeUsed" Role="PromoCodeUsed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PromotionCode">
+              <PropertyRef Name="IdCode" />
+            </Principal>
+            <Dependent Role="PromoCodeUsed">
+              <PropertyRef Name="PromoCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeliveryServices">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDelivery" Type="Int32" />
+          <Property Name="idService" Type="Int32" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Roles" Type="Int16" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="UserAddress" Relationship="dekkOnlineModel.fk_iduserref" FromRole="AspNetUsers" ToRole="UserAddress" />
+          <NavigationProperty Name="DetailUserPoints" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="AspNetUsers" ToRole="DetailUserPoints" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="AspNetUsers" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="AspNetRoles" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="Int32" />
+          <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_iduserref" FromRole="UserAddress" ToRole="AspNetUsers" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dekkOnlineModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dekkOnlineModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_iduserref">
           <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
           <End Type="dekkOnlineModel.UserAddress" Role="UserAddress" Multiplicity="*" />
@@ -1396,17 +1432,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_city">
-          <End Type="dekkOnlineModel.fylker" Role="fylker" Multiplicity="1" />
-          <End Type="dekkOnlineModel.kommuner" Role="kommuner" Multiplicity="*" />
+        <Association Name="fk_Userpromcodeinvite">
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.DetailUserPoints" Role="DetailUserPoints" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="fylker">
-              <PropertyRef Name="fylkeID" />
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="kommuner">
-              <PropertyRef Name="fylkeID" />
+            <Dependent Role="DetailUserPoints">
+              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Userpurchase">
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="dekkOnlineModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="dekkOnlineModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1567,26 +1619,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PromotionCode">
-            <EntityTypeMapping TypeName="dekkOnlineModel.PromotionCode">
-              <MappingFragment StoreEntitySet="PromotionCode">
-                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
-                <ScalarProperty Name="PercentCode" ColumnName="PercentCode" />
-                <ScalarProperty Name="DescriptionCode" ColumnName="DescriptionCode" />
-                <ScalarProperty Name="IdCode" ColumnName="IdCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PromotionCodeUser">
-            <EntityTypeMapping TypeName="dekkOnlineModel.PromotionCodeUser">
-              <MappingFragment StoreEntitySet="PromotionCodeUser">
-                <ScalarProperty Name="IdCode" ColumnName="IdCode" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TypesServices">
             <EntityTypeMapping TypeName="dekkOnlineModel.TypesServices">
               <MappingFragment StoreEntitySet="TypesServices">
@@ -1631,32 +1663,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUsers">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="dekkOnlineModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="PurchaseOrder">
             <EntityTypeMapping TypeName="dekkOnlineModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrder">
@@ -1712,18 +1718,6 @@
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="TargetType" ColumnName="TargetType" />
                 <ScalarProperty Name="Expire" ColumnName="Expire" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PromoCodeUsed">
-            <EntityTypeMapping TypeName="dekkOnlineModel.PromoCodeUsed">
-              <MappingFragment StoreEntitySet="PromoCodeUsed">
-                <ScalarProperty Name="TotalPriceFinal" ColumnName="TotalPriceFinal" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Used" ColumnName="Used" />
-                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1786,23 +1780,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserAddress">
-            <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
-              <MappingFragment StoreEntitySet="UserAddress">
-                <ScalarProperty Name="WorkShopManager" ColumnName="WorkShopManager" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Workshop">
             <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
               <MappingFragment StoreEntitySet="Workshop">
@@ -1821,6 +1798,112 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="kategorier">
+            <EntityTypeMapping TypeName="dekkOnlineModel.kategorier">
+              <MappingFragment StoreEntitySet="kategorier">
+                <ScalarProperty Name="kategoriNavn" ColumnName="kategoriNavn" />
+                <ScalarProperty Name="kategoriID" ColumnName="kategoriID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postnumre">
+            <EntityTypeMapping TypeName="dekkOnlineModel.postnumre">
+              <MappingFragment StoreEntitySet="postnumre">
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="kategoriID" ColumnName="kategoriID" />
+                <ScalarProperty Name="poststedID" ColumnName="poststedID" />
+                <ScalarProperty Name="postnummer" ColumnName="postnummer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="poststed">
+            <EntityTypeMapping TypeName="dekkOnlineModel.poststed">
+              <MappingFragment StoreEntitySet="poststed">
+                <ScalarProperty Name="PoststedID" ColumnName="PoststedID" />
+                <ScalarProperty Name="poststedNavn" ColumnName="poststedNavn" />
+                <ScalarProperty Name="kommuneID" ColumnName="kommuneID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PromoCodeUsed">
+            <EntityTypeMapping TypeName="dekkOnlineModel.PromoCodeUsed">
+              <MappingFragment StoreEntitySet="PromoCodeUsed">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DateUsed" ColumnName="DateUsed" />
+                <ScalarProperty Name="TotalPriceFinal" ColumnName="TotalPriceFinal" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Used" ColumnName="Used" />
+                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PromotionCode">
+            <EntityTypeMapping TypeName="dekkOnlineModel.PromotionCode">
+              <MappingFragment StoreEntitySet="PromotionCode">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="PercentCode" ColumnName="PercentCode" />
+                <ScalarProperty Name="DescriptionCode" ColumnName="DescriptionCode" />
+                <ScalarProperty Name="IdCode" ColumnName="IdCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryServices">
+            <EntityTypeMapping TypeName="dekkOnlineModel.DeliveryServices">
+              <MappingFragment StoreEntitySet="DeliveryServices">
+                <ScalarProperty Name="idService" ColumnName="idService" />
+                <ScalarProperty Name="idDelivery" ColumnName="idDelivery" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAddress">
+            <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
+              <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="dekkOnlineModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

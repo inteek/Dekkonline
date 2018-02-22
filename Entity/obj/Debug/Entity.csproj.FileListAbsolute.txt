@@ -122,6 +122,7 @@ C:\Productos\DekkOnline20022018\Entity\bin\Debug\EntityFramework.dll
 C:\Productos\DekkOnline20022018\Entity\bin\Debug\EntityFramework.SqlServer.dll
 C:\Productos\DekkOnline20022018\Entity\bin\Debug\EntityFramework.xml
 C:\Productos\DekkOnline20022018\Entity\bin\Debug\EntityFramework.SqlServer.xml
+C:\Productos\DekkOnline20022018\Entity\obj\Debug\Entity.csprojResolveAssemblyReference.cache
 C:\Productos\DekkOnline20022018\Entity\obj\Debug\Entity.csproj.CoreCompileInputs.cache
 C:\Productos\DekkOnline20022018\Entity\obj\Debug\Entity.dll
 C:\Productos\DekkOnline20022018\Entity\obj\Debug\Entity.pdb

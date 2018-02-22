@@ -12,20 +12,20 @@ namespace Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class kommuner
+    public partial class poststed
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public kommuner()
+        public poststed()
         {
-            this.poststed = new HashSet<poststed>();
+            this.postnumre = new HashSet<postnumre>();
         }
     
         public short kommuneID { get; set; }
-        public short fylkeID { get; set; }
-        public string kommuneNavn { get; set; }
+        public string poststedNavn { get; set; }
+        public short PoststedID { get; set; }
     
-        public virtual fylker fylker { get; set; }
+        public virtual kommuner kommuner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<poststed> poststed { get; set; }
+        public virtual ICollection<postnumre> postnumre { get; set; }
     }
 }

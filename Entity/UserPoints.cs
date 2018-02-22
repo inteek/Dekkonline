@@ -17,7 +17,5 @@ namespace Entity
         public int Id { get; set; }
         public string IdUser { get; set; }
         public Nullable<int> Points { get; set; }
-    
-        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

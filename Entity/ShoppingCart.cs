@@ -22,6 +22,5 @@ namespace Entity
         public Nullable<bool> Status { get; set; }
     
         public virtual products products { get; set; }
-        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

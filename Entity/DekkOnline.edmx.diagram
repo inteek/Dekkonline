@@ -19,39 +19,41 @@
         <AssociationConnector Association="dekkOnlineModel.FK_products_categoriesDP" ManuallyRouted="false" />
         <EntityTypeShape EntityType="dekkOnlineModel.ShoppingCart" Width="1.5" PointX="10.25" PointY="6.75" />
         <AssociationConnector Association="dekkOnlineModel.fk_product" />
-        <EntityTypeShape EntityType="dekkOnlineModel.PromotionCode" Width="1.5" PointX="11.375" PointY="10.375" />
-        <EntityTypeShape EntityType="dekkOnlineModel.PromotionCodeUser" Width="1.5" PointX="13.625" PointY="2.5" />
         <EntityTypeShape EntityType="dekkOnlineModel.TypesServices" Width="1.5" PointX="7.75" PointY="9.75" />
         <EntityTypeShape EntityType="dekkOnlineModel.WorkshopAppointment" Width="1.5" PointX="7.75" PointY="12.75" />
-        <AssociationConnector Association="dekkOnlineModel.fk_CodepromUser" />
         <EntityTypeShape EntityType="dekkOnlineModel.DetailUserPoints" Width="1.5" PointX="10.25" PointY="13.625" />
         <EntityTypeShape EntityType="dekkOnlineModel.UserPoints" Width="1.5" PointX="10.25" PointY="16.75" />
-        <EntityTypeShape EntityType="dekkOnlineModel.AspNetUsers" Width="1.5" PointX="8" PointY="3.125" />
-        <AssociationConnector Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="dekkOnlineModel.fk_user" />
-        <AssociationConnector Association="dekkOnlineModel.fk_UserPoints" />
-        <AssociationConnector Association="dekkOnlineModel.fk_Userpromcode" />
-        <AssociationConnector Association="dekkOnlineModel.fk_Userpromcodeinvite" />
-        <AssociationConnector Association="dekkOnlineModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="dekkOnlineModel.PurchaseOrder" Width="1.5" PointX="15.625" PointY="6.125" />
-        <AssociationConnector Association="dekkOnlineModel.fk_Userpurchase" />
         <EntityTypeShape EntityType="dekkOnlineModel.WorkshopServices" Width="1.5" PointX="0.75" PointY="13.75" />
         <EntityTypeShape EntityType="dekkOnlineModel.Appointments" Width="1.5" PointX="14.75" PointY="14.75" />
         <EntityTypeShape EntityType="dekkOnlineModel.OrdersDetail" Width="1.5" PointX="0.75" PointY="16.75" />
         <EntityTypeShape EntityType="dekkOnlineModel.Payment" Width="1.5" PointX="2.75" PointY="16.75" />
-        <EntityTypeShape EntityType="dekkOnlineModel.PromoCodeUsed" Width="1.5" PointX="14" PointY="11.375" />
-        <AssociationConnector Association="dekkOnlineModel.fk_usedpromo" />
         <EntityTypeShape EntityType="dekkOnlineModel.DeliveryType" Width="1.5" PointX="5.375" PointY="17" />
         <AssociationConnector Association="dekkOnlineModel.fk_delivery" />
         <EntityTypeShape EntityType="dekkOnlineModel.Orders" Width="1.5" PointX="16.375" PointY="0.75" />
         <EntityTypeShape EntityType="dekkOnlineModel.WorkshopUser" Width="1.5" PointX="3.375" PointY="13.75" />
         <EntityTypeShape EntityType="dekkOnlineModel.fylker" Width="1.5" PointX="16.375" PointY="11" />
         <EntityTypeShape EntityType="dekkOnlineModel.kommuner" Width="1.5" PointX="18.625" PointY="10.875" />
-        <EntityTypeShape EntityType="dekkOnlineModel.UserAddress" Width="1.5" PointX="10.25" PointY="20" />
         <EntityTypeShape EntityType="dekkOnlineModel.Workshop" Width="1.5" PointX="12.375" PointY="5.75" />
-        <AssociationConnector Association="dekkOnlineModel.fk_iduserref" />
         <AssociationConnector Association="dekkOnlineModel.fk_city" />
+        <EntityTypeShape EntityType="dekkOnlineModel.kategorier" Width="1.5" PointX="20.875" PointY="8.125" />
+        <EntityTypeShape EntityType="dekkOnlineModel.postnumre" Width="1.5" PointX="23.125" PointY="10.625" />
+        <EntityTypeShape EntityType="dekkOnlineModel.poststed" Width="1.5" PointX="20.875" PointY="10.875" />
+        <EntityTypeShape EntityType="dekkOnlineModel.PromoCodeUsed" Width="1.5" PointX="14.625" PointY="18" />
+        <EntityTypeShape EntityType="dekkOnlineModel.PromotionCode" Width="1.5" PointX="12.375" PointY="18" />
+        <AssociationConnector Association="dekkOnlineModel.postnumre_ibfk_2" />
+        <AssociationConnector Association="dekkOnlineModel.poststed_ibfk_1" />
+        <AssociationConnector Association="dekkOnlineModel.postnumre_ibfk_1" />
+        <AssociationConnector Association="dekkOnlineModel.fk_usedpromo" />
+        <EntityTypeShape EntityType="dekkOnlineModel.DeliveryServices" Width="1.5" PointX="10.375" PointY="10.75" />
+        <EntityTypeShape EntityType="dekkOnlineModel.AspNetUsers" Width="1.5" PointX="8" PointY="21.875" />
+        <EntityTypeShape EntityType="dekkOnlineModel.UserAddress" Width="1.5" PointX="10.25" PointY="22.75" />
+        <AssociationConnector Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="dekkOnlineModel.fk_iduserref" />
+        <AssociationConnector Association="dekkOnlineModel.fk_Userpromcodeinvite" />
+        <AssociationConnector Association="dekkOnlineModel.fk_Userpurchase" />
+        <AssociationConnector Association="dekkOnlineModel.AspNetUserRoles" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -154,6 +154,7 @@ namespace DekkOnlineMVC.Controllers
                         img.Resize(130, 130);
                     img.Save(_comPath);
                     // end resize
+                    //Falta cortar la url de _compath para insertar la url en la base
                     var userupdate = us.UpdateUserImage(_comPath, id);
                     if (userupdate != null || userupdate.Length > 1)
                     {
@@ -254,36 +255,37 @@ namespace DekkOnlineMVC.Controllers
         {
             Orders or = new Orders();
             ShoppingCart sh = new ShoppingCart();
-            var pending = (dynamic)null;
+            var promos = (dynamic)null;
             var idUser = Security.GetIdUser(this);
             var usuario1 = User.Identity.Name;
-            var pro = (dynamic)null;
+            var lista = (dynamic)null;
             if (usuario1 != "")
             {
                 var id = sh.User(usuario1);
-                pending = or.loadOrderPending(id);
-                if (pending != null)
+                promos = or.loadPromos(id);
+
+                if (promos != null)
                 {
-                    foreach (var item in pending)
+                    foreach (var item in promos)
                     {
-                        pro = new Framework.Libraies.ResultUserOrder
+                        lista = new Framework.Libraies.ResultUserPromo
                         {
-                            product = item.product,
+                            promo = item.promo,
                             user = item.user
                         };
                     }
                 }
-
+                else
+                {
+                    ;
+                }
             }
             else
             {
                 Response.Redirect("~/Home/Index");
             }
-
-
-            return PartialView(pro);
+            return PartialView(lista);
         }
-
         [HttpPost]
         public JsonResult ValidateEmail(string email)
         {

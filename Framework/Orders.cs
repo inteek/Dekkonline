@@ -12,52 +12,7 @@ namespace Framework
 {
     public class Orders
     {
-        public bool addToDelivery(bool deliveryType, string idUser, int idWorkshop, int? idServiceWorkshop, int? idAppointmentsWorkshop, DateTime date, string time, string comments)
-        {
-            try
-            {
-                using (var db = new dekkOnlineEntities())
-                {
-                    if (idAppointmentsWorkshop != null)
-                    {
-                        var addDelivery = new Entity.DeliveryType();
-                        addDelivery.DeliveryType1 = deliveryType;
-                        addDelivery.IdUser = idUser;
-                        addDelivery.IdWorkshop = idWorkshop;
-                        addDelivery.IdServiceWorkshop = idServiceWorkshop;
-                        //addDelivery.IdAppointmentsWorkshop = idAppointmentsWorkshop;
-                        addDelivery.Date = null;
-                        addDelivery.Time = null;
-                        addDelivery.Comments = null;
-                        db.DeliveryType.Add(addDelivery);
-                        db.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        var addDelivery = new Entity.DeliveryType();
-                        addDelivery.DeliveryType1 = deliveryType;
-                        addDelivery.IdUser = idUser;
-                        addDelivery.IdWorkshop = idWorkshop;
-                        addDelivery.IdServiceWorkshop = idServiceWorkshop;
-                        //addDelivery.IdAppointmentsWorkshop = null;
-                        addDelivery.Date = date;
-                        addDelivery.Time = time;
-                        addDelivery.Comments = comments;
-                        db.DeliveryType.Add(addDelivery);
-                        db.SaveChanges();
-                        return true;
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                //_Error = ex;
-                return false;
-            }
-        }
-
+      
         //DE-8 2 cambios
         public bool addToPurchaseOrder(string idUser, int tar, string cn, string edm, string edy, int sc, string chn)
         {
@@ -842,11 +797,118 @@ namespace Framework
                         }
                     }
                 }
+                Mail mail = new Mail();
+
+                mail.sendEmailConfirmation(AddressWorkshop);
                 return AddressWorkshop;
             }
             catch (Exception ex)
             {
 
+                throw;
+            }
+
+        }
+
+        public List<ResultUserPromo> loadPromos(string idUser)
+        {
+            try
+            {
+                List<Promos> datosTabla = null;
+                List<Promos> promos = new List<Promos>();
+                List<Promos> promosActivas = null;
+                List<ResultDataUser> userdata = null;
+                using (var db = new dekkOnlineEntities())
+                {
+                    var codigoPromo = (from pro in db.PromotionCode
+                                       where (pro.IdUser == idUser)
+                                       select new Promos
+                                       {
+                                           PromoCode = pro.IdCode
+                                       }).FirstOrDefault();
+                    if (codigoPromo != null)
+                    {
+                        promosActivas = (from pro in db.PromoCodeUsed
+                                         where (pro.PromoCode == codigoPromo.PromoCode)
+                                         select new Promos
+                                         {
+                                             idUser = pro.idUser,
+                                             Used = pro.Used,
+                                             Date = pro.DateUsed.ToString()
+                                         }).ToList();
+                    }
+
+                    if (promosActivas != null)
+                    {
+                        foreach (var item in promosActivas)
+                        {
+
+                            var userdata2 = (from us in db.AspNetUsers
+                                             join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                             where (us.Id == item.idUser)
+                                             select new
+                                             {
+                                                 FirstName = us2.FirstName,
+                                                 LastName = us2.LastName,
+                                                 Email = us.Email
+                                             }).FirstOrDefault();
+                            if (userdata2 != null)
+                            {
+                                datosTabla = new List<Promos>
+                            {
+                                new Promos
+                                {
+                                    UserName = userdata2.FirstName + " " + userdata2.LastName,
+                                    Email = userdata2.Email,
+                                    Date = item.Date,
+                                    Used = item.Used
+                                }
+                            };
+                                promos.AddRange(datosTabla);
+                            }
+                            else
+                            {
+                                datosTabla = new List<Promos>
+                            {
+                                new Promos
+                                {
+                                    UserName = null,
+                                    Email = null,
+                                    Date = item.Date,
+                                    Used = item.Used
+                                }
+                            };
+                                promos.AddRange(datosTabla);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        userdata = (from us in db.AspNetUsers
+                                    join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                    where (us.Id == idUser)
+                                    select new ResultDataUser
+                                    {
+                                        FirstName = us2.FirstName,
+                                        LastName = us2.LastName,
+                                        Email = us.Email
+                                    }).ToList();
+                        promos = null;
+                    }
+
+                    List<ResultUserPromo> promosResult = new List<ResultUserPromo>()
+                    {
+                        new ResultUserPromo{
+                                promo = promos,
+                                user = userdata
+                        }
+                    };
+                    return promosResult;
+                }
+
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
 

@@ -199,7 +199,7 @@ namespace DekkOnlineMVC.Controllers
                     System.Web.HttpContext.Current.Session["SessionUser"] = idUser;
 
                     users.EnvioCorreo(model.Email1, model.Password1);
-                    
+                    users.UpdateRoleUser(model.Email1);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

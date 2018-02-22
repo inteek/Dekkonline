@@ -27,7 +27,7 @@ namespace Entity
         public string Comments { get; set; }
         public string Shoppingcarts { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual DeliveryType DeliveryType { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

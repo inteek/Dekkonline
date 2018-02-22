@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization;
-@model Framework.Libraies.ResultUserOrder
+@model Framework.Libraies.ResultUserPromo
 @{
     ViewBag.Title = "Promos";
 }
@@ -85,24 +85,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">Ronny Sonetwork</th>
-                                    <td>26/04/2017</td>
-                                    <td>Pending</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Ronny Sonetwork</th>
-                                    <td>26/04/2017</td>
-                                    <td>Pending</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Ronny Sonetwork</th>
-                                    <td>26/04/2017</td>
-                                    <td>Pending</td>
-                                    <td>0</td>
-                                </tr>
+                                @if (Model.promo != null)
+                                {
+                                    foreach (var item in Model.promo)
+                                    {
+                                    <tr>
+                                        @if (item.UserName == null)
+                                        {
+                                            <th scope="row">Cliente no registrado</th>
+                                        }
+                                        else
+                                        { 
+                                        <th scope="row">@item.UserName</th>
+                                        }
+                                        <td>@item.Date</td>
+                                        @if (item.Used == true)
+                                        {
+                                            <td>Used</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Pending</td>
+                                        }
+                                        <td>10</td>
+                                    </tr>
+                                    }
+                                }
                             </tbody>
                         </table>
                     </div>

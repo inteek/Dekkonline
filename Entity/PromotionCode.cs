@@ -17,7 +17,6 @@ namespace Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PromotionCode()
         {
-            this.PromotionCodeUser = new HashSet<PromotionCodeUser>();
             this.PromoCodeUsed = new HashSet<PromoCodeUsed>();
         }
     
@@ -26,9 +25,8 @@ namespace Entity
         public Nullable<decimal> PercentCode { get; set; }
         public Nullable<System.DateTime> DateStart { get; set; }
         public Nullable<System.DateTime> DateEnd { get; set; }
+        public string IdUser { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PromotionCodeUser> PromotionCodeUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PromoCodeUsed> PromoCodeUsed { get; set; }
     }

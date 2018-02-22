@@ -245,7 +245,7 @@ namespace Framework
 
 
                     //var promocode1 = ""; //LoadPromoCodeFomUser(User);
-                    var promocode1 = LoadPromoCodeFomUser(User);
+                    //var promocode1 = LoadPromoCodeFomUser(User);
                     var points1 = LoadPointsPerUser(User);
 
                     var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == User && s.Used == false).FirstOrDefault();
@@ -267,7 +267,8 @@ namespace Framework
                         new ResultAllCart{
                         cart = products,
                         subtotal = (decimal)subtotal1,
-                        promocode = promocode1,
+                        //promocode = promocode1,
+                        promocode = null,
                         points = points1,
                         total = (decimal)subtotal2,
                         promocodeapp = false,
@@ -303,31 +304,31 @@ namespace Framework
         }
 
         //LOAD PROMO CODE FROM USER DE-11 TASK 2 cambios
-        public string LoadPromoCodeFomUser(string idUser)
-        {
-            var promocode = (dynamic)null;
-            try
-            {
-                using (var db = new dekkOnlineEntities())
-                {
-                    promocode = db.PromotionCodeUser.Where(s => s.IdUser == idUser).Select(s => s.IdCode).FirstOrDefault();
-                    if (promocode != null)
-                    {
-                        return promocode;
-                    }
-                    else
-                    {
-                        return promocode = "";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+        //public string LoadPromoCodeFomUser(string idUser)
+        //{
+        //    var promocode = (dynamic)null;
+        //    try
+        //    {
+        //        using (var db = new dekkOnlineEntities())
+        //        {
+        //            promocode = db.PromotionCodeUser.Where(s => s.IdUser == idUser).Select(s => s.IdCode).FirstOrDefault();
+        //            if (promocode != null)
+        //            {
+        //                return promocode;
+        //            }
+        //            else
+        //            {
+        //                return promocode = "";
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        
+        //        throw;
+        //    }
 
-                throw;
-            }
-
-        }
+        //}
 
 
         //VALIDATE PROMO CODE DE-11 cambios
@@ -368,6 +369,7 @@ namespace Framework
                         var iva = totalprice * ivapor2;//TAX
                         totalprice = totalprice + iva;
                         totalprice = (int)Math.Floor((decimal)totalprice);
+                        totalprice2 = totalprice2 + iva;
                         Entity.PromoCodeUsed addpromo = new Entity.PromoCodeUsed();
                         addpromo.idUser = idUser;
                         addpromo.PromoCode = code;

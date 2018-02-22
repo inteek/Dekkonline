@@ -232,7 +232,7 @@ namespace Framework
             return result;
         }
 
-        public bool addDeliveryType(int workshop, string idUser, int idWorkShop, int servicio, int fecha, string date, string time, string comments, string address)
+        public bool addDeliveryType(int workshop, string idUser, int idWorkShop, string[] servicio, int fecha, string date, string time, string comments, string address)
         {
             bool result = false;
             bool work = false;
@@ -259,7 +259,7 @@ namespace Framework
                             addwork.DeliveryType1 = work;
                             addwork.IdUser = idUser;
                             addwork.IdWorkshop = idWorkShop;
-                            addwork.IdServiceWorkshop = servicio;
+                            addwork.IdServiceWorkshop = 0;
                             addwork.IdAppointments = fecha;
                             addwork.Date = Convert.ToDateTime(date);
                             addwork.Time = hora2;
@@ -268,6 +268,46 @@ namespace Framework
                             db.DeliveryType.Add(addwork);
                             db.SaveChanges();
 
+                            var delivery2 = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).Select(s => s.IdDelivery).FirstOrDefault();
+                            var deleteservicelistp = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                            if (deleteservicelistp != null || deleteservicelistp.Count != 0)
+                            {
+                                foreach (var item2 in deleteservicelistp)
+                                {
+                                    var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                    db.DeliveryServices.Remove(deleteservice);
+                                    db.SaveChanges();
+                                }
+                            }
+                            if (servicio.Length>0)
+                            {
+                                foreach (var item in servicio)
+                                {
+                                    if (item == "0")
+                                    {
+                                        var deleteservicelist = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                                        if (deleteservicelist != null || deleteservicelist.Count != 0)
+                                        {
+                                            foreach (var item2 in deleteservicelist)
+                                            {
+                                                var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                                db.DeliveryServices.Remove(deleteservice);
+                                                db.SaveChanges();
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var serviceadd = new Entity.DeliveryServices();
+                                        serviceadd.idDelivery = delivery2;
+                                        serviceadd.idService = Convert.ToInt32(item);
+                                        db.DeliveryServices.Add(serviceadd);
+                                        db.SaveChanges();
+                                    }
+                                  
+                                }
+                                
+                            }
                             result = true;
                         }
                         else
@@ -276,7 +316,7 @@ namespace Framework
                             addwork.DeliveryType1 = work;
                             addwork.IdUser = idUser;
                             addwork.IdWorkshop = idWorkShop;
-                            addwork.IdServiceWorkshop = servicio;
+                            addwork.IdServiceWorkshop = 0;
                             addwork.IdAppointments = fecha;
                             addwork.Date = Convert.ToDateTime(date);
                             addwork.Time = time;
@@ -284,7 +324,46 @@ namespace Framework
                             addwork.Address = address;
                             db.DeliveryType.Add(addwork);
                             db.SaveChanges();
+                            var delivery2 = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).Select(s => s.IdDelivery).FirstOrDefault();
+                            var deleteservicelistp = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                            if (deleteservicelistp != null || deleteservicelistp.Count != 0)
+                            {
+                                foreach (var item2 in deleteservicelistp)
+                                {
+                                    var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                    db.DeliveryServices.Remove(deleteservice);
+                                    db.SaveChanges();
+                                }
+                            }
+                            if (servicio.Length > 0)
+                            {
+                                foreach (var item in servicio)
+                                {
+                                    if (item == "0")
+                                    {
+                                        var deleteservicelist = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                                        if (deleteservicelist != null || deleteservicelist.Count != 0)
+                                        {
+                                            foreach (var item2 in deleteservicelist)
+                                            {
+                                                var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                                db.DeliveryServices.Remove(deleteservice);
+                                                db.SaveChanges();
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var serviceadd = new Entity.DeliveryServices();
+                                        serviceadd.idDelivery = delivery2;
+                                        serviceadd.idService = Convert.ToInt32(item);
+                                        db.DeliveryServices.Add(serviceadd);
+                                        db.SaveChanges();
+                                    }
 
+                                }
+
+                            }
                             result = true;
                         }
                     }
@@ -302,7 +381,7 @@ namespace Framework
                             {
                                 update.DeliveryType1 = work;
                                 update.IdWorkshop = idWorkShop;
-                                update.IdServiceWorkshop = servicio;
+                                update.IdServiceWorkshop = 0;
                                 update.IdAppointments = fecha;
                                 update.Date = Convert.ToDateTime(date);
                                 update.Time = hora2;
@@ -311,6 +390,47 @@ namespace Framework
 
                                 db.Entry(update).State = EntityState.Modified;
                                 db.SaveChanges();
+                                var delivery2 = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).Select(s => s.IdDelivery).FirstOrDefault();
+                                var deleteservicelistp = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                                if (deleteservicelistp != null || deleteservicelistp.Count != 0)
+                                {
+                                    foreach (var item2 in deleteservicelistp)
+                                    {
+                                        var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                        db.DeliveryServices.Remove(deleteservice);
+                                        db.SaveChanges();
+                                    }
+                                }
+                                if (servicio.Length > 0)
+                                {
+                                    foreach (var item in servicio)
+                                    {
+                                        if (item == "0")
+                                        {
+                                            var deleteservicelist = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                                            if (deleteservicelist != null || deleteservicelist.Count != 0)
+                                            {
+                                                foreach (var item2 in deleteservicelist)
+                                                {
+                                                    var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                                    db.DeliveryServices.Remove(deleteservice);
+                                                    db.SaveChanges();
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            var serviceadd = new Entity.DeliveryServices();
+                                            serviceadd.idDelivery = delivery2;
+                                            serviceadd.idService = Convert.ToInt32(item);
+                                            db.DeliveryServices.Add(serviceadd);
+                                            db.SaveChanges();
+                                        }
+
+                                    }
+
+                                }
                                 result = true;
                             }
                             else
@@ -324,7 +444,7 @@ namespace Framework
                             {
                                 update.DeliveryType1 = work;
                                 update.IdWorkshop = idWorkShop;
-                                update.IdServiceWorkshop = servicio;
+                                update.IdServiceWorkshop = 0;
                                 update.IdAppointments = fecha;
                                 update.Date = Convert.ToDateTime(date);
                                 update.Time = time;
@@ -333,6 +453,46 @@ namespace Framework
 
                                 db.Entry(update).State = EntityState.Modified;
                                 db.SaveChanges();
+                                var delivery2 = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).Select(s => s.IdDelivery).FirstOrDefault();
+                                var deleteservicelistp = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                                if (deleteservicelistp != null || deleteservicelistp.Count != 0)
+                                {
+                                    foreach (var item2 in deleteservicelistp)
+                                    {
+                                        var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                        db.DeliveryServices.Remove(deleteservice);
+                                        db.SaveChanges();
+                                    }
+                                }
+                                if (servicio.Length > 0)
+                                {
+                                    foreach (var item in servicio)
+                                    {
+                                        if (item == "0")
+                                        {
+                                            var deleteservicelist = db.DeliveryServices.Where(s => s.idDelivery == delivery2).ToList();
+                                            if (deleteservicelist != null || deleteservicelist.Count != 0)
+                                            {
+                                                foreach (var item2 in deleteservicelist)
+                                                {
+                                                    var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                                    db.DeliveryServices.Remove(deleteservice);
+                                                    db.SaveChanges();
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            var serviceadd = new Entity.DeliveryServices();
+                                            serviceadd.idDelivery = delivery2;
+                                            serviceadd.idService = Convert.ToInt32(item);
+                                            db.DeliveryServices.Add(serviceadd);
+                                            db.SaveChanges();
+                                        }
+
+                                    }
+
+                                }
                                 result = true;
                             }
                             else

@@ -154,26 +154,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PromotionCode">
-      <EntityTypeMapping TypeName="dekkOnlineModel.PromotionCode">
-        <MappingFragment StoreEntitySet="PromotionCode">
-          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-          <ScalarProperty Name="DateStart" ColumnName="DateStart" />
-          <ScalarProperty Name="PercentCode" ColumnName="PercentCode" />
-          <ScalarProperty Name="DescriptionCode" ColumnName="DescriptionCode" />
-          <ScalarProperty Name="IdCode" ColumnName="IdCode" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PromotionCodeUser">
-      <EntityTypeMapping TypeName="dekkOnlineModel.PromotionCodeUser">
-        <MappingFragment StoreEntitySet="PromotionCodeUser">
-          <ScalarProperty Name="IdCode" ColumnName="IdCode" />
-          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TypesServices">
       <EntityTypeMapping TypeName="dekkOnlineModel.TypesServices">
         <MappingFragment StoreEntitySet="TypesServices">
@@ -218,32 +198,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AspNetUsers">
-      <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUsers">
-        <MappingFragment StoreEntitySet="AspNetUsers">
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="AspNetUserRoles" TypeName="dekkOnlineModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-      <EndProperty Name="AspNetUsers">
-        <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-      <EndProperty Name="AspNetRoles">
-        <ScalarProperty Name="Id" ColumnName="RoleId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <EntitySetMapping Name="PurchaseOrder">
       <EntityTypeMapping TypeName="dekkOnlineModel.PurchaseOrder">
         <MappingFragment StoreEntitySet="PurchaseOrder">
@@ -299,18 +253,6 @@
           <ScalarProperty Name="idUser" ColumnName="idUser" />
           <ScalarProperty Name="TargetType" ColumnName="TargetType" />
           <ScalarProperty Name="Expire" ColumnName="Expire" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PromoCodeUsed">
-      <EntityTypeMapping TypeName="dekkOnlineModel.PromoCodeUsed">
-        <MappingFragment StoreEntitySet="PromoCodeUsed">
-          <ScalarProperty Name="TotalPriceFinal" ColumnName="TotalPriceFinal" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="Used" ColumnName="Used" />
-          <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
-          <ScalarProperty Name="idUser" ColumnName="idUser" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -373,23 +315,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserAddress">
-      <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
-        <MappingFragment StoreEntitySet="UserAddress">
-          <ScalarProperty Name="WorkShopManager" ColumnName="WorkShopManager" />
-          <ScalarProperty Name="Image" ColumnName="Image" />
-          <ScalarProperty Name="Length" ColumnName="Length" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Workshop">
       <EntityTypeMapping TypeName="dekkOnlineModel.Workshop">
         <MappingFragment StoreEntitySet="Workshop">
@@ -408,5 +333,111 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="kategorier">
+      <EntityTypeMapping TypeName="dekkOnlineModel.kategorier">
+        <MappingFragment StoreEntitySet="kategorier">
+          <ScalarProperty Name="kategoriNavn" ColumnName="kategoriNavn" />
+          <ScalarProperty Name="kategoriID" ColumnName="kategoriID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="postnumre">
+      <EntityTypeMapping TypeName="dekkOnlineModel.postnumre">
+        <MappingFragment StoreEntitySet="postnumre">
+          <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="kategoriID" ColumnName="kategoriID" />
+          <ScalarProperty Name="poststedID" ColumnName="poststedID" />
+          <ScalarProperty Name="postnummer" ColumnName="postnummer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="poststed">
+      <EntityTypeMapping TypeName="dekkOnlineModel.poststed">
+        <MappingFragment StoreEntitySet="poststed">
+          <ScalarProperty Name="PoststedID" ColumnName="PoststedID" />
+          <ScalarProperty Name="poststedNavn" ColumnName="poststedNavn" />
+          <ScalarProperty Name="kommuneID" ColumnName="kommuneID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromoCodeUsed">
+      <EntityTypeMapping TypeName="dekkOnlineModel.PromoCodeUsed">
+        <MappingFragment StoreEntitySet="PromoCodeUsed">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="DateUsed" ColumnName="DateUsed" />
+          <ScalarProperty Name="TotalPriceFinal" ColumnName="TotalPriceFinal" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Used" ColumnName="Used" />
+          <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromotionCode">
+      <EntityTypeMapping TypeName="dekkOnlineModel.PromotionCode">
+        <MappingFragment StoreEntitySet="PromotionCode">
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+          <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+          <ScalarProperty Name="PercentCode" ColumnName="PercentCode" />
+          <ScalarProperty Name="DescriptionCode" ColumnName="DescriptionCode" />
+          <ScalarProperty Name="IdCode" ColumnName="IdCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryServices">
+      <EntityTypeMapping TypeName="dekkOnlineModel.DeliveryServices">
+        <MappingFragment StoreEntitySet="DeliveryServices">
+          <ScalarProperty Name="idService" ColumnName="idService" />
+          <ScalarProperty Name="idDelivery" ColumnName="idDelivery" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="dekkOnlineModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Roles" ColumnName="Roles" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAddress">
+      <EntityTypeMapping TypeName="dekkOnlineModel.UserAddress">
+        <MappingFragment StoreEntitySet="UserAddress">
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="dekkOnlineModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>
