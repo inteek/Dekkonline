@@ -1175,7 +1175,6 @@ C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.csprojResolveAss
 C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.csproj.CoreCompileInputs.cache
 C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.dll
 C:\Productos\dekkonline14022018\DekkOnline\obj\Debug\DekkOnline.pdb
-C:\Productos\Dekkonline\DekkOnline\obj\Debug\DekkOnline.dll.licenses
 C:\git\DekkOnline\DekkOnline\obj\Debug\DekkOnline.csprojResolveAssemblyReference.cache
 C:\git\DekkOnline\DekkOnline\obj\Debug\DekkOnline.dll
 C:\git\DekkOnline\DekkOnline\obj\Debug\DekkOnline.pdb

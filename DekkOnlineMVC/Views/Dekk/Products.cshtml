@@ -14,11 +14,28 @@
 
 
 @Scripts.Render("~/Scripts/connectAsy.js?v=2")
-@Scripts.Render("~/Scripts/site/Products.js?v=4")
+@Scripts.Render("~/Scripts/site/Products.js?v=9")
 
 
 
         <div class="searchWrap" style="top:-300px; width:100%">
+            <div class="searchContain" style="text-align:left; padding-bottom:15px;" >
+                <span style="color:#C84647; margin-left:14px; font-family:Arial; font-size:20px">Search Results: (<span id="lblProdctsVisible">
+                    @if (Model.Count >= ViewBag.RowsPerPage)
+                    {
+                        @ViewBag.RowsPerPage
+                    }
+                    else {
+                        @Model.Count
+                    }
+                </span>
+                /
+                <span id="lblProdctsTotal">
+                    @Model.Count
+                </span>
+                )</span>
+                
+            </div>
             <div class="searchContain" style="width:100%;">
                 <div class="col-md-3">
                     <span class="sTitle">SIZE:</span><br />
@@ -341,6 +358,7 @@
                 <br />
                 <br />
                 <br />
+                <br />
 
 
                 <style type="text/css">
@@ -394,17 +412,6 @@
                 <script>
                     var cardView = '@ViewBag.IsCardView';
                     var sortMode = '@ViewBag.SortMode';
-                    @*$(document).ready(function () {
-                        if ("@ViewBag.IdCategory" != null) {
-                            //var item = settings.Properties.Items.FindByValue(ViewBag.IdCategory.ToString());
-                            debugger
-                            var item = cmbCategory.FindItemByValue("@ViewBag.IdCategory");
-                            item.Selected = true;
-                            //settings.SelectedIndex = item.Index;
-                            cmbCategory.SetSelectedIndex(item.index);
-                            //cmbCategory.SetValue("@ViewBag.IdCategory");
-                        }
-                    })*@
                 </script>
 
                 <div id="xcpProducts" style="text-align:center; margin-left:0px; padding-right:0px">

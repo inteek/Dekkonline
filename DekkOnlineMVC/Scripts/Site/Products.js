@@ -28,6 +28,18 @@ function OnProductCardsBeginCallback(s, e) {
 
 
 }
+
+function OnProductCardsEndCallback(s, e) {
+    var pageCount = 0;
+    if (s.cpRowsCount != null) {
+        pageCount = s.cpRowsCount
+    }
+
+    $("#lblProdctsVisible").text(s.pageRowCount);
+    $("#lblProdctsTotal").text(pageCount);
+}
+
+
 function IsCardView() {
     return cardView; //ProductCards.GetToolbar(0).GetItemByName("CardView").GetChecked();
 }

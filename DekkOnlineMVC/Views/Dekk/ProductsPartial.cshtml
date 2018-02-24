@@ -39,12 +39,24 @@
 
     settings.Settings.VerticalScrollableHeight = 600;
     settings.SettingsPager.SettingsTableLayout.ColumnCount = ViewBag.IsCardView ? 2 : 1;
+    settings.SettingsPager.SettingsTableLayout.RowsPerPage = ViewBag.RowsPerPage;
     settings.CardLayoutProperties.ColCount = ViewBag.IsCardView ? 1 : 2;
 
     settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
     settings.SettingsPager.EndlessPagingMode = DevExpress.Web.CardViewEndlessPagingMode.OnScroll;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Hidden;
     settings.ControlStyle.CssClass = "cardViewProducts";
+
+
+    //settings.BeforeGetCallbackResult = (s, e) =>
+    //{
+    //    MVCxCardView card = (MVCxCardView)s;
+    //    if (card != null)
+    //    {
+    //        var pCount = card.PageCount;
+    //        var pIndex = (card.PageIndex + 1) + 1;
+    //    }
+    //};
 
 
 
@@ -319,6 +331,12 @@
 
     //settings.ClientSideEvents.ToolbarItemClick = "OnToolbarItemClick";
     settings.ClientSideEvents.BeginCallback = "OnProductCardsBeginCallback";
+    settings.ClientSideEvents.EndCallback = "OnProductCardsEndCallback";
+
+    settings.CustomJSProperties = (s, e) =>
+    {
+        e.Properties["cpRowsCount"] = Model.Count;
+    };
 
 
     settings.Settings.LayoutMode = DevExpress.Web.Layout.Flow;

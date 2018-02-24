@@ -13,6 +13,7 @@ namespace DekkOnlineMVC.Controllers
 {
     public class DekkController : Controller
     {
+        const int rowsPageSize = 10;
 
         public enum ProductsCardsSortMode { LowestHighest, Highestlowest };
 
@@ -27,6 +28,7 @@ namespace DekkOnlineMVC.Controllers
 
             ViewBag.IsCardView = false;
             ViewBag.SortMode = ProductsCardsSortMode.LowestHighest;
+            ViewBag.RowsPerPage = rowsPageSize;
 
 
             var resultModel = GetProducts(null, null, null, null, null, false, ProductsCardsSortMode.LowestHighest);
@@ -44,6 +46,7 @@ namespace DekkOnlineMVC.Controllers
 
             ViewBag.IsCardView = false;
             ViewBag.SortMode = ProductsCardsSortMode.LowestHighest;
+            ViewBag.RowsPerPage = rowsPageSize;
 
 
             var resultModel = GetProducts(sizeWidth, profile, sizeDiameter, idCategory, idBrand, false, ProductsCardsSortMode.LowestHighest);
@@ -70,6 +73,7 @@ namespace DekkOnlineMVC.Controllers
 
             ViewBag.IsCardView = isCardView;
             ViewBag.SortMode = sortMode;
+            ViewBag.RowsPerPage = rowsPageSize;
 
             return PartialView("ProductsPartial", resultModel);
         }
@@ -117,7 +121,7 @@ namespace DekkOnlineMVC.Controllers
                                    SpeedIndex = p.SpeedIndex,
                                    LoadIndex = p.LoadIndex
                                }
-                               ).ToList();
+                               ).Take(20).ToList();
 
 
             if (sortMode == ProductsCardsSortMode.LowestHighest) resultModel = resultModel.OrderBy(c => c.Price).ToList();
