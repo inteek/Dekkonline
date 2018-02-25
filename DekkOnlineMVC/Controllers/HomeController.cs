@@ -16,7 +16,23 @@ namespace DekkOnlineMVC.Controllers
             ViewBag.BagProfile = ar.loadDimensionProfile();
             ViewBag.BagDiameter = ar.loadDimensionDiameter();
             ViewBag.BagCategories = ar.loadCategories();
-           
+            
+
+            ViewBag.SizeWidth = System.Configuration.ConfigurationManager.AppSettings["SizeWidth"];
+            ViewBag.Profile = System.Configuration.ConfigurationManager.AppSettings["Profile"];
+            ViewBag.SizeDiameter = System.Configuration.ConfigurationManager.AppSettings["SizeDiameter"];
+
+
+            if (DateTime.Now.Month == 11 || DateTime.Now.Month == 12 || DateTime.Now.Month == 1 || DateTime.Now.Month == 2) {
+                ViewBag.IdCategory = 2; //WINTER
+            }
+            else{
+                ViewBag.IdCategory = 1; //SOMMERDEKK
+            }
+
+            //ViewBag.IdBagCategories = System.Configuration.ConfigurationManager.AppSettings["SizeWidth"];
+
+            
             return View();
         }
 
