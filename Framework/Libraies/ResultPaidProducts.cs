@@ -9,6 +9,7 @@ namespace Framework.Libraies
   public  class ResultPaidProducts
     {
         public List<ResultShoppingCartProduct> cart { get; set; }
+        public List<ResultTypesServices> services { get; set; }
         public string ZipCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -28,5 +29,8 @@ namespace Framework.Libraies
         public string Expire { get; set; }
         public int Number { get; set; }
         public int Order { get; set; }
+        public int Total1 { get; set; }
+        public int taxproduct { get; set; }
+        public int SubTotal { get; set; }
     }
 }

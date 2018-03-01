@@ -19,7 +19,7 @@ namespace DekkOnlineMVC.Controllers
         public ActionResult Index()
         {
             string path = Request.Url.AbsolutePath;
-            ViewBag.ReturnUrl = path;
+            //ViewBag.ReturnUrl = path;
             var b = (dynamic)null;
             ShoppingCart sh = new ShoppingCart();
             var idUser = Security.GetIdUser(this);
@@ -149,7 +149,7 @@ namespace DekkOnlineMVC.Controllers
 
                         foreach (var item in products)
                         {
-                          x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
+                          x = new Framework.Libraies.ResultAllCart { cart = item.cart, subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         return Json(new { x, qty, a, JsonRequestBehavior.AllowGet });
                     }
@@ -158,7 +158,7 @@ namespace DekkOnlineMVC.Controllers
                         products = sh.ProductsInCart(idUser);
                         foreach (var item in products)
                         {
-                            x = new Framework.Libraies.ResultAllCart { subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
+                            x = new Framework.Libraies.ResultAllCart { cart = item.cart, subtotal = item.subtotal, promocode = item.promocode, points = item.points, total = item.total, promocodeapp = item.promocodeapp, tax = item.tax };
                         }
                         return Json(new { x, qty, a, JsonRequestBehavior.AllowGet });
                     }
@@ -369,7 +369,12 @@ namespace DekkOnlineMVC.Controllers
         [HttpPost]
         public JsonResult loadWorkShop(string zipCode)
         {
+            if (zipCode == "" || zipCode == null)
+            {
+                zipCode = "0";
+            }
             zip = zipCode;
+
             return Json(new { error = false, noError = 0, msg = "" });
         }
 
@@ -397,6 +402,7 @@ namespace DekkOnlineMVC.Controllers
                     b = new Framework.Libraies.ResultProductsConfirmation
                     {
                         cart = item.cart,
+                        services = item.services,
                         ZipCode = item.ZipCode.ToString(),
                         FirstName = item.FirstName,
                         LastName = item.LastName,
@@ -411,7 +417,9 @@ namespace DekkOnlineMVC.Controllers
                         Date = item.Date.ToString(),
                         Time = item.Time,
                         Comments = item.Comments,
-                        Total = item.Total
+                        Total = item.Total,
+                        SubTotal = item.SubTotal,
+                        taxproduct = item.taxproduct
                     };
 
                 }
@@ -477,6 +485,7 @@ namespace DekkOnlineMVC.Controllers
                     b = new Framework.Libraies.ResultPaidProducts
                     {
                         cart = item.cart,
+                        services = item.services,
                         ZipCode = item.ZipCode.ToString(),
                         FirstName = item.FirstName,
                         LastName = item.LastName,
@@ -495,8 +504,11 @@ namespace DekkOnlineMVC.Controllers
                         TypeTarget = item.TypeTarget,
                         Number = item.Number,
                         Expire = item.Expire,
-                        Order = item.Order
-                    
+                        Order = item.Order,
+                        Total1 = item.Total1,
+                        SubTotal = item.SubTotal,
+                        taxproduct = item.taxproduct
+
                     };
 
                 }

@@ -6,25 +6,56 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/Styles/Dimension.css?V=5")
-@Styles.Render("~/Styles/Shoppingcart.css?V=7")
+@Styles.Render("~/Styles/Shoppingcart.css?V=8")
 <div class="row">
     <div class="col-lg-12 ">
-        <img src="~/Content/imgs/Step3.png" class="imgwidth1 img-responsive" />
-        <img src="~/Content/imgs/step3mobile.PNG" class="img-responsive imgmobile" />
+
+        <div class="row marginRowPasos responsePasos">
+            <div class="col-lg-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 linea1Step3"><img src="~/Content/imgs/linea-04prueba.png" class="medidaLinea1Index" /></div>
+            <div class="col-lg-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 linea2Step3"><img src="~/Content/imgs/linea-04prueba.png" class="medidaLinea1Index" /></div>
+            <div class="col-lg-1 carritoIndex"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+            <div class="col-lg-2 linea3Step3"><img src="~/Content/imgs/linea-01prueba.png" class="medidaLinea3Step3" /></div>
+            <div class="col-lg-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+        </div>
+
+
+        <div class="row responsePasos">
+            <div class="col-lg-1 col-sm-1 col-xs-1 texto1Step3" id="Step1" style="cursor:pointer;"><h5 style="color:#1a64a1">STEP ONE</h5></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea1Index"></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 texto2Step3" id="Step2" style="cursor:pointer;"><h5 class="" style="color:#1a64a1">STEP TWO</h5></div>
+            <div class="col-lg-1 col-sm-2 col-xs-2 linea2Index"></div>
+            <div class="col-lg-2 col-sm-1 col-xs-1 texto3Step3"><h5 class="" style="color:#1a64a1">STEP THREE</h5><h6 style="margin-top:-5px; color:black;">Confirm all your info, your arder and workshop appointment</h6></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea3Index"></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 texto4Step3"><h5 class="" style="color:#a19d9d">STEP FOUR</h5></div>
+        </div>
+
+        <div class="row marginRowPasos3 responsePasosMovil">
+            <div class="col-lg-1 col-sm-1 col-xs-1 bola1Step2"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea1Step3"><img src="~/Content/imgs/linea-04movil.png" class="medidaLinea1Step3" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 bola1Step3"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea2Step3"><img src="~/Content/imgs/linea-04movil.png" class="medidaLinea1Step3" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 carritoStep3"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea3Step3"><img src="~/Content/imgs/linea-01movil.png" class="medidaLinea3Step3" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 circulo4GrisStep3"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+        </div>
+
     </div>
 </div>
 <div class="container" style="font-family:Arial;margin-bottom:50px;">
 
     <div class="row" style="border-bottom:1px solid #ddd">
-        <table id="cart" class="table table-hover table-condensed">
+        <table id="cart" class="table table-hover table-condensed tabl1">
             <thead>
                 @if (Model.cart.Count > 0)
                 {
 
                     <tr>
-                        <th style="width:50%">Item</th>
+                        <th style="width:40%">Item</th>
                         <th style="width:8%">QTY</th>
-                        <th style="width:10%">Price</th>
+                        <th style="width:10%">Unit Price</th>
+                        <th style="width:10%">Sub Total</th>
                     </tr>
                 }
                 else
@@ -39,7 +70,7 @@
                 {
                     foreach (var item in Model.cart)
                     {
-                        <tr>
+                        <tr class="@item.cartid">
 
                             <td data-th="Item">
                                 <div class="row">
@@ -47,25 +78,17 @@
                                         <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
                                     </div>
                                     <div class="col-sm-8 col-xs-5">
-                                        <h4 class="nomargin"><strong style="color:#176292">@item.Name</strong></h4>
+                                        <h4 class="nomargin"><strong style="color:#e72e31">@item.Name</strong></h4>
                                         <div class="deschide"><p>@item.Description.</p></div>
+                                        <div class="deschide"><p>Size: @item.proDimensionWidth / @item.proDimensionprofile  @item.proDimensionDiameter</p></div>
                                     </div>
                                 </div>
                             </td>
                             <td data-th="QTY">
-                                @*<input type="number" class="form-control text-center qtyprodcart" min="1" value="@item.quantity" size="3" autocomplete="off" onkeydown="return false" disabled="disabled">*@
-                                <strong>@item.quantity</strong>
+                                <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" disabled="disabled">
                             </td>
-                            <td data-th="Price">
-                                <div class="row">
-                                    <div class="col-sm-12 col-xs-12">
-                                        <strong>@item.totalpriceprod kr</strong>
-                                    </div>
-                                    <div class="col-sm-12 col-xs-3">
-                                        <strong>+tax @item.taxproduct kr</strong>
-                                    </div>
-                                </div>
-                            </td>
+                            <td data-th="Unit Price"><strong><label id="@item.cartid">@item.UnitPrice</label> kr</strong></td>
+                            <td data-th="Sub Total"><strong><label id="@item.cartid" >@item.totalpriceprod</label> kr</strong></td>
                         </tr>
                     }
                 }
@@ -82,9 +105,61 @@
                         </td>
                     </tr>
                 }
+                @if (Model.services.Count > 0)
+                {
+                    foreach (var item in Model.services)
+                    {
+                    <tr>
+
+                        <td data-th="Item">
+                            <div class="row">
+                                <div class="col-sm-2 col-xs-3">
+                                    <img src="@item.WorkshopImage" alt="..." style="height:85px;width:85px;" class="img-responsive " />
+                                </div>
+                                <div class="col-sm-8 col-xs-5">
+                                    <h4 class="nomargin"><strong style="color:#176292">@item.WorkshopName Service:</strong></h4>
+                                    <div class="deschide"><p>@item.Name.</p></div>
+                                </div>
+                                
+                            </div>
+                        </td>
+                        <td data-th="QTY">
+                            <input type="number" class="form-control text-center qtyprodcart " min="1" value="1" size="3" autocomplete="off" disabled="disabled">
+                        </td>
+                        <td data-th="Unit Price">
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    <strong>@item.Price kr</strong>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Sub Total">
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    <strong>@item.Price kr</strong>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td data-th="Item">
+                            <div class="row">
+                                <div class="col-sm-8 col-xs-8">
+                                    <br />
+                                    <div><p>No services extra.</p></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
+    <div class="row"><br /></div>
     <div class="row total">
         <div class="col-lg-7 ipadtry">
             <div class="form-group">
@@ -98,6 +173,12 @@
                         <strong style="color:#1a64a1">NO APPLIED</strong>
                     }
                 </strong>
+            </div>
+            <div class="form-group">
+                <strong style="font-size:larger;">SUBTOTAL: @Model.SubTotal kr</strong>
+            </div>
+            <div class="form-group">
+                <strong style="font-size:larger;">TAX: @Model.taxproduct kr</strong>
             </div>
             <div class="form-group">
                 <strong style="font-size:larger;">TOTAL: @Model.Total kr</strong>
@@ -292,7 +373,7 @@
     <div class="row">
         <div class="form-group col-lg-12">
             <div class="col-sm-5 col-xs-8 terms">
-                <input type="checkbox" name="terms" class="terms2" id="terms2"><span class="linkcolor3 textoAzul">I have read and accepted terms & conditions</span>
+                <input type="checkbox" name="terms" class="terms2" id="terms2"><span class="linkcolor3 textoAzul" style="cursor:pointer">I have read and accepted terms & conditions</span>
             </div>
             <div class="col-sm-8 col-xs-7 confirm">
                 <br />
@@ -315,7 +396,7 @@
 
 
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/Scripts/Site/ShoppingCartStep3.js?v=9")
+@Scripts.Render("~/Scripts/Site/ShoppingCartStep3.js?v=1")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

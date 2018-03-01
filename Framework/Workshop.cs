@@ -44,7 +44,7 @@ namespace Framework
                                     idWorkshop = ws.Id,
                                     IdService = ser.IdService,
                                     Description = ser.Description,
-                                    Price = ws.Price
+                                    Price = (double)ws.Price
                                 }).ToList();
                 }
 
@@ -873,7 +873,7 @@ namespace Framework
                                    IdService = item.IdService,
                                    Name = item.Name,
                                    Description = item.Description,
-                                   Price = (decimal)item.Price
+                                   Price = (double)item.Price
                                 }
                             };
                             result2.AddRange(result);
@@ -1438,7 +1438,7 @@ namespace Framework
 
         }
 
-        public List<ResultZipCode> GetZipCodes()
+        public List<ResultZipCode> GetZipCodesInWorkshop(int work)
         {
             List<ResultZipCode> zipc1 = null;
             List<ResultZipCode> zipc2 = new List<ResultZipCode>();
@@ -1447,10 +1447,14 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     var zipcodes = (from zpc in db.kommuner
+                                    join fyl in db.fylker on zpc.fylkeID equals fyl.fylkeID
+                                    join wsz in db.WorkshopZipCode on zpc.kommuneID equals wsz.IdKommune
+                                    where wsz.IdWorkshop == work
                                     select new ResultZipCode
                                     {
                                         kommuneID = zpc.kommuneID,
-                                        KommuneNavn = zpc.kommuneNavn
+                                        KommuneNavn = zpc.kommuneNavn,
+                                        fylker = fyl.fylkeNavn
                                     }).ToList();
                     foreach (var item in zipcodes)
                     {
@@ -1459,7 +1463,60 @@ namespace Framework
                             new ResultZipCode
                             {
                                 kommuneID = item.kommuneID,
-                                KommuneNavn = item.KommuneNavn
+                                KommuneNavn = item.KommuneNavn,
+                                fylker = item.fylker
+                            }
+                        };
+                        zipc2.AddRange(zipc1);
+                    }
+                    return zipc2;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        public List<ResultZipCode> GetZipCodesNoInWorkshop(int work)
+        {
+            List<ResultZipCode> zipc1 = null;
+            List<ResultZipCode> zipc2 = new List<ResultZipCode>();
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var zipcodes = (from zpc in db.kommuner
+                                    join fyl in db.fylker on zpc.fylkeID equals fyl.fylkeID
+                                    join wsz in db.WorkshopZipCode on zpc.kommuneID equals wsz.IdKommune
+                                    where wsz.IdWorkshop == work
+                                    select new ResultZipCode
+                                    {
+                                        kommuneID = zpc.kommuneID,
+                                        KommuneNavn = zpc.kommuneNavn,
+                                        fylker = fyl.fylkeNavn
+                                    }).ToList();
+                    var zipcodes2 = (from zpc in db.kommuner
+                                    join fyl in db.fylker on zpc.fylkeID equals fyl.fylkeID
+                                    select new ResultZipCode
+                                    {
+                                        kommuneID = zpc.kommuneID,
+                                        KommuneNavn = zpc.kommuneNavn,
+                                        fylker = fyl.fylkeNavn
+                                    }).ToList();
+                    var zeipcodesin = new HashSet<int>(zipcodes.Select(x => x.kommuneID));
+                    var zips = zipcodes2.Where(s=> !zeipcodesin.Contains(s.kommuneID));
+                    foreach (var item in zips)
+                    {
+                        zipc1 = new List<ResultZipCode>
+                        {
+                            new ResultZipCode
+                            {
+                                kommuneID = item.kommuneID,
+                                KommuneNavn = item.KommuneNavn,
+                                fylker = item.fylker
                             }
                         };
                         zipc2.AddRange(zipc1);

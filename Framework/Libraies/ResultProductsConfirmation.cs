@@ -9,6 +9,7 @@ namespace Framework.Libraies
     public class ResultProductsConfirmation
     {
         public List<ResultShoppingCartProduct> cart { get; set; }
+        public List<ResultTypesServices> services { get; set; }
         public string ZipCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -25,5 +26,6 @@ namespace Framework.Libraies
         public string Image { get; set; }
         public int Total { get; set; }
         public int taxproduct { get; set; }
+        public int SubTotal { get; set; }
     }
 }

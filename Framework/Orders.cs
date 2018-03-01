@@ -26,6 +26,7 @@ namespace Framework
                     DbContextTransaction transaction = db.Database.BeginTransaction();
                     try
                     {
+                        List<ResultTypesServices> services1 = null;
                         var totaliva = (dynamic)null;
                         var idDelivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
                         var Address = db.UserAddress.Where(s => s.IdUser == idUser).OrderByDescending(s => s.Id).FirstOrDefault();
@@ -97,11 +98,41 @@ namespace Framework
                             //DateTime newDateTime = fecha.Add(TimeSpan.Parse(deliverydate.Time));
                             addOrder.EstimatedDate = Convert.ToDateTime(a);
                         }
+                        //Obtener los servicios si es que contrato
+                        services1 = (from wtps in db.WorkshopServices
+                                     join ws in db.Workshop on wtps.IdWorkshop equals ws.IdWorkshop
+                                     join tps in db.TypesServices on wtps.IdService equals tps.IdService
+                                     join dps in db.DeliveryServices on wtps.Id equals dps.idService
+                                     join dela in db.DeliveryType on dps.idDelivery equals dela.IdDelivery
+                                     where dela.IdDelivery == idDelivery.IdDelivery
+                                     select new ResultTypesServices
+                                     {
+                                         IdService = (int)wtps.Id,
+                                         Name = tps.Name,
+                                         WorkshopImage = ws.WorkImage,
+                                         WorkshopName = ws.Name,
+                                         Price = Math.Truncate((double)wtps.Price),
+                                         TaxIva = Math.Truncate((double)wtps.Price * ivapor2)
+                                     }
+                            ).ToList();
+                        //
+                        //Obtener el total de los servicios con el iva agregado
+                        double? totalserviceswithtax = 0;
+                        if (services1.Count > 0 || services1 != null)
+                        {
+                            double? totalservices = services1.Select(p => (double?)p.Price).Sum();
+                            double? totalservicestax = services1.Select(p => p.TaxIva).Sum();
+                            totalservices = (int)Math.Floor((decimal)totalservices);
+                            totalservicestax = (int)Math.Floor((decimal)totalservicestax);
+                            totalserviceswithtax = (int)Math.Floor((decimal)totalservices + (decimal)totalservicestax);
+                        }
+                        //
+                        //Agregar la compra a la tabla de orden
                         addOrder.idUser = idUser;
                         addOrder.Payment = payment.id;
                         addOrder.DeliveryAddress = idDelivery.IdDelivery;
                         addOrder.PromoCode = prom;
-                        addOrder.Total = totaliva;
+                        addOrder.Total = Convert.ToDecimal((double)totaliva + totalserviceswithtax);
                         addOrder.DateS = DateTime.Now;
                         addOrder.Delivered = false;
                         db.Orders.Add(addOrder);
@@ -338,13 +369,17 @@ namespace Framework
         {
             var ivapor = System.Configuration.ConfigurationManager.AppSettings["ivapre"];
             int ivpre = Convert.ToInt32(ivapor);
+            var tax = 0;
             double ivapor2 = Convert.ToDouble((double)ivpre / 100);
             List<ResultProductsConfirmation> AddressWorkshop = (dynamic)null;
             List<ResultShoppingCartProduct> products = null;
+            List<ResultTypesServices> services1 = null;
             try
             {
                 using (var db = new dekkOnlineEntities())
                 {
+
+                    //obtener productos del carrito
                     products = (from pro in db.products
                                 join cart in db.ShoppingCart on pro.proId equals cart.proId
                                 where cart.IdUser.Equals(idUser) && cart.Status == false
@@ -357,9 +392,15 @@ namespace Framework
                                     Description = pro.proDescription,
                                     quantity = cart.quantity,
                                     totalpriceprod = Math.Truncate((double)cart.Price),
+                                    UnitPrice = Math.Truncate((double)pro.proSuggestedPriceDP),
                                     cartid = cart.Id.ToString(),
-                                    taxproduct = (int)Math.Truncate((double)cart.Price * ivapor2)
+                                    taxproduct = (int)Math.Truncate((double)cart.Price * ivapor2),
+                                    proDimensionprofile = pro.proDimensionProfileDP.ToString(),
+                                    proDimensionWidth = pro.proDimensionWidthDP.ToString(),
+                                    proDimensionDiameter = pro.proDimensionDiameterDP.ToString()
                                 }).ToList();
+                    //
+                    //validar si hay codigo de promocion activo
                     var promocodeused2 = (from promo in db.PromotionCode
                                           join promou in db.PromoCodeUsed on promo.IdCode equals promou.PromoCode
                                           where (promo.DateEnd < DateTime.Now && promou.Used == false && promou.idUser == idUser)
@@ -371,6 +412,14 @@ namespace Framework
                         db.SaveChanges();
                     }
                     var promocodeused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
+                    var promocodeperc = (dynamic)null;
+                    if (promocodeused != null)
+                    {
+                        promocodeperc = db.PromotionCode.Where(s => s.IdCode == promocodeused.PromoCode).FirstOrDefault();
+                    }
+                    
+                    //
+                    //obtener los datos del cliente
                     var userAddress = (from us in db.AspNetUsers
                                        join us2 in db.UserAddress on us.Id equals us2.IdUser
                                        where us.Id == idUser
@@ -383,25 +432,67 @@ namespace Framework
                                            Email = us.Email,
                                            Mobile = us2.Phone,
                                        }).FirstOrDefault();
+                    //
+                    //Obtener el total de los produtos
                     double? Total2 = products.Select(p => p.totalpriceprod).Sum();
                     Total2 = (int)Math.Floor((decimal)Total2);
+                    //
+                    //Obtener los datos de la entrega del producto y datos del taller
                     var Delivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
                     var workshop = db.Workshop.Where(s => s.IdWorkshop == Delivery.IdWorkshop).FirstOrDefault();
+                    //
+                    //Obtener los servicios si es que contrato
+                    services1 = (from wtps in db.WorkshopServices
+                                join ws in db.Workshop on wtps.IdWorkshop equals ws.IdWorkshop
+                                join tps in db.TypesServices on wtps.IdService equals tps.IdService
+                                join dps in db.DeliveryServices on wtps.Id equals dps.idService
+                                join dela in db.DeliveryType on dps.idDelivery equals dela.IdDelivery
+                                where dela.IdDelivery == Delivery.IdDelivery
+                                select new ResultTypesServices
+                                {
+                                    IdService = (int)wtps.Id,
+                                    Name = tps.Name,
+                                    WorkshopImage = ws.WorkImage,
+                                    WorkshopName = ws.Name,
+                                    Price = Math.Truncate((double)wtps.Price),
+                                    TaxIva = Math.Truncate((double)wtps.Price * ivapor2)
+                                }
+                        ).ToList();
+                    //
+                    //Obtener el total de los servicios con el iva agregado
+                    double? totalserviceswithtax = 0;
+                    double? totalservices = 0;
+                    double? totalservicestax = 0;
+                    if (services1.Count > 0 || services1 != null)
+                    {
+                        totalservices = services1.Select(p => (double?)p.Price).Sum();
+                        totalservicestax = services1.Select(p => p.TaxIva).Sum();
+                        totalservices = (int)Math.Floor((decimal)totalservices);
+                        totalservicestax = (int)Math.Floor((decimal)totalservicestax);
+                        totalserviceswithtax = (int)Math.Floor((decimal)totalservices + (decimal)totalservicestax);
+                        tax = (int)totalservicestax;
+                    }
+                    //
+                    //Si no hay codigo de promocion aplicado
                     if (promocodeused == null)
                     {
+                        //Si se selecciono un taller para la entrega
                         if (Delivery.DeliveryType1 == false)
                         {
                             var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                            //Si el cliente selecciono una fecha y hora
                             if (Delivery.IdAppointments == 0)
                             {
                                 DateTime dat = (DateTime)Delivery.Date;
                                 var totalnodec = Total2;
                                 var iva = totalnodec * ivapor2;//TAX
+                                tax = tax + (int)iva;
                                 totalnodec = totalnodec + iva;
                                 totalnodec = (int)Math.Floor((decimal)totalnodec);
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
+                                   services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -416,19 +507,24 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalnodec}
+                                   Total = (int)totalnodec + (int)totalserviceswithtax,
+                                   SubTotal = (int)Total2 + (int)totalservices,
+                                   taxproduct = tax}
                                 };
                             }
+                            //Si el cliente selecciono una fecha y hora predeterminada por el taller
                             else
                             {
                                 DateTime dat = (DateTime)Delivery.Date;
                                 var totalnodec = Total2;
                                 var iva = totalnodec * ivapor2;//TAX
+                                tax = tax + (int)iva;
                                 totalnodec = totalnodec + iva;
                                 totalnodec = (int)Math.Floor((decimal)totalnodec);
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
+                                   services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -443,21 +539,26 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalnodec}
+                                   Total = (int)totalnodec + (int)totalserviceswithtax,
+                                   SubTotal = (int)Total2 + (int)totalservices,
+                                   taxproduct = tax}
                                 };
                             }
 
                         }
+                        //Si selecciono un lugar en el mapa para la entrega
                         else
                         {
                             DateTime dat = (DateTime)Delivery.Date;
                             var totalnodec = Total2;
                             var iva = totalnodec * ivapor2;//TAX
+                            tax = tax + (int)iva;
                             totalnodec = totalnodec + iva;
                             totalnodec = (int)Math.Floor((decimal)totalnodec);
                             AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
                            new ResultProductsConfirmation{ cart = products,
+                            services = services1,
                             ZipCode = userAddress.ZipCode.ToString(),
                             FirstName = userAddress.FirstName,
                             LastName = userAddress.LastName,
@@ -472,24 +573,36 @@ namespace Framework
                             Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
-                           Total = (int)totalnodec }
+                           Total = (int)totalnodec,
+                            SubTotal = (int)Total2 + (int)totalservices,
+                            taxproduct = tax}
                         };
                         }
                     }////promocode null
+                    //Si hay codigo de promocion aplicado
                     else
                     {
                         var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                        //Si wl cliente selecciono un taller para la entrega
                         if (Delivery.DeliveryType1 == false)
                         {
+                            //Si el cliente registro una fecha y hora
                             if (Delivery.IdAppointments == 0)
                             {
                                 var totalpromo = promocodeused.TotalPriceFinal;
                                 totalpromo = (int)Math.Floor((decimal)totalpromo);
 
+                                var promocodedisc = promocodeperc.PercentCode;
+                                promocodedisc = promocodedisc / 100;
+                                var nototalpromo = Total2;
+                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
+                                    services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -504,17 +617,28 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalpromo}
+                                   Total = (int)totalpromo + (int)totalserviceswithtax,
+                                   SubTotal = (int)nototalpromo + (int)totalservices,
+                                   taxproduct = tax}
                                 };
                             }
+                            //Si el cliente selecciono una hora y fecha configurada del taller
                             else
                             {
                                 var totalpromo = promocodeused.TotalPriceFinal;
                                 totalpromo = (int)Math.Floor((decimal)totalpromo);
+
+                                var promocodedisc = promocodeperc.PercentCode;
+                                promocodedisc = promocodedisc / 100;
+                                var nototalpromo = Total2;
+                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
+                                    services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -529,18 +653,29 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalpromo}
+                                   Total = (int)totalpromo + (int)totalserviceswithtax,
+                                   SubTotal = (int)nototalpromo + (int)totalservices,
+                                   taxproduct = tax}
                                 };
                             }
                         }
+                        //Si el cliente selecciono un lugar en el mapa y no un taller
                         else
                         {
                             DateTime dat = (DateTime)Delivery.Date;
                             var totalpromo = promocodeused.TotalPriceFinal;
                             totalpromo = (int)Math.Floor((decimal)totalpromo);
+
+                            var promocodedisc = promocodeperc.PercentCode;
+                            promocodedisc = promocodedisc / 100;
+                            var nototalpromo = Total2;
+                            nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                            nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
                             AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
                            new ResultProductsConfirmation{ cart = products,
+                            services = services1,
                             ZipCode = userAddress.ZipCode.ToString(),
                             FirstName = userAddress.FirstName,
                             LastName = userAddress.LastName,
@@ -555,7 +690,9 @@ namespace Framework
                             Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
-                           Total = (int)totalpromo }
+                           Total = (int)totalpromo,
+                            SubTotal = (int)nototalpromo,
+                            taxproduct = tax}
                         };
                         }
                     }
@@ -572,8 +709,13 @@ namespace Framework
 
         public List<ResultPaidProducts> ObtainProductsPaid(string idUser)
         {
+            var tax = 0;
+            var ivapor = System.Configuration.ConfigurationManager.AppSettings["ivapre"];
+            int ivpre = Convert.ToInt32(ivapor);
+            double ivapor2 = Convert.ToDouble((double)ivpre / 100);
             List<ResultPaidProducts> AddressWorkshop = (dynamic)null;
             List<ResultShoppingCartProduct> products = null;
+            List<ResultTypesServices> services1 = null;
             try
             {
                 using (var db = new dekkOnlineEntities())
@@ -592,7 +734,12 @@ namespace Framework
                                     Description = pro.proDescription,
                                     quantity = cart.quantity,
                                     totalpriceprod = Math.Truncate((double)cart.price),
-                                    cartid = cart.id.ToString()
+                                    taxproduct = (int)Math.Truncate((double)cart.price * ivapor2),
+                                    UnitPrice = Math.Truncate((double)pro.proSuggestedPriceDP),
+                                    cartid = cart.id.ToString(),
+                                    proDimensionprofile = pro.proDimensionProfileDP.ToString(),
+                                    proDimensionWidth = pro.proDimensionWidthDP.ToString(),
+                                    proDimensionDiameter = pro.proDimensionDiameterDP.ToString()
                                 }).ToList();
                     var promocodeused = (from prom in db.PromoCodeUsed
                                          join or in db.Orders on prom.PromoCode equals or.PromoCode
@@ -602,6 +749,11 @@ namespace Framework
                                              prom.PromoCode,
                                              prom.TotalPriceFinal
                                          }).FirstOrDefault();
+                    var promocodeperc = (dynamic)null;
+                    if (promocodeused != null)
+                    {
+                        promocodeperc = db.PromotionCode.Where(s => s.IdCode == promocodeused.PromoCode).FirstOrDefault();
+                    }
                     var userAddress = (from us in db.AspNetUsers
                                        join us2 in db.UserAddress on us.Id equals us2.IdUser
                                        where us.Id == idUser
@@ -618,17 +770,59 @@ namespace Framework
                     var Delivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
                     var workshop = db.Workshop.Where(s => s.IdWorkshop == Delivery.IdWorkshop).FirstOrDefault();
                     var payment = db.Payment.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).FirstOrDefault();
+                    //Obtener los servicios si es que contrato
+                    services1 = (from wtps in db.WorkshopServices
+                                 join ws in db.Workshop on wtps.IdWorkshop equals ws.IdWorkshop
+                                 join tps in db.TypesServices on wtps.IdService equals tps.IdService
+                                 join dps in db.DeliveryServices on wtps.Id equals dps.idService
+                                 join dela in db.DeliveryType on dps.idDelivery equals dela.IdDelivery
+                                 where dela.IdDelivery == Delivery.IdDelivery
+                                 select new ResultTypesServices
+                                 {
+                                     IdService = (int)wtps.Id,
+                                     Name = tps.Name,
+                                     WorkshopImage = ws.WorkImage,
+                                     WorkshopName = ws.Name,
+                                     Price = Math.Truncate((double)wtps.Price),
+                                     TaxIva = Math.Truncate((double)wtps.Price * ivapor2)
+                                 }
+                        ).ToList();
+                    //
+                    //Obtener el total de los servicios con el iva agregado
+                    double? totalserviceswithtax = 0;
+                    double?  totalservices = 0;
+                    double? totalservicestax = 0;
+                    if (services1.Count > 0 || services1 != null)
+                    {
+                        totalservices = services1.Select(p => (double?)p.Price).Sum();
+                        totalservicestax = services1.Select(p => p.TaxIva).Sum();
+                        totalservices = (int)Math.Floor((decimal)totalservices);
+                        totalservicestax = (int)Math.Floor((decimal)totalservicestax);
+                        totalserviceswithtax = (int)Math.Floor((decimal)totalservices + (decimal)totalservicestax);
+                        tax = (int)totalservicestax;
+                    }
+                    //
+                    //Si el cliente no valido ningun codigo de promocion
                     if (promocodeused == null)
                     {
+                        //si el cliente selecciono un taller en su entrega
                         if (Delivery.DeliveryType1 == false)
                         {
                             var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                            //Si el cliente ingreso una direccion y horario
                             if (Delivery.IdAppointments == 0)
                             {
+                                var totalnodec = Total2;
+                                var iva = totalnodec * ivapor2;//TAX
+                                tax = tax + (int)iva;
+                                totalnodec = totalnodec + iva;
+                                totalnodec = (int)Math.Floor((decimal)totalnodec);
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
                                    new ResultPaidProducts{ cart = products,
+                                   services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -643,20 +837,31 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (decimal)Total2,
+                                   Total = (decimal)totalnodec + (decimal)totalserviceswithtax,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
-                                   Order = order}
+                                   Order = order,
+                                   SubTotal = (int)Total2 + (int)totalservices,
+                                   taxproduct = tax
+                                   }
 
                                 };
                             }
+                            //Si el cliente selecciono una direccion y horario del taller
                             else
                             {
+                                var totalnodec = Total2;
+                                var iva = totalnodec * ivapor2;//TAX
+                                tax = tax + (int)iva;
+                                totalnodec = totalnodec + iva;
+                                totalnodec = (int)Math.Floor((decimal)totalnodec);
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
                                    new ResultPaidProducts{ cart = products,
+                                   services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -671,21 +876,30 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (decimal)Total2,
+                                   Total = (decimal)totalnodec + (decimal)totalserviceswithtax,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
-                                   Order = order}
+                                   Order = order,
+                                   SubTotal = (int)Total2 + (int)totalservices,
+                                   taxproduct = tax}
                                 };
                             }
 
                         }
+                        //Si selecciono un mapa
                         else
                         {
+                            var totalnodec = Total2;
+                            var iva = totalnodec * ivapor2;//TAX
+                            tax = tax + (int)iva;
+                            totalnodec = totalnodec + iva;
+                            totalnodec = (int)Math.Floor((decimal)totalnodec);
                             DateTime dat = (DateTime)Delivery.Date;
                             AddressWorkshop = new List<ResultPaidProducts>()
                         {
                            new ResultPaidProducts{ cart = products,
+                           services = services1,
                             ZipCode = userAddress.ZipCode.ToString(),
                             FirstName = userAddress.FirstName,
                             LastName = userAddress.LastName,
@@ -700,25 +914,38 @@ namespace Framework
                             Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
-                           Total = (decimal)Total2,
+                           Total = (decimal)totalnodec ,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
-                                   Order = order}
+                                   Order = order,
+                                   SubTotal = (int)Total2,
+                                   taxproduct = tax}
                         };
                         }
                     }////promocode null
+                    //
+                    //Si el cliente utilizo un codigo de promocion
                     else
                     {
                         var appointment = db.WorkshopAppointment.Where(s => s.Id == Delivery.IdAppointments).FirstOrDefault();
+                        //Si el cliente selecciono un taller
                         if (Delivery.DeliveryType1 == false)
                         {
+                            //Si el cliente ingreso una fecha y horario de entrega
                             if (Delivery.IdAppointments == 0)
                             {
+                                var promocodedisc = promocodeperc.PercentCode;
+                                promocodedisc = promocodedisc / 100;
+                                var nototalpromo = Total2;
+                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
                                    new ResultPaidProducts{ cart = products,
+                                   services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -733,19 +960,29 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = promocodeused.TotalPriceFinal,
+                                   Total = promocodeused.TotalPriceFinal + (decimal)totalserviceswithtax, 
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
-                                   Order = order}
+                                   Order = order,
+                                     SubTotal = (int)nototalpromo + (int)totalservices,
+                                   taxproduct = tax}
                                 };
                             }
+                            //Si el cliente selecciono un horario y fecha de entrega del taller
                             else
                             {
+                                var promocodedisc = promocodeperc.PercentCode;
+                                promocodedisc = promocodedisc / 100;
+                                var nototalpromo = Total2;
+                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
                                    new ResultPaidProducts{ cart = products,
+                                   services = services1,
                                     ZipCode = userAddress.ZipCode.ToString(),
                                     FirstName = userAddress.FirstName,
                                     LastName = userAddress.LastName,
@@ -760,20 +997,30 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = promocodeused.TotalPriceFinal,
+                                   Total = promocodeused.TotalPriceFinal + (decimal)totalserviceswithtax,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
-                                   Order = order}
+                                   Order = order,
+                                     SubTotal = (int)nototalpromo + (int)totalservices,
+                                   taxproduct = tax}
                                 };
                             }
                         }
+                        //Si el cliente ingreso una direccion en el mapa
                         else
                         {
+                            var promocodedisc = promocodeperc.PercentCode;
+                            promocodedisc = promocodedisc / 100;
+                            var nototalpromo = Total2;
+                            nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                            nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
                             DateTime dat = (DateTime)Delivery.Date;
                             AddressWorkshop = new List<ResultPaidProducts>()
                         {
                            new ResultPaidProducts{ cart = products,
+                           services = services1,
                             ZipCode = userAddress.ZipCode.ToString(),
                             FirstName = userAddress.FirstName,
                             LastName = userAddress.LastName,
@@ -792,7 +1039,9 @@ namespace Framework
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
-                                   Order = order}
+                                   Order = order,
+                                  SubTotal = (int)nototalpromo,
+                                   taxproduct = tax}
                         };
                         }
                     }
@@ -810,13 +1059,13 @@ namespace Framework
 
         }
 
+
         public List<ResultUserPromo> loadPromos(string idUser)
         {
             try
             {
                 List<Promos> datosTabla = null;
                 List<Promos> promos = new List<Promos>();
-                List<Promos> promosActivas = null;
                 List<ResultDataUser> userdata = null;
                 using (var db = new dekkOnlineEntities())
                 {
@@ -826,9 +1075,8 @@ namespace Framework
                                        {
                                            PromoCode = pro.IdCode
                                        }).FirstOrDefault();
-                    if (codigoPromo != null)
-                    {
-                        promosActivas = (from pro in db.PromoCodeUsed
+
+                    var promosActivas = (from pro in db.PromoCodeUsed
                                          where (pro.PromoCode == codigoPromo.PromoCode)
                                          select new Promos
                                          {
@@ -836,53 +1084,8 @@ namespace Framework
                                              Used = pro.Used,
                                              Date = pro.DateUsed.ToString()
                                          }).ToList();
-                    }
 
-                    if (promosActivas != null)
-                    {
-                        foreach (var item in promosActivas)
-                        {
-
-                            var userdata2 = (from us in db.AspNetUsers
-                                             join us2 in db.UserAddress on us.Id equals us2.IdUser
-                                             where (us.Id == item.idUser)
-                                             select new
-                                             {
-                                                 FirstName = us2.FirstName,
-                                                 LastName = us2.LastName,
-                                                 Email = us.Email
-                                             }).FirstOrDefault();
-                            if (userdata2 != null)
-                            {
-                                datosTabla = new List<Promos>
-                            {
-                                new Promos
-                                {
-                                    UserName = userdata2.FirstName + " " + userdata2.LastName,
-                                    Email = userdata2.Email,
-                                    Date = item.Date,
-                                    Used = item.Used
-                                }
-                            };
-                                promos.AddRange(datosTabla);
-                            }
-                            else
-                            {
-                                datosTabla = new List<Promos>
-                            {
-                                new Promos
-                                {
-                                    UserName = null,
-                                    Email = null,
-                                    Date = item.Date,
-                                    Used = item.Used
-                                }
-                            };
-                                promos.AddRange(datosTabla);
-                            }
-                        }
-                    }
-                    else
+                    foreach (var item in promosActivas)
                     {
                         userdata = (from us in db.AspNetUsers
                                     join us2 in db.UserAddress on us.Id equals us2.IdUser
@@ -893,9 +1096,44 @@ namespace Framework
                                         LastName = us2.LastName,
                                         Email = us.Email
                                     }).ToList();
-                        promos = null;
+                        var userdata2 = (from us in db.AspNetUsers
+                                         join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                         where (us.Id == item.idUser)
+                                         select new
+                                         {
+                                             FirstName = us2.FirstName,
+                                             LastName = us2.LastName,
+                                             Email = us.Email
+                                         }).FirstOrDefault();
+                        if (userdata2 != null)
+                        {
+                            datosTabla = new List<Promos>
+                            {
+                                new Promos
+                                {
+                                    UserName = userdata2.FirstName,
+                                    Email = userdata2.Email,
+                                    Date = item.Date,
+                                    Used = item.Used
+                                }
+                            };
+                            promos.AddRange(datosTabla);
+                        }
+                        else
+                        {
+                            datosTabla = new List<Promos>
+                            {
+                                new Promos
+                                {
+                                    UserName = null,
+                                    Email = null,
+                                    Date = item.Date,
+                                    Used = item.Used
+                                }
+                            };
+                            promos.AddRange(datosTabla);
+                        }
                     }
-
                     List<ResultUserPromo> promosResult = new List<ResultUserPromo>()
                     {
                         new ResultUserPromo{
@@ -913,6 +1151,7 @@ namespace Framework
             }
 
         }
+
 
     }
 }

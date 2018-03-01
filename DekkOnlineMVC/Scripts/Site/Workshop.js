@@ -53,6 +53,7 @@ $(document).ready(function () {
             return false;
         }
         else {
+            zip = 1;
             UpdateworkShopData(zip, name, address, mobile);
         }
 
@@ -90,7 +91,8 @@ $(document).ready(function () {
     filltableservice();
     filltablePending();
     filltablePast();
-    fillzipcodes();
+    fillzipcodesinWorkshop();
+    fillzipcodesnNoWorkshop();
     $("#tblSchedule").on("click", ".editsche", function () {
         var data_row = oTable1.row($(this).closest('tr')).data();
         var dayvalue = data_row["Dayint"];
@@ -269,11 +271,54 @@ return false;
         $("#txtemailpast").text("");
     });
 
+
+        $('#btnRight').click(function (e) {
+            var selectedOpts = $('#lstBox1 option:selected');
+            if (selectedOpts.length == 0) {
+                alert("Nothing to move.");
+                e.preventDefault();
+            }
+            $('#lstBox2').append($(selectedOpts).clone());
+            $(selectedOpts).remove();
+            e.preventDefault();
+        });
+        $('#btnAllRight').click(function (e) {
+            var selectedOpts = $('#lstBox1 option');
+            if (selectedOpts.length == 0) {
+                alert("Nothing to move.");
+                e.preventDefault();
+            }
+            $('#lstBox2').append($(selectedOpts).clone());
+            $(selectedOpts).remove();
+            e.preventDefault();
+        });
+        $('#btnLeft').click(function (e) {
+            var selectedOpts = $('#lstBox2 option:selected');
+            if (selectedOpts.length == 0) {
+                alert("Nothing to move.");
+                e.preventDefault();
+            }
+            $('#lstBox1').append($(selectedOpts).clone());
+            $(selectedOpts).remove();
+            e.preventDefault();
+        });
+        $('#btnAllLeft').click(function (e) {
+            var selectedOpts = $('#lstBox2 option');
+            if (selectedOpts.length == 0) {
+                alert("Nothing to move.");
+                e.preventDefault();
+            }
+            $('#lstBox1').append($(selectedOpts).clone());
+            $(selectedOpts).remove();
+            e.preventDefault();
+        });
+
 });
 
 function UpdateworkShopData(zip, name1, address1, mobile1) {
     var data = {
-        zipcore: zip,
+        //zipcore: zip,
+        zipcore: 1111,
         name: name1,
         address: address1,
         mobile: mobile1,
@@ -304,10 +349,10 @@ function UpdateworkShopData(zip, name1, address1, mobile1) {
 function validate() {
     var error = true;
     if (error == true) {
-        if ($("#ZipCode").val().length > 4 || $("#ZipCode").val().length < 4) {
-            $(".req1").removeClass("hidden");
-            error = false;
-        }
+        //if ($("#ZipCode").val().length > 4 || $("#ZipCode").val().length < 4) {
+        //    $(".req1").removeClass("hidden");
+        //    error = false;
+        //}
         if ($("#Firstname").val().length > 50 || $("#Firstname").val().length == 0) {
             $(".req2").removeClass("hidden");
             error = false;
@@ -1044,15 +1089,16 @@ function validateserviceedit() {
 
 }
 
-function fillzipcodes() {
+function fillzipcodesinWorkshop() {
     var data = {
-        idwo: idWork
+        idwo: idWork,
+        isWorkshop:1
     };
     conectarAsy("../Workshop/ZipCodes", data, function (result) {
         if (result != null && result.Success != false) {
-            var $dropdown = $("#multiSelectzip");
+            var $dropdown = $("#lstBox1");
             $.each(result, function () {
-                $dropdown.append($("<option />").val(this.kommuneID).text(this.kommuneID));
+                $dropdown.append($("<option />").val(this.kommuneID).text(this.kommuneID + " " + this.KommuneNavn + " " + this.fylker));
             });
             var zipactual = $("#zip").text();
             $("#multiSelectzip").val(zipactual).change();
@@ -1064,4 +1110,52 @@ function fillzipcodes() {
             alert(result.msg);
         }
     });
+};
+function fillzipcodesnNoWorkshop() {
+    var data = {
+        idwo: idWork,
+        isWorkshop:0
+    };
+    conectarAsy("../Workshop/ZipCodes", data, function (result) {
+        if (result != null && result.Success != false) {
+            var $dropdown = $("#lstBox2");
+            $.each(result, function () {
+                $dropdown.append($("<option />").val(this.kommuneID).text(this.kommuneID + " " + this.KommuneNavn + " " + this.fylker));
+            });
+            var zipactual = $("#zip").text();
+            $("#multiSelectzip").val(zipactual).change();
+        }
+        else if (result.Success == false) {
+            return false;
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+};
+
+
+function moverightzipcode(idwo, zipcode) {
+    var data = {
+        idservice: idserv,
+        Name: name1
+    };
+    conectarAsy("../Workshop/ServiceWorkshopUpdate", data, function (result) {
+        if (result != null && result.Success != false) {
+            filltableservice();
+            $("#txt_nameedit").val("");
+            $("#txt_descedit").val("");
+            $("#modalEditServ").modal('hide');
+        }
+        else if (result.Success == false) {
+            filltableservice();
+            $("#txt_nameedit").val("");
+            $("#txt_descedit").val("");
+            $("#modalEditServ").modal('hide');
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+
 };

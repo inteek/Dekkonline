@@ -27,8 +27,17 @@ namespace DekkOnlineMVC
         }
         protected void Application_Error(object sender, EventArgs e)
         {
-            Exception exception = System.Web.HttpContext.Current.Server.GetLastError();
-            //TODO: Handle Exception
+            //Exception exception = System.Web.HttpContext.Current.Server.GetLastError();
+            ////TODO: Handle Exception
+            Exception exception = Server.GetLastError();
+            Response.Clear();
+
+            HttpException httpException = exception as HttpException;
+
+            int error = httpException != null ? httpException.GetHttpCode() : 0;
+
+            Server.ClearError();
+            Response.Redirect(String.Format("~/Errores/?error={0}", error, exception.Message));
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Framework.Libraies
     {
         public int kommuneID { get; set; }
         public string KommuneNavn { get; set; }
+        public string fylker { get; set; }
     }
 }

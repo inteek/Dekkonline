@@ -154,7 +154,6 @@ namespace DekkOnlineMVC.Controllers
                         img.Resize(130, 130);
                     img.Save(_comPath);
                     // end resize
-                    //Falta cortar la url de _compath para insertar la url en la base
                     var userupdate = us.UpdateUserImage(_comPath, id);
                     if (userupdate != null || userupdate.Length > 1)
                     {
@@ -286,6 +285,7 @@ namespace DekkOnlineMVC.Controllers
             }
             return PartialView(lista);
         }
+
         [HttpPost]
         public JsonResult ValidateEmail(string email)
         {
@@ -386,7 +386,6 @@ namespace DekkOnlineMVC.Controllers
             return Json(new { error, resultado });
 
         }
-
         [HttpPost]
         public JsonResult emailWorkshop(int idWorkshop, string mensaje)
         {
@@ -410,7 +409,28 @@ namespace DekkOnlineMVC.Controllers
                 throw;
             }
         }
-
+        [HttpPost]
+        public JsonResult emailPromo(string correos, string mensaje)
+        {
+            Users users = new Users();
+            string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+            try
+            {
+                bool email = users.emailPromo(idUser, correos, mensaje);
+                if (email == true)
+                {
+                    return Json(new { error = false });
+                }
+                else
+                {
+                    return Json(new { error = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
     }
 }

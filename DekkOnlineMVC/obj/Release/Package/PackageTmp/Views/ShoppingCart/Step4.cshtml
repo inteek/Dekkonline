@@ -7,13 +7,42 @@
 }
 
 @Styles.Render("~/Styles/Dimension.css?v=5")
-@Styles.Render("~/Styles/Shoppingcart.css?v=5")
+@Styles.Render("~/Styles/Shoppingcart.css?v=6")
 
 <div class="content" style="font-family:Arial;margin-bottom:50px;">
     <div class="row">
         <div class="col-lg-12">
-            <img src="~/Content/step4.JPG" class="imgRespons1" />
-            <img src="~/Content/step4movil.PNG" class="img-responsive imgRespons2" />
+
+            <div class="row marginRowPasos responsePasos">
+                <div class="col-lg-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 linea1Step4"><img src="~/Content/imgs/linea-04prueba.png" class="medidaLinea1Index" /></div>
+                <div class="col-lg-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 linea2Step4"><img src="~/Content/imgs/linea-04prueba.png" class="medidaLinea1Index" /></div>
+                <div class="col-lg-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 linea3Step4"><img src="~/Content/imgs/linea-04prueba.png" class="medidaLinea1Index" /></div>
+                <div class="col-lg-1 carritoIndex"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+            </div>
+
+            <div class="row responsePasos">
+                <div class="col-lg-1 col-sm-1 col-xs-1 texto1Step4"><h5 style="color:#1a64a1">STEP ONE</h5></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea1Index"></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 texto2Step4"><h5 class="" style="color:#1a64a1">STEP TWO</h5></div>
+                <div class="col-lg-1 col-sm-2 col-xs-2 linea2Index"></div>
+                <div class="col-lg-2 col-sm-1 col-xs-1 texto3Step4"><h5 class="" style="color:#1a64a1">STEP THREE</h5></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea3Index"></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 texto4Step4"><h5 class="" style="color:#1a64a1">STEP FOUR</h5><h6 style="margin-top:-5px; color:black;">Confirmation of payment</h6></div>
+            </div>
+
+            <div class="row marginRowPasos3 responsePasosMovil">
+                <div class="col-lg-1 col-sm-1 col-xs-1 bola1Step3"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea1Step3"><img src="~/Content/imgs/linea-04movil.png" class="medidaLinea1Step3" /></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 bola1Step3"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea2Step3"><img src="~/Content/imgs/linea-04movil.png" class="medidaLinea1Step3" /></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 bola1Step3"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea3Step4"><img src="~/Content/imgs/linea-04movil.png" class="medidaLinea3Step3" /></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 carritoStep4"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+            </div>
+
         </div>
     </div>
     <div class="row">
@@ -24,27 +53,190 @@
     <div class="row rowLeft1">
         <div class="col-lg-12">
             <h4 class="textGris"> You will recieve an e-mail with a summary of the information you provided. Or you can print now.</h4>
-            <h4 class="labelmargin textGris"> your order confirmation number: <span class="textAm">@Model.Order</span></h4>
+            <h4 class="labelmargin textGris"> Your order confirmation number: <span class="textAm">@Model.Order</span></h4>
             <h4 class="labelmargin textGris"> You can also revise your purchase and appointment status anytime in the my page section in <a><span class="textAm">dekkonline.no</span></a></h4>
         </div>
     </div>
-    @foreach (var item in Model.cart)
-    {
-        <div class="row rowLeft2">
+    @*@foreach (var item in Model.cart)
+        {
+            <div class="row rowLeft2">
 
-            <div class="col-lg-6 col-xs-12">
-                <div class="col-lg-2 col-xs-4">
-                    <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width:100px;" />
+                <div class="col-lg-6 col-xs-12">
+                    <div class="col-lg-2 col-xs-4">
+                        <img src="http://admin.dekkonline.sonetworks.no/@item.Image" style="width:100px;" />
+                    </div>
+                    <div class="col-lg-8 col-xs-6" style="margin-left:15px;">
+                        <h3 class="sizeDesc"><strong>@item.Name</strong></h3>
+                        <h3><strong>@item.totalpriceprod kr</strong></h3>
+                        <h3><strong>Size: @item.proDimensionWidth / @item.proDimensionprofile  @item.proDimensionDiameter</strong></h3>
+                    </div>
                 </div>
-                <div class="col-lg-8 col-xs-6" style="margin-left:15px;">
-                    <h3 class="sizeDesc"><strong>@item.Name</strong></h3>
-                    <h3><strong>@item.totalpriceprod kr</strong></h3>
-                </div>
+
+
             </div>
+        }
+        @foreach (var item in Model.services)
+        {
+            <div class="row rowLeft2">
+
+                <div class="col-lg-8 col-xs-12">
+                    <div class="col-lg-2 col-xs-4">
+                        <img src="@item.WorkshopImage" style="width:110px; height:105px;" />
+                    </div>
+                    <div class="col-lg-7 col-xs-6" style="margin-left:15px;">
+                        <h3 class="sizeDesc"><strong>@item.WorkshopName Service:</strong></h3>
+                    </div>
+                    <div class="col-lg-3 col-xs-2" style="margin-left:15px;">
+                        <h3 class="sizeDesc"><strong>@item.Name</strong></h3>
+                        <h3><strong>@item.Price kr</strong></h3>
+                    </div>
+                </div>
 
 
+            </div>
+        }*@
+    <div class="container">
+        <div class="row" style="border-bottom:1px solid #ddd">
+            <table id="cart" class="table table-hover table-condensed tabl1">
+                <thead>
+                    @if (Model.cart.Count > 0)
+                    {
+
+                        <tr>
+                            <th style="width:40%">Item</th>
+                            <th style="width:8%">QTY</th>
+                            <th style="width:10%">Unit Price</th>
+                            <th style="width:10%">Sub Total</th>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <th style="width:80%">Item</th>
+                        </tr>
+                    }
+                </thead>
+                <tbody>
+                    @if (Model.cart.Count > 0)
+                    {
+                        foreach (var item in Model.cart)
+                        {
+                            <tr class="@item.cartid">
+
+                                <td data-th="Item">
+                                    <div class="row">
+                                        <div class="col-sm-2 col-xs-3">
+                                            <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
+                                        </div>
+                                        <div class="col-sm-8 col-xs-5">
+                                            <h4 class="nomargin"><strong style="color:#e72e31">@item.Name</strong></h4>
+                                            <div class="deschide"><p>@item.Description.</p></div>
+                                            <div class="deschide"><p>Size: @item.proDimensionWidth / @item.proDimensionprofile  @item.proDimensionDiameter</p></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="QTY">
+                                    <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" disabled="disabled">
+                                </td>
+                                <td data-th="Unit Price"><strong><label id="@item.cartid">@item.UnitPrice</label> kr</strong></td>
+                                <td data-th="Sub Total"><strong><label id="@item.cartid">@item.totalpriceprod</label> kr</strong></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td data-th="Item">
+                                <div class="row">
+                                    <div class="col-sm-8 col-xs-8">
+                                        <br />
+                                        <div><p>Empty.</p></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if (Model.services.Count > 0)
+                    {
+                        foreach (var item in Model.services)
+                        {
+                            <tr>
+
+                                <td data-th="Item">
+                                    <div class="row">
+                                        <div class="col-sm-2 col-xs-3">
+                                            <img src="@item.WorkshopImage" alt="..." style="height:85px;width:85px;" class="img-responsive " />
+                                        </div>
+                                        <div class="col-sm-8 col-xs-5">
+                                            <h4 class="nomargin"><strong style="color:#176292">@item.WorkshopName Service:</strong></h4>
+                                            <div class="deschide"><p>@item.Name.</p></div>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td data-th="QTY">
+                                    <input type="number" class="form-control text-center qtyprodcart " min="1" value="1" size="3" autocomplete="off" disabled="disabled">
+                                </td>
+                                <td data-th="Unit Price">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12">
+                                            <strong>@item.Price kr</strong>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Sub Total">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-xs-12">
+                                            <strong>@item.Price kr</strong>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td data-th="Item">
+                                <div class="row">
+                                    <div class="col-sm-8 col-xs-8">
+                                        <br />
+                                        <div><p>No services extra.</p></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-    }
+        <div class="row"><br /></div>
+    </div>
+    <div class="row total">
+        <div class="col-lg-7 ipadtry">
+            <div class="form-group">
+                <strong style="font-size:larger;">
+                    PROMO CODE: @if (Model.Promo != null)
+                    {
+                        <strong style="color:#1a64a1">APPLIED</strong>
+                    }
+                    else
+                    {
+                        <strong style="color:#1a64a1">NO APPLIED</strong>
+                    }
+                </strong>
+            </div>
+            <div class="form-group">
+                <strong style="font-size:larger;">SUBTOTAL: @Model.SubTotal kr</strong>
+            </div>
+            <div class="form-group">
+                <strong style="font-size:larger;">TAX: @Model.taxproduct kr</strong>
+            </div>
+            <div class="form-group">
+                <strong style="font-size:larger;">TOTAL: @Model.Total kr</strong>
+            </div>
+        </div>
+    </div>
     <div class="row rowLeft3">
         <div class="col-lg-5" style="margin-top:15px;">
             @*<label class="personal"><strong>Personal Information</strong></label>*@

@@ -54,6 +54,20 @@ namespace Framework
                         db.SaveChanges();
                         Result = true;
                     }
+                    else if (result == null)
+                    {
+                        UserAddress us = new UserAddress();
+                        us.FirstName = firstName;
+                        us.LastName = lastName;
+                        us.Address = address;
+                        us.Phone = phone;
+                        us.ZipCode = zipCode;
+                        us.Latitude = latitude;
+                        us.Length = length;
+                        db.UserAddress.Add(us);
+                        db.SaveChanges();
+                        Result = true;
+                    }
                     else
                     {
                         Result = false;
@@ -759,6 +773,91 @@ namespace Framework
             }
 
 
+        }
+
+        public string CreateRandomPromoCode()
+        {
+            string _allowedChars = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
+            Byte[] randomBytes = new Byte[6];
+            char[] chars = new char[6];
+            int allowedCharCount = _allowedChars.Length;
+
+            for (int i = 0; i < 6; i++)
+            {
+                Random randomObj = new Random();
+                randomObj.NextBytes(randomBytes);
+                if (i < (6 - 1))
+                {
+                    chars[i] = _allowedChars[(int)randomBytes[i] % allowedCharCount];
+                }
+                else
+                {
+                    chars[i] = _allowedChars[(int)randomBytes[i] % allowedCharCount];
+                }
+            }
+
+            return new string(chars);
+        }
+
+        public bool SavePromoCode(string promo, string email)
+        {
+            bool result = false;
+            try
+            {
+                using (dekkOnlineEntities db = new dekkOnlineEntities())
+                {
+                    var useremail = db.AspNetUsers.Where(s => s.Email == email).FirstOrDefault();
+                    var promocodeuser = db.PromotionCode.Where(s => s.IdCode == promo).FirstOrDefault();
+                    if (promocodeuser == null)
+                    {
+                        DateTime date1 = DateTime.Now;
+                        DateTime date2 = date1.AddYears(50);
+                        PromotionCode promous = new PromotionCode();
+                        promous.IdCode = promo;
+                        promous.IdUser = useremail.Id;
+                        promous.PercentCode = 10;
+                        promous.DateStart = date1;
+                        promous.DateEnd = date2;
+                        promous.DescriptionCode = "PromoCode for Costumer";
+                        db.PromotionCode.Add(promous);
+                        db.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        public bool emailPromo(string idUser, string correos, string mensaje)
+        {
+            bool result = false;
+            var mail = new Mail();
+
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var emailUser = db.AspNetUsers.Where(s => s.Id == idUser).Select(s => s.Email).FirstOrDefault();
+                    mail.sendEmailPromo(emailUser, correos, mensaje);
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+
+            return result;
         }
 
     }

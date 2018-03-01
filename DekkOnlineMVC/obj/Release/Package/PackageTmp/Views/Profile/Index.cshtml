@@ -27,16 +27,16 @@
                         <div class="row dimension">
                             <div class="insidebox">
                                 <div class="col-lg-2  col-sm-2 col-xs-12 infoPerfilrespons">
-                                    <div class="form-group" style="margin-top:10px;">
-                                        @*@if (Model.Image == null)
-                                            {*@
+                                    <div class="form-group imagendivprofile" style="margin-top:10px;">
+                                        @if (Model.Image == null)
+                                            {
                                         <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
 
-                                        @*}
+                                        }
                                             else
                                             {
                                                 <img src="@Model.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
-                                            }*@
+                                            }
                                     </div>
                                     <div class="form-group">
                                         <h4 class="colorGris"><strong><label id="titlename">@Model.FirstName @Model.LastName</label></strong></h4>
@@ -52,24 +52,14 @@
                                         <h6 class="colorGris"></h6>
                                     </div>*@
                                     <div class="form-group">
-                                        @*<form action="" method="post" enctype="multipart/form-data">
-                                                <fieldset>
-                                                    <label for="Image">Change Image</label>
-                                                    <input type="file" name="Image" />
-                                                    <br />
-                                                    <input type="submit" value="Upload" />
-                                                </fieldset>
-                                            </form>*@
-                                        @*@using (Html.BeginForm("Create", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                            {
-                                            <div class="editor-field">
+                                         @*<form action="" method="post" enctype="multipart/form-data">
+                                            <fieldset>
                                                 <label for="Image">Change Image</label>
-                                                <input type="file" title="search image" file-model="profileimage" id="allfilepath" name="file" />
-                                                <button type="submit" class="btn btn-default btn-sm">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </button>
-                                            </div>
-                                            }*@
+                                                <input type="file" name="Image" id="UploadImg" />
+                                                <br />
+                                                <input type="button" class="btn btn-default btn-sm" value="Upload" id="upload" />
+                                            </fieldset>
+                                        </form>*@
                                     </div>
 
                                 </div>
@@ -150,7 +140,7 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Site/Profile.js?v=5")
+@Scripts.Render("~/Scripts/Site/Profile.js?v=8")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

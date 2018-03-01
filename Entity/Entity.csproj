@@ -164,6 +164,9 @@
     <Compile Include="WorkshopUser.cs">
       <DependentUpon>DekkOnline.tt</DependentUpon>
     </Compile>
+    <Compile Include="WorkshopZipCode.cs">
+      <DependentUpon>DekkOnline.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DekkOnline.edmx">

@@ -40,28 +40,12 @@
               settings.Name = "cmbCategory";
               settings.Width = Unit.Percentage(100);
               settings.ControlStyle.CssClass = "BoxGeneral";
-              //settings.SelectedIndex = 0;
-              //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
-              settings.Properties.CallbackPageSize = 15;
+                     //settings.SelectedIndex = 0;
+                     //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                     settings.Properties.CallbackPageSize = 15;
               settings.Properties.TextField = "catName";
               settings.Properties.ValueField = "catId";
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-
-
-              settings.PreRender = (sender, e) =>
-              {
-                  if (ViewBag.IdCategory != null)
-                  {
-                      MVCxComboBox cbo = sender as MVCxComboBox;
-                      var item = cbo.Properties.Items.FindByValue(ViewBag.IdCategory.ToString());
-                      if (item != null)
-                      {
-                          item.Selected = true;
-                          cbo.SelectedIndex = item.Index;
-                      }
-                  }
-              };
-
 
               settings.ClientEnabled = true;
               //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
@@ -84,28 +68,12 @@
               settings.Name = "cmbWidth";
               settings.Width = Unit.Percentage(100);
               settings.ControlStyle.CssClass = "BoxGeneral";
-              //settings.SelectedIndex = 0;
-              //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
-              settings.Properties.CallbackPageSize = 15;
+                         //settings.SelectedIndex = 0;
+                         //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                         settings.Properties.CallbackPageSize = 15;
               settings.Properties.TextField = "Size";
               settings.Properties.ValueField = "Id";
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-              
-
-              settings.PreRender = (sender, e) =>
-              {
-                  if (ViewBag.SizeWidth != null)
-                  {
-                      MVCxComboBox cbo = sender as MVCxComboBox;
-                      var item = cbo.Properties.Items.FindByValue(ViewBag.SizeWidth.ToString());
-                      if (item != null)
-                      {
-                          item.Selected = true;
-                          cbo.SelectedIndex = item.Index;
-                      }
-                  }
-              };
-
 
               settings.ClientEnabled = true;
               //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
@@ -128,27 +96,12 @@
               settings.Name = "cmbProfile";
               settings.Width = Unit.Percentage(100);
               settings.ControlStyle.CssClass = "BoxGeneral";
-              //settings.SelectedIndex = 0;
-              //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
-              settings.Properties.CallbackPageSize = 15;
+                         //settings.SelectedIndex = 0;
+                         //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                         settings.Properties.CallbackPageSize = 15;
               settings.Properties.TextField = "Size";
               settings.Properties.ValueField = "Id";
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-
-
-              settings.PreRender = (sender, e) =>
-              {
-                  if (ViewBag.Profile != null)
-                  {
-                      MVCxComboBox cbo = sender as MVCxComboBox;
-                      var item = cbo.Properties.Items.FindByValue(ViewBag.Profile.ToString());
-                      if (item != null)
-                      {
-                          item.Selected = true;
-                          cbo.SelectedIndex = item.Index;
-                      }
-                  }
-              };
 
               settings.ClientEnabled = true;
               //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";
@@ -169,28 +122,12 @@
               settings.Name = "cmbDiameter";
               settings.Width = Unit.Percentage(100);
               settings.ControlStyle.CssClass = "BoxGeneral";
-              //settings.SelectedIndex = 0;
-              //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
-              settings.Properties.CallbackPageSize = 15;
+                         //settings.SelectedIndex = 0;
+                         //settings.CallbackRouteValues = new { Controller = "Editors", Action = "ComboBoxPartial" };
+                         settings.Properties.CallbackPageSize = 15;
               settings.Properties.TextField = "Size";
               settings.Properties.ValueField = "Id";
               settings.Properties.ClearButton.DisplayMode = ClearButtonDisplayMode.OnHover;
-
-
-              settings.PreRender = (sender, e) =>
-              {
-                  if (ViewBag.SizeDiameter != null)
-                  {
-                      MVCxComboBox cbo = sender as MVCxComboBox;
-                      var item = cbo.Properties.Items.FindByValue(ViewBag.SizeDiameter.ToString());
-                      if (item != null)
-                      {
-                          item.Selected = true;
-                          cbo.SelectedIndex = item.Index;
-                      }
-                  }
-              };
-              
 
               settings.ClientEnabled = true;
               //settings.Properties.ClientSideEvents.ValueChanged = "cmbFilters_ValueChanged";

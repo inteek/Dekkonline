@@ -17,8 +17,12 @@ namespace Framework.Libraies
         public Nullable<int> proId { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<double> totalpriceprod { get; set; }
+        public Nullable<double> UnitPrice { get; set; }
         public string cartid { get; set; }
         public string workshop { get; set; }
         public int taxproduct { get; set; }
+        public string proDimensionprofile { get; set; }
+        public string proDimensionWidth { get; set; }
+        public string proDimensionDiameter { get; set; }
     }
 }

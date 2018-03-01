@@ -12,10 +12,11 @@ var tiempoSeleccionado = "";
 var work = 0;
 var zipcodeLocal = localStorage.getItem("zipCode");
 var TimeWorkshop = "";
+var localStep3 = 0;
 
 $(document).ready(function () {
     //alert("entro");   
-
+    localStep3 = localStorage.getItem("Step3");
     $("#validateMobile").hide();
     $("#validateEmail").hide();
     $("#validateAddress").hide();
@@ -36,9 +37,29 @@ $(document).ready(function () {
     $(".comments").prop('disabled', true);
 
     $("#comboPerson").attr('checked', true);
-    $("#nearestWoekshop").attr('checked', true);
+    //$("#nearestWoekshop").attr('checked', true);
 
     $("#txtZipCode").val(zipcodeLocal);
+
+    $(".txtPass").click(function () {
+    $(".txtPass").removeClass("txtPass");
+    });
+
+});
+$("#Step1").click(function () {
+    var url = "../ShoppingCart/Index"
+    window.location = url;
+});
+
+
+$("#Step3").click(function () {
+    if (localStep3 == 1) {
+        var url = "../ShoppingCart/Step3"
+        window.location = url;
+    }
+});
+$(".txtPass").click(function () {
+    $(".txtPass").removeClass("txtPass");
 });
 $(".reco").change(function () {
     Workshopreco();
@@ -198,6 +219,9 @@ $("#next").click(function () {
 
         if (result.error == true && result.noError == 2 && result.msg == "Correo Existente") {
             $("#EmailExistente").show();
+            $(".txtUser").val(email);
+            $(".txtUser").removeClass("txtUser")
+            $('#modalLoginStep2').modal('show');
         }
         else if (result.error == false && result.noError == 0) {
 
@@ -217,6 +241,13 @@ $("#next").click(function () {
         }
     });
 });
+
+
+$("#back").click(function () {
+    var url = "../ShoppingCart/Index"
+    window.location = url;
+});
+
 
 $("#MakeAppoint").click(function () {
 
@@ -255,10 +286,16 @@ $("#MakeAppoint").click(function () {
         }
 
     }
-
+    var selected = [];
+    $('#servicesModal input:checked').each(function () {
+        selected.push($(this).attr('value'));
+    });
+    if (selected.length <= 0) {
+        selected = ["0"];
+    }
     var data = {
         fecha: fechaSeleccionada,
-        servicio: servicioSeleccionado,
+        servicio: selected,
         date: date,
         fechaSeleccionadaNumeros: fechaSeleccionadaNumeros,
         time: time,
@@ -417,10 +454,33 @@ function popouWorkShop(name, idWorkshop) {
 
 
                 for (var i = 0; i < result.services.length; i++) {
+                    var str = null;
+                    var price = result.services[i].Price;
+                    price =String(price)
+                    if (price != "0") {
+                        if (price.indexOf('.') > -1) {
+                            str = price;
+                            str = str.split('.')[0];
+                            str =" " + "+" + str + " " + "kr"
+                        }
+                        else {
+                            str = price;
+                            str = " " + "+" + str + " " + "kr"
+                        }
+
+                    }
+                    else {
+                        str = " " + "+" + "0" + " " + "kr"
+                    }
+
                     $("#servicesModal").append(
+                        //"<div class='form-check ocultarcheck2'>" +
+                        //"<input class='form-check-input position-static checkService' type='checkbox' name='blankRadio2' id='" + "b" + result.services[i].idWorkshop + "' value='" + result.services[i].idWorkshop + "' onclick='validCheck2(\"" + result.services[i].idWorkshop + "\")'>" +
+                        //"<label class='form-check-label' for='" + "b" + result.services[i].idWorkshop + "' style='color:#C0392B; font-size:16px; font-family:arial; margin-left:10px;'>" + result.services[i].Description + "</label>" +
+                        //"</div>"
                         "<div class='form-check ocultarcheck2'>" +
-                        "<input class='form-check-input position-static checkService' type='checkbox' name='blankRadio2' id='" + "b" + result.services[i].idWorkshop + "' value='" + result.services[i].idWorkshop + "' onclick='validCheck2(\"" + result.services[i].idWorkshop + "\")'>" +
-                        "<label class='form-check-label' for='" + "b" + result.services[i].idWorkshop + "' style='color:#C0392B; font-size:16px; font-family:arial; margin-left:10px;'>" + result.services[i].Description + "</label>" +
+                        "<input class='form-check-input position-static checkService' type='checkbox' name='blankRadio2' id='" + "b" + result.services[i].idWorkshop + "' value='" + result.services[i].idWorkshop +"'>" +
+                        "<label class='form-check-label' for='" + "b" + result.services[i].idWorkshop + "' style='color:#C0392B; font-size:16px; font-family:arial; margin-left:10px;'>" + result.services[i].Description + str + "</label>" +
                         "</div>"
                     );
                     valorServicio[i] = result.services[i].idWorkshop;
@@ -467,25 +527,25 @@ function validCheck1(IdAppointment, Date, Time) {
     }
 }
 
-function validCheck2(IdWorkShop) {
+//function validCheck2(IdWorkShop) {
 
-    servicioSeleccionado = IdWorkShop;
+//    servicioSeleccionado = IdWorkShop;
 
-    for (var i = 0; i < valorServicio.length; i++) {
+//    for (var i = 0; i < valorServicio.length; i++) {  
 
-        if ($('#b' + IdWorkShop).prop('checked')) {
-            if (IdWorkShop != valorServicio[i]) {
-                $("#b" + valorServicio[i]).attr('disabled', true);
-            }
-        }
-        else if (!$('#b' + IdWorkShop).prop('checked')) {
-            if (IdWorkShop != valorServicio[i]) {
-                $("#b" + valorServicio[i]).attr('disabled', false);
-            }
-            servicioSeleccionado = 0;
-        }
-    }
-}
+//        if ($('#b' + IdWorkShop).prop('checked')) {
+//            if (IdWorkShop != valorServicio[i]) {
+//                $("#b" + valorServicio[i]).attr('disabled', true);
+//            }
+//        }
+//        else if (!$('#b' + IdWorkShop).prop('checked')) {
+//            if (IdWorkShop != valorServicio[i]) {
+//                $("#b" + valorServicio[i]).attr('disabled', false);
+//            }
+//            servicioSeleccionado = 0;
+//        }
+//    }
+//}
 
 function habilitarInput() {
     $(".choose").prop('disabled', false);

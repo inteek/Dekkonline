@@ -618,7 +618,7 @@ namespace DekkOnlineMVC.Controllers
         }
 
         [HttpPost]
-        public JsonResult ZipCodes(string idwo)
+        public JsonResult ZipCodes(string idwo, string isWorkshop)
         {
             try
             {
@@ -627,7 +627,15 @@ namespace DekkOnlineMVC.Controllers
                 if (idUser != null && idUser != "")
                 {
                     Workshop us = new Workshop();
-                    user = us.GetZipCodes();
+                    
+                    if (isWorkshop == "1")
+                    {
+                        user = us.GetZipCodesInWorkshop(Convert.ToInt32(idwo));
+                    }
+                    else
+                    {
+                        user = us.GetZipCodesNoInWorkshop(Convert.ToInt32(idwo));
+                    }
                     if (user != null || user.Count >= 0)
                     {
 

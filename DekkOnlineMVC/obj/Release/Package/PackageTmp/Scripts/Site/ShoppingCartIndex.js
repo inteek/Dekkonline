@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿var localStep3 = 0;
+
+$(document).ready(function () {
+    localStep3 = localStorage.getItem("Step3");
     $(".keep").click(function () {
         var url = "../Dekk/Products";
         window.location = url;
@@ -33,6 +36,19 @@
         var promo = $(".promocode").val();
         UndoPromo(promo);
     });
+    $("#Step2").click(function () {
+        var url = "../ShoppingCart/Step2"
+        window.location = url;
+    });
+
+    $("#Step3").click(function () {
+
+        if (localStep3 == 1) {
+            var url = "../ShoppingCart/Step3"
+            window.location = url;
+        }
+    });
+    loadWorkShop();
 });
 
 function DelCrt(id) {
@@ -117,7 +133,7 @@ function DelCrt(id) {
     
 }
 
-function IncrsCart(id, qty1) {
+    function IncrsCart(id, qty1) {
     var data = {
         idcart: id,
         qty: qty1
@@ -134,8 +150,10 @@ function IncrsCart(id, qty1) {
             //$("." + id).val(qty1);
             $("#" + id).text(result['a']);
             var b = result['x'];
-                $("#subtotal").text(b['subtotal']);
+            $("#subtotal").text(b['subtotal']);
+            $("#b+" + id).text(result['a']);
                 $("#total").text(b['total']);
+
                 $(".promocode").val(b['promocode']);
                 $(".promopoints").val(b['points']);
                 $("#tax").text(b['tax']);
@@ -276,7 +294,7 @@ function loadWorkShop() {
 
 
     ////AJAX
-    conectarAsy("loadWorkShop", data, function (result) {
+    conectarAsy("../ShoppingCart/loadWorkShop", data, function (result) {
 
         if (result.error == false) {
 

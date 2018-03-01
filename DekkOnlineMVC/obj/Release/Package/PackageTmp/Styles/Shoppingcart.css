@@ -305,6 +305,278 @@
     margin-right: 10px;
 }
 
+.marginRowPasos {
+    margin-left: 20px;
+    margin-bottom: 0px;
+    margin-top:0px;
+}
+
+.carritoIndex {
+    margin-left: 92px;
+    margin-top: 20px;
+    z-index:99999;
+}
+
+.medidasCarritoIndex {
+    width: 75px;
+    height: auto;
+}
+
+.carritoStep2 {
+    margin-left: 96px;
+    margin-top: 22px;
+    z-index: 99999;
+}
+
+.carritoStep3 {
+    margin-left: 66px;
+    margin-top: 20px;
+}
+
+.carritoStep4 {
+    margin-left: 66px;
+    margin-top: 20px;
+}
+
+.linea1Index {
+    margin-left: -38px;
+    margin-top: 16px;
+}
+
+.medidaLinea1Index {
+    width: 328px;
+    height: 50px;
+}
+
+.medidaLinea3Step3 {
+    width: 322px;
+    height: 50px;
+}
+
+.medidaLinea3Index {
+    width: 322px;
+    height: 50px;
+}
+
+.medidaLinea1Step3 {
+    width: 330px;
+    height: 50px;
+}
+
+.medidaLinea3Step2 {
+    width: 324px;
+    height: 50px;
+}
+
+.medidaLinea1Step2 {
+    width: 330px;
+    height: 50px;
+}
+
+.medidaLinea1Step3 {
+    width: 330px;
+    height: 50px;
+}
+
+.circuloGrisIndex {
+    margin-left: 96px;
+    margin-top: 28px;
+}
+
+.circuloAzulIndex {
+    margin-left: 96px;
+    margin-top: 30px;
+}
+
+.circuloGrisStep2 {
+    margin-left: 98px;
+    margin-top: 31px;
+}
+
+.circulo4GrisStep2 {
+    margin-left: 98px;
+    margin-top: 29px;
+}
+
+.circulo4GrisStep3 {
+    margin-left: 98px;
+    margin-top: 29px;
+}
+
+.medidadCirculoGrisIndex {
+    width: 15px;
+    height: auto;
+}
+
+.linea2Index {
+    margin-left: -99px;
+    margin-top: 16px;
+}
+
+.linea2Step2 {
+    margin-left: -87px;
+    margin-top: 20px;
+}
+
+.linea2Step4 {
+    margin-left: -99px;
+    margin-top: 14px;
+}
+
+.linea3Index {
+    margin-left: -99px;
+    margin-top: 16px;
+}
+
+.linea3Step4 {
+    margin-left: -99px;
+    margin-top: 14px;
+}
+
+.linea3Step2 {
+    margin-left: -99px;
+    margin-top: 18px;
+}
+
+.linea1Step2 {
+    margin-left: -100px;
+    margin-top: 16px;
+}
+
+.linea1Step3 {
+    margin-left: -100px;
+    margin-top: 14px;
+}
+
+.linea1Step4 {
+    margin-left: -100px;
+    margin-top: 14px;
+}
+
+.linea2Step2 {
+    margin-left: -40px;
+    margin-top: 18px;
+}
+
+.linea2Step3 {
+    margin-left: -100px;
+    margin-top: 14px;
+}
+
+.linea3Step3 {
+    margin-left: -38px;
+    margin-top: 16px;
+}
+
+.responsePasos {
+    visibility: visible;
+}
+
+.responsePasosMovil {
+    visibility: hidden;
+}
+
+.bola1Step2 {
+    margin-left: 98px;
+    margin-top: 29px;
+}
+
+.bola1Step3 {
+    margin-left: 98px;
+    margin-top: 29px;
+}
+
+.bola1Step3 {
+    margin-left: 98px;
+    margin-top: 29px;
+}
+
+.marginRowPasostexto {
+    margin-left: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.texto1Index {
+    margin-left: 131px;
+    margin-top: -20px;
+}
+
+.texto2Index {
+    margin-left: 60px;
+    margin-top: -20px;
+}
+
+.texto3Index {
+    margin-left: 89px;
+    margin-top: -20px;
+}
+
+.texto4Index {
+    margin-left: 86px;
+    margin-top: -20px;
+}
+
+.texto1Step2 {
+    margin-left: 107px;
+    margin-top: -20px;
+}
+
+.texto2Step2 {
+    margin-left: 51px;
+    margin-top: -20px;
+}
+
+.texto3Step2 {
+    margin-left: 229px;
+    margin-top: -20px;
+}
+
+.texto4Step2 {
+    margin-left: -25px;
+    margin-top: -20px;
+}
+
+.texto1Step3 {
+    margin-left: 107px;
+    margin-top: -20px;
+}
+
+.texto2Step3 {
+    margin-left: 26px;
+    margin-top: -20px;
+}
+
+.texto3Step3 {
+    margin-left: 221px;
+    margin-top: -20px;
+}
+
+.texto4Step3 {
+    margin-left: 7px;
+    margin-top: -20px;
+}
+
+.texto1Step4 {
+    margin-left: 107px;
+    margin-top: -20px;
+}
+
+.texto2Step4 {
+    margin-left: 22px;
+    margin-top: -20px;
+}
+
+.texto3Step4 {
+    margin-left: 198px;
+    margin-top: -20px;
+}
+
+.texto4Step4 {
+    margin-left: -1px;
+    margin-top: -20px;
+}
+
 @media screen and (max-width:1200px) {
     .imgwidth1 {
         margin-left: 2px;
@@ -424,8 +696,8 @@
     }
 
     .btnLogin{
-    margin-right: -335px;
-}
+        margin-right: -335px;
+    }
 }
 
 @media screen and (max-width:1023px) {
@@ -880,6 +1152,189 @@
     .btnLogin{
         margin-right: -21px;
     }
+
+    .carritoIndex {
+        margin-left: -30px;
+        margin-top: 9px;
+        z-index: 99999;
+    }
+
+    .medidasCarritoIndex {
+        width: 53px;
+        height: 20px;
+    }
+
+    .linea1Index {
+        margin-left: 19px;
+        margin-top: 13px;
+    }
+
+    .medidaLinea1Index {
+        width:100px;
+        height: 12px;
+    }
+
+    .medidaLinea3Index {
+        width: 90px;
+        height: 12px;
+    }
+
+    .medidaLinea1Step3 {
+        width: 100px;
+        height: 12px;
+    }
+
+    .circuloGrisIndex {
+        margin-left: 33px;
+        margin-top: 12px;
+    }
+
+    .circuloAzulIndex {
+        margin-left: 25px;
+        margin-top: 12px;
+    }
+
+    .medidadCirculoGrisIndex {
+        width: 10px;
+        height: 10px;
+    }
+
+    .linea2Index {
+        margin-left: -24px;
+        margin-top: 13px;
+    }
+
+    .linea2Step4 {
+        margin-left: -20px;
+        margin-top: 13px;
+    }
+
+    .linea3Index {
+        margin-left: -25px;
+        margin-top: 13px;
+    }
+
+    .linea3Step4 {
+        margin-left: -28px;
+        margin-top: 11px;
+    }
+
+    .marginRowPasos {
+        margin-left: 30px;
+        margin-bottom: 20px;
+        margin-top: -20px;
+    }
+
+    .responsePasos {
+        visibility:hidden;
+    }
+
+    .responsePasosMovil {
+        visibility:visible;
+    }
+
+    .marginRowPasos2 {
+        margin-left: -8px;
+        margin-bottom: 0px;
+        margin-top: -240px;
+    }
+
+    .marginRowPasos3 {
+        margin-left: -24px;
+        margin-bottom: 15px;
+        margin-top: -214px;
+    }
+
+    .bola1Step2 {
+        margin-left: 22px;
+        margin-top: 10px;
+    }
+
+    .bola1Step4 {
+        margin-left: 29px;
+        margin-top: 10px;
+    }
+
+    .bola1Step3 {
+        margin-left: 24px;
+        margin-top: 10px;
+    }
+
+    .linea1Step2 {
+        margin-left: -27px;
+        margin-top: 11px;
+    }
+
+    .linea1Step4 {
+        margin-left: -27px;
+        margin-top: 11px;
+    }
+
+    .linea1Step3 {
+        margin-left: -29px;
+        margin-top: 11px;
+    }
+
+    .carritoStep2 {
+        margin-left: 15px;
+        margin-top: 9px;
+    }
+
+    .carritoStep3 {
+        margin-left: 25px;
+        margin-top: 9px;
+    }
+
+    .carritoStep4 {
+        margin-left: 16px;
+        margin-top: 9px;
+    }
+
+    .medidaLinea1Step2 {
+        width: 80px;
+        height: 12px;
+    }
+
+    .circuloGrisStep2 {
+        margin-left: 7px;
+        margin-top: 11px;
+    }
+
+    .linea2Step2 {
+        margin-left: 17px;
+        margin-top: 12px;
+    }
+
+    .linea2Step3 {
+        margin-left: -27px;
+        margin-top: 11px;
+    }
+
+    .linea3Step2 {
+        margin-left: -27px;
+        margin-top: 12px;
+    }
+
+    .linea3Step3 {
+        margin-left: 15px;
+        margin-top: 12px;
+    }
+
+    .circulo4GrisStep2 {
+        margin-left: 17px;
+        margin-top: 11px;
+    }
+
+    .circulo4GrisStep3 {
+        margin-left: 18px;
+        margin-top: 11px;
+    }
+
+    .medidaLinea3Step3 {
+        width: 95px;
+        height: 12px;
+    }
+
 }
 
 

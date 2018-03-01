@@ -240,7 +240,11 @@ namespace Framework
                                     Description = pro.proDescription,
                                     quantity = cart.quantity,
                                     totalpriceprod = Math.Truncate((double)cart.Price),
-                                    cartid = cart.Id.ToString()
+                                    cartid = cart.Id.ToString(),
+                                    UnitPrice = Math.Truncate((double)pro.proSuggestedPriceDP),
+                                    proDimensionprofile = pro.proDimensionProfileDP.ToString(),
+                                    proDimensionWidth = pro.proDimensionWidthDP.ToString(),
+                                    proDimensionDiameter = pro.proDimensionDiameterDP.ToString()
                                 }).ToList();
 
 
@@ -376,6 +380,7 @@ namespace Framework
                         addpromo.TotalPrice = (decimal)totalprice2;
                         addpromo.TotalPriceFinal = (decimal)totalprice;
                         addpromo.Used = false;
+                        addpromo.DateUsed = DateTime.Now;
                         db.PromoCodeUsed.Add(addpromo);
                         db.SaveChanges();
                         return true;

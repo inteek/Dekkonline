@@ -5,11 +5,46 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Styles.Render("~/Styles/Shoppingcart.css?V=2")
+@Styles.Render("~/Styles/Shoppingcart.css?V=7")
 <div class="row">
     <div class="col-lg-12 ">
-        <img src="~/Content/imgs/step1-.PNG" class="imgwidth1 img-responsive" />
-        <img src="~/Content/imgs/step1mobile2.PNG" class=" img-responsive imgmobile" />
+
+        <div class="row marginRowPasos responsePasos">
+            <div class="col-lg-1 col-sm-1 col-xs-1 carritoIndex"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea1Index"><img src="~/Content/imgs/linea-01prueba.png" class="medidaLinea1Index" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea2Index"><img src="~/Content/imgs/linea-01prueba.png" class="medidaLinea1Index" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea3Index"><img src="~/Content/imgs/linea-01prueba.png" class="medidaLinea3Index" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+
+        </div>
+
+        <div class="row responsePasos">
+            <div class="col-lg-1 col-sm-1 col-xs-1 texto1Index"><h5 style="color:#1a64a1">STEP ONE</h5><h6 style="margin-top:-5px; color:black;">Check you shopping cart</h6></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea1Index"></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 texto2Index" id="Step2" style="cursor:pointer;"><h5 class="" style="color:#a19d9d">STEP TWO</h5></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea2Index"></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 texto3Index" id="Step3" style="cursor:pointer;"><h5 class="" style="color:#a19d9d">STEP THREE</h5></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea3Index"></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 texto4Index"><h5 class="" style="color:#a19d9d">STEP FOUR</h5></div>
+        </div>
+
+        <div class="row marginRowPasos responsePasosMovil">
+            <div class="col-lg-1 col-sm-1 col-xs-1 carritoIndex"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea1Index"><img src="~/Content/imgs/linea-01movil.png" class="medidaLinea1Index" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea2Index"><img src="~/Content/imgs/linea-01movil.png" class="medidaLinea1Index" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+            <div class="col-lg-2 col-sm-2 col-xs-2 linea3Index"><img src="~/Content/imgs/linea-01movil.png" class="medidaLinea1Index" /></div>
+            <div class="col-lg-1 col-sm-1 col-xs-1 circuloGrisIndex"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+        </div>
+
+
+
+
+        @*<img src="~/Content/imgs/step1-.PNG" class="imgwidth1 img-responsive" />
+            <img src="~/Content/imgs/step1mobile2.PNG" class=" img-responsive imgmobile" />*@
     </div>
 </div>
 <div class="container" style="font-family:Arial;margin-bottom:50px;">
@@ -20,11 +55,12 @@
                 @if (Model.cart.Count > 0)
                 {
 
-                    <tr>
-                        <th style="width:50%">Item</th>
-                        <th style="width:8%">QTY</th>
-                        <th style="width:10%">Price</th>
-                    </tr>
+                <tr>
+                    <th style="width:40%">Item</th>
+                    <th style="width:8%">QTY</th>
+                    <th style="width:10%">Unit Price</th>
+                    <th style="width:10%">Sub Total</th>
+                </tr>
                 }
                 else
                 {
@@ -38,25 +74,27 @@
                 {
                     foreach (var item in Model.cart)
                     {
-                        <tr class="@item.cartid">
+                <tr class="@item.cartid">
 
-                            <td data-th="Item">
-                                <div class="row">
-                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" class="remclick" onclick="DelCrt('@item.cartid')"><span class="glyphicon glyphicon-remove"></span></a></div>
-                                    <div class="col-sm-2 col-xs-3">
-                                        <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
-                                    </div>
-                                    <div class="col-sm-8 col-xs-5">
-                                        <h4 class="nomargin"><strong style="color:#e72e31">@item.Name</strong></h4>
-                                        <div class="deschide"><p>@item.Description.</p></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-th="QTY">
-                                <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" onchange="IncrsCart('@item.cartid', this.value)">
-                            </td>
-                            <td data-th="Price"><strong><label id="@item.cartid">@item.totalpriceprod</label> kr</strong></td>
-                        </tr>
+                    <td data-th="Item">
+                        <div class="row">
+                            <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" class="remclick" onclick="DelCrt('@item.cartid')"><span class="glyphicon glyphicon-remove"></span></a></div>
+                            <div class="col-sm-2 col-xs-3">
+                                <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
+                            </div>
+                            <div class="col-sm-8 col-xs-5">
+                                <h4 class="nomargin"><strong style="color:#e72e31">@item.Name</strong></h4>
+                                <div class="deschide"><p>@item.Description.</p></div>
+                                <div class="deschide"><p>Size: @item.proDimensionWidth / @item.proDimensionprofile  @item.proDimensionDiameter</p></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-th="QTY">
+                        <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" onchange="IncrsCart('@item.cartid', this.value)">
+                    </td>
+                    <td data-th="Unit Price"><strong><label id="b+@item.cartid">@item.UnitPrice</label> kr</strong></td>
+                    <td data-th="Sub Total"><strong><label id="@item.cartid" class="@item.cartid">@item.totalpriceprod</label> kr</strong></td>
+                </tr>
                     }
                 }
                 else
@@ -231,7 +269,7 @@
 </div>
 
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=8")
+@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=4")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

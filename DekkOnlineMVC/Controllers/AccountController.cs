@@ -200,6 +200,20 @@ namespace DekkOnlineMVC.Controllers
 
                     users.EnvioCorreo(model.Email1, model.Password1);
                     users.UpdateRoleUser(model.Email1);
+                    var promo = users.CreateRandomPromoCode();
+                    bool validatepromo = users.SavePromoCode(promo, model.Email1);
+                    if (validatepromo == true)
+                    {
+
+                    }
+                    else
+                    {
+                        while (validatepromo == false)
+                        {
+                            promo = users.CreateRandomPromoCode();
+                            validatepromo = users.SavePromoCode(promo, model.Email1);
+                        }
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

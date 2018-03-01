@@ -1,7 +1,10 @@
 ﻿$(document).ready(function () {
+    localStorage.setItem("Step3", 1);
+
     $(".st2").click(function () {
         var url = "/ShoppingCart/Step2";
         window.location = url;
+
     });
 
 
@@ -39,6 +42,15 @@
         var sc = $(".sc").val();
         var chn = $(".nombretg").val();
         Confirm(tar, cn, edm, edy, sc, chn);
+    });
+    $("#Step1").click(function () {
+        var url = "../ShoppingCart/Index"
+        window.location = url;
+    });
+
+    $("#Step2").click(function () {
+        var url = "../ShoppingCart/Step2"
+        window.location = url;
     });
 });
 

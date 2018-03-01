@@ -68,6 +68,8 @@
     <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Roles" Type="smallint" />
+    <Property Name="Active" Type="bit" />
   </EntityType>
   <EntityType Name="brands">
     <Key>
@@ -108,6 +110,14 @@
     <Property Name="cdpStatus" Type="bit" Nullable="false" />
     <Property Name="cdpEdited" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="DeliveryServices">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idDelivery" Type="int" />
+    <Property Name="idService" Type="int" />
+  </EntityType>
   <EntityType Name="DeliveryType">
     <Key>
       <PropertyRef Name="IdDelivery" />
@@ -140,6 +150,13 @@
     </Key>
     <Property Name="fylkeID" Type="smallint" Nullable="false" />
     <Property Name="fylkeNavn" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="kategorier">
+    <Key>
+      <PropertyRef Name="kategoriID" />
+    </Key>
+    <Property Name="kategoriID" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="kategoriNavn" Type="varchar" MaxLength="150" Nullable="false" />
   </EntityType>
   <EntityType Name="kommuner">
     <Key>
@@ -183,6 +200,24 @@
     <Property Name="TargetType" Type="varchar" MaxLength="15" />
     <Property Name="idUser" Type="nvarchar" MaxLength="128" />
     <Property Name="Number" Type="int" />
+  </EntityType>
+  <EntityType Name="postnumre">
+    <Key>
+      <PropertyRef Name="postnummer" />
+    </Key>
+    <Property Name="postnummer" Type="smallint" Nullable="false" />
+    <Property Name="poststedID" Type="smallint" Nullable="false" />
+    <Property Name="kategoriID" Type="char" MaxLength="1" />
+    <Property Name="lat" Type="decimal" Precision="12" Scale="7" />
+    <Property Name="lon" Type="decimal" Precision="12" Scale="7" />
+  </EntityType>
+  <EntityType Name="poststed">
+    <Key>
+      <PropertyRef Name="PoststedID" />
+    </Key>
+    <Property Name="kommuneID" Type="smallint" Nullable="false" />
+    <Property Name="poststedNavn" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="PoststedID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="products">
     <Key>
@@ -240,12 +275,13 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="idUser" Type="nvarchar" MaxLength="128" />
     <Property Name="PromoCode" Type="varchar" MaxLength="35" />
     <Property Name="Used" Type="bit" />
     <Property Name="TotalPrice" Type="money" />
     <Property Name="TotalPriceFinal" Type="money" />
+    <Property Name="DateUsed" Type="date" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="PromotionCode">
     <Key>
@@ -256,14 +292,7 @@
     <Property Name="PercentCode" Type="decimal" Precision="18" Scale="0" />
     <Property Name="DateStart" Type="datetime" />
     <Property Name="DateEnd" Type="datetime" />
-  </EntityType>
-  <EntityType Name="PromotionCodeUser">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
-    <Property Name="IdCode" Type="varchar" MaxLength="35" />
   </EntityType>
   <EntityType Name="PurchaseOrder">
     <Key>
@@ -323,7 +352,6 @@
     <Property Name="Latitude" Type="varchar" MaxLength="50" />
     <Property Name="Length" Type="varchar" MaxLength="50" />
     <Property Name="Image" Type="varchar(max)" />
-    <Property Name="WorkShopManager" Type="bit" />
   </EntityType>
   <EntityType Name="UserPoints">
     <Key>
@@ -380,6 +408,14 @@
     <Property Name="idUser" Type="nvarchar" MaxLength="128" />
     <Property Name="idWorkshop" Type="int" />
   </EntityType>
+  <EntityType Name="WorkshopZipCode">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdWorkshop" Type="int" />
+    <Property Name="IdKommune" Type="smallint" />
+  </EntityType>
   <Association Name="fk_city">
     <End Role="fylker" Type="Self.fylker" Multiplicity="1" />
     <End Role="kommuner" Type="Self.kommuner" Multiplicity="*" />
@@ -389,18 +425,6 @@
       </Principal>
       <Dependent Role="kommuner">
         <PropertyRef Name="fylkeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_CodepromUser">
-    <End Role="PromotionCode" Type="Self.PromotionCode" Multiplicity="0..1" />
-    <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PromotionCode">
-        <PropertyRef Name="IdCode" />
-      </Principal>
-      <Dependent Role="PromotionCodeUser">
-        <PropertyRef Name="IdCode" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -544,30 +568,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_UserPoints">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-    <End Role="UserPoints" Type="Self.UserPoints" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="UserPoints">
-        <PropertyRef Name="IdUser" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_Userpromcode">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-    <End Role="PromotionCodeUser" Type="Self.PromotionCodeUser" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PromotionCodeUser">
-        <PropertyRef Name="IdUser" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_Userpromcodeinvite">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
     <End Role="DetailUserPoints" Type="Self.DetailUserPoints" Multiplicity="*" />
@@ -592,6 +592,46 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="postnumre_ibfk_1">
+    <End Role="poststed" Type="Self.poststed" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="postnumre" Type="Self.postnumre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="poststed">
+        <PropertyRef Name="PoststedID" />
+      </Principal>
+      <Dependent Role="postnumre">
+        <PropertyRef Name="poststedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="postnumre_ibfk_2">
+    <End Role="kategorier" Type="Self.kategorier" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="postnumre" Type="Self.postnumre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="kategorier">
+        <PropertyRef Name="kategoriID" />
+      </Principal>
+      <Dependent Role="postnumre">
+        <PropertyRef Name="kategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="poststed_ibfk_1">
+    <End Role="kommuner" Type="Self.kommuner" Multiplicity="1" />
+    <End Role="poststed" Type="Self.poststed" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="kommuner">
+        <PropertyRef Name="kommuneID" />
+      </Principal>
+      <Dependent Role="poststed">
+        <PropertyRef Name="kommuneID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="dekkOnlineModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Appointments" EntityType="Self.Appointments" Schema="dbo" store:Type="Tables" />
@@ -603,17 +643,20 @@
     <EntitySet Name="brands" EntityType="Self.brands" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeliveryServices" EntityType="Self.DeliveryServices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeliveryType" EntityType="Self.DeliveryType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DetailUserPoints" EntityType="Self.DetailUserPoints" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="fylker" EntityType="Self.fylker" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="kategorier" EntityType="Self.kategorier" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="kommuner" EntityType="Self.kommuner" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrdersDetail" EntityType="Self.OrdersDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="postnumre" EntityType="Self.postnumre" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="poststed" EntityType="Self.poststed" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PromoCodeUsed" EntityType="Self.PromoCodeUsed" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PromotionCode" EntityType="Self.PromotionCode" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="PromotionCodeUser" EntityType="Self.PromotionCodeUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tokens" EntityType="Self.tokens" Schema="dbo" store:Type="Tables" />
@@ -624,13 +667,10 @@
     <EntitySet Name="WorkshopAppointment" EntityType="Self.WorkshopAppointment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopServices" EntityType="Self.WorkshopServices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopUser" EntityType="Self.WorkshopUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkshopZipCode" EntityType="Self.WorkshopZipCode" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fk_city" Association="Self.fk_city">
       <End Role="fylker" EntitySet="fylker" />
       <End Role="kommuner" EntitySet="kommuner" />
-    </AssociationSet>
-    <AssociationSet Name="fk_CodepromUser" Association="Self.fk_CodepromUser">
-      <End Role="PromotionCode" EntitySet="PromotionCode" />
-      <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -676,14 +716,6 @@
       <End Role="PromotionCode" EntitySet="PromotionCode" />
       <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
     </AssociationSet>
-    <AssociationSet Name="fk_UserPoints" Association="Self.fk_UserPoints">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="UserPoints" EntitySet="UserPoints" />
-    </AssociationSet>
-    <AssociationSet Name="fk_Userpromcode" Association="Self.fk_Userpromcode">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="PromotionCodeUser" EntitySet="PromotionCodeUser" />
-    </AssociationSet>
     <AssociationSet Name="fk_Userpromcodeinvite" Association="Self.fk_Userpromcodeinvite">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="DetailUserPoints" EntitySet="DetailUserPoints" />
@@ -691,6 +723,18 @@
     <AssociationSet Name="fk_Userpurchase" Association="Self.fk_Userpurchase">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="postnumre_ibfk_1" Association="Self.postnumre_ibfk_1">
+      <End Role="poststed" EntitySet="poststed" />
+      <End Role="postnumre" EntitySet="postnumre" />
+    </AssociationSet>
+    <AssociationSet Name="postnumre_ibfk_2" Association="Self.postnumre_ibfk_2">
+      <End Role="kategorier" EntitySet="kategorier" />
+      <End Role="postnumre" EntitySet="postnumre" />
+    </AssociationSet>
+    <AssociationSet Name="poststed_ibfk_1" Association="Self.poststed_ibfk_1">
+      <End Role="kommuner" EntitySet="kommuner" />
+      <End Role="poststed" EntitySet="poststed" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

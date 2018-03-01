@@ -408,6 +408,14 @@
     <Property Name="idUser" Type="nvarchar" MaxLength="128" />
     <Property Name="idWorkshop" Type="int" />
   </EntityType>
+  <EntityType Name="WorkshopZipCode">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdWorkshop" Type="int" />
+    <Property Name="IdKommune" Type="smallint" />
+  </EntityType>
   <Association Name="fk_city">
     <End Role="fylker" Type="Self.fylker" Multiplicity="1" />
     <End Role="kommuner" Type="Self.kommuner" Multiplicity="*" />
@@ -659,6 +667,7 @@
     <EntitySet Name="WorkshopAppointment" EntityType="Self.WorkshopAppointment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopServices" EntityType="Self.WorkshopServices" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkshopUser" EntityType="Self.WorkshopUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkshopZipCode" EntityType="Self.WorkshopZipCode" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fk_city" Association="Self.fk_city">
       <End Role="fylker" EntitySet="fylker" />
       <End Role="kommuner" EntitySet="kommuner" />

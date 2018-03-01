@@ -1,10 +1,80 @@
 ﻿@using System.Web.Optimization;
-@model Framework.Libraies.ResultUserOrder
+@model Framework.Libraies.ResultUserPromo
 @{
     ViewBag.Title = "Promos";
 }
 
 @Styles.Render("~/Styles/Dimensiones.css?v=3")
+
+<div id="fb-root"></div>
+<script>
+    (function (d, s, id)
+    {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.12';
+        fjs.parentNode.insertBefore(js, fjs);
+    }
+    (document, 'script', 'facebook-jssdk')
+    );
+
+    function copiarURL() {
+        var url = document.querySelector("#txtURL");
+        var range = document.createRange();
+        range.selectNode(url);
+        window.getSelection().addRange(range);
+        try
+        {
+            var resultado = document.execCommand('copy');
+            console.log(resultado ? 'URL Copiada' : 'No se pudo copiar la URL');
+        }
+        catch (err)
+        {
+            console.log('ERROR al intentar copiar la URL');
+        }
+        window.getSelection().removeAllRanges();
+    }
+
+    function sendEmail() {
+        var mensaje = "";
+        var correos = "";
+        mensaje = $("#txtURL").val();
+        correos = $("#txtCorreos").val();
+
+        if (mensaje == "") {
+            return false;
+        }
+
+        var data = {
+            correos: correos,
+            mensaje: mensaje
+        }
+        conectarAsy("../Profile/emailPromo", data, function (result) {
+
+            if (result.error == false) {
+                alert("E-mail sent");
+            }
+            else if (result.error == true) {
+                alert("Error send E-mail");
+            }
+        });
+    }
+
+    function shareGoogle()
+    {
+        window.open("https://plus.google.com/share?url=http://google.com.mx", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+        return false;
+    }
+    function shareFacebook() {
+        window.open("https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com.mx%2F&amp;src=sdkpreparse", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+        return false;
+    }
+    function shareTwitter() {
+        window.open("http://twitter.com/share?text=Mensaje%20De%20Prueba", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+        return false;
+    }
+</script>
 
 <div class="contentPage">
     <div class="row">
@@ -44,10 +114,10 @@
                     <div class="panel panel-default panel-hovered panel-stacked mb30" ng-controller="AlertDemoCtrl" style="height:282px;">
                         <div class="panel-body">
                             <div class="" style="color:red; font-size:20px;"><strong>Invite some friends</strong></div>
-                            <div class="" style="color:steelblue; font-size:17px;">Enter yot fiends email below:</div><br />
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="You can add multiple emails(one per line)" style="border: 1px solid #ccc;"></textarea>
-                            <div class="" style="color:steelblue; font-size:13px; text-align:right;">Add from address book</div>
-                            <button class="btn btn-danger btn-lg" style="width:100%">SEND</button>
+                            <div class="" style="color:steelblue; font-size:17px;">Enter you friends email below:</div><br />
+                            <textarea class="form-control" id="txtCorreos" rows="5" placeholder="You can add multiple emails(one per line)" style="border: 1px solid #ccc;"></textarea>
+                            @*<div class="" style="color:steelblue; font-size:13px; text-align:right;">Add from address book</div>*@
+                            <button onclick="sendEmail()" id="sendEmail" class="btn btn-success btn-lg" style="width:100%; margin-top:20px;">SEND</button>
                         </div>
                     </div>
                 </div>
@@ -55,10 +125,14 @@
                     <div class="panel panel-default panel-hovered panel-stacked mb30" ng-controller="AlertDemoCtrl">
                         <div class="panel-body">
                             <div class="" style="color:red; font-size:20px;"><strong>Invite some friends</strong></div>
-                            <input type="text" class="form-control" value="http://www.dekonline.com/r/" disabled="disabled"><br />
-                            <button class="btn btn-danger btn-lg" style="width:100%;">COPY</button>
-                            <button class="btn btn-primary btn-lg" style="width: 100%; margin-top: 20px; ">SHARE IT</button>
-                            <button class="btn btn-info btn-lg" style="width: 100%; margin-top: 20px;">TWEET IT</button>
+                            <input id="txtURL" type="text" class="form-control" value="http://www.dekonline.com/r/" disabled="disabled"><br />
+                            <button onclick="copiarURL()" class="btn btn-warning btn-lg" style="width:100%;">COPY LINK</button>
+                            <button onclick="shareGoogle()" class="btn btn-danger btn-lg" style="width: 100%; margin-top: 20px; ">GOOGLE +</button>
+                            <button onclick="shareFacebook()" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 20px; ">FACEBOOK</button>
+                            <button onclick="shareTwitter()" class="btn btn-info btn-lg" style="width: 100%; margin-top: 20px;">TWITTER</button>
+                            @*<a type="button" onclick="" href="https://plus.google.com/share?url=http://google.com.mx">Compartir en Google+</a>
+                            <div class="fb-share-button" data-href="https://www.google.com.mx" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com.mx%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+                            <a onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" href="http://twitter.com/share?text=Mensaje%20De%20Prueba">Tweet</a>*@
                         </div>
                     </div>
                 </div>
@@ -85,24 +159,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">Ronny Sonetwork</th>
-                                    <td>26/04/2017</td>
-                                    <td>Pending</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Ronny Sonetwork</th>
-                                    <td>26/04/2017</td>
-                                    <td>Pending</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Ronny Sonetwork</th>
-                                    <td>26/04/2017</td>
-                                    <td>Pending</td>
-                                    <td>0</td>
-                                </tr>
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model.promo)
+                                    {
+                                    <tr>
+                                        @if (item.UserName == null)
+                                        {
+                                            <th scope="row">Cliente no registrado</th>
+                                        }
+                                        else
+                                        { 
+                                        <th scope="row">@item.UserName</th>
+                                        }
+                                        <td>@item.Date</td>
+                                        @if (item.Used == true)
+                                        {
+                                            <td>Used</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Pending</td>
+                                        }
+                                        <td>10</td>
+                                    </tr>
+                                    }
+                                }
                             </tbody>
                         </table>
                     </div>

@@ -10,35 +10,6 @@
     <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
     <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
-  <EntityType Name="AspNetRoles">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
-  </EntityType>
-  <EntityType Name="AspNetUserClaims">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
-  </EntityType>
-  <EntityType Name="AspNetUserLogins">
-    <Key>
-      <PropertyRef Name="LoginProvider" />
-      <PropertyRef Name="ProviderKey" />
-      <PropertyRef Name="UserId" />
-    </Key>
-    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-  </EntityType>
   <EntityType Name="brands">
     <Key>
       <PropertyRef Name="braId" />
@@ -53,7 +24,7 @@
     <Property Name="braImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="braEdited" Type="Boolean" Nullable="false" />
     <Property Name="braPercent" Type="Int32" />
-    <NavigationProperty Name="products" Relationship="Self.FK_products_brands" FromRole="brands" ToRole="products" />
+    <NavigationProperty Name="products" Relationship="dekkOnlineModel.FK_products_brands" FromRole="brands" ToRole="products" />
   </EntityType>
   <EntityType Name="categories">
     <Key>
@@ -64,7 +35,7 @@
     <Property Name="catDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="catImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="catStatus" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="products" Relationship="Self.FK_products_categories" FromRole="categories" ToRole="products" />
+    <NavigationProperty Name="products" Relationship="dekkOnlineModel.FK_products_categories" FromRole="categories" ToRole="products" />
   </EntityType>
   <EntityType Name="categoriesDP">
     <Key>
@@ -79,63 +50,7 @@
     <Property Name="cdpParentId" Type="Guid" />
     <Property Name="cdpStatus" Type="Boolean" Nullable="false" />
     <Property Name="cdpEdited" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="products" Relationship="Self.FK_products_categoriesDP" FromRole="categoriesDP" ToRole="products" />
-  </EntityType>
-  <EntityType Name="products">
-    <Key>
-      <PropertyRef Name="proId" />
-    </Key>
-    <Property Name="proId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="proUUID" Type="Guid" />
-    <Property Name="braId" Type="Guid" Nullable="false" />
-    <Property Name="cdpId" Type="Guid" Nullable="false" />
-    <Property Name="proSkuId" Type="Guid" Nullable="false" />
-    <Property Name="proSkuDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="proNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="proDescriptionDP" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-    <Property Name="proCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proDimensionProfileDP" Type="Int32" />
-    <Property Name="proDimensionWidthDP" Type="Int32" />
-    <Property Name="proDimensionDiameterDP" Type="Int32" />
-    <Property Name="proCoverPriceDP" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="proSuggestedPriceDP" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="proRCRDP" Type="Int32" />
-    <Property Name="proLoadIndexDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proSpeedDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proProductCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proFuelDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="proWetDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="proNoiseDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="proTyreSizeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proSku" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="proName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="proDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-    <Property Name="proCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proDimensionProfile" Type="Int32" />
-    <Property Name="proDimensionWidth" Type="Int32" />
-    <Property Name="proDimensionDiameter" Type="Int32" />
-    <Property Name="proCoverPrice" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="proSuggestedPrice" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="proInventory" Type="Int32" />
-    <Property Name="proRCR" Type="Int32" />
-    <Property Name="proLoadIndex" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proSpeed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proFuel" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="proWet" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="proNoise" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="proTyreSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="proEdited" Type="Boolean" Nullable="false" />
-    <Property Name="proImage" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="proStatus" Type="Boolean" Nullable="false" />
-    <Property Name="catId" Type="Int32" />
-    <Property Name="proLastUpdateDP" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="proLastUpdate" Type="DateTime" Precision="3" />
-    <Property Name="proDiscount" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="brands" Relationship="Self.FK_products_brands" FromRole="products" ToRole="brands" />
-    <NavigationProperty Name="categories" Relationship="Self.FK_products_categories" FromRole="products" ToRole="categories" />
-    <NavigationProperty Name="categoriesDP" Relationship="Self.FK_products_categoriesDP" FromRole="products" ToRole="categoriesDP" />
-    <NavigationProperty Name="ShoppingCart" Relationship="dekkOnlineModel.fk_product" FromRole="products" ToRole="ShoppingCart" />
+    <NavigationProperty Name="products" Relationship="dekkOnlineModel.FK_products_categoriesDP" FromRole="categoriesDP" ToRole="products" />
   </EntityType>
   <EntityType Name="tokens">
     <Key>
@@ -145,69 +60,12 @@
     <Property Name="tokDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="tokData" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
-  <Association Name="FK_products_brands">
-    <End Role="brands" Type="Self.brands" Multiplicity="1" />
-    <End Role="products" Type="Self.products" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="brands">
-        <PropertyRef Name="braId" />
-      </Principal>
-      <Dependent Role="products">
-        <PropertyRef Name="braId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_products_categories">
-    <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
-    <End Role="products" Type="Self.products" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="categories">
-        <PropertyRef Name="catId" />
-      </Principal>
-      <Dependent Role="products">
-        <PropertyRef Name="catId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_products_categoriesDP">
-    <End Role="categoriesDP" Type="Self.categoriesDP" Multiplicity="1" />
-    <End Role="products" Type="Self.products" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="categoriesDP">
-        <PropertyRef Name="cdpId" />
-      </Principal>
-      <Dependent Role="products">
-        <PropertyRef Name="cdpId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="dekkOnlineEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
-    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
-    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
     <EntitySet Name="brands" EntityType="Self.brands" />
     <EntitySet Name="categories" EntityType="Self.categories" />
     <EntitySet Name="categoriesDP" EntityType="Self.categoriesDP" />
-    <EntitySet Name="products" EntityType="Self.products" />
     <EntitySet Name="tokens" EntityType="Self.tokens" />
-    <AssociationSet Name="FK_products_brands" Association="Self.FK_products_brands">
-      <End Role="brands" EntitySet="brands" />
-      <End Role="products" EntitySet="products" />
-    </AssociationSet>
-    <AssociationSet Name="FK_products_categories" Association="Self.FK_products_categories">
-      <End Role="categories" EntitySet="categories" />
-      <End Role="products" EntitySet="products" />
-    </AssociationSet>
-    <AssociationSet Name="FK_products_categoriesDP" Association="Self.FK_products_categoriesDP">
-      <End Role="categoriesDP" EntitySet="categoriesDP" />
-      <End Role="products" EntitySet="products" />
-    </AssociationSet>
-    <EntitySet Name="ShoppingCart" EntityType="dekkOnlineModel.ShoppingCart" />
-    <AssociationSet Name="fk_product" Association="dekkOnlineModel.fk_product">
-      <End Role="products" EntitySet="products" />
-      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
-    </AssociationSet>
     <EntitySet Name="TypesServices" EntityType="dekkOnlineModel.TypesServices" />
     <EntitySet Name="WorkshopAppointment" EntityType="dekkOnlineModel.WorkshopAppointment" />
     <EntitySet Name="DetailUserPoints" EntityType="dekkOnlineModel.DetailUserPoints" />
@@ -253,8 +111,29 @@
       <End Role="PromoCodeUsed" EntitySet="PromoCodeUsed" />
     </AssociationSet>
     <EntitySet Name="DeliveryServices" EntityType="dekkOnlineModel.DeliveryServices" />
-    <EntitySet Name="AspNetUsers" EntityType="dekkOnlineModel.AspNetUsers" />
     <EntitySet Name="UserAddress" EntityType="dekkOnlineModel.UserAddress" />
+    <EntitySet Name="AspNetUserClaims" EntityType="dekkOnlineModel.AspNetUserClaims" />
+    <EntitySet Name="AspNetUserLogins" EntityType="dekkOnlineModel.AspNetUserLogins" />
+    <EntitySet Name="products" EntityType="dekkOnlineModel.products" />
+    <EntitySet Name="ShoppingCart" EntityType="dekkOnlineModel.ShoppingCart" />
+    <AssociationSet Name="FK_products_brands" Association="dekkOnlineModel.FK_products_brands">
+      <End Role="brands" EntitySet="brands" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_products_categories" Association="dekkOnlineModel.FK_products_categories">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_products_categoriesDP" Association="dekkOnlineModel.FK_products_categoriesDP">
+      <End Role="categoriesDP" EntitySet="categoriesDP" />
+      <End Role="products" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="fk_product" Association="dekkOnlineModel.fk_product">
+      <End Role="products" EntitySet="products" />
+      <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+    </AssociationSet>
+    <EntitySet Name="AspNetRoles" EntityType="dekkOnlineModel.AspNetRoles" />
+    <EntitySet Name="AspNetUsers" EntityType="dekkOnlineModel.AspNetUsers" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -279,31 +158,8 @@
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <EntitySet Name="WorkshopZipCode" EntityType="dekkOnlineModel.WorkshopZipCode" />
   </EntityContainer>
-  <EntityType Name="ShoppingCart">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="proId" Type="Int32" />
-    <Property Name="quantity" Type="Int32" />
-    <NavigationProperty Name="products" Relationship="dekkOnlineModel.fk_product" FromRole="ShoppingCart" ToRole="products" />
-    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="Status" Type="Boolean" />
-  </EntityType>
-  <Association Name="fk_product">
-    <End Type="dekkOnlineModel.products" Role="products" Multiplicity="0..1" />
-    <End Type="dekkOnlineModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="products">
-        <PropertyRef Name="proId" />
-      </Principal>
-      <Dependent Role="ShoppingCart">
-        <PropertyRef Name="proId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="TypesServices">
     <Key>
       <PropertyRef Name="IdService" />
@@ -614,6 +470,167 @@
     <Property Name="idDelivery" Type="Int32" />
     <Property Name="idService" Type="Int32" />
   </EntityType>
+  <EntityType Name="UserAddress">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ZipCode" Type="Int32" />
+    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_iduserref" FromRole="UserAddress" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="products">
+    <Key>
+      <PropertyRef Name="proId" />
+    </Key>
+    <Property Name="proId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="proUUID" Type="Guid" />
+    <Property Name="braId" Type="Guid" Nullable="false" />
+    <Property Name="cdpId" Type="Guid" Nullable="false" />
+    <Property Name="proSkuId" Type="Guid" Nullable="false" />
+    <Property Name="proSkuDP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proNameDP" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="proDescriptionDP" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="proCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proDimensionProfileDP" Type="Int32" />
+    <Property Name="proDimensionWidthDP" Type="Int32" />
+    <Property Name="proDimensionDiameterDP" Type="Int32" />
+    <Property Name="proCoverPriceDP" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proSuggestedPriceDP" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proRCRDP" Type="Int32" />
+    <Property Name="proLoadIndexDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proSpeedDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proProductCodeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proFuelDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proWetDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proNoiseDP" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proTyreSizeDP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proSku" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="proDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="proCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proDimensionProfile" Type="Int32" />
+    <Property Name="proDimensionWidth" Type="Int32" />
+    <Property Name="proDimensionDiameter" Type="Int32" />
+    <Property Name="proCoverPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proSuggestedPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="proInventory" Type="Int32" />
+    <Property Name="proRCR" Type="Int32" />
+    <Property Name="proLoadIndex" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proSpeed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proFuel" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proWet" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proNoise" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="proTyreSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="proEdited" Type="Boolean" Nullable="false" />
+    <Property Name="proImage" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="proStatus" Type="Boolean" Nullable="false" />
+    <Property Name="catId" Type="Int32" />
+    <Property Name="proLastUpdateDP" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="proLastUpdate" Type="DateTime" Precision="3" />
+    <Property Name="proDiscount" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="brands" Relationship="dekkOnlineModel.FK_products_brands" FromRole="products" ToRole="brands" />
+    <NavigationProperty Name="categories" Relationship="dekkOnlineModel.FK_products_categories" FromRole="products" ToRole="categories" />
+    <NavigationProperty Name="categoriesDP" Relationship="dekkOnlineModel.FK_products_categoriesDP" FromRole="products" ToRole="categoriesDP" />
+    <NavigationProperty Name="ShoppingCart" Relationship="dekkOnlineModel.fk_product" FromRole="products" ToRole="ShoppingCart" />
+  </EntityType>
+  <EntityType Name="ShoppingCart">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="proId" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="products" Relationship="dekkOnlineModel.fk_product" FromRole="ShoppingCart" ToRole="products" />
+  </EntityType>
+  <Association Name="FK_products_brands">
+    <End Type="dekkOnlineModel.brands" Role="brands" Multiplicity="1" />
+    <End Type="dekkOnlineModel.products" Role="products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="brands">
+        <PropertyRef Name="braId" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="braId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_products_categories">
+    <End Type="dekkOnlineModel.categories" Role="categories" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.products" Role="products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="catId" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="catId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_products_categoriesDP">
+    <End Type="dekkOnlineModel.categoriesDP" Role="categoriesDP" Multiplicity="1" />
+    <End Type="dekkOnlineModel.products" Role="products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categoriesDP">
+        <PropertyRef Name="cdpId" />
+      </Principal>
+      <Dependent Role="products">
+        <PropertyRef Name="cdpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_product">
+    <End Type="dekkOnlineModel.products" Role="products" Multiplicity="0..1" />
+    <End Type="dekkOnlineModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="products">
+        <PropertyRef Name="proId" />
+      </Principal>
+      <Dependent Role="ShoppingCart">
+        <PropertyRef Name="proId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
   <EntityType Name="AspNetUsers">
     <Key>
       <PropertyRef Name="Id" />
@@ -638,22 +655,6 @@
     <NavigationProperty Name="DetailUserPoints" Relationship="dekkOnlineModel.fk_Userpromcodeinvite" FromRole="AspNetUsers" ToRole="DetailUserPoints" />
     <NavigationProperty Name="PurchaseOrder" Relationship="dekkOnlineModel.fk_Userpurchase" FromRole="AspNetUsers" ToRole="PurchaseOrder" />
     <NavigationProperty Name="AspNetRoles" Relationship="dekkOnlineModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-  </EntityType>
-  <EntityType Name="UserAddress">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="IdUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-    <Property Name="ZipCode" Type="Int32" />
-    <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Length" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="AspNetUsers" Relationship="dekkOnlineModel.fk_iduserref" FromRole="UserAddress" ToRole="AspNetUsers" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -723,4 +724,12 @@
     <End Type="dekkOnlineModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
     <End Type="dekkOnlineModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
   </Association>
+  <EntityType Name="WorkshopZipCode">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdWorkshop" Type="Int32" />
+    <Property Name="IdKommune" Type="Int16" />
+  </EntityType>
 </Schema>

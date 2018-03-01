@@ -28,18 +28,6 @@ function OnProductCardsBeginCallback(s, e) {
 
 
 }
-
-function OnProductCardsEndCallback(s, e) {
-    var pageCount = 0;
-    if (s.cpRowsCount != null) {
-        pageCount = s.cpRowsCount
-    }
-
-    $("#lblProdctsVisible").text(s.pageRowCount);
-    $("#lblProdctsTotal").text(pageCount);
-}
-
-
 function IsCardView() {
     return cardView; //ProductCards.GetToolbar(0).GetItemByName("CardView").GetChecked();
 }
@@ -104,18 +92,18 @@ function openProductDetails(item) {
     //var item = products.find(o => o.Id === idProduct);
     
     $("#productDetails_Id").val(item.Id);
-    $("#productDetails_Img").attr("src", item.Image);
+    $("#productDetails_Img").attr("src" + "http://admin.dekkonline.sonetworks.no/" + item.Image);
     $("#productDetails_CategoryImg1").attr("src", item.CategoryImage.replace("~", ".."));
     $("#productDetails_CategoryImg2").attr("src", item.CategoryImage.replace("~", ".."));
     $("#productDetails_Name").text(item.Name);
     $("#productDetails_Price").text(item.Price);
-    $("#productDetails_Description").text(item.eDescription);
+    //$("#productDetails_Description").text(item.eDescription);
     $("#productDetails_Brand").text(item.Brand);
-    //productDetails_CboWidth.SetValue(item.Width);
+    productDetails_CboWidth.SetValue(item.Width);
     $("#productDetails_LblWidth").text(item.Width);
-    //productDetails_CboProfile.SetValue(item.Profile);
+    productDetails_CboProfile.SetValue(item.Profile);
     $("#productDetails_LblProfile").text(item.Profile);
-    //productDetails_CboDiameter.SetValue(item.Diameter);
+    productDetails_CboDiameter.SetValue(item.Diameter);
     $("#productDetails_LblDiameter").text(item.Diameter);
     $("#productDetails_CategoryName").text(item.CategoryName);
     $("#productDetails_InStock").text(item.Stock);

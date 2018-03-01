@@ -18,7 +18,7 @@
 @*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX6wD6FcmE4ZEFB2gEVka9qNkdsA4eqeg"></script>*@
 
 @Styles.Render("~/Styles/Dimension.css?v=4")
-@Styles.Render("~/Styles/Shoppingcart.css?v=1")
+@Styles.Render("~/Styles/Shoppingcart.css?v=3")
 
 
 <style>
@@ -65,8 +65,41 @@
 <div class="content" style="font-family:Arial;margin-bottom:50px;">
     <div class="row">
         <div class="col-lg-12">
-            <img src="~/Content/step2.JPG" class="imgRespons1" />
-            <img src="~/Content/step2movil.PNG" class="img-responsive imgRespons2" />
+
+            <div class="row marginRowPasos responsePasos">
+                <div class="col-lg-1 circuloAzulIndex"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 linea1Step2"><img src="~/Content/imgs/linea-04prueba.png" class="medidaLinea1Index" /></div>
+                <div class="col-lg-1 carritoStep2"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+                <div class="col-lg-2 linea2Step2"><img src="~/Content/imgs/linea-01prueba.png" class="medidaLinea1Index" /></div>
+                <div class="col-lg-1 circuloGrisStep2"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 linea3Step2"><img src="~/Content/imgs/linea-01prueba.png" class="medidaLinea3Step2" /></div>
+                <div class="col-lg-1 circuloGrisStep2"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+            </div>
+
+            <div class="row responsePasos">
+                <div class="col-lg-1 col-sm-1 col-xs-1 texto1Step2" id="Step1" style="cursor:pointer;"><h5 style="color:#1a64a1">STEP ONE</h5></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea1Index"></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 texto2Step2"><h5 class="" style="color:#1a64a1">STEP TWO</h5><h6 style="margin-top:-5px; color:black;">Personal Informacion and chose your nearest workshop</h6></div>
+                <div class="col-lg-1 col-sm-2 col-xs-2 linea2Index"></div>
+                <div class="col-lg-2 col-sm-1 col-xs-1 texto3Step2" id="Step3" style="cursor:pointer;"><h5 class="" style="color:#a19d9d">STEP THREE</h5></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea3Index"></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 texto4Step2"><h5 class="" style="color:#a19d9d">STEP FOUR</h5></div>
+            </div>
+
+            <div class="row marginRowPasos2 responsePasosMovil">
+                <div class="col-lg-1 col-sm-1 col-xs-1 bola1Step2"><img src="~/Content/imgs/circulo_azul.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea1Step2"><img src="~/Content/imgs/linea-04movil.png" class="medidaLinea1Index" /></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 carritoStep2"><img src="~/Content/imgs/car.png" class="medidasCarritoIndex" /></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea2Step2"><img src="~/Content/imgs/linea-01movil.png" class="medidaLinea1Step2" /></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 circuloGrisStep2"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+                <div class="col-lg-2 col-sm-2 col-xs-2 linea3Step2"><img src="~/Content/imgs/linea-01movil.png" class="medidaLinea1Index" /></div>
+                <div class="col-lg-1 col-sm-1 col-xs-1 circulo4GrisStep2"><img src="~/Content/imgs/circulo_gris.png" class="medidadCirculoGrisIndex" /></div>
+            </div>
+
+
+
+            @*<img src="~/Content/step2.JPG" class="imgRespons1" />
+                <img src="~/Content/step2movil.PNG" class="img-responsive imgRespons2" />*@
         </div>
     </div>
     <div style="margin-left:20px;">
@@ -172,13 +205,13 @@
                                     <div class="col-lg-2 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="txtZipCode" placeholder="">
                                         @Html.DevExpress().TextBox(settings =>
-                                                                   {
-                                                                       settings.Name = "txtZipCode";
-                                                                       settings.Height = Unit.Pixel(30);
-                                                                       settings.Width = Unit.Percentage(130);
-                                                                       settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
-                                                                       settings.ClientVisible = false;
-                                                                   }).GetHtml()
+                                                                                  {
+                                                                                      settings.Name = "txtZipCode";
+                                                                                      settings.Height = Unit.Pixel(30);
+                                                                                      settings.Width = Unit.Percentage(130);
+                                                                                      settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
+                                                                                      settings.ClientVisible = false;
+                                                                                  }).GetHtml()
                                     </div>
                                     <label id="validateZipcode" class="textValidateFalse">The zipcode field is required</label>
                                 </div>
@@ -275,7 +308,7 @@
                     </div>
                     <br />
                     <div class="widthleftresponse">
-                        @if (Model.workshop.Count != 0)
+                        @if (Model.workshop.Count > 0)
                         {
                             foreach (var item in Model.workshop)
                             {
@@ -287,7 +320,14 @@
                                         <div class="col-lg-5 col-xs-8 catalago">
                                             <h4 class="nameWorkshop" id="nameWorkshop" style="color: #185d8a;"><strong><span></span> @item.Name</strong></h4>
                                             <p class="">@item.Address</p>
-                                            @*<h5 style="color: #909497;">Ratings: <img src="~/Content/estrellas.png" style="width:80px;" /></h5>*@
+                                            <h5 style="color: #909497;">
+                                                Ratings:
+                                                <span class="fa fa-star checked" style="color:orange;"></span>
+                                                <span class="fa fa-star checked" style="color:orange;"></span>
+                                                <span class="fa fa-star checked" style="color:orange;"></span>
+                                                <span class="fa fa-star checked" style="color:orange;"></span>
+                                                <span class="fa fa-star"></span>
+                                            </h5>
                                         </div>
                                         <div class="col-lg-2 catHiden">
                                             <h3><strong>60 kr</strong></h3>
@@ -445,6 +485,144 @@
 
                 </div>
             </div>
+            <div class="row">
+                <a style=" margin-left:52px; cursor:pointer; font-size:18px;"><font color="#21618C">Restore password</font></a>
+                <div class="form-check" style="margin-left:52px;">
+                    <label class="form-check-label" for="exampleCheck1" style="font-size:18px; display: block; padding-left: 15px; text-indent: -15px;">
+                        <input type="checkbox" class="form-check-input" id="Remember" style="width:18px; height:18px;padding: 0; margin:0; vertical-align: bottom; position: relative; top: -3px; *overflow: hidden;">
+                        Remember me?
+                    </label>
+                </div>
+            </div>
+
+            @*<div class="hidden">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <asp:CheckBox runat="server" ID="RememberMe" />
+                            <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+            <div class="BoxGeneral text-center">
+                <h4>LOG IN FASTER</h4>
+                <div class="clearfix"></div>
+                @*<section id="socialLoginForm">
+                        <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                    </section>*@
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-primary btn-sm" style="width:180px; height:45px; font-size:22px;">FACEBOOK</button>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-danger btn-sm" style="width:180px; height:45px; font-size:22px;">GOOGLE</button>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@*MODAL LOGIN SIN REGISTRO*@
+<div id="modalLoginStep2" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-xs">
+            <div style="margin-right:10px; margin-top:5px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12 loginLogo">
+            </div>
+            <div class="clearfix"></div>
+            <div class="loginContain">
+                <div class="col-md-12">
+                    <div class="modalLoginLt" style="border-right: 0px solid black;">
+                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+
+                        @Html.Partial("Login")
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <a style=" margin-left:52px; cursor:pointer; font-size:18px;"><font color="#21618C">Restore password</font></a>
+                <div class="form-check" style="margin-left:52px;">
+                    <label class="form-check-label" for="exampleCheck1" style="font-size:18px; display: block; padding-left: 15px; text-indent: -15px;">
+                        <input type="checkbox" class="form-check-input" id="Remember" style="width:18px; height:18px;padding: 0; margin:0; vertical-align: bottom; position: relative; top: -3px; *overflow: hidden;">
+                        Remember me?
+                    </label>
+                </div>
+            </div>
+            @*<div class="hidden">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <asp:CheckBox runat="server" ID="RememberMe" />
+                            <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+
+            <div class="BoxGeneral text-center">
+                <h4>LOG IN FASTER</h4>
+                <div class="clearfix"></div>
+                @*<section id="socialLoginForm">
+                        <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+                    </section>*@
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button class="btn btn-primary btn-sm" style="width:180px; height:45px; font-size:22px;">FACEBOOK</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button class="btn btn-danger btn-sm" style="width:180px; height:45px; font-size:22px;">GOOGLE</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@*MODAL LOGIN SIN REGISTRO*@
+<div id="modalLoginStep2" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-xs">
+            <div style="margin-right:10px; margin-top:5px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="spacer20"></div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12 loginLogo">
+            </div>
+            <div class="clearfix"></div>
+            <div class="loginContain">
+                <div class="col-md-12">
+                    <div class="modalLoginLt" style="border-right: 0px solid black;">
+                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+
+                        @Html.Partial("Login")
+
+                    </div>
+                </div>
+            </div>
             <div class="hidden">
                 <div class="col-md-offset-2 col-md-10">
                     <div class="checkbox">
@@ -561,7 +739,7 @@
                             <div class="form-group">
                                 <label for="" class="col-lg-1 control-label">Date</label>
                                 <div class="col-lg-5">
-                                    <input type="date" class="form-control" id="modDate" style="margin-left:10px;">
+                                    <input type="date" class="form-control" id="modDate" style="margin-left:10px;" data-date-inline-picker="true">
                                 </div>
                                 <label for="" class="col-lg-1 control-label">Time</label>
                                 <div class="col-lg-4">
@@ -591,60 +769,9 @@
     </div>
 </div>
 
-@*MODAL LOGIN SIN REGISTRO*@
-<div id="modalLoginStep2" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content modal-xs">
-            <div style="margin-right:10px; margin-top:5px;">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            <div class="col-xs-12 loginLogo">
-            </div>
-            <div class="clearfix"></div>
-            <div class="loginContain">
-                <div class="col-md-12">
-                    <div class="modalLoginLt" style="border-right: 0px solid black;">
-                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
-
-                        @Html.Partial("Login")
-
-                    </div>
-                </div>
-            </div>
-            <div class="hidden">
-                <div class="col-md-offset-2 col-md-10">
-                    <div class="checkbox">
-                        <asp:CheckBox runat="server" ID="RememberMe" />
-                        <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-
-            <div class="BoxGeneral text-center">
-                <h4>LOG IN FASTER</h4>
-                <div class="clearfix"></div>
-                <section id="socialLoginForm">
-                    <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                </section>
-            </div>
-
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=6")
+@Scripts.Render("~/Scripts/Step2.js?v=3")
 @Scripts.Render("~/Scripts/Map.js?v=4")
 @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
 @Scripts.Render("~/Scripts/Login.js?v=2")

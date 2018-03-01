@@ -51,10 +51,12 @@ namespace Framework
             bool result = false;
             var archivo = "";
             var archivo2 = "";
+            var archivo3 = "";
             var plantilla = "";
             string email = "";
             var htmldiv = "";
             var htmldivProducts = "";
+            var htmldivServices = "";
 
             try
             {               
@@ -65,6 +67,7 @@ namespace Framework
 
                 archivo = String.Format(@"{0}\Templates\EmailConfirmation.html", input);
                 archivo2 = String.Format(@"{0}\Templates\Products.html", input);
+                archivo3 = String.Format(@"{0}\Templates\Services.html", input);
                 plantilla = getTexto_Plantilla(archivo);
 
 
@@ -87,6 +90,8 @@ namespace Framework
                     }
                     else
                     {
+                        plantilla = plantilla.Replace("{IMAGE}", @"Content\imgs\mapa.png");
+                        plantilla = plantilla.Replace("{WORKSHOPNAME}", "The location you choose");
                         plantilla = plantilla.Replace("{WORKSHOPADDRESS}", item.WorkshopAddress);
                     }
                     
@@ -106,11 +111,24 @@ namespace Framework
                         htmldiv = htmldiv.Replace("{IMAGENPRODUCT}", item2.Image);
                         htmldiv = htmldiv.Replace("{NOMBREPRODUCTO}", item2.Name);
                         htmldiv = htmldiv.Replace("{PRECIOTOTAL}", item2.totalpriceprod.ToString());
+                        htmldiv = htmldiv.Replace("{width}", item2.proDimensionWidth.ToString());
+                        htmldiv = htmldiv.Replace("{profile}", item2.proDimensionprofile.ToString());
+                        htmldiv = htmldiv.Replace("{diameter}", item2.proDimensionDiameter.ToString());
                         htmldivProducts += htmldiv;
+                    }
+                    foreach (var item3 in item.services)
+                    {
+                        htmldiv = getTexto_Plantilla(archivo3);
+
+                        htmldiv = htmldiv.Replace("{IMAGENSERVICE}", item3.WorkshopImage);
+                        htmldiv = htmldiv.Replace("{NOMBRETALLER}", item3.WorkshopName);
+                        htmldiv = htmldiv.Replace("{NOMBRESERVICE}", item3.Name);
+                        htmldiv = htmldiv.Replace("{PRECIOTOTALSERVICE}", item3.Price.ToString());
+                        htmldivServices += htmldiv;
                     }
 
                     plantilla = plantilla.Replace("{PRODUCTS}", htmldivProducts);
-
+                    plantilla = plantilla.Replace("{SERVICES}", htmldivServices);
 
                     email = item.Email;
                 }
@@ -251,6 +269,36 @@ namespace Framework
             catch (Exception ex)
             {
                 throw ex;
+            }
+
+            return result;
+        }
+
+        public bool sendEmailPromo(string emailUser, string correos, string mensaje)
+        {
+            bool result = false;
+            var archivo = "";
+            var plantilla = "";
+
+            //path = path.Split()
+
+            string input = path;
+            int index = input.LastIndexOf(@"\");
+            if (index > 0)
+                input = input.Substring(0, index); // or index + 1 to keep slash
+
+            try
+            {
+                archivo = String.Format(@"{0}\Templates\EmailPromo.html", input);
+                plantilla = getTexto_Plantilla(archivo);
+                plantilla = plantilla.Replace("{MENSAJE}", mensaje);
+                EnvioCorreo(emailUser, correos, mensaje, plantilla, "Invitation");
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                result = false;
             }
 
             return result;
