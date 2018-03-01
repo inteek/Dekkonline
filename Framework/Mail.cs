@@ -45,7 +45,6 @@ namespace Framework
             return result;
         }
 
-
         public bool sendEmailConfirmation(List<ResultPaidProducts> list)
         {
             bool result = false;
@@ -114,6 +113,11 @@ namespace Framework
                         htmldiv = htmldiv.Replace("{width}", item2.proDimensionWidth.ToString());
                         htmldiv = htmldiv.Replace("{profile}", item2.proDimensionprofile.ToString());
                         htmldiv = htmldiv.Replace("{diameter}", item2.proDimensionDiameter.ToString());
+                        htmldiv = htmldiv.Replace("{QUANTITY}", item2.quantity.ToString());
+                        htmldiv = htmldiv.Replace("{UNITPRICE}", item2.UnitPrice.ToString());
+                        htmldiv = htmldiv.Replace("{TOTALPRICE}", item2.totalpriceprod.ToString());
+
+
                         htmldivProducts += htmldiv;
                     }
                     foreach (var item3 in item.services)
@@ -199,7 +203,6 @@ namespace Framework
             }
         }
 
-
         private void emailConfirmation(string emailUser, string cuerpo, string asunto)
         {
             bool success = false;
@@ -253,7 +256,6 @@ namespace Framework
                 throw ex;
             }
         }
-
 
         private string getTexto_Plantilla(string archivo)
         {

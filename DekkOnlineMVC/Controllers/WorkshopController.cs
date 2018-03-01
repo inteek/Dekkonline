@@ -2,8 +2,10 @@
 using Framework.Libraies;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace DekkOnlineMVC.Controllers
@@ -660,6 +662,167 @@ namespace DekkOnlineMVC.Controllers
             }
 
         }
+
+        [HttpPost]
+        public JsonResult zipcodeinworkshopdelete(string idwo, string zipcode)
+        {
+            try
+            {
+                var user = (dynamic)null;
+                string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+                if (idUser != null && idUser != "")
+                {
+                    Workshop us = new Workshop();
+
+                    user = us.DeleteZipcode(Convert.ToInt32(idwo), Convert.ToInt32(zipcode));
+                    if (user != null || user.Count >= 0)
+                    {
+
+                        return Json(user, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { Success = false });
+                    }
+
+                }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult zipcodeinworkshopadd(string idwo, string zipcode)
+        {
+            try
+            {
+                var user = (dynamic)null;
+                string idUser = System.Web.HttpContext.Current.Session["SessionUser"] as String;
+                if (idUser != null && idUser != "")
+                {
+                    Workshop us = new Workshop();
+
+                    user = us.Workshopzipcodeadd(Convert.ToInt32(idwo), Convert.ToInt32(zipcode));
+                    if (user != null || user.Count >= 0)
+                    {
+
+                        return Json(user, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { Success = false });
+                    }
+
+                }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]//enviar tambien el id del taller
+        public ActionResult UploadFile()
+        {
+            ShoppingCart sh = new ShoppingCart();
+            Workshop ws = new Workshop();
+            var usuario1 = User.Identity.Name;
+            var id = sh.User(usuario1);
+
+            string _imgname = string.Empty;
+            if (System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                var pic = System.Web.HttpContext.Current.Request.Files["MyImages"];
+                if (pic.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(pic.FileName);
+                    var _ext = Path.GetExtension(pic.FileName);
+                    if (fileName.ToLower().EndsWith(".png") || fileName.ToLower().EndsWith(".jpg"))
+                    {
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { Message = "invalid Upload" });
+                    }
+                    _imgname = Guid.NewGuid().ToString().Replace("-", "");
+                    _imgname = _imgname.Replace(_imgname, id);
+                    var _comPath = Server.MapPath("~/Content/Uploads/Photo/") + _imgname + _ext;
+
+                    ViewBag.Msg = _comPath;
+                    var path = _comPath;
+                    string pathvalidate1 = _imgname + _ext;
+                    pathvalidate1 = pathvalidate1.Remove(pathvalidate1.Length - 4);
+                    pathvalidate1 = pathvalidate1 + ".png";
+                    string pathvalidate2 = _imgname + _ext;
+                    pathvalidate2 = pathvalidate2.Remove(pathvalidate2.Length - 4);
+                    pathvalidate2 = pathvalidate2 + ".jpg";
+                    // Saving Image in Original Mode
+                    string fullPath1 = Request.MapPath("~/Content/Uploads/Photo/" + pathvalidate1);
+                    string fullPath2 = Request.MapPath("~/Content/Uploads/Photo/" + pathvalidate2);
+                    if (System.IO.File.Exists(fullPath1))
+                    {
+                        System.IO.File.Delete(fullPath1);
+                        pic.SaveAs(path);
+                    }
+                    else if (System.IO.File.Exists(fullPath2))
+                    {
+                        System.IO.File.Delete(fullPath2);
+                        pic.SaveAs(path);
+                    }
+                    else
+                    {
+                        pic.SaveAs(path);
+                    }
+
+                    // resizing image
+                    MemoryStream ms = new MemoryStream();
+                    WebImage img = new WebImage(_comPath);
+
+                    if (img.Width > 130)
+                        img.Resize(130, 130);
+                    img.Save(_comPath);
+                    // end resize
+                    var realpath = "/Content/Uploads/Photo/" + _imgname + _ext;
+                    var userupdate = ws.UpdateWorkshopImage(realpath, id);
+                    if (userupdate != null || userupdate.Length > 1)
+                    {
+                        return Json(userupdate, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", new { Message = "Upload Failed" });
+                        //return Json(new { x, JsonRequestBehavior.AllowGet });
+                    }
+
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { Message = "Upload Failed" });
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", new { Message = "Upload Failed" });
+            }
+        }
+
 
     }
 }

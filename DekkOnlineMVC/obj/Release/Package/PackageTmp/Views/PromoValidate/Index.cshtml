@@ -1,0 +1,45 @@
+﻿@using System.Web.Optimization;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Styles/Dimension.css?v=5")
+<div class="col-md-12 mb30" style="font-family:Arial; margin-top:20px; margin-bottom:20px;">
+    <div class="clearfix">
+        <div class="tab-content" style="background-color:#F2F2F2">
+            <div class="tab-pane active" id="tab-profile">
+                <div class="clearfix">
+                    <div class="container">
+                        <div class="row dimension">
+                            <div class="insidebox">
+                                <div class="col-lg-12  col-sm-12 col-xs-12 margintopperonalinfo">
+                                    <center>
+                                        <h2 style="color: #D35780;">@ViewBag.Title</h2>
+                                        <h3 style="margin-top:10px; margin-bottom:20px;">@ViewBag.Description</h3>
+                                    </center>
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- tab style -->
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/scripts/app.js")
+<script>
+    $(document).ready(function () {
+        $("#principalDiv").attr("class", "prDivSub");
+        $("#mainContainDiv").attr("class", "prMainContentSub");
+        setTimeout(redirect1(), 5000);
+    });
+
+    function redirect1() {
+        var url = "/Home/Index";
+        window.location = url;
+    }
+</script>

@@ -418,11 +418,12 @@ namespace Framework
 
         public string CreateRandomPassword(int PasswordLength)
         {
-            string _allowedChars = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ0123456789?!@.-_";
+            string _allowedChars = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
             Byte[] randomBytes = new Byte[PasswordLength];
             char[] chars = new char[PasswordLength];
             int allowedCharCount = _allowedChars.Length;
-
+            string _allowedChars2 = "0123456789";
+            int allowedCharCount2 = _allowedChars2.Length;
             for (int i = 0; i < PasswordLength; i++)
             {
                 Random randomObj = new Random();
@@ -433,7 +434,7 @@ namespace Framework
                 }
                 else
                 {
-                    chars[i] = '_';
+                    chars[i] = _allowedChars2[(int)randomBytes[i] % allowedCharCount2];
                 }
             }
 
@@ -554,9 +555,9 @@ namespace Framework
                         us.Phone = mobile;
                         us.ZipCode = Convert.ToInt32(zipcore);
                         //us.WorkShopManager = false;
-                        useremail.Email = email;
-                        useremail.UserName = email;
-                        db.Entry(useremail).State = EntityState.Modified;
+                        //useremail.Email = email;
+                        //useremail.UserName = email;
+                        //db.Entry(useremail).State = EntityState.Modified;
                         db.UserAddress.Add(us);
                         db.SaveChanges();
                         result = true;
@@ -569,10 +570,10 @@ namespace Framework
                         userdata.Phone = mobile;
                         userdata.ZipCode = Convert.ToInt32(zipcore);
                         //userdata.WorkShopManager = false;
-                        useremail.Email = email;
-                        useremail.UserName = email;
+                        //useremail.Email = email;
+                        //useremail.UserName = email;
                         db.Entry(userdata).State = EntityState.Modified;
-                        db.Entry(useremail).State = EntityState.Modified;
+                        //db.Entry(useremail).State = EntityState.Modified;
                         db.SaveChanges();
                         result = true;
                     }
@@ -603,6 +604,16 @@ namespace Framework
                     {
                         UserInfo.Image = path;
                         db.Entry(UserInfo).State = EntityState.Modified;
+                        db.SaveChanges();
+                        var image = db.UserAddress.Where(s => s.IdUser == idUser1).Select(s => s.Image).FirstOrDefault();
+                        return image;
+                    }
+                    else if (UserInfo == null)
+                    {
+                        UserAddress us2 = new UserAddress();
+                        us2.IdUser = idUser1;
+                        us2.Image = path;
+                        db.UserAddress.Add(us2);
                         db.SaveChanges();
                         var image = db.UserAddress.Where(s => s.IdUser == idUser1).Select(s => s.Image).FirstOrDefault();
                         return image;
@@ -818,6 +829,7 @@ namespace Framework
                         promous.PercentCode = 10;
                         promous.DateStart = date1;
                         promous.DateEnd = date2;
+                        promous.Points = 10;
                         promous.DescriptionCode = "PromoCode for Costumer";
                         db.PromotionCode.Add(promous);
                         db.SaveChanges();

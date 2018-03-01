@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Hosting;
@@ -34,7 +36,8 @@ namespace DekkOnlineMVC.Controllers
                     return RedirectToAction("Index", "Workshop");
                 }
                 else {
-                UserData = us.dataUser(id);
+                    sh.UpdateShoppingCart(id, idUser);
+                    UserData = us.dataUser(id);
                 if (UserData != null)
                 {
                     foreach (var item in UserData)
@@ -135,16 +138,37 @@ namespace DekkOnlineMVC.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", new { Message = "Upload Success" });
+                        return RedirectToAction("Index", new { Message = "invalid Upload" });
                     }
                     _imgname = Guid.NewGuid().ToString().Replace("-", "");
+                    _imgname = _imgname.Replace(_imgname, id);
                     var _comPath = Server.MapPath("~/Content/Uploads/Photo/") + _imgname + _ext;
 
                     ViewBag.Msg = _comPath;
                     var path = _comPath;
-
+                    string pathvalidate1 = _imgname + _ext;
+                    pathvalidate1 = pathvalidate1.Remove(pathvalidate1.Length - 4);
+                    pathvalidate1 = pathvalidate1 + ".png";
+                    string pathvalidate2 = _imgname + _ext;
+                    pathvalidate2 = pathvalidate2.Remove(pathvalidate2.Length - 4);
+                    pathvalidate2 = pathvalidate2 + ".jpg";
                     // Saving Image in Original Mode
-                    pic.SaveAs(path);
+                    string fullPath1 = Request.MapPath("~/Content/Uploads/Photo/" + pathvalidate1);
+                    string fullPath2 = Request.MapPath("~/Content/Uploads/Photo/" + pathvalidate2);
+                    if (System.IO.File.Exists(fullPath1))
+                    {
+                        System.IO.File.Delete(fullPath1);
+                        pic.SaveAs(path);
+                    }
+                    else if (System.IO.File.Exists(fullPath2))
+                    {
+                        System.IO.File.Delete(fullPath2);
+                        pic.SaveAs(path);
+                    }
+                    else
+                    {
+                        pic.SaveAs(path);
+                    }
 
                     // resizing image
                     MemoryStream ms = new MemoryStream();
@@ -154,7 +178,8 @@ namespace DekkOnlineMVC.Controllers
                         img.Resize(130, 130);
                     img.Save(_comPath);
                     // end resize
-                    var userupdate = us.UpdateUserImage(_comPath, id);
+                    var realpath = "/Content/Uploads/Photo/" + _imgname + _ext;
+                    var userupdate = us.UpdateUserImage(realpath, id);
                     if (userupdate != null || userupdate.Length > 1)
                     {
                         return Json(userupdate, JsonRequestBehavior.AllowGet);
@@ -176,6 +201,60 @@ namespace DekkOnlineMVC.Controllers
                 return RedirectToAction("Index", new { Message = "Upload Failed" });
             }
         }
+
+
+
+        //protected bool FTPUploadimg(object sender, EventArgs e)
+        //{
+        //    bool result = false;
+        //    //FTP Server URL.
+        //    string ftp = "ftp://dekkonline.sone.mx/";
+
+        //    //FTP Folder name. Leave blank if you want to upload to root folder.
+        //    string ftpFolder = "Content/Uploads/Photo/";
+
+        //    byte[] fileBytes = null;
+
+        //    //Read the FileName and convert it to Byte array.
+        //    string fileName = Path.GetFileName(FileUpload1.FileName);
+        //    using (StreamReader fileStream = new StreamReader(FileUpload1.PostedFile.InputStream))
+        //    {
+        //        fileBytes = Encoding.UTF8.GetBytes(fileStream.ReadToEnd());
+        //        fileStream.Close();
+        //    }
+
+        //    try
+        //    {
+        //        //Create FTP Request.
+        //        FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ftp + ftpFolder + fileName);
+        //        request.Method = WebRequestMethods.Ftp.UploadFile;
+
+        //        //Enter FTP Server credentials.
+        //        request.Credentials = new NetworkCredential("dekkonline.sone.mx|dekkonline", "Tr75bv5d84");
+        //        request.ContentLength = fileBytes.Length;
+        //        request.UsePassive = true;
+        //        request.UseBinary = true;
+        //        request.ServicePoint.ConnectionLimit = fileBytes.Length;
+        //        request.EnableSsl = false;
+
+        //        using (Stream requestStream = request.GetRequestStream())
+        //        {
+        //            requestStream.Write(fileBytes, 0, fileBytes.Length);
+        //            requestStream.Close();
+        //        }
+
+        //        FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+        //        response.Close();
+        //        result = true;
+        //        return result;
+        //    }
+        //    catch (WebException ex)
+        //    {
+        //        throw new Exception((ex.Response as FtpWebResponse).StatusDescription);
+        //    }
+        //}
+
+
 
         //public PartialViewResult Index()
         //{

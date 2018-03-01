@@ -26,6 +26,7 @@ namespace Entity
         public Nullable<System.DateTime> DateStart { get; set; }
         public Nullable<System.DateTime> DateEnd { get; set; }
         public string IdUser { get; set; }
+        public Nullable<int> Points { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PromoCodeUsed> PromoCodeUsed { get; set; }

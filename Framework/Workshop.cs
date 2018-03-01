@@ -119,7 +119,8 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     result = (from address in db.Workshop
-                              where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                              join zipwork in db.WorkshopZipCode on address.IdWorkshop equals zipwork.IdWorkshop
+                              where (zipwork.IdKommune >= rango1 && zipwork.IdKommune <= rango2)
                               select new ResultWorkshop
                               {
                                   IdWorkshop = address.IdWorkshop,
@@ -129,7 +130,7 @@ namespace Framework
                                   Latitude = address.Latitude,
                                   Length = address.Length,
                                   WorkImage = address.WorkImage
-                              }).ToList();
+                              }).Distinct().ToList();
                 }
             }
             catch (Exception ex)
@@ -152,48 +153,60 @@ namespace Framework
                     {
                         result = (from address in db.Workshop
                                       //where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                                  join zipwork in db.WorkshopZipCode on address.IdWorkshop equals zipwork.IdWorkshop
+                                  where (zipwork.IdKommune >= rango1 && zipwork.IdKommune <= rango2)
                                   orderby address.Average descending
                                   select new ResultWorkshop
                                   {
                                       IdWorkshop = address.IdWorkshop,
                                       Name = address.Name,
                                       Address = address.Address,
-                                      ZipCode = address.ZipCode,
+                                      ZipCode = zipwork.IdKommune,
                                       Latitude = address.Latitude,
                                       Length = address.Length,
-                                      WorkImage = address.WorkImage
-                                  }).ToList();
+                                      WorkImage = address.WorkImage,
+                                      Average = (int)address.Average
+                                  }).Distinct().ToList();
+                        result = result.GroupBy(x => x.IdWorkshop).Select(x => x.FirstOrDefault()).ToList();
+                        result = result.OrderByDescending(s => s.Average).Distinct().ToList();
+                        
+
                     }
                     else if (filter == 2)
                     {
                         result = (from address in db.Workshop
-                                  where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
-                                  orderby address.ZipCode descending
+                                  join zipwork in db.WorkshopZipCode on address.IdWorkshop equals zipwork.IdWorkshop
+                                  where (zipwork.IdKommune >= rango1 && zipwork.IdKommune <= rango2)
+                                  orderby zipwork.IdKommune descending
                                   select new ResultWorkshop
                                   {
                                       IdWorkshop = address.IdWorkshop,
                                       Name = address.Name,
                                       Address = address.Address,
-                                      ZipCode = address.ZipCode,
+                                      ZipCode = zipwork.IdKommune,
                                       Latitude = address.Latitude,
                                       Length = address.Length,
                                       WorkImage = address.WorkImage
-                                  }).ToList();
+                                  }).Distinct().ToList();
+                        result = result.GroupBy(x => x.IdWorkshop).Select(x => x.FirstOrDefault()).ToList();
+                        result = result.OrderByDescending(s => s.ZipCode).Distinct().ToList();
                     }
                     else
                     {
                         result = (from address in db.Workshop
-                                  where (address.ZipCode >= rango1 && address.ZipCode <= rango2)
+                                  join zipwork in db.WorkshopZipCode on address.IdWorkshop equals zipwork.IdWorkshop
+                                  where (zipwork.IdKommune >= rango1 && zipwork.IdKommune <= rango2)
                                   select new ResultWorkshop
                                   {
                                       IdWorkshop = address.IdWorkshop,
                                       Name = address.Name,
                                       Address = address.Address,
-                                      ZipCode = address.ZipCode,
+                                      ZipCode = zipwork.IdKommune,
                                       Latitude = address.Latitude,
                                       Length = address.Length,
                                       WorkImage = address.WorkImage
-                                  }).ToList();
+                                  }).Distinct().ToList();
+                        result = result.GroupBy(x => x.IdWorkshop).Select(x => x.FirstOrDefault()).ToList();
                     }
 
                 }
@@ -514,6 +527,43 @@ namespace Framework
 
             return result;
         }
+
+        public bool updateDeliveryappointmentmap(string idUser)
+        {
+            bool result = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var order = db.Orders.Where(s => s.idUser == idUser).OrderByDescending(s => s.id).FirstOrDefault();
+                    var delivery = db.DeliveryType.Where(s => s.IdUser == idUser).OrderByDescending(s => s.IdDelivery).FirstOrDefault();
+                    if (order.DeliveryAddress != delivery.IdDelivery || (order == null && delivery != null))
+                    {
+
+                        var deleteservicelistp = db.DeliveryServices.Where(s => s.idDelivery == delivery.IdDelivery).ToList();
+                        if (deleteservicelistp != null || deleteservicelistp.Count != 0)
+                        {
+                            foreach (var item2 in deleteservicelistp)
+                            {
+                                var deleteservice = db.DeliveryServices.Where(s => s.idDelivery == item2.idDelivery).FirstOrDefault();
+                                db.DeliveryServices.Remove(deleteservice);
+                                db.SaveChanges();
+                            }
+                            result = true;
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return result;
+        }
+
 
         public List<ResultWorkshopAppointment> loadAppoinment(int idWorkShop)
         {
@@ -1556,5 +1606,126 @@ namespace Framework
             return result;
         }
 
+        public bool DeleteZipcode(int idwo, int zipcode)
+        {
+            bool result = false;
+            try
+            {
+                using (dekkOnlineEntities db = new dekkOnlineEntities())
+                {
+                    var zipcodeWorkshop = db.WorkshopZipCode.Where(s => s.IdWorkshop == idwo && s.IdKommune == zipcode).FirstOrDefault();
+                    var zipcodevalidate = db.kommuner.Where(s => s.kommuneID == (short)zipcode).FirstOrDefault();
+                    if (zipcodevalidate != null)
+                    {
+                        if (zipcodeWorkshop != null)
+                        {
+                            db.WorkshopZipCode.Remove(zipcodeWorkshop);
+                            db.SaveChanges();
+                            result = true;
+                        }
+                        else
+                        {
+                            result = false;
+                        }
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+        public bool Workshopzipcodeadd(int idwork, int zipcode)
+        {
+            bool result = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var zipwork = db.WorkshopZipCode.Where(s => s.IdWorkshop == idwork && s.IdKommune==zipcode).FirstOrDefault();
+                    var zipcodevalidate = db.kommuner.Where(s => s.kommuneID == (short)zipcode).FirstOrDefault();
+                    if (zipcodevalidate != null)
+                    {
+                            if (zipwork == null)
+                            {
+                                WorkshopZipCode workz = new WorkshopZipCode();
+                                workz.IdWorkshop = idwork;
+                                workz.IdKommune = (short)zipcode;
+                                db.WorkshopZipCode.Add(workz);
+                                db.SaveChanges();
+                                result = true;
+                                return result;
+                            }
+                            else
+                            {
+                                result = false;
+                                return result;
+                            }
+                    }
+                    else
+                    {
+                        result = false;
+                        return result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                return result;
+                throw;
+            }
+
+        }
+
+
+        public string UpdateWorkshopImage(string path, string idUser1)
+        {
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var UserInfo = db.UserAddress.Where(s => s.IdUser == idUser1).FirstOrDefault();
+                    if (UserInfo != null)
+                    {
+                        UserInfo.Image = path;
+                        db.Entry(UserInfo).State = EntityState.Modified;
+                        db.SaveChanges();
+                        var image = db.UserAddress.Where(s => s.IdUser == idUser1).Select(s => s.Image).FirstOrDefault();
+                        return image;
+                    }
+                    else if (UserInfo == null)
+                    {
+                        UserAddress us2 = new UserAddress();
+                        us2.IdUser = idUser1;
+                        us2.Image = path;
+                        db.UserAddress.Add(us2);
+                        db.SaveChanges();
+                        var image = db.UserAddress.Where(s => s.IdUser == idUser1).Select(s => s.Image).FirstOrDefault();
+                        return image;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+
+        }
+
     }
-}
+    }

@@ -221,6 +221,8 @@ function ValPromo(id) {
             $(".keep").removeAttr('disabled');
             $(".inemail").removeAttr('disabled');
             $(".remclick").removeAttr('disabled');
+            $("#discount").text(b['tax']);
+            $(".discount").removeClass("hidden");
         }
         else if (result.Success == false) {
             $(".promo").removeClass("hidden");
@@ -269,6 +271,7 @@ function UndoPromo(id) {
             $(".keep").removeAttr('disabled');
             $(".inemail").removeAttr('disabled');
             $(".remclick").removeAttr('disabled');
+            $(".discount").addClass("hidden");
         }
         else if (result.Success == false) {
             $(".qtyprodcart").removeAttr('disabled');

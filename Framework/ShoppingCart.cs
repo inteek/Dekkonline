@@ -241,7 +241,7 @@ namespace Framework
                                     quantity = cart.quantity,
                                     totalpriceprod = Math.Truncate((double)cart.Price),
                                     cartid = cart.Id.ToString(),
-                                    UnitPrice = Math.Truncate((double)pro.proSuggestedPriceDP),
+                                    UnitPrice = Math.Truncate((double)pro.proSuggestedPrice),
                                     proDimensionprofile = pro.proDimensionProfileDP.ToString(),
                                     proDimensionWidth = pro.proDimensionWidthDP.ToString(),
                                     proDimensionDiameter = pro.proDimensionDiameterDP.ToString()
@@ -274,12 +274,18 @@ namespace Framework
                         //promocode = promocode1,
                         promocode = null,
                         points = points1,
-                        total = (decimal)subtotal2,
+                        total = (decimal)subtotal1,
                         promocodeapp = false,
                         tax = (Math.Truncate((double)iva)).ToString()} };
                     }
                     else
                     {
+                        var promocode= db.PromotionCode.Where(s => s.IdCode == promocodeused.PromoCode).FirstOrDefault();
+                        var promodis = promocode.PercentCode;
+                        promodis = promodis / 100;
+                        var disc = subtotal1 * (double)promodis;
+                        disc = Math.Truncate((double)disc);
+                        var dissub = (double)subtotal1 - (double)disc;
                         var subtotal2 = subtotal1;
                         var iva = subtotal2 * ivapor2;//TAX
                         subtotal2 = subtotal2 + iva;
@@ -289,9 +295,10 @@ namespace Framework
                         subtotal = (decimal)subtotal1,
                         promocode = promocodeused.PromoCode,
                         points = points1,
-                        total = (decimal)Math.Truncate((double)promocodeused.TotalPriceFinal),
+                        total = (decimal)Math.Truncate(dissub),
                         promocodeapp = true,
-                        tax = (Math.Truncate((double)iva)).ToString()} };
+                        tax = (Math.Truncate((double)disc).ToString())//DESCUENTO
+                        } };
 
                     }
 
@@ -349,41 +356,77 @@ namespace Framework
                 {
                     DateTime DateToday = DateTime.Now;
                     promocodediscount = db.PromotionCode.Where(p => p.IdCode == code && p.DateStart <= DateToday && p.DateEnd >= DateToday).Select(p => p.PercentCode).FirstOrDefault();
-                    if (promocodediscount != null)
+                    var promocodeuservalidate = db.PromotionCode.Where(p => p.IdUser == idUser && p.IdCode == code).FirstOrDefault();
+                    if (promocodediscount != null && promocodeuservalidate == null)
                     {
                         var usercode = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.PromoCode == code && s.Used == true).FirstOrDefault();
-                        var usercodenotused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
-                        if (usercode != null || usercodenotused != null)
+                        var usercodenotused = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false && s.PromoCode == code).FirstOrDefault();//aqui
+                        if (usercode != null )
                         {
                             return false;
                         }
-                        products = (from pro in db.products
-                                    join cart in db.ShoppingCart on pro.proId equals cart.proId
-                                    where cart.IdUser.Equals(idUser) && cart.Status == false
-                                    select new ResultShoppingCartProduct
-                                    {
-                                        totalpriceprod = Math.Round((double)cart.Price, 2),
-                                    }).ToList();
-                        double? totalprice = products.Select(p => p.totalpriceprod).Sum();
-                        totalprice = (int)Math.Floor((decimal)totalprice);
-                        double? totalprice2 = products.Select(p => p.totalpriceprod).Sum();
-                        promocodediscount = promocodediscount / 100;
-                        decimal totalpricepromocode = promocodediscount * (decimal)totalprice;
-                        totalprice = totalprice - (double)totalpricepromocode;
-                        var iva = totalprice * ivapor2;//TAX
-                        totalprice = totalprice + iva;
-                        totalprice = (int)Math.Floor((decimal)totalprice);
-                        totalprice2 = totalprice2 + iva;
-                        Entity.PromoCodeUsed addpromo = new Entity.PromoCodeUsed();
-                        addpromo.idUser = idUser;
-                        addpromo.PromoCode = code;
-                        addpromo.TotalPrice = (decimal)totalprice2;
-                        addpromo.TotalPriceFinal = (decimal)totalprice;
-                        addpromo.Used = false;
-                        addpromo.DateUsed = DateTime.Now;
-                        db.PromoCodeUsed.Add(addpromo);
-                        db.SaveChanges();
-                        return true;
+                        else if ( usercodenotused != null)
+                        {
+                            products = (from pro in db.products
+                                        join cart in db.ShoppingCart on pro.proId equals cart.proId
+                                        where cart.IdUser.Equals(idUser) && cart.Status == false
+                                        select new ResultShoppingCartProduct
+                                        {
+                                            totalpriceprod = Math.Round((double)cart.Price, 2),
+                                        }).ToList();
+                            double? totalprice = products.Select(p => p.totalpriceprod).Sum();
+                            totalprice = (int)Math.Floor((decimal)totalprice);
+                            double? totalprice2 = products.Select(p => p.totalpriceprod).Sum();
+                            promocodediscount = promocodediscount / 100;
+                            decimal totalpricepromocode = promocodediscount * (decimal)totalprice;
+                            totalpricepromocode = (int)Math.Floor((decimal)totalpricepromocode);
+                            totalprice = totalprice - (double)totalpricepromocode;
+                            //var iva = totalprice * ivapor2;//TAX
+                            //totalprice = totalprice + iva; //Con esto comentado solo guardara el precio final de la orden sin el iva
+                            totalprice = (int)Math.Floor((decimal)totalprice);
+                            //totalprice2 = totalprice2 + iva;//Aqui guardara el precio de la orden sin validar el codigo de promocion y sin iva
+                            usercodenotused.PromoCode = code;
+                            usercodenotused.TotalPrice = (decimal)totalprice2;
+                            usercodenotused.TotalPriceFinal = (decimal)totalprice;
+                            usercodenotused.Used = false;
+                            usercodenotused.DateUsed = DateTime.Now;
+                            db.Entry(usercodenotused).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return true;
+                        }
+                        else
+                        {
+                            products = (from pro in db.products
+                                        join cart in db.ShoppingCart on pro.proId equals cart.proId
+                                        where cart.IdUser.Equals(idUser) && cart.Status == false
+                                        select new ResultShoppingCartProduct
+                                        {
+                                            totalpriceprod = Math.Round((double)cart.Price, 2),
+                                        }).ToList();
+                            double? totalprice = products.Select(p => p.totalpriceprod).Sum();
+                            totalprice = (int)Math.Floor((decimal)totalprice);
+                            double? totalprice2 = products.Select(p => p.totalpriceprod).Sum();
+                            promocodediscount = promocodediscount / 100;
+                            decimal totalpricepromocode = promocodediscount * (decimal)totalprice;
+                            totalpricepromocode = (int)Math.Floor((decimal)totalpricepromocode);
+                            totalprice = totalprice - (double)totalpricepromocode;
+                            //var iva = totalprice * ivapor2;//TAX
+                            //totalprice = totalprice + iva; //Con esto comentado solo guardara el precio final de la orden sin el iva
+                            totalprice = (int)Math.Floor((decimal)totalprice);
+                            //totalprice2 = totalprice2 + iva;//Aqui guardara el precio de la orden sin validar el codigo de promocion y sin iva
+                            Entity.PromoCodeUsed addpromo = new Entity.PromoCodeUsed();
+                            addpromo.idUser = idUser;
+                            addpromo.PromoCode = code;
+                            addpromo.TotalPrice = (decimal)totalprice2;
+                            addpromo.TotalPriceFinal = (decimal)totalprice;
+                            addpromo.Used = false;
+                            addpromo.DateUsed = DateTime.Now;
+                            addpromo.Points = 0;
+                            db.PromoCodeUsed.Add(addpromo);
+                            db.SaveChanges();
+                            return true;
+                        }
+                     
                     }
                     else
                     {
@@ -498,50 +541,118 @@ namespace Framework
                         price += item.Price;
 
                     }
-
+                 db.SaveChanges();
                     var promocodeusedus = db.PromoCodeUsed.Where(s => s.idUser == IdUser1 && s.Used == false).FirstOrDefault();
                     if (promocodeusedck != null)
                     {
                         price = 0;
-                        var percent = db.PromotionCode.Where(s => s.IdCode == promocodeusedck.PromoCode).Select(s => s.PercentCode).FirstOrDefault();
-                        var user1 = db.ShoppingCart.Where(s => s.IdUser == IdUser1 && s.Status == false).ToList();
-                        foreach (var item in user1)
+                        var validatepromocodeuser = db.PromotionCode.Where(s => s.IdCode == promocodeusedck.PromoCode && s.IdUser == IdUser1).FirstOrDefault();
+                        var validatepromocodeusedbyuser = db.PromoCodeUsed.Where(s => s.PromoCode == promocodeusedck.PromoCode && s.idUser == IdUser1 && s.Used == true).FirstOrDefault();
+                        if (validatepromocodeuser != null && validatepromocodeusedbyuser == null)
                         {
-                            price = item.Price;
-                        }
-                        promocodeusedck.idUser = IdUser1;
-                        percent = percent / 100;
-                        promocodeusedck.TotalPrice = promocodeusedck.TotalPrice + price;
-                        var totalfinal = promocodeusedck.TotalPrice - (percent * promocodeusedck.TotalPrice);
-                        totalfinal = (int)Math.Floor((decimal)totalfinal);
-                        var iva = (double)totalfinal * ivapor2;//TAX
-                        totalfinal = totalfinal + (decimal)iva;
-                        totalfinal = (int)Math.Floor((decimal)totalfinal);
-                        promocodeusedck.TotalPriceFinal = (decimal)totalfinal;
-                        if (promocodeusedus != null)
-                        {
-                            db.PromoCodeUsed.Remove(promocodeusedus);
 
                         }
+                        else
+                        {
+                            var percent = db.PromotionCode.Where(s => s.IdCode == promocodeusedck.PromoCode).Select(s => s.PercentCode).FirstOrDefault();
+                            var user1 = db.ShoppingCart.Where(s => s.IdUser == IdUser1 && s.Status == false).ToList();
+                            foreach (var item in user1)
+                            {
+                                price += item.Price;
+                            }
+                            promocodeusedck.idUser = IdUser1;
+                            percent = percent / 100;
+                            promocodeusedck.TotalPrice = promocodeusedck.TotalPrice + price;
+                            var promo1 = (percent * promocodeusedus.TotalPrice);
+                            promo1 = (int)Math.Floor((decimal)promo1);
+                            var totalfinal = promocodeusedck.TotalPrice - promo1;
+                            totalfinal = (int)Math.Floor((decimal)totalfinal);
+                            //var iva = (double)totalfinal * ivapor2;//TAX
+                            //totalfinal = totalfinal + (decimal)iva;
+                            totalfinal = (int)Math.Floor((decimal)totalfinal);
+                            promocodeusedck.TotalPriceFinal = (decimal)totalfinal;
+                            if (promocodeusedus != null)
+                            {
+                                db.PromoCodeUsed.Remove(promocodeusedus);
+
+                            }
+                        }
                     }
-                    else if (promocodeusedus != null)
+                 else   if (promocodeusedus != null)
                     {
                         var percent = db.PromotionCode.Where(s => s.IdCode == promocodeusedus.PromoCode).Select(s => s.PercentCode).FirstOrDefault();
                         percent = percent / 100;
                         promocodeusedus.TotalPrice = promocodeusedus.TotalPrice + price;
-                        var totalfinal = promocodeusedus.TotalPrice - (percent * promocodeusedus.TotalPrice);
+                        var promo1 = (percent * promocodeusedus.TotalPrice);
+                        promo1 = (int)Math.Floor((decimal)promo1);
+                        var totalfinal = promocodeusedus.TotalPrice - promo1;
                         totalfinal = (int)Math.Floor((decimal)totalfinal);
-                        var iva = (double)totalfinal * ivapor2;//TAX
-                        totalfinal = totalfinal + (decimal)iva;
+                        //var iva = (double)totalfinal * ivapor2;//TAX
+                        //totalfinal = totalfinal + (decimal)iva;
                         totalfinal = (int)Math.Floor((decimal)totalfinal);
                         promocodeusedus.TotalPriceFinal = (decimal)totalfinal;
                     }
-
+                   
+                   
                     db.SaveChanges();
                     result = true;
                 }
                 else if (user.Count == 0)
                 {
+                    var promocodeusedus = db.PromoCodeUsed.Where(s => s.idUser == IdUser1 && s.Used == false).FirstOrDefault();
+
+                    if (promocodeusedck != null)
+                    {
+                        price = 0;
+                        var validatepromocodeuser = db.PromotionCode.Where(s => s.IdCode == promocodeusedck.PromoCode && s.IdUser == IdUser1).FirstOrDefault();
+                        var validatepromocodeusedbyuser = db.PromoCodeUsed.Where(s => s.PromoCode == promocodeusedck.PromoCode && s.idUser == IdUser1 && s.Used == true).FirstOrDefault();
+                        if (validatepromocodeuser != null && validatepromocodeusedbyuser == null)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            var percent = db.PromotionCode.Where(s => s.IdCode == promocodeusedck.PromoCode).Select(s => s.PercentCode).FirstOrDefault();
+                            var user1 = db.ShoppingCart.Where(s => s.IdUser == IdUser1 && s.Status == false).ToList();
+                            foreach (var item in user1)
+                            {
+                                price += item.Price;
+                            }
+                            promocodeusedck.idUser = IdUser1;
+                            percent = percent / 100;
+                            promocodeusedck.TotalPrice = price;
+                            var promo = percent * price;
+                            promo = (int)Math.Floor((decimal)promo);
+                            var totalfinal = promocodeusedck.TotalPrice - promo;
+                            totalfinal = (int)Math.Floor((decimal)totalfinal);
+                            //var iva = (double)totalfinal * ivapor2;//TAX
+                            //totalfinal = totalfinal + (decimal)iva;
+                            totalfinal = (int)Math.Floor((decimal)totalfinal);
+                            promocodeusedck.TotalPriceFinal = (decimal)totalfinal;
+                            if (promocodeusedus != null)
+                            {
+                                db.PromoCodeUsed.Remove(promocodeusedus);
+
+                            }
+                        }
+                    }
+                   else if (promocodeusedus != null)
+                    {
+                        var percent = db.PromotionCode.Where(s => s.IdCode == promocodeusedus.PromoCode).Select(s => s.PercentCode).FirstOrDefault();
+                        percent = percent / 100;
+                        promocodeusedus.TotalPrice = promocodeusedus.TotalPrice + price;
+                        var promo1 = (percent * promocodeusedus.TotalPrice);
+                        promo1 = (int)Math.Floor((decimal)promo1);
+                        var totalfinal = promocodeusedus.TotalPrice - promo1;
+
+                        totalfinal = (int)Math.Floor((decimal)totalfinal);
+                        //var iva = (double)totalfinal * ivapor2;//TAX
+                        //totalfinal = totalfinal + (decimal)iva;
+                        totalfinal = (int)Math.Floor((decimal)totalfinal);
+                        promocodeusedus.TotalPriceFinal = (decimal)totalfinal;
+                    }
+
+                    db.SaveChanges();
                     result = true;
                 }
                 else
@@ -582,5 +693,113 @@ namespace Framework
             }
             return result;
         }
+
+        public bool confirmPromocode(string code, string idUser, string idUserCookie)
+        {
+            bool result = false;
+            try
+            {
+                DateTime DateToday = DateTime.Now;
+                var promocodediscountUser = (dynamic)null;
+                var promocodediscountdates = (dynamic)null;
+                using (var db = new dekkOnlineEntities())
+                {
+                    var userdata = db.AspNetUsers.Where(s=>s.Id == idUser).FirstOrDefault();//validar si se esta entrando a la url con un usuario o con cookie
+                    if (userdata != null)
+                    {
+                        promocodediscountUser = db.PromotionCode.Where(p => p.IdCode == code && p.IdUser == userdata.Id).FirstOrDefault();//si entra un usuario logueado validar si no es su propio codigo de promocion
+                        if (promocodediscountUser != null)
+                        {
+                            result = false;
+                        }
+                        else
+                        {
+                            promocodediscountdates = db.PromotionCode.Where(p => p.IdCode == code && p.DateStart <= DateToday && p.DateEnd >= DateToday).FirstOrDefault();//validar si el codigo de promocion esta vigente
+                            if (promocodediscountdates != null)
+                            {
+                                var usercode = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.PromoCode == code && s.Used == true).FirstOrDefault();//validar que el usuario no haya utilizado antes el codigo de promocion
+                                if (usercode != null)
+                                {
+                                    result = false;
+                                }
+                                else
+                                {
+                                    result = true;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        promocodediscountdates = db.PromotionCode.Where(p => p.IdCode == code && p.DateStart <= DateToday && p.DateEnd >= DateToday).FirstOrDefault();//validar si el codigo de promocion esta vigente
+                        if (promocodediscountdates != null)
+                        {
+                                var usercode2 = db.PromoCodeUsed.Where(s => s.idUser == idUserCookie  && s.Used == false).FirstOrDefault();//validar si es usuario con cookie, y su lo es, validar si tiene un codigo de promocion activo, si lo tiene que lo modifique por el nuevo
+                                if (usercode2 != null)
+                                {
+                                var validate = UpdatePromo(code, idUserCookie);
+                                result = validate;
+                                }
+                                else
+                                {
+                                PromoCodeUsed used = new PromoCodeUsed();
+                                used.idUser = idUserCookie;
+                                used.PromoCode = code;
+                                used.TotalPrice = 0;
+                                used.TotalPriceFinal = 0;
+                                used.Used = false;
+                                used.Points = 0;
+                                used.DateUsed = DateTime.Now;
+                                db.PromoCodeUsed.Add(used);
+                                db.SaveChanges();
+                                result = true;
+                                }
+                        }
+                        else
+                        {
+                            result = false;
+                        }
+
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UpdatePromo (string code, string idusercookie)
+        {
+            bool result = false;
+            try
+            {
+                using (var db = new dekkOnlineEntities())
+                {
+                    var registro = db.PromoCodeUsed.Where(s => s.idUser == idusercookie && s.Used == false).FirstOrDefault();
+                    if (registro != null)
+                    {
+                        registro.PromoCode = code;
+                        db.Entry(registro).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

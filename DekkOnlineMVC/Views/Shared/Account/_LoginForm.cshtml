@@ -1,0 +1,89 @@
+﻿@using DekkOnlineMVC.Models;
+
+@model LoginViewModel
+
+@Html.AntiForgeryToken()
+
+@*<div class="col-xs-12 hgRowTitle">
+        Ya eres miembro:
+    </div>*@
+
+@*<div class="col-xs-12 paddingLRZero mlLabels">
+        Usuario:
+    </div>*@
+
+@Html.TextBoxFor(m => m.usuEmail, "", new { @class = "txtLogin txtUser txtUser1", @autocomplete = "off", @onclick = "ocultarEtiqueta1()"})
+@Html.ValidationMessageFor(m => m.usuEmail, "", new { @class = "text-danger" })
+
+
+<div class="clearfix"></div>
+<br />
+@*<div class="col-xs-12 paddingLRZero mlLabels">
+        Contraseña:
+    </div>*@
+
+@Html.PasswordFor(m => m.usuPassword, new { @class = "txtLogin txtPass txtPass1", @autocomplete = "off", @onclick = "ocultarEtiqueta2()" })
+@Html.ValidationMessageFor(m => m.usuPassword, "", new { @class = "text-danger" })
+
+
+<div class="clearfix"></div>
+<br />
+
+<button id="btnLogin" class="loginBtn" onclick="datosPersonales()">
+    LOG IN
+</button>
+
+
+<button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalPassRecovery" data-dismiss="modal">
+    Restore password
+</button>
+
+
+@Html.Hidden("returnUrl", (ViewBag.ReturnUrl != null) ? (string)ViewBag.ReturnUrl : null, new { @class = "loginHidReturnUrl" })
+
+<div class="hidden m-messageHide">
+    @Html.Partial("_ModalState_Errors")
+</div>
+
+<script type="text/javascript">
+    @{ <text> @(new HtmlString(Model.scriptJS)) </text>}
+</script>
+
+
+<script>
+    function datosPersonales() {
+        localStorage.setItem("datosPeronales", 0);
+        localStorage.setItem("txtZipCode", 0);
+        localStorage.setItem("Firstname", 0);
+        localStorage.setItem("Lastname", 0);
+        localStorage.setItem("address", 0);
+        localStorage.setItem("email", 0);
+        localStorage.setItem("mobile", 0);
+        localStorage.setItem("direccionMapa", 0);
+
+        localStorage.setItem("dateMap", 0);
+        localStorage.setItem("timeMap", 0);
+        localStorage.setItem("commentsMap", 0);
+
+        localStorage.setItem("radio", 0);
+
+        localStorage.removeItem("search_latitude");
+        localStorage.removeItem("search_longitude");
+    }
+</script>
+
+<script>
+    function ocultarEtiqueta1() {
+        $(".txtUser1").removeClass("txtUser")
+        if ($(".txtPass1").val() == "") {
+            $(".txtPass1").addClass("txtPass")
+        }
+    }
+
+    function ocultarEtiqueta2() {
+        $(".txtPass1").removeClass("txtPass")
+        if ($(".txtUser1").val() == "") {
+            $(".txtUser1").addClass("txtUser")
+        }
+    }
+</script>

@@ -314,7 +314,7 @@
 .carritoIndex {
     margin-left: 92px;
     margin-top: 20px;
-    z-index:99999;
+    z-index:1;
 }
 
 .medidasCarritoIndex {
@@ -325,7 +325,7 @@
 .carritoStep2 {
     margin-left: 96px;
     margin-top: 22px;
-    z-index: 99999;
+    z-index: 1;
 }
 
 .carritoStep3 {
@@ -1156,7 +1156,7 @@
     .carritoIndex {
         margin-left: -30px;
         margin-top: 9px;
-        z-index: 99999;
+        z-index: 1;
     }
 
     .medidasCarritoIndex {

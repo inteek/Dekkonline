@@ -21,6 +21,7 @@ namespace Entity
         public Nullable<decimal> TotalPriceFinal { get; set; }
         public Nullable<System.DateTime> DateUsed { get; set; }
         public int id { get; set; }
+        public Nullable<int> Points { get; set; }
     
         public virtual PromotionCode PromotionCode { get; set; }
     }

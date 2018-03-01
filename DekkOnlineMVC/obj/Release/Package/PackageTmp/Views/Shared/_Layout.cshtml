@@ -1,6 +1,7 @@
-﻿
+﻿@using DekkOnlineMVC.Models;
 @using System.Web.Optimization;
-@using Microsoft.AspNet.Identity    
+@using Microsoft.AspNet.Identity
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +9,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DekkOnline</title>
-    <link rel="icon" type="image/png" href="http://dekkonline.sonetworks.no/Content/iconoLogo.png" style="width:78%;height:78%"/>
+    <link rel="icon" type="image/png" href="http://dekkonline.sonetworks.no/Content/iconoLogo.png" style="width:78%;height:78%" />
 
     @Styles.Render("~/Styles/bootstrap.css")
-    @Styles.Render("~/Styles/Site.css?V=2")
+    @Styles.Render("~/Styles/Site.css?V=4")
     @Styles.Render("~/Styles/plugins/notyf.min.css")
     @Styles.Render("~/Styles/plugins/bootstrap-popover-x.css")
     @Styles.Render("~/Styles/plugins/ladda-themeless.min.css")
@@ -34,23 +35,23 @@
 
 
     @Html.DevExpress().GetStyleSheets(
-                                                                                    new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.CardView },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.VerticalGrid },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.DashboardDesigner },
-                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.DashboardViewer }
-                                                                                )
+                                                                                                        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.CardView },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.SpellChecker },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.VerticalGrid },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.Spreadsheet },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.DashboardDesigner },
+                                                                                            new StyleSheet { ExtensionSuite = ExtensionSuite.DashboardViewer }
+                                                                                                    )
 
 
 
@@ -65,23 +66,23 @@
 
 
     @Html.DevExpress().GetScripts(
-                                                                                    new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.CardView },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.SpellChecker },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.RichEdit },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.Editors },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.VerticalGrid },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.Spreadsheet },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.Scheduler },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.Chart },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.Report },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.GridView },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.TreeList },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.DashboardDesigner },
-                                                                        new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
-                                                                                )
+                                                                                                        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.CardView },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.SpellChecker },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.RichEdit },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.Editors },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.VerticalGrid },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.Spreadsheet },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.Chart },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.Report },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.GridView },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.TreeList },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.DashboardDesigner },
+                                                                                            new Script { ExtensionSuite = ExtensionSuite.DashboardViewer }
+                                                                                                    )
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3pN4K2y47Ta_rkII0WsPOFvCUut8u98w" type="text/javascript"></script>
 
@@ -106,7 +107,6 @@
     <div class="prMenu" style="overflow-x:hidden;overflow-y:hidden;">
         @Html.Partial("_LoginPartial")
     </div>
-
     <div class="clearfix"></div>
     <div id="homeContainDiv" class="prContain">
         <div id="HomeContent">
@@ -163,7 +163,7 @@
 
 
 
-    <div id="modalLogin" class="modal fade modalLogin" data-backdrop="true" style="z-index:9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    @*<div id="modalLogin" class="modal fade modalLogin" data-backdrop="true" style="z-index:9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -206,10 +206,10 @@
                             <div class="row">
                                 <label>Remember me?</label>
                             </div>
-                            @*<div class="checkbox">
+                            <div class="checkbox">
                                     <asp:CheckBox runat="server" ID="RememberMe" />
                                         <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
-                                </div>*@
+                                </div>
                         </div>
                     </div>
 
@@ -219,10 +219,9 @@
 
                     <div class="BoxGeneral text-center">
                         <h4>LOG IN FASTER</h4>
+
                         <div class="clearfix"></div>
-                        @*<section id="socialLoginForm">
-                                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                            </section>*@
+
                         <div class="row">
                             <div class="col-lg-2"></div>
                             <div class="col-lg-4">
@@ -241,10 +240,113 @@
                 </div>
             </div>
         </div>
+    </div>*@
+
+
+    <div class="modal fade modalLogin" id="modalLogin2" tabindex="-1" role="dialog" style="z-index:9999;" data-backdrop="true" aria-labelledby="modalLogin2" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                @*<div class="modal-header">
+                        <img src="~/Content/Images/general/logoMd.png" alt="Logo" class="mlImgLogin" />
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>*@
+                <div class="modal-body">
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 loginLogo">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="loginContain">
+                        <div class="col-md-6">
+                            <div class="modalLoginLt">
+                                <h4>ALREADY A DEKKONLINE MEMBER:</h4>
+
+                                @using (Ajax.BeginForm("_LoginForm", "Account", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmLogin", OnComplete = "showMessages();" }))
+                                {
+                                    <fieldset id="frmLogin">
+                                        @Html.Partial("Account/_LoginForm", new LoginViewModel())
+                                    </fieldset>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="modalLoginRt">
+                                <h4>REGISTER:</h4>
+
+                                @using (Ajax.BeginForm("_RegisterForm", "Account", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmRegister", OnComplete = "showMessages();" }))
+                                {
+                                    <fieldset id="frmRegister">
+                                        @Html.Partial("Account/_RegisterForm", new RegisterViewModel())
+                                    </fieldset>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
+
+                    <div class="BoxGeneral text-center">
+                        @using (Html.BeginForm("_LoginFormSocialNetworks", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "frmSocialNetworks" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("returnUrl", (ViewBag.ReturnUrl != null) ? (string)ViewBag.ReturnUrl : null, new { @class = "loginHidReturnUrl" })
+                            <div class="col-xs-12 mlSocialNetworksLbl mlLabels">
+                                LOG IN FASTER
+                            </div>
+                            <div class="col-xs-12 col-sm-6 paddingLRZero-XS">
+                                <button type="submit" class="btn m-btnLoginNetworks m-btnFacebook width100" name="provider" value="Facebook">
+                                    <img src="~/Content/imgs/logoFacebook.png" alt="F" width="30" />
+                                    <span class="hidden-xs hidden-sm">Sign up with</span> Facebook
+                                </button>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 paddingLRZero-XS">
+                                <button type="submit" class="btn m-btnLoginNetworks m-btnGoogle width100" name="provider" value="Google">
+                                    <img src="~/Content/imgs/icons/logoGmail.png" alt="G" width="30" />
+                                    <span class="hidden-xs hidden-sm">Sign up with</span> Google
+                                </button>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="spacer20"></div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPassRecovery" tabindex="-1" role="dialog" data-backdrop="false" style="z-index:999999;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="~/Content/Images/general/logoMd.png" alt="Logo" class="mlImgLogin" />
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body modalBodyLogin">
+                    <div class="container-fluid">
+                        <div class="row row-eq-height">
+                            <div class="col-xs-12 col-sm-12">
+                                @using (Ajax.BeginForm("_PasswordRecoveryForm", "Account", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmPasswordRecoveryForm", OnComplete = "showMessages();" }))
+                                {
+                                    <fieldset id="frmPasswordRecoveryForm">
+                                        @Html.Partial("Account/_PasswordRecoveryForm", new ForgotPasswordViewModel())
+                                    </fieldset>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
-
+    @Html.Partial("Account/_Login")
 
 
 
@@ -273,7 +375,18 @@
 
     @RenderSection("scripts", required: false)
 
-
+    @if (ViewBag.showLogin != null && (bool)ViewBag.showLogin == true)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#modalLogin2").modal({
+                    show: true,
+                    backdrop: false
+                })
+                showMessages();
+            });
+        </script>
+    }
 
     <script type="text/javascript">
         var zip = "";
@@ -476,7 +589,7 @@
         }
 
         function openLogin() {
-            $('#modalLogin').modal('show');
+            $('#modalLogin2').modal('show');
         }
 
         function goHome() {

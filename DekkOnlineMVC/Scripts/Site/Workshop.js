@@ -59,14 +59,11 @@ $(document).ready(function () {
 
     });
 
-    $("#upload").on("click", function () {
+    $("#UploadImg").change(function () {
         var data = new FormData();
-        var files = $("#imageup").get(0).files;
+        var files = $("#UploadImg").get(0).files;
         if (files.length > 0) {
             data.append("MyImages", files[0]);
-        }
-        else {
-            return false;
         }
 
         $.ajax({
@@ -77,14 +74,22 @@ $(document).ready(function () {
             data: data,
             success: function (response) {
                 //code after success
-                $(".imgup").remove();
-                $(".addpromoapp").append("<img src='" + response + "' class='imgdel' style='width: 130px; height: 130px; border: 1px solid #7F8C8D;' />");
+                $(".imagendivprofilew").html("");
+                $(".imagendivprofilew").append("<img src='" + response + "' style='width: 130px; height: 130px; border: 1px solid #7F8C8D; ' />");
+                $('#clearr').click();
             },
             error: function (er) {
                 alert(er);
             }
 
         });
+    });
+
+
+    $('#clearr').on('click', function (e) {
+        var $el = $('#UploadImg');
+        $el.wrap('<form>').closest('form').get(0).reset();
+        $el.unwrap();
     });
 
     filltableschedule();
@@ -273,14 +278,14 @@ return false;
 
 
         $('#btnRight').click(function (e) {
-            var selectedOpts = $('#lstBox1 option:selected');
-            if (selectedOpts.length == 0) {
+            var selectedOpts1 = $('#lstBox1 option:selected');
+            if (selectedOpts1.length == 0) {
                 alert("Nothing to move.");
+                return false;
                 e.preventDefault();
             }
-            $('#lstBox2').append($(selectedOpts).clone());
-            $(selectedOpts).remove();
-            e.preventDefault();
+            var zip = $('#lstBox1 option:selected').val();
+            moverightzipcode(zip)
         });
         $('#btnAllRight').click(function (e) {
             var selectedOpts = $('#lstBox1 option');
@@ -293,14 +298,14 @@ return false;
             e.preventDefault();
         });
         $('#btnLeft').click(function (e) {
-            var selectedOpts = $('#lstBox2 option:selected');
-            if (selectedOpts.length == 0) {
+            var selectedOpts2 = $('#lstBox2 option:selected');
+            if (selectedOpts2.length == 0) {
                 alert("Nothing to move.");
+                return false;
                 e.preventDefault();
             }
-            $('#lstBox1').append($(selectedOpts).clone());
-            $(selectedOpts).remove();
-            e.preventDefault();
+            var zip = $('#lstBox2 option:selected').val();
+            moverleftzipcode(zip)
         });
         $('#btnAllLeft').click(function (e) {
             var selectedOpts = $('#lstBox2 option');
@@ -1100,8 +1105,8 @@ function fillzipcodesinWorkshop() {
             $.each(result, function () {
                 $dropdown.append($("<option />").val(this.kommuneID).text(this.kommuneID + " " + this.KommuneNavn + " " + this.fylker));
             });
-            var zipactual = $("#zip").text();
-            $("#multiSelectzip").val(zipactual).change();
+            //var zipactual = $("#zip").text();
+            //$("#multiSelectzip").val(zipactual).change();
         }
         else if (result.Success == false) {
             return false;
@@ -1135,23 +1140,42 @@ function fillzipcodesnNoWorkshop() {
 };
 
 
-function moverightzipcode(idwo, zipcode) {
+function moverightzipcode(zipcode1) {
     var data = {
-        idservice: idserv,
-        Name: name1
+        idwo: idWork,
+        zipcode: zipcode1
     };
-    conectarAsy("../Workshop/ServiceWorkshopUpdate", data, function (result) {
+    conectarAsy("../Workshop/zipcodeinworkshopdelete", data, function (result) {
         if (result != null && result.Success != false) {
-            filltableservice();
-            $("#txt_nameedit").val("");
-            $("#txt_descedit").val("");
-            $("#modalEditServ").modal('hide');
+            var selectedOpts3 = $('#lstBox1 option:selected');
+            $('#lstBox2').append($(selectedOpts3).clone());
+            $(selectedOpts3).remove();
+            event.preventDefault();
         }
         else if (result.Success == false) {
-            filltableservice();
-            $("#txt_nameedit").val("");
-            $("#txt_descedit").val("");
-            $("#modalEditServ").modal('hide');
+            alert(result.msg);
+        }
+        else if (result.error == true) {
+            alert(result.msg);
+        }
+    });
+
+};
+
+function moverleftzipcode(zipcode1) {
+    var data = {
+        idwo: idWork,
+        zipcode: zipcode1
+    };
+    conectarAsy("../Workshop/zipcodeinworkshopadd", data, function (result) {
+        if (result != null && result.Success != false) {
+            var selectedOpts4 = $('#lstBox2 option:selected');
+            $('#lstBox1').append($(selectedOpts4).clone());
+            $(selectedOpts4).remove();
+            event.preventDefault();
+        }
+        else if (result.Success == false) {
+            alert(result.msg);
         }
         else if (result.error == true) {
             alert(result.msg);

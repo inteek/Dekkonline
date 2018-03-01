@@ -17,5 +17,6 @@ namespace Framework.Libraies
         public string Length { get; set; }
         public string WorkImage { get; set; }
         public string Email { get; set; }
+        public int Average { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization;
+@using DekkOnlineMVC.Models;
 @model Framework.Libraies.ResulUserWorkShop
 
 @{
@@ -17,8 +18,11 @@
 
 @*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX6wD6FcmE4ZEFB2gEVka9qNkdsA4eqeg"></script>*@
 
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='//fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+
 @Styles.Render("~/Styles/Dimension.css?v=4")
-@Styles.Render("~/Styles/Shoppingcart.css?v=3")
+@Styles.Render("~/Styles/Shoppingcart.css?v=4")
 
 
 <style>
@@ -205,13 +209,13 @@
                                     <div class="col-lg-2 col-xs-6">
                                         <input type="text" class="form-control borderInput" id="txtZipCode" placeholder="">
                                         @Html.DevExpress().TextBox(settings =>
-                                                                                  {
-                                                                                      settings.Name = "txtZipCode";
-                                                                                      settings.Height = Unit.Pixel(30);
-                                                                                      settings.Width = Unit.Percentage(130);
-                                                                                      settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
-                                                                                      settings.ClientVisible = false;
-                                                                                  }).GetHtml()
+                                                                                                           {
+                                                                                                               settings.Name = "txtZipCode";
+                                                                                                               settings.Height = Unit.Pixel(30);
+                                                                                                               settings.Width = Unit.Percentage(130);
+                                                                                                               settings.ControlStyle.CssClass = "BoxGeneral form-control borderInput";
+                                                                                                               settings.ClientVisible = false;
+                                                                                                           }).GetHtml()
                                     </div>
                                     <label id="validateZipcode" class="textValidateFalse">The zipcode field is required</label>
                                 </div>
@@ -336,6 +340,11 @@
                                 </div>
 
                             }
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    NearestInicio();
+                                });
+                            </script>
                         }
                         else
                         {
@@ -446,6 +455,7 @@
                     <label id="validateDateMapa" class="textValidateDataModal">The date must be greater than the current</label>
                     <label id="validateDateMapaPasada" class="textValidateDataModal">The date must be less than the current date</label>
                     <label id="EmailExistente" class="textValidateDataModal">Please enter another email the current one already exists</label>
+                    <img src="~/Content/giphy.gif" style="width:15%; display:none;" id="gifLog" />
                     <button type="submit" class="btn btn-default btn-lg" id="next">NEXT</button>
                 </div>
             </div>
@@ -454,80 +464,79 @@
 </div>
 
 
-<div id="modalLogin" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modalLogin" id="modalLogin2" tabindex="-1" role="dialog" style="z-index:9999;" data-backdrop="true" aria-labelledby="modalLogin2" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div style="margin-right:10px; margin-top:5px;">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            <div class="col-xs-12 loginLogo">
-            </div>
-            <div class="clearfix"></div>
-            <div class="loginContain">
-                <div class="col-md-6">
-                    <div class="modalLoginLt">
-                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
-
-                        @Html.Partial("Login")
-
-                    </div>
+            @*<div class="modal-header">
+                    <img src="~/Content/Images/general/logoMd.png" alt="Logo" class="mlImgLogin" />
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>*@
+            <div class="modal-body">
+                <div class="clearfix"></div>
+                <div class="spacer20"></div>
+                <div class="clearfix"></div>
+                <div class="col-xs-12 loginLogo">
                 </div>
-                <div class="col-md-6">
-                    <div class="modalLoginRt">
-                        <h4>REGISTER:</h4>
+                <div class="clearfix"></div>
+                <div class="loginContain">
+                    <div class="col-md-6">
+                        <div class="modalLoginLt">
+                            <h4>ALREADY A DEKKONLINE MEMBER:</h4>
 
-                        @Html.Partial("Register")
+                            @using (Ajax.BeginForm("_LoginForm", "Account", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmLogin", OnComplete = "showMessages();" }))
+                            {
+                                <fieldset id="frmLogin">
+                                    @Html.Partial("Account/_LoginForm", new LoginViewModel())
+                                </fieldset>
+                            }
 
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <a style=" margin-left:52px; cursor:pointer; font-size:18px;"><font color="#21618C">Restore password</font></a>
-                <div class="form-check" style="margin-left:52px;">
-                    <label class="form-check-label" for="exampleCheck1" style="font-size:18px; display: block; padding-left: 15px; text-indent: -15px;">
-                        <input type="checkbox" class="form-check-input" id="Remember" style="width:18px; height:18px;padding: 0; margin:0; vertical-align: bottom; position: relative; top: -3px; *overflow: hidden;">
-                        Remember me?
-                    </label>
-                </div>
-            </div>
-
-            @*<div class="hidden">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            <asp:CheckBox runat="server" ID="RememberMe" />
-                            <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
                         </div>
                     </div>
-                </div>*@
+                    <div class="col-md-6">
+                        <div class="modalLoginRt">
+                            <h4>REGISTER:</h4>
 
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            <div class="BoxGeneral text-center">
-                <h4>LOG IN FASTER</h4>
-                <div class="clearfix"></div>
-                @*<section id="socialLoginForm">
-                        <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                    </section>*@
-                <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-4">
-                        <button class="btn btn-primary btn-sm" style="width:180px; height:45px; font-size:22px;">FACEBOOK</button>
+                            @using (Ajax.BeginForm("_RegisterForm", "Account", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmRegister", OnComplete = "showMessages();" }))
+                            {
+                                <fieldset id="frmRegister">
+                                    @Html.Partial("Account/_RegisterForm", new RegisterViewModel())
+                                </fieldset>
+                            }
+                        </div>
+
                     </div>
-                    <div class="col-lg-4">
-                        <button class="btn btn-danger btn-sm" style="width:180px; height:45px; font-size:22px;">GOOGLE</button>
-                    </div>
-                    <div class="col-lg-2"></div>
                 </div>
-            </div>
 
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
+                <div class="clearfix"></div>
+                <div class="spacer20"></div>
+                <div class="clearfix"></div>
+
+                <div class="BoxGeneral text-center">
+                    @using (Html.BeginForm("_LoginFormSocialNetworks", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "frmSocialNetworks" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("returnUrl", (ViewBag.ReturnUrl != null) ? (string)ViewBag.ReturnUrl : null, new { @class = "loginHidReturnUrl" })
+                        <div class="col-xs-12 mlSocialNetworksLbl mlLabels">
+                            LOG IN FASTER
+                        </div>
+                        <div class="col-xs-12 col-sm-6 paddingLRZero-XS">
+                            <button type="submit" class="btn m-btnLoginNetworks m-btnFacebook width100" name="provider" value="Facebook">
+                                <img src="~/Content/imgs/logoFacebook.png" alt="F" width="30" />
+                                <span class="hidden-xs hidden-sm">Sign up with</span> Facebook
+                            </button>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 paddingLRZero-XS">
+                            <button type="submit" class="btn m-btnLoginNetworks m-btnGoogle width100" name="provider" value="Google">
+                                <img src="~/Content/imgs/icons/logoGmail.png" alt="G" width="30" />
+                                <span class="hidden-xs hidden-sm">Sign up with</span> Google
+                            </button>
+                        </div>
+                    }
+                </div>
+                <div class="clearfix"></div>
+                <div class="spacer20"></div>
+                <div class="clearfix"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -550,98 +559,37 @@
                     <div class="modalLoginLt" style="border-right: 0px solid black;">
                         <h4>ALREADY A DEKKONLINE MEMBER:</h4>
 
-                        @Html.Partial("Login")
+                        @using (Ajax.BeginForm("_LoginForm", "Account", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmLogin", OnComplete = "showMessages();" }))
+                        {
+                            <fieldset id="frmLogin">
+                                @Html.Partial("Account/_LoginForm", new LoginViewModel())
+                            </fieldset>
+                        }
 
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <a style=" margin-left:52px; cursor:pointer; font-size:18px;"><font color="#21618C">Restore password</font></a>
-                <div class="form-check" style="margin-left:52px;">
-                    <label class="form-check-label" for="exampleCheck1" style="font-size:18px; display: block; padding-left: 15px; text-indent: -15px;">
-                        <input type="checkbox" class="form-check-input" id="Remember" style="width:18px; height:18px;padding: 0; margin:0; vertical-align: bottom; position: relative; top: -3px; *overflow: hidden;">
-                        Remember me?
-                    </label>
-                </div>
-            </div>
-            @*<div class="hidden">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            <asp:CheckBox runat="server" ID="RememberMe" />
-                            <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
-                        </div>
-                    </div>
-                </div>*@
-
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-
             <div class="BoxGeneral text-center">
-                <h4>LOG IN FASTER</h4>
-                <div class="clearfix"></div>
-                @*<section id="socialLoginForm">
-                        <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                    </section>*@
-                <div class="row">
-                    <div class="col-lg-6">
-                        <button class="btn btn-primary btn-sm" style="width:180px; height:45px; font-size:22px;">FACEBOOK</button>
+                @using (Html.BeginForm("_LoginFormSocialNetworks", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "frmSocialNetworks" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("returnUrl", (ViewBag.ReturnUrl != null) ? (string)ViewBag.ReturnUrl : null, new { @class = "loginHidReturnUrl" })
+                    <div class="col-xs-12 mlSocialNetworksLbl mlLabels">
+                        LOG IN FASTER
                     </div>
-                    <div class="col-lg-6">
-                        <button class="btn btn-danger btn-sm" style="width:180px; height:45px; font-size:22px;">GOOGLE</button>
+                    <div class="col-xs-12 col-sm-6 paddingLRZero-XS">
+                        <button type="submit" class="btn m-btnLoginNetworks m-btnFacebook width100" name="provider" value="Facebook">
+                            <img src="~/Content/imgs/logoFacebook.png" alt="F" width="30" />
+                            <span class="hidden-xs hidden-sm">Sign up with</span> Facebook
+                        </button>
                     </div>
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-
-@*MODAL LOGIN SIN REGISTRO*@
-<div id="modalLoginStep2" class="modal fade modalLogin" data-backdrop="false" style="z-index: 9999;" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content modal-xs">
-            <div style="margin-right:10px; margin-top:5px;">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-            <div class="col-xs-12 loginLogo">
-            </div>
-            <div class="clearfix"></div>
-            <div class="loginContain">
-                <div class="col-md-12">
-                    <div class="modalLoginLt" style="border-right: 0px solid black;">
-                        <h4>ALREADY A DEKKONLINE MEMBER:</h4>
-
-                        @Html.Partial("Login")
-
+                    <div class="col-xs-12 col-sm-6 paddingLRZero-XS">
+                        <button type="submit" class="btn m-btnLoginNetworks m-btnGoogle width100" name="provider" value="Google">
+                            <img src="~/Content/imgs/icons/logoGmail.png" alt="G" width="30" />
+                            <span class="hidden-xs hidden-sm">Sign up with</span> Google
+                        </button>
                     </div>
-                </div>
-            </div>
-            <div class="hidden">
-                <div class="col-md-offset-2 col-md-10">
-                    <div class="checkbox">
-                        <asp:CheckBox runat="server" ID="RememberMe" />
-                        <asp:label runat="server" associatedcontrolid="RememberMe">Remember me?</asp:label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-            <div class="spacer20"></div>
-            <div class="clearfix"></div>
-
-            <div class="BoxGeneral text-center">
-                <h4>LOG IN FASTER</h4>
-                <div class="clearfix"></div>
-                <section id="socialLoginForm">
-                    <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
-                </section>
+                }
             </div>
 
             <div class="clearfix"></div>
@@ -771,8 +719,8 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/scripts/app.js")
-@Scripts.Render("~/Scripts/Step2.js?v=3")
-@Scripts.Render("~/Scripts/Map.js?v=4")
+@Scripts.Render("~/Scripts/Step2.js?v=8")
+@Scripts.Render("~/Scripts/Map.js?v=5")
 @Scripts.Render("~/Scripts/jquery-ui.min.js?v=2")
 @Scripts.Render("~/Scripts/Login.js?v=2")
 @Scripts.Render("~/Scripts/connectAsy.js?v=1")
@@ -784,7 +732,11 @@
         $("#mainContainDiv").attr("class", "prMainContentSub");
     });
 </script>
-
+<script>
+    function NearestInicio() {
+        $("#nearestWoekshop").attr('checked', true);
+    }
+</script>
 <script>
     function initPage() {
         debugger
@@ -807,6 +759,10 @@
 
         $(".myPlace").show();
         $("#myplace").attr('checked', true);
+
+        var objO = document.getElementByid(myplace);
+
+        objO.click();
 
         initialize();
         google.maps.event.trigger(map, 'resize');

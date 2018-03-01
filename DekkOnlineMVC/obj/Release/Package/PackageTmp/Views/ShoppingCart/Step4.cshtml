@@ -7,7 +7,7 @@
 }
 
 @Styles.Render("~/Styles/Dimension.css?v=5")
-@Styles.Render("~/Styles/Shoppingcart.css?v=6")
+@Styles.Render("~/Styles/Shoppingcart.css?v=7")
 
 <div class="content" style="font-family:Arial;margin-bottom:50px;">
     <div class="row">
@@ -136,10 +136,10 @@
                                     </div>
                                 </td>
                                 <td data-th="QTY">
-                                    <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" disabled="disabled">
+                                    <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" disabled="disabled" style="margin-left:-45px;">
                                 </td>
-                                <td data-th="Unit Price"><strong><label id="@item.cartid">@item.UnitPrice</label> kr</strong></td>
-                                <td data-th="Sub Total"><strong><label id="@item.cartid">@item.totalpriceprod</label> kr</strong></td>
+                                <td data-th="Unit Price"><strong><label id="@item.cartid" style="margin-left:12px;">@item.UnitPrice</label> kr</strong></td>
+                                <td data-th="Sub Total"><strong><label id="@item.cartid" style="margin-left:13px;">@item.totalpriceprod</label> kr</strong></td>
                             </tr>
                         }
                     }
@@ -175,18 +175,18 @@
                                     </div>
                                 </td>
                                 <td data-th="QTY">
-                                    <input type="number" class="form-control text-center qtyprodcart " min="1" value="1" size="3" autocomplete="off" disabled="disabled">
+                                    <input type="number" class="form-control text-center qtyprodcart " min="1" value="1" size="3" autocomplete="off" disabled="disabled" style="margin-left:-45px;">
                                 </td>
                                 <td data-th="Unit Price">
                                     <div class="row">
-                                        <div class="col-sm-12 col-xs-12">
+                                        <div class="col-sm-12 col-xs-12" style="margin-left:12px;">
                                             <strong>@item.Price kr</strong>
                                         </div>
                                     </div>
                                 </td>
                                 <td data-th="Sub Total">
                                     <div class="row">
-                                        <div class="col-sm-12 col-xs-12">
+                                        <div class="col-sm-12 col-xs-12" style="margin-left:13px;">
                                             <strong>@item.Price kr</strong>
                                         </div>
                                     </div>

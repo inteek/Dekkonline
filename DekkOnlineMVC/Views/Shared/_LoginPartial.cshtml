@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization;
-@using Microsoft.AspNet.Identity
+﻿
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -55,6 +54,13 @@ else
                 <td></td>
             </tr>
         </table>
+        @*<ul class="nav navbar-nav m-navbar-LoginMenu lineRight">
+            <li>
+                <a href="javascript:openLogin()" id="HeadLoginStatus">
+                    Ingresa
+                </a>
+            </li>
+        </ul>*@
     </div>
     <div class="prMenuClosed" onclick="openMenu()"></div>
     <div class="prMenuOpen" onclick="closeMenu()"></div>
@@ -66,4 +72,5 @@ else
         <div class="prMenuCI"><a href="/TIRE GUIDE">TIRE GUIDE</a></div>
         <div class="prMenuCI"><a href="/KONTAKT">KONTAKT</a></div>
     </div>
+    @*@Html.Partial("Account/_Login")*@
 }

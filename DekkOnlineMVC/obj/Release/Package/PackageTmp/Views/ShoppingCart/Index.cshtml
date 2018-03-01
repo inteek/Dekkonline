@@ -5,7 +5,12 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Styles.Render("~/Styles/Shoppingcart.css?V=7")
+@Styles.Render("~/Styles/Shoppingcart.css?V=8")
+<div class="row">
+    <div class="col-lg-12" style="margin-left:20px;">
+        <img src="~/Content/publicidad.PNG" style="width:1311px; height:210px;" />
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-12 ">
 
@@ -55,12 +60,12 @@
                 @if (Model.cart.Count > 0)
                 {
 
-                <tr>
-                    <th style="width:40%">Item</th>
-                    <th style="width:8%">QTY</th>
-                    <th style="width:10%">Unit Price</th>
-                    <th style="width:10%">Sub Total</th>
-                </tr>
+                    <tr>
+                        <th style="width:40%">Item</th>
+                        <th style="width:8%">QTY</th>
+                        <th style="width:10%">Unit Price</th>
+                        <th style="width:10%">Sub Total</th>
+                    </tr>
                 }
                 else
                 {
@@ -74,27 +79,27 @@
                 {
                     foreach (var item in Model.cart)
                     {
-                <tr class="@item.cartid">
+                        <tr class="@item.cartid">
 
-                    <td data-th="Item">
-                        <div class="row">
-                            <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" class="remclick" onclick="DelCrt('@item.cartid')"><span class="glyphicon glyphicon-remove"></span></a></div>
-                            <div class="col-sm-2 col-xs-3">
-                                <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
-                            </div>
-                            <div class="col-sm-8 col-xs-5">
-                                <h4 class="nomargin"><strong style="color:#e72e31">@item.Name</strong></h4>
-                                <div class="deschide"><p>@item.Description.</p></div>
-                                <div class="deschide"><p>Size: @item.proDimensionWidth / @item.proDimensionprofile  @item.proDimensionDiameter</p></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-th="QTY">
-                        <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" onchange="IncrsCart('@item.cartid', this.value)">
-                    </td>
-                    <td data-th="Unit Price"><strong><label id="b+@item.cartid">@item.UnitPrice</label> kr</strong></td>
-                    <td data-th="Sub Total"><strong><label id="@item.cartid" class="@item.cartid">@item.totalpriceprod</label> kr</strong></td>
-                </tr>
+                            <td data-th="Item">
+                                <div class="row">
+                                    <div class="col-sm-1 col-xs-2 downico" style="margin-top:40px"><a style="cursor:pointer;" class="remclick" onclick="DelCrt('@item.cartid')"><span class="glyphicon glyphicon-remove"></span></a></div>
+                                    <div class="col-sm-2 col-xs-3">
+                                        <img src="http://admin.dekkonline.sonetworks.no/@item.Image" alt="..." style="height:85px;width:85px;" class="img-responsive " />
+                                    </div>
+                                    <div class="col-sm-8 col-xs-5">
+                                        <h4 class="nomargin"><strong style="color:#e72e31">@item.Name</strong></h4>
+                                        <div class="deschide"><p>@item.Description.</p></div>
+                                        <div class="deschide"><p>Size: @item.proDimensionWidth / @item.proDimensionprofile  @item.proDimensionDiameter</p></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-th="QTY">
+                                <input type="number" class="form-control text-center qtyprodcart " min="1" value="@item.quantity" size="3" autocomplete="off" onchange="IncrsCart('@item.cartid', this.value)"  style="margin-left:-45px;">
+                            </td>
+                            <td data-th="Unit Price"><strong><label id="b+@item.cartid" style="margin-left:12px;">@item.UnitPrice</label> kr</strong></td>
+                            <td data-th="Sub Total"><strong><label id="@item.cartid" class="@item.cartid" style="margin-left:13px;">@item.totalpriceprod</label> kr</strong></td>
+                        </tr>
                     }
                 }
                 else
@@ -123,17 +128,31 @@
                     {
                         <div class="col-sm-6 dtpy">
                             <div class="form-group" style="margin-bottom:10px;">
-                                <label class="col-md-5 col-xs-2 control-label">SUBTOTAL:</label>
+                                <label class="col-md-5 col-xs-2 control-label">PRODUCTS:</label>
                                 <div class="col-md-7 col-xs-2 margininput">
                                     <label style="margin-top:5px"><strong><label id="subtotal">@Model.subtotal</label> kr</strong></label>
                                 </div>
                             </div>
-                            <div class="form-group" style="margin-bottom:10px;">
-                                <label class="col-md-5 col-xs-2 control-label">TAX:</label>
-                                <div class="col-md-3 col-xs-2 margininput">
-                                    <label style="margin-top:5px"><strong><label id="tax">@Model.tax</label> kr</strong></label>
+
+                            @if (Model.promocodeapp == true)
+                            {
+                                <div class="form-group discount" style="margin-bottom:10px;">
+                                    <label class="col-md-5 col-xs-2 control-label">DISCOUNT:</label>
+                                    <div class="col-md-3 col-xs-2 margininput">
+                                        <label style="margin-top:5px"><strong><label id="tax">@Model.tax</label> kr</strong></label>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="form-group discount hidden" style="margin-bottom:10px;">
+                                    <label class="col-md-5 col-xs-2 control-label">DISCOUNT:</label>
+                                    <div class="col-md-3 col-xs-2 margininput">
+                                        <label style="margin-top:5px"><strong><label id="discount"></label> kr</strong></label>
+                                    </div>
+                                </div>
+                            }
+
                             <div class="form-group" style="margin-bottom:10px;">
                                 <label class="col-md-5 col-xs-2 control-label">PROMO CODE:</label>
                                 <div class="col-md-4 col-xs-2 margininput">
@@ -150,7 +169,7 @@
                                             else
                                             {
 
-                                                <a  class="PromoCodeun PromoCodeunaction"><span class="linkcolor2 PromoCodeun">UNDO</span></a>
+                                                <a class="PromoCodeun PromoCodeunaction"><span class="linkcolor2 PromoCodeun">UNDO</span></a>
 
                                             }
                                         </label>
@@ -269,7 +288,7 @@
 </div>
 
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=4")
+@Scripts.Render("~/Scripts/Site/ShoppingCartIndex.js?v=5")
 <script>
     $(document).ready(function () {
         $("#principalDiv").attr("class", "prDivSub");

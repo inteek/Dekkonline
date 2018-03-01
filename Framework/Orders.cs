@@ -34,6 +34,7 @@ namespace Framework
                         var Procmocode = db.PromoCodeUsed.Where(s => s.idUser == idUser && s.Used == false).FirstOrDefault();
                         var prom = (dynamic)null;
                         var total = (dynamic)null;
+                        var tax = 0;
                         var addTarget = new Entity.Payment();
                         if (tar == 1)
                         {
@@ -118,21 +119,51 @@ namespace Framework
                         //
                         //Obtener el total de los servicios con el iva agregado
                         double? totalserviceswithtax = 0;
+                        double? totalservices = 0;
+                        double? totalservicestax = 0;
                         if (services1.Count > 0 || services1 != null)
                         {
-                            double? totalservices = services1.Select(p => (double?)p.Price).Sum();
-                            double? totalservicestax = services1.Select(p => p.TaxIva).Sum();
+                             totalservices = services1.Select(p => (double?)p.Price).Sum();
+                            totalservicestax = services1.Select(p => p.TaxIva).Sum();
                             totalservices = (int)Math.Floor((decimal)totalservices);
                             totalservicestax = (int)Math.Floor((decimal)totalservicestax);
                             totalserviceswithtax = (int)Math.Floor((decimal)totalservices + (decimal)totalservicestax);
                         }
                         //
                         //Agregar la compra a la tabla de orden
+                        var totalfinal = 0;
+                        if (Procmocode == null)
+                        {
+                            tax = (int)(ivapor2 * ((int)total + (int)totalservices));
+                            totalfinal = (int)total + (int)totalservices;
+                            totalfinal = totalfinal + (int)(ivapor2 * ((int)total + (int)totalservices));
+                        }
+                        else
+                        {
+                            var promocodeperc = (dynamic)null;
+                                promocodeperc = db.PromotionCode.Where(s => s.IdCode == Procmocode.PromoCode).FirstOrDefault();
+
+                            var promocodedisc = promocodeperc.PercentCode;
+                            promocodedisc = promocodedisc / 100;
+                            var nototalpromo = Procmocode.TotalPrice;
+                            var promototal = (double)nototalpromo * (double)promocodedisc;
+                            promototal = (int)Math.Floor((decimal)promototal);
+                            nototalpromo = nototalpromo - (decimal)promototal;
+                            nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
+                            tax = (int)(ivapor2 * ((int)nototalpromo + (int)totalservices));
+                            totalfinal = (int)nototalpromo + (int)totalservices;
+                            var ivagood = ivapor2 * ((int)nototalpromo + (int)totalservices);
+                            ivagood = (int)Math.Floor(ivagood);
+                            totalfinal = totalfinal + (int)ivagood;
+                        }
+
+
                         addOrder.idUser = idUser;
                         addOrder.Payment = payment.id;
                         addOrder.DeliveryAddress = idDelivery.IdDelivery;
                         addOrder.PromoCode = prom;
-                        addOrder.Total = Convert.ToDecimal((double)totaliva + totalserviceswithtax);
+                        addOrder.Total = Convert.ToDecimal(totalfinal);
                         addOrder.DateS = DateTime.Now;
                         addOrder.Delivered = false;
                         db.Orders.Add(addOrder);
@@ -149,6 +180,7 @@ namespace Framework
                             if (Procmocode != null)
                             {
                                 Procmocode.Used = true;
+                                Procmocode.Points = 10;
                             }
                             db.OrdersDetail.Add(addOrderdetail);
                             db.SaveChanges();
@@ -191,8 +223,18 @@ namespace Framework
                                 {
                                     FirstName = us2.FirstName,
                                     LastName = us2.LastName,
-                                    Email = us.Email
+                                    Email = us.Email,
+                                    Image = us2.Image
                                 }).ToList();
+                    if (userdata.Count == 0)
+                    {
+                        userdata = (from us in db.AspNetUsers
+                                    where us.Id == idUser
+                                    select new ResultDataUser
+                                    {
+                                        Email = us.Email
+                                    }).ToList();
+                    }
                     products = (from pro in db.products
                                 join ord in db.OrdersDetail on pro.proId equals ord.proId
                                 join or in db.Orders on ord.OrderMain equals or.id
@@ -257,8 +299,18 @@ namespace Framework
                                 {
                                     FirstName = us2.FirstName,
                                     LastName = us2.LastName,
+                                    Email = us.Email,
+                                    Image = us2.Image
+                                }).ToList();
+                    if (userdata.Count == 0)
+                    {
+                        userdata = (from us in db.AspNetUsers
+                                where us.Id == idUser
+                                select new ResultDataUser
+                                {
                                     Email = us.Email
                                 }).ToList();
+                    }
                     products = (from pro in db.products
                                 join ord in db.OrdersDetail on pro.proId equals ord.proId
                                 join or in db.Orders on ord.OrderMain equals or.id
@@ -486,9 +538,12 @@ namespace Framework
                                 DateTime dat = (DateTime)Delivery.Date;
                                 var totalnodec = Total2;
                                 var iva = totalnodec * ivapor2;//TAX
-                                tax = tax + (int)iva;
+                                
                                 totalnodec = totalnodec + iva;
                                 totalnodec = (int)Math.Floor((decimal)totalnodec);
+                                tax = (int)(ivapor2 * ((int)Total2 + (int)totalservices));
+                                var totalfinal = (int)Total2 + (int)totalservices;
+                                totalfinal = totalfinal + (int)(ivapor2*((int)Total2 + (int)totalservices));
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
@@ -507,7 +562,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalnodec + (int)totalserviceswithtax,
+                                   Total = totalfinal,
                                    SubTotal = (int)Total2 + (int)totalservices,
                                    taxproduct = tax}
                                 };
@@ -521,6 +576,10 @@ namespace Framework
                                 tax = tax + (int)iva;
                                 totalnodec = totalnodec + iva;
                                 totalnodec = (int)Math.Floor((decimal)totalnodec);
+
+                                tax = (int)(ivapor2 * ((int)Total2 + (int)totalservices));
+                                var totalfinal = (int)Total2 + (int)totalservices;
+                                totalfinal = totalfinal + (int)(ivapor2 * ((int)Total2 + (int)totalservices));
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
                                    new ResultProductsConfirmation{ cart = products,
@@ -539,7 +598,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalnodec + (int)totalserviceswithtax,
+                                   Total = totalfinal,
                                    SubTotal = (int)Total2 + (int)totalservices,
                                    taxproduct = tax}
                                 };
@@ -592,12 +651,20 @@ namespace Framework
                                 var totalpromo = promocodeused.TotalPriceFinal;
                                 totalpromo = (int)Math.Floor((decimal)totalpromo);
 
+
                                 var promocodedisc = promocodeperc.PercentCode;
                                 promocodedisc = promocodedisc / 100;
                                 var nototalpromo = Total2;
-                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                var dissc = nototalpromo * (double)promocodedisc;
+                                dissc = (int)Math.Floor((double)dissc);
+                                nototalpromo = nototalpromo - (dissc);
                                 nototalpromo = (int)Math.Floor((decimal)nototalpromo);
 
+                                tax = (int)(ivapor2 * ((int)nototalpromo + (int)totalservices));
+                                var totalfinal = (int)nototalpromo + (int)totalservices;
+                                var ivagood = ivapor2 * ((int)nototalpromo + (int)totalservices);
+                                ivagood = (int)Math.Floor(ivagood);
+                                totalfinal = totalfinal + (int)ivagood;
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
                                 {
@@ -617,7 +684,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalpromo + (int)totalserviceswithtax,
+                                   Total = totalfinal,
                                    SubTotal = (int)nototalpromo + (int)totalservices,
                                    taxproduct = tax}
                                 };
@@ -631,8 +698,16 @@ namespace Framework
                                 var promocodedisc = promocodeperc.PercentCode;
                                 promocodedisc = promocodedisc / 100;
                                 var nototalpromo = Total2;
-                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                var dissc = nototalpromo * (double)promocodedisc;
+                                dissc = (int)Math.Floor((double)dissc);
+                                nototalpromo = nototalpromo - (dissc);
                                 nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
+                                tax = (int)(ivapor2 * ((int)nototalpromo + (int)totalservices));
+                                var totalfinal = (int)nototalpromo + (int)totalservices;
+                                var ivagood = ivapor2 * ((int)nototalpromo + (int)totalservices);
+                                ivagood = (int)Math.Floor(ivagood);
+                                totalfinal = totalfinal + (int)ivagood;
 
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultProductsConfirmation>()
@@ -653,7 +728,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (int)totalpromo + (int)totalserviceswithtax,
+                                   Total = totalfinal,
                                    SubTotal = (int)nototalpromo + (int)totalservices,
                                    taxproduct = tax}
                                 };
@@ -669,8 +744,16 @@ namespace Framework
                             var promocodedisc = promocodeperc.PercentCode;
                             promocodedisc = promocodedisc / 100;
                             var nototalpromo = Total2;
-                            nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                            var dissc = nototalpromo * (double)promocodedisc;
+                            dissc = (int)Math.Floor((double)dissc);
+                            nototalpromo = nototalpromo - (dissc);
                             nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
+                            tax = (int)(ivapor2 * ((int)nototalpromo + (int)totalservices));
+                            var totalfinal = (int)nototalpromo + (int)totalservices;
+                            var ivagood = ivapor2 * ((int)nototalpromo + (int)totalservices);
+                            ivagood = (int)Math.Floor(ivagood);
+                            totalfinal = totalfinal + (int)ivagood;
 
                             AddressWorkshop = new List<ResultProductsConfirmation>()
                         {
@@ -690,7 +773,7 @@ namespace Framework
                             Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
-                           Total = (int)totalpromo,
+                           Total = (int)totalfinal,
                             SubTotal = (int)nototalpromo,
                             taxproduct = tax}
                         };
@@ -818,6 +901,10 @@ namespace Framework
                                 totalnodec = totalnodec + iva;
                                 totalnodec = (int)Math.Floor((decimal)totalnodec);
 
+                                tax = (int)(ivapor2 * ((int)Total2 + (int)totalservices));
+                                var totalfinal = (int)Total2 + (int)totalservices;
+                                totalfinal = totalfinal + (int)(ivapor2 * ((int)Total2 + (int)totalservices));
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
@@ -837,7 +924,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (decimal)totalnodec + (decimal)totalserviceswithtax,
+                                   Total = totalfinal,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
@@ -857,6 +944,11 @@ namespace Framework
                                 totalnodec = totalnodec + iva;
                                 totalnodec = (int)Math.Floor((decimal)totalnodec);
 
+                                tax = (int)(ivapor2 * ((int)Total2 + (int)totalservices));
+                                var totalfinal = (int)Total2 + (int)totalservices;
+                                totalfinal = totalfinal + (int)(ivapor2 * ((int)Total2 + (int)totalservices));
+
+
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
                                 {
@@ -876,7 +968,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = (decimal)totalnodec + (decimal)totalserviceswithtax,
+                                   Total = totalfinal,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
@@ -938,8 +1030,16 @@ namespace Framework
                                 var promocodedisc = promocodeperc.PercentCode;
                                 promocodedisc = promocodedisc / 100;
                                 var nototalpromo = Total2;
-                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                var promototal = (double)nototalpromo * (double)promocodedisc;
+                                promototal = (int)Math.Floor((decimal)promototal);
+                                nototalpromo = nototalpromo - (double)promototal;
                                 nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
+                                tax = (int)(ivapor2 * ((int)nototalpromo + (int)totalservices));
+                                var totalfinal = (int)nototalpromo + (int)totalservices;
+                                var ivagood = ivapor2 * ((int)nototalpromo + (int)totalservices);
+                                ivagood = (int)Math.Floor(ivagood);
+                                totalfinal = totalfinal + (int)ivagood;
 
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
@@ -960,7 +1060,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = promocodeused.TotalPriceFinal + (decimal)totalserviceswithtax, 
+                                   Total = totalfinal, 
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
@@ -972,11 +1072,20 @@ namespace Framework
                             //Si el cliente selecciono un horario y fecha de entrega del taller
                             else
                             {
+
                                 var promocodedisc = promocodeperc.PercentCode;
                                 promocodedisc = promocodedisc / 100;
                                 var nototalpromo = Total2;
-                                nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                                var promototal = (double)nototalpromo * (double)promocodedisc;
+                                promototal = (int)Math.Floor((decimal)promototal);
+                                nototalpromo = nototalpromo - (double)promototal;
                                 nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
+                                tax = (int)(ivapor2 * ((int)nototalpromo + (int)totalservices));
+                                var totalfinal = (int)nototalpromo + (int)totalservices;
+                                var ivagood = ivapor2 * ((int)nototalpromo + (int)totalservices);
+                                ivagood = (int)Math.Floor(ivagood);
+                                totalfinal = totalfinal + (int)ivagood;
 
                                 DateTime dat = (DateTime)Delivery.Date;
                                 AddressWorkshop = new List<ResultPaidProducts>()
@@ -997,7 +1106,7 @@ namespace Framework
                                     Date = dat.ToString("D"),
                                     Time = Delivery.Time,
                                     Comments = Delivery.Comments,
-                                   Total = promocodeused.TotalPriceFinal + (decimal)totalserviceswithtax,
+                                   Total = totalfinal,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
@@ -1010,11 +1119,21 @@ namespace Framework
                         //Si el cliente ingreso una direccion en el mapa
                         else
                         {
+
+
                             var promocodedisc = promocodeperc.PercentCode;
                             promocodedisc = promocodedisc / 100;
                             var nototalpromo = Total2;
-                            nototalpromo = nototalpromo + (nototalpromo * (double)promocodedisc);
+                            var dissc = nototalpromo * (double)promocodedisc;
+                            dissc = (int)Math.Floor((double)dissc);
+                            nototalpromo = nototalpromo - (dissc);
                             nototalpromo = (int)Math.Floor((decimal)nototalpromo);
+
+                            tax = (int)(ivapor2 * ((int)nototalpromo + (int)totalservices));
+                            var totalfinal = (int)nototalpromo + (int)totalservices;
+                            var ivagood = ivapor2 * ((int)nototalpromo + (int)totalservices);
+                            ivagood = (int)Math.Floor(ivagood);
+                            totalfinal = totalfinal + (int)ivagood;
 
                             DateTime dat = (DateTime)Delivery.Date;
                             AddressWorkshop = new List<ResultPaidProducts>()
@@ -1035,7 +1154,7 @@ namespace Framework
                             Date = dat.ToString("D"),
                             Time = Delivery.Time,
                             Comments = Delivery.Comments,
-                           Total = promocodeused.TotalPriceFinal,
+                           Total = totalfinal,
                                    TypeTarget = payment.TargetType,
                                    Number = (int)payment.Number,
                                    Expire = payment.Expire,
@@ -1075,65 +1194,83 @@ namespace Framework
                                        {
                                            PromoCode = pro.IdCode
                                        }).FirstOrDefault();
-
+                    userdata = (from us in db.AspNetUsers
+                                join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                where (us.Id == idUser)
+                                select new ResultDataUser
+                                {
+                                    FirstName = us2.FirstName,
+                                    LastName = us2.LastName,
+                                    Email = us.Email,
+                                    Image = us2.Image,
+                                    Promocode = codigoPromo.PromoCode
+                                }).ToList();
+                    if (userdata.Count == 0)
+                    {
+                        userdata = (from us in db.AspNetUsers
+                                    where us.Id == idUser
+                                    select new ResultDataUser
+                                    {
+                                        Email = us.Email,
+                                        Promocode = codigoPromo.PromoCode
+                                    }).ToList();
+                    }
                     var promosActivas = (from pro in db.PromoCodeUsed
                                          where (pro.PromoCode == codigoPromo.PromoCode)
                                          select new Promos
                                          {
                                              idUser = pro.idUser,
+                                             PromoCode = pro.PromoCode,
+                                             Points = pro.Points,
                                              Used = pro.Used,
                                              Date = pro.DateUsed.ToString()
                                          }).ToList();
-
-                    foreach (var item in promosActivas)
-                    {
-                        userdata = (from us in db.AspNetUsers
-                                    join us2 in db.UserAddress on us.Id equals us2.IdUser
-                                    where (us.Id == idUser)
-                                    select new ResultDataUser
-                                    {
-                                        FirstName = us2.FirstName,
-                                        LastName = us2.LastName,
-                                        Email = us.Email
-                                    }).ToList();
-                        var userdata2 = (from us in db.AspNetUsers
-                                         join us2 in db.UserAddress on us.Id equals us2.IdUser
-                                         where (us.Id == item.idUser)
-                                         select new
-                                         {
-                                             FirstName = us2.FirstName,
-                                             LastName = us2.LastName,
-                                             Email = us.Email
-                                         }).FirstOrDefault();
-                        if (userdata2 != null)
+                        foreach (var item in promosActivas)
                         {
-                            datosTabla = new List<Promos>
+
+                            var userdata2 = (from us in db.AspNetUsers
+                                             join us2 in db.UserAddress on us.Id equals us2.IdUser
+                                             where (us.Id == item.idUser)
+                                             select new
+                                             {
+                                                 FirstName = us2.FirstName,
+                                                 LastName = us2.LastName,
+                                                 Email = us.Email
+                                             }).FirstOrDefault();
+                            if (userdata2 != null)
+                            {
+                                datosTabla = new List<Promos>
                             {
                                 new Promos
                                 {
                                     UserName = userdata2.FirstName,
                                     Email = userdata2.Email,
+                                    PromoCode = item.PromoCode,
+                                    Points = item.Points,
                                     Date = item.Date,
                                     Used = item.Used
                                 }
                             };
-                            promos.AddRange(datosTabla);
-                        }
-                        else
-                        {
-                            datosTabla = new List<Promos>
+                                promos.AddRange(datosTabla);
+                            }
+                            else
+                            {
+                                datosTabla = new List<Promos>
                             {
                                 new Promos
                                 {
                                     UserName = null,
                                     Email = null,
+                                    PromoCode = item.PromoCode,
+                                    Points = item.Points,
                                     Date = item.Date,
                                     Used = item.Used
                                 }
                             };
-                            promos.AddRange(datosTabla);
+                                promos.AddRange(datosTabla);
+                            }
                         }
-                    }
+
                     List<ResultUserPromo> promosResult = new List<ResultUserPromo>()
                     {
                         new ResultUserPromo{

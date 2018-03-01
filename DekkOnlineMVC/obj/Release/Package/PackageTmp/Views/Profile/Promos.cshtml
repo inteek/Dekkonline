@@ -8,15 +8,14 @@
 
 <div id="fb-root"></div>
 <script>
-    (function (d, s, id)
-    {
+    (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
         js = d.createElement(s); js.id = id;
         js.src = 'https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.12';
         fjs.parentNode.insertBefore(js, fjs);
     }
-    (document, 'script', 'facebook-jssdk')
+        (document, 'script', 'facebook-jssdk')
     );
 
     function copiarURL() {
@@ -24,13 +23,11 @@
         var range = document.createRange();
         range.selectNode(url);
         window.getSelection().addRange(range);
-        try
-        {
+        try {
             var resultado = document.execCommand('copy');
             console.log(resultado ? 'URL Copiada' : 'No se pudo copiar la URL');
         }
-        catch (err)
-        {
+        catch (err) {
             console.log('ERROR al intentar copiar la URL');
         }
         window.getSelection().removeAllRanges();
@@ -53,16 +50,17 @@
         conectarAsy("../Profile/emailPromo", data, function (result) {
 
             if (result.error == false) {
-                alert("E-mail sent");
+                $("#emailSent").css("display", "block");
+                $("#txtCorreos").val("");
             }
             else if (result.error == true) {
-                alert("Error send E-mail");
+                $("#emailFailed").css("display", "block");
+                $("#txtCorreos").val("");
             }
         });
     }
 
-    function shareGoogle()
-    {
+    function shareGoogle() {
         window.open("https://plus.google.com/share?url=http://google.com.mx", '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
         return false;
     }
@@ -80,33 +78,30 @@
     <div class="row">
         <div class="col-lg-2 movilPerfil">
             @foreach (var item in Model.user)
-    {
+            {
+                <div class="form-group infoPerfilrespons3 imagendivprofile4">
+                    @if (item.Image == null)
+                    {
+                        <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
 
-        <div class="form-group">
-            <img src="~/Content/prueba.png" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
-        </div>
-        <div class="form-group">
-            <h4 style="color:#393e44;"><strong><label id="titlenamepe">@item.FirstName @item.LastName</label></strong></h4>
-        </div>
-        <div class="form-group" style="margin-top:-13px;">
-            <h6 style="color:#393e44;"><label id="titleemailpe">@item.Email</label> </h6>
-        </div>
-        @*<br />
-    <div class="form-group" style="margin-top:-20px;">
-        <h4 style="color:#393e44;"><strong>Your cars</strong></h4>
-    </div>
-    <div class="form-group" style="margin-top:-11px;">
-        <h6 style="color:#393e44;">Audi TT 2017</h6>
-    </div>
-    <div class="form-group" style="margin-top:-11px;">
-        <h6 style="color:#393e44;">AB12345</h6>
-    </div>*@
-}
+                    }
+                    else
+                    {
+                        <img src="@item.Image" style="width: 130px; height: 130px; border: 1px solid #7F8C8D; " />
+                    }
+                </div>
+                <div class="form-group">
+                    <h4 style="color:#393e44;"><strong><label id="titlenamepe">@item.FirstName @item.LastName</label></strong></h4>
+                </div>
+                <div class="form-group" style="margin-top:-13px;">
+                    <h6 style="color:#393e44;"><label id="titleemailpe">@item.Email</label> </h6>
+                </div>
+            }
         </div>
         <div class="col-lg-9 col-sm-11 col-xs-11">
             <div class="row">
                 <div class="col-lg-12 col-sm-12 col-xs-12">
-                    <h4 class="marginPromos" style="color: #1A5276;"><strong>Sprend the word get awesome rewards for every fiend you refer to dekkonline and also grve them their first discount on their purchase</strong></h4>
+                    <h4 class="marginPromos" style="color: #1A5276;"><strong>Sprend the word get awesome rewards for every friend you refer to dekkonline and also grve them their first discount on their purchase</strong></h4>
                 </div>
             </div>
             <div class="row">
@@ -115,8 +110,9 @@
                         <div class="panel-body">
                             <div class="" style="color:red; font-size:20px;"><strong>Invite some friends</strong></div>
                             <div class="" style="color:steelblue; font-size:17px;">Enter you friends email below:</div><br />
-                            <textarea class="form-control" id="txtCorreos" rows="5" placeholder="You can add multiple emails(one per line)" style="border: 1px solid #ccc;"></textarea>
-                            @*<div class="" style="color:steelblue; font-size:13px; text-align:right;">Add from address book</div>*@
+                            <textarea class="form-control" id="txtCorreos" rows="5" placeholder="You can add multiple E-mails (separated by comma)" style="border: 1px solid #ccc;"></textarea>
+                            <div id="emailSent" style="color:green; font-size:13px; display:none; text-align:left;">E-mail sent successfully!</div>
+                            <div id="emailFailed" style="color:red; font-size:13px; display:none; text-align:left;">E-mail sent failed!</div>
                             <button onclick="sendEmail()" id="sendEmail" class="btn btn-success btn-lg" style="width:100%; margin-top:20px;">SEND</button>
                         </div>
                     </div>
@@ -124,24 +120,38 @@
                 <div class="col-lg-4 col-sm-12 col-xs-12 margginCard1">
                     <div class="panel panel-default panel-hovered panel-stacked mb30" ng-controller="AlertDemoCtrl">
                         <div class="panel-body">
+                            @{ string code = "";}
                             <div class="" style="color:red; font-size:20px;"><strong>Invite some friends</strong></div>
-                            <input id="txtURL" type="text" class="form-control" value="http://www.dekonline.com/r/" disabled="disabled"><br />
+                            @if (Model != null)
+    {
+        foreach (var item in Model.user)
+        {
+                        <input style="display:none;" type="text" class="form-control" value="@{code = @item.Promocode;} @code" disabled="disabled"><br />
+}
+                        @*<input id="txtURL" style="margin-top:-30px;" type="text" class="form-control" value="http://www.dekkonline.com/code=@code" disabled="disabled"><br />*@
+                        <input id="txtURL" style="margin-top:-30px;" type="text" class="form-control" value="https://localhost:44312/PromoValidate/Index/code=@code" disabled="disabled"><br />
+}
                             <button onclick="copiarURL()" class="btn btn-warning btn-lg" style="width:100%;">COPY LINK</button>
                             <button onclick="shareGoogle()" class="btn btn-danger btn-lg" style="width: 100%; margin-top: 20px; ">GOOGLE +</button>
                             <button onclick="shareFacebook()" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 20px; ">FACEBOOK</button>
                             <button onclick="shareTwitter()" class="btn btn-info btn-lg" style="width: 100%; margin-top: 20px;">TWITTER</button>
                             @*<a type="button" onclick="" href="https://plus.google.com/share?url=http://google.com.mx">Compartir en Google+</a>
-                            <div class="fb-share-button" data-href="https://www.google.com.mx" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com.mx%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
-                            <a onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" href="http://twitter.com/share?text=Mensaje%20De%20Prueba">Tweet</a>*@
+        <div class="fb-share-button" data-href="https://www.google.com.mx" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.google.com.mx%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+        <a onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" href="http://twitter.com/share?text=Mensaje%20De%20Prueba">Tweet</a>*@
                         </div>
                     </div>
                 </div>
                 <div class=" col-lg-1 vl2"></div>
                 <div class="col-lg-3 col-sm-12 col-xs-12 margginCard1">
                     <div style="text-align:center;">
+                        @{ int? suma = 0;}
                         <div class="" style="color: #1A5276; font-size: 17px;">You have</div>
-                        <div class="" style="color: #D35400; font-size: 75px;">145</div>
-                        <div class="" style="color: #1A5276; font-size: 19px;">DEKONLINE point which you can use as credit on your next purchase.</div>
+                        @foreach (var item in Model.promo)
+                        {
+                            <div style="color: #D35400; font-size: 75px; display:none;">@{suma = suma + item.Points;}@suma</div>
+                        }
+                        <div style="color: #D35400; font-size: 75px;">@suma</div>
+                        <div class="" style="color: #1A5276; font-size: 19px;"> DEKKONLINE point which you can use as credit on your next purchase.</div>
                     </div>
                 </div>
             </div>
@@ -163,26 +173,26 @@
                                 {
                                     foreach (var item in Model.promo)
                                     {
-                                    <tr>
-                                        @if (item.UserName == null)
-                                        {
-                                            <th scope="row">Cliente no registrado</th>
-                                        }
-                                        else
-                                        { 
-                                        <th scope="row">@item.UserName</th>
-                                        }
-                                        <td>@item.Date</td>
-                                        @if (item.Used == true)
-                                        {
-                                            <td>Used</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Pending</td>
-                                        }
-                                        <td>10</td>
-                                    </tr>
+                                        <tr>
+                                            @if (item.UserName == null)
+                                            {
+                                                <th scope="row">Cliente no registrado</th>
+                                            }
+                                            else
+                                            {
+                                                <th scope="row">@item.UserName</th>
+                                            }
+                                            <td>@item.Date</td>
+                                            @if (item.Used == true)
+                                            {
+                                                <td>Used</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Pending</td>
+                                            }
+                                            <td>@item.Points</td>
+                                        </tr>
                                     }
                                 }
                             </tbody>

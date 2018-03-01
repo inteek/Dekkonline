@@ -7,16 +7,24 @@ var valorServicio = [];
 var valorDate = [];
 var servicioSeleccionado = 0;
 var fechaSeleccionada = 0;
+var fechaAppointment = 0;
 var fechaSeleccionadaNumeros = "";
 var tiempoSeleccionado = "";
 var work = 0;
 var zipcodeLocal = localStorage.getItem("zipCode");
 var TimeWorkshop = "";
 var localStep3 = 0;
+//Datos Personales
+var datosPeronales = 0;
+
+var ServiciosSeleccionados = [];
 
 $(document).ready(function () {
     //alert("entro");   
+    mantenerInfo();
     localStep3 = localStorage.getItem("Step3");
+
+
     $("#validateMobile").hide();
     $("#validateEmail").hide();
     $("#validateAddress").hide();
@@ -42,15 +50,15 @@ $(document).ready(function () {
     $("#txtZipCode").val(zipcodeLocal);
 
     $(".txtPass").click(function () {
-    $(".txtPass").removeClass("txtPass");
+        $(".txtPass").removeClass("txtPass");
     });
 
 });
+
 $("#Step1").click(function () {
     var url = "../ShoppingCart/Index"
     window.location = url;
 });
-
 
 $("#Step3").click(function () {
     if (localStep3 == 1) {
@@ -58,9 +66,11 @@ $("#Step3").click(function () {
         window.location = url;
     }
 });
+
 $(".txtPass").click(function () {
     $(".txtPass").removeClass("txtPass");
 });
+
 $(".reco").change(function () {
     Workshopreco();
 });
@@ -84,11 +94,13 @@ $("#InfoPersonal").click(function () {
 });
 
 $("#nearestWoekshop").click(function () {
+    radio = 0;
     $(".myPlace").hide();
     $(".workshopDisplay").show();
 });
 
 $("#myplace").click(function () {
+    radio = 1;
     $(".workshopDisplay").hide();
 
     $(".myPlace").show();
@@ -98,7 +110,7 @@ $("#myplace").click(function () {
 });
 
 $("#LoginIn").click(function () {
-    $('#modalLogin').modal('show');
+    $('#modalLogin2').modal('show');
 });
 
 $("#popupTalleres").click(function () {
@@ -157,7 +169,6 @@ $("#next").click(function () {
             $("#validateDateMapaPasada").hide();
         }
 
-
         //$("#choose").val(nombretaller);
         $("#date").val(dateMapa);
         $("#time").val(timeMapa);
@@ -196,6 +207,9 @@ $("#next").click(function () {
         ZIPCODE = codeZip;
     }
 
+    $("#gifLog").show();
+    $('#next').attr("disabled", true);
+
     var data = {
         zipCode: ZIPCODE,
         firstName: firstName,
@@ -222,32 +236,100 @@ $("#next").click(function () {
             $(".txtUser").val(email);
             $(".txtUser").removeClass("txtUser")
             $('#modalLoginStep2').modal('show');
+
+            $("#gifLog").hide();
+            $('#next').attr("disabled", false);
+
         }
         else if (result.error == false && result.noError == 0) {
 
             conectarAsy("RegisterUser", data, function (result) {
 
                 if (result.error == false && result.noError == 0) {
+
+                    var mapa = $("#search_location").val();
+                    var latitude = $(".search_latitude").val();
+                    var longitude = $(".search_longitude").val();
+                    var dateMap = $(".dateMapa").val();
+                    var timeMap = $(".timeMapa").val();
+                    var commentsMap = $(".commentsMapa").val();
+
+                    localStorage.setItem("datosPeronales", 1);
+                    localStorage.setItem("dateMap", dateMap);
+                    localStorage.setItem("timeMap", timeMap);
+                    localStorage.setItem("commentsMap", commentsMap);
+                    localStorage.setItem("direccionMapa", mapa);
+
+                    if (latitude != "" && longitude != "") {
+                        localStorage.setItem("search_latitude", latitude);
+                        localStorage.setItem("search_longitude", longitude);
+                    }
+
+                    localStorage.setItem("radio", radio);
+
                     var url = "../ShoppingCart/Step3"
                     window.location = url;
+
+                    $("#gifLog").hide();
+                    $('#next').attr("disabled", false);
                 }
                 else if (result.error == true) {
                     alert(result.msg);
+                    $("#gifLog").hide();
+                    $('#next').attr("disabled", false);
                 }
             });
         }
         else if (result.error == true) {
             alert(result.msg);
+            $("#gifLog").hide();
+            $('#next').attr("disabled", false);
         }
     });
 });
 
-
 $("#back").click(function () {
+
+    var infoZipCode = $("#txtZipCode").val();
+    var infoFirstName = $("#Firstname").val();
+    var infoLastName = $("#Lastname").val();
+    var infoAddress = $("#address").val();
+    var infoEmail = $("#email").val();
+    var infoMobil = $("#mobile").val();
+
+    var mapa = $("#search_location").val();
+    var latitude = $(".search_latitude").val();
+    var longitude = $(".search_longitude").val();
+
+    var dateMap = $(".dateMapa").val();
+    var timeMap = $(".timeMapa").val();
+    var commentsMap = $(".commentsMapa").val();
+
+    localStorage.setItem("datosPeronales", 1);
+    localStorage.setItem("txtZipCode", infoZipCode);
+    localStorage.setItem("Firstname", infoFirstName);
+    localStorage.setItem("Lastname", infoLastName);
+    localStorage.setItem("address", infoAddress);
+    localStorage.setItem("email", infoEmail);
+    localStorage.setItem("mobile", infoMobil);
+
+    localStorage.setItem("dateMap", dateMap);
+    localStorage.setItem("timeMap", timeMap);
+    localStorage.setItem("commentsMap", commentsMap);
+
+    localStorage.setItem("radio", radio);
+
+    localStorage.setItem("direccionMapa", mapa);
+
+    if (latitude != "" && longitude != "") {
+        localStorage.setItem("search_latitude", latitude);
+        localStorage.setItem("search_longitude", longitude);
+    }
+
     var url = "../ShoppingCart/Index"
     window.location = url;
-});
 
+});
 
 $("#MakeAppoint").click(function () {
 
@@ -286,6 +368,10 @@ $("#MakeAppoint").click(function () {
         }
 
     }
+    else {
+        var fechaAppointment = localStorage.getItem("fechaAppointment");
+        date = fechaAppointment;
+    }
     var selected = [];
     $('#servicesModal input:checked').each(function () {
         selected.push($(this).attr('value'));
@@ -293,6 +379,10 @@ $("#MakeAppoint").click(function () {
     if (selected.length <= 0) {
         selected = ["0"];
     }
+
+    ServiciosSeleccionados = selected;
+
+
     var data = {
         fecha: fechaSeleccionada,
         servicio: selected,
@@ -310,6 +400,9 @@ $("#MakeAppoint").click(function () {
     conectarAsy("MakeApponitment", data, function (result) {
 
         if (result.error == false) {
+
+            localStorage.setItem("fechaSeleccionada", fechaSeleccionada);
+            localStorage.setItem("ServiciosSeleccionados", ServiciosSeleccionados);
 
             if (fechaSeleccionadaNumeros != "") {
                 date = fechaSeleccionadaNumeros;
@@ -337,7 +430,7 @@ $("#MakeAppoint").click(function () {
 $("#zipcode").on('keyup', function () {
     var zipCode = $(this).val();
     var value = $(this).val().length;
-    if (value == 4) {
+    if (value >= 3 && value <= 5) {
         var data = {
             zipCode: zipCode
         };
@@ -357,7 +450,12 @@ $("#zipcode").on('keyup', function () {
                         "<div class='col-lg-5 col-xs-8 catalago'>" +
                         "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.resultado[i].Name + "</strong></h4>" +
                         "<p class=''>" + result.resultado[i].Address + "</p>" +
-                        //"<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
+                        "<h5 style='color: #909497;'>Ratings:" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star'></span>" +
                         "</div>" +
                         "<div class='col-lg-2 catHiden'>" +
                         "<h3><strong>60 kr</strong></h3>" +
@@ -378,7 +476,7 @@ $("#zipcode").on('keyup', function () {
 $("#txtZipCode").on('keyup', function () {
     var zipCode = $(this).val();
     var value = $(this).val().length;
-    if (value == 4) {
+    if (value >= 3 && value <= 5) {
         var data = {
             zipCode: zipCode
         };
@@ -401,7 +499,12 @@ $("#txtZipCode").on('keyup', function () {
                         "<div class='col-lg-5 col-xs-8 catalago'>" +
                         "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.resultado[i].Name + "</strong></h4>" +
                         "<p class=''>" + result.resultado[i].Address + "</p>" +
-                        //"<h5 style='color: #909497;'>Ratings: <img src='../Content/estrellas.png' style='width: 80px;'/></h5>" +
+                        "<h5 style='color: #909497;'>Ratings:" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                        "<span class='fa fa-star'></span>" +
                         "</div>" +
                         "<div class='col-lg-2 catHiden'>" +
                         "<h3><strong>60 kr</strong></h3>" +
@@ -417,8 +520,6 @@ $("#txtZipCode").on('keyup', function () {
 
     }
 }).keyup();
-
-
 
 function popouWorkShop(name, idWorkshop) {
     IdWorkshop = idWorkshop;
@@ -456,12 +557,12 @@ function popouWorkShop(name, idWorkshop) {
                 for (var i = 0; i < result.services.length; i++) {
                     var str = null;
                     var price = result.services[i].Price;
-                    price =String(price)
+                    price = String(price)
                     if (price != "0") {
                         if (price.indexOf('.') > -1) {
                             str = price;
                             str = str.split('.')[0];
-                            str =" " + "+" + str + " " + "kr"
+                            str = " " + "+" + str + " " + "kr"
                         }
                         else {
                             str = price;
@@ -479,12 +580,13 @@ function popouWorkShop(name, idWorkshop) {
                         //"<label class='form-check-label' for='" + "b" + result.services[i].idWorkshop + "' style='color:#C0392B; font-size:16px; font-family:arial; margin-left:10px;'>" + result.services[i].Description + "</label>" +
                         //"</div>"
                         "<div class='form-check ocultarcheck2'>" +
-                        "<input class='form-check-input position-static checkService' type='checkbox' name='blankRadio2' id='" + "b" + result.services[i].idWorkshop + "' value='" + result.services[i].idWorkshop +"'>" +
+                        "<input class='form-check-input position-static checkService' type='checkbox' name='blankRadio2' id='" + "b" + result.services[i].idWorkshop + "' value='" + result.services[i].idWorkshop + "'>" +
                         "<label class='form-check-label' for='" + "b" + result.services[i].idWorkshop + "' style='color:#C0392B; font-size:16px; font-family:arial; margin-left:10px;'>" + result.services[i].Description + str + "</label>" +
                         "</div>"
                     );
                     valorServicio[i] = result.services[i].idWorkshop;
                 }
+                marcarCheck();
             }
             else if (result.error == true) {
                 alert(result.msg);
@@ -500,6 +602,8 @@ function popouWorkShop(name, idWorkshop) {
 function validCheck1(IdAppointment, Date, Time) {
 
     fechaSeleccionada = IdAppointment;
+    fechaAppointment = Date;
+    localStorage.setItem("fechaAppointment", fechaAppointment);
 
     for (var i = 0; i < valorDate.length; i++) {
 
@@ -706,6 +810,126 @@ function Workshopreco() {
         else if (result.error == true) {
             $("#lableWorkShop").show();
             alert(result.msg);
+        }
+    });
+}
+
+function mantenerInfo() {
+
+    datosPeronales = localStorage.getItem("datosPeronales");
+    var infoZipCode = localStorage.getItem("txtZipCode");
+    var infoFirstName = localStorage.getItem("Firstname");
+    var infoLastName = localStorage.getItem("Lastname");
+    var infoAddress = localStorage.getItem("address");
+    var infoEmail = localStorage.getItem("email");
+    var infoMobil = localStorage.getItem("mobile");
+    var mapa = localStorage.getItem("direccionMapa");
+
+    var dateMap = localStorage.getItem("dateMap");
+    var timeMap = localStorage.getItem("timeMap");
+    var commentsMap = localStorage.getItem("commentsMap");
+
+    var radio = localStorage.getItem("radio");
+
+    if (radio == 0) {
+        $("#nearestWoekshop").attr('checked', true);
+        $(".workshopDisplay").show();
+        $(".myPlace").hide();
+
+        if (infoZipCode != "0" && infoZipCode != "" && infoZipCode != "undefined") {
+            cargarWorkshop(infoZipCode)
+        }
+    }
+    else if (radio == 1) {
+        $(".workshopDisplay").hide();
+
+        $(".myPlace").show();
+        $("#myplace").attr('checked', true);
+
+        initialize();
+        google.maps.event.trigger(map, 'resize');
+    }
+
+    if (datosPeronales == 1) {
+        //$("#txtZipCode").val(infoZipCode);
+        $("#Firstname").val(infoFirstName);
+        $("#Lastname").val(infoLastName);
+        $("#address").val(infoAddress);
+        $("#email").val(infoEmail);
+        $("#mobile").val(infoMobil);
+    }
+
+
+    if (mapa != 0) {
+        $("#search_location").val(mapa);
+        $(".dateMapa").val(dateMap);
+        $(".timeMapa").val(timeMap);
+        $(".commentsMapa").val(commentsMap);
+    }
+
+}
+
+function marcarCheck() {
+
+    var fecha = localStorage.getItem("fechaSeleccionada");
+    var servicios = localStorage.getItem("ServiciosSeleccionados");
+    var fechaAppointment = localStorage.getItem("fechaAppointment");
+
+    $("#a" + fecha).attr('checked', true);
+    //$("#a" + fecha).prop('checked', true);
+
+    if (fecha != 0) {
+        validCheck1(fecha, fechaAppointment, "");
+    }
+
+    var myArray = servicios.split(",");
+    for (var i = 0; i < myArray.length; i++) {
+        myArray[i] = parseInt(myArray[i], 10);
+
+        $("#b" + myArray[i]).attr('checked', true);
+        //$("#b" + myArray[i]).prop('checked', true);        
+    }
+}
+
+function cargarWorkshop(zipcode) {
+
+    var data = {
+        zipCode: zipcode
+    };
+    ////AJAX
+    conectarAsy("cargarWorkShop", data, function (result) {
+        $(".ocultarWorkshop").html("");
+        $("#validateWorkshop").hide();
+        $("#lableWorkShop").hide();
+
+        if (result.error == false) {
+            for (var i = 0; i < result.resultado.length; i++) {
+
+                $("#divWorkShop").append(
+
+                    "<div class='row blanco rowcat ocultarWorkshop' id='" + result.resultado[i].IdWorkshop + "' style='cursor:pointer;' onclick='popouWorkShop(\"" + result.resultado[i].Name + "\",\"" + result.resultado[i].IdWorkshop + "\")'>" +
+                    "<div class='col-lg-2 col-xs-3'>" +
+                    "<img src='" + result.resultado[i].WorkImage + "' style='width:110px; height: 105px;' />" +
+                    "</div>" +
+                    "<div class='col-lg-5 col-xs-8 catalago'>" +
+                    "<h4 class='nameWorkshop' id='nameWorkshop' style='color: #2471A3;'><strong><span></span>" + result.resultado[i].Name + "</strong></h4>" +
+                    "<p class=''>" + result.resultado[i].Address + "</p>" +
+                    "<h5 style='color: #909497;'>Ratings:" +
+                    "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                    "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                    "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                    "<span class='fa fa-star checked' style='color:orange;'></span>" +
+                    "<span class='fa fa-star'></span>" +
+                    "</div>" +
+                    "<div class='col-lg-2 catHiden'>" +
+                    "<h3><strong>60 kr</strong></h3>" +
+                    "</div>" +
+                    "</div>"
+                );
+            }
+        }
+        else if (result.error == true) {
+            $("#validateWorkshop").show();
         }
     });
 }

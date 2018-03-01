@@ -6,8 +6,21 @@ var marker;
 function initialize() {
     var initialLat = $('.search_latitude').val();
     var initialLong = $('.search_longitude').val();
-    initialLat = initialLat ? initialLat : 36.169648;
-    initialLong = initialLong ? initialLong : -115.141000;
+
+    var latitude = 0;
+    var longitude = 0;
+
+    var latitude = localStorage.getItem("search_latitude");
+    var longitude = localStorage.getItem("search_longitude");
+
+    if (latitude == null && longitude == null) {
+        initialLat = initialLat ? initialLat : 36.169648;
+        initialLong = initialLong ? initialLong : -115.141000;
+    }
+    else {
+        initialLat = initialLat ? initialLat : latitude;
+        initialLong = initialLong ? initialLong : longitude;
+    }
 
     var latlng = new google.maps.LatLng(initialLat, initialLong);
     var options = {
@@ -39,6 +52,7 @@ function initialize() {
                 map.setCenter(results[0].geometry.location);
                 marker.setPosition(results[0].geometry.location);
                 $('.direccion').text(results[0].formatted_address);
+                $('.address').val(results[0].formatted_address);
                 $('.search_addr').val(results[0].formatted_address);
                 $('.search_latitude').val(marker.getPosition().lat());
                 $('.search_longitude').val(marker.getPosition().lng());
@@ -96,6 +110,7 @@ $(document).ready(function () {
                 map.setCenter(results[0].geometry.location);
                 marker.setPosition(results[0].geometry.location);
                 $('.direccion').text(results[0].formatted_address);
+                $('.address').val(results[0].formatted_address);
                 $('.search_addr').val(results[0].formatted_address);
                 $('.search_latitude').val(marker.getPosition().lat());
                 $('.search_longitude').val(marker.getPosition().lng());
@@ -112,6 +127,7 @@ $(document).ready(function () {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[0]) {
                     $('.direccion').text(results[0].formatted_address);
+                    $('.address').val(results[0].formatted_address);
                     $('.search_addr').val(results[0].formatted_address);
                     $('.search_latitude').val(marker.getPosition().lat());
                     $('.search_longitude').val(marker.getPosition().lng());

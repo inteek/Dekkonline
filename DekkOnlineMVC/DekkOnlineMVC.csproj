@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44306</IISExpressSSLPort>
+    <IISExpressSSLPort>44312</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -92,6 +92,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
@@ -233,11 +234,17 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\PromoValidateController.cs" />
     <Compile Include="Controllers\WorkshopController.cs" />
+    <Compile Include="Engine\DatabaseFunctions.cs" />
+    <Compile Include="Engine\Global_Functions.cs" />
+    <Compile Include="Engine\Global_Helpers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HelperClasses\constClass.cs" />
+    <Compile Include="Models\HelperClasses\ThemeManagement.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginRegisterViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -254,6 +261,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estrellas.png" />
+    <Content Include="Content\giphy.gif" />
     <Content Include="Content\HeadphonesPhoto\10_l.jpg" />
     <Content Include="Content\HeadphonesPhoto\10_s.jpg" />
     <Content Include="Content\HeadphonesPhoto\11_l.jpg" />
@@ -340,6 +348,7 @@
     <Content Include="Content\imgs\icons\exp.png" />
     <Content Include="Content\imgs\icons\grid-view.png" />
     <Content Include="Content\imgs\icons\list-view.png" />
+    <Content Include="Content\imgs\icons\logoGmail.png" />
     <Content Include="Content\imgs\icons\more_info-01.png" />
     <Content Include="Content\imgs\icons\move_down-01.png" />
     <Content Include="Content\imgs\icons\move_down.png" />
@@ -365,6 +374,7 @@
     <Content Include="Content\imgs\linea-04prueba.png" />
     <Content Include="Content\imgs\loading.gif" />
     <Content Include="Content\imgs\logo.png" />
+    <Content Include="Content\imgs\logoFacebook.png" />
     <Content Include="Content\imgs\logoGray.png" />
     <Content Include="Content\imgs\logo_topmenu.png" />
     <Content Include="Content\imgs\loguito.png" />
@@ -399,6 +409,7 @@
     <Content Include="Content\imgs\winter_red-01.png" />
     <Content Include="Content\llanta.png" />
     <Content Include="Content\prueba.png" />
+    <Content Include="Content\publicidad.PNG" />
     <Content Include="Content\step2.JPG" />
     <Content Include="Content\step2movil.PNG" />
     <Content Include="Content\step3mobile.PNG" />
@@ -441,6 +452,7 @@
     <Content Include="Scripts\plugins\fullcalendar.min.js" />
     <Content Include="Scripts\plugins\jquery.dataTables.min.js" />
     <Content Include="Scripts\plugins\jquery.easypiechart.min.js" />
+    <Content Include="Scripts\plugins\jquery.powertip.js" />
     <Content Include="Scripts\plugins\jquery.sparkline.min.js" />
     <Content Include="Scripts\plugins\ladda.min.js" />
     <Content Include="Scripts\plugins\moment.min.js" />
@@ -479,6 +491,7 @@
     <Content Include="Styles\plugins\bootstrap-slider.css" />
     <Content Include="Styles\plugins\c3.css" />
     <Content Include="Styles\plugins\fullcalendar.css" />
+    <Content Include="Styles\plugins\jquery.powertip.css" />
     <Content Include="Styles\plugins\ladda-themeless.min.css" />
     <Content Include="Styles\plugins\notyf.min.css" />
     <Content Include="Styles\plugins\perfect-scrollbar.css" />
@@ -504,7 +517,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -557,10 +572,19 @@
     <Content Include="Views\Workshop\Schedule.cshtml" />
     <Content Include="Views\Workshop\Services.cshtml" />
     <Content Include="Views\Errores\ErrorPage.cshtml" />
+    <Content Include="Views\Shared\Account\_ConfirmEmailForward.cshtml" />
+    <Content Include="Views\Shared\Account\_Login.cshtml" />
+    <Content Include="Views\Shared\Account\_LoginForm.cshtml" />
+    <Content Include="Views\Shared\Account\_PasswordRecoveryForm.cshtml" />
+    <Content Include="Views\Shared\Account\_RegisterForm.cshtml" />
+    <Content Include="Views\Shared\Account\_ResetPasswordCodeForm.cshtml" />
+    <Content Include="Views\Shared\_ModalState_Errors.cshtml" />
+    <Content Include="Views\PromoValidate\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Uploads\Photo\" />
+    <Folder Include="Views\ValidatePromo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -602,7 +626,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61490</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44306/</IISUrl>
+          <IISUrl>https://localhost:44312/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,0 +1,57 @@
+﻿@using DekkOnlineMVC.Models;
+
+@model RegisterViewModel
+
+@Html.AntiForgeryToken()
+
+@*<div class="col-xs-12 hgRowTitle">
+        Registrate para ser parte:
+    </div>*@
+    @*<div class="col-md-12 mlLabels">
+            E-mail:
+        </div>*@
+
+    @Html.TextBoxFor(m => m.usuEmail, "", new { @class = "txtLogin txtUser txtUser2", @autocomplete = "off", @onclick = "ocultarEtiqueta3()" })
+    @Html.ValidationMessageFor(m => m.usuEmail, "", new { @class = "text-danger" })
+
+
+<div class="clearfix"></div>
+<br />
+    @*<div class="col-md-12 mlLabels">
+            Contraseña:
+        </div>*@
+    @Html.PasswordFor(m => m.usuPassword, new { @class = "txtLogin txtPass txtPass2", @autocomplete = "off", @onclick = "ocultarEtiqueta4()" })
+    @Html.ValidationMessageFor(m => m.usuPassword, "", new { @class = "text-danger" })
+    <div class="clearfix"></div>
+    <br />
+
+    <button type="submit" class="loginBtn">
+        SIGN UP
+    </button>
+
+
+@Html.Hidden("returnUrl", (ViewBag.ReturnUrl != null) ? (string)ViewBag.ReturnUrl : null, new { @class = "loginHidReturnUrl" })
+
+<div class="hidden m-messageHide">
+    @Html.Partial("_ModalState_Errors")
+</div>
+
+<script type="text/javascript">
+    @{ <text> @(new HtmlString(Model.scriptJS)) </text>}
+</script>
+
+<script>
+    function ocultarEtiqueta3() {
+        $(".txtUser2").removeClass("txtUser")
+        if ($(".txtPass2").val() == "") {
+            $(".txtPass2").addClass("txtPass")
+        }
+    }
+
+    function ocultarEtiqueta4() {
+        $(".txtPass2").removeClass("txtPass")
+        if ($(".txtUser2").val() == "") {
+            $(".txtUser2").addClass("txtUser")
+        }
+    }
+</script>

@@ -18,5 +18,7 @@ namespace Framework.Libraies
         public string length { get; set; }
         public string Email { get; set; }
         public string Image { get; set; }
+        public string Promocode { get; set; }
+        public Nullable<int> points { get; set; }
     }
 }

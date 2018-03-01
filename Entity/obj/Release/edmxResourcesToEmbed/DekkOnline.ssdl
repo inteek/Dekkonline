@@ -282,6 +282,7 @@
     <Property Name="TotalPriceFinal" Type="money" />
     <Property Name="DateUsed" Type="date" />
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Points" Type="int" />
   </EntityType>
   <EntityType Name="PromotionCode">
     <Key>
@@ -293,6 +294,7 @@
     <Property Name="DateStart" Type="datetime" />
     <Property Name="DateEnd" Type="datetime" />
     <Property Name="IdUser" Type="nvarchar" MaxLength="128" />
+    <Property Name="Points" Type="int" />
   </EntityType>
   <EntityType Name="PurchaseOrder">
     <Key>

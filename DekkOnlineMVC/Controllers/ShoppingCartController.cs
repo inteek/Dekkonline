@@ -19,21 +19,32 @@ namespace DekkOnlineMVC.Controllers
         public ActionResult Index()
         {
             string path = Request.Url.AbsolutePath;
-            //ViewBag.ReturnUrl = path;
+            ViewBag.ReturnUrl = path;
             var b = (dynamic)null;
             ShoppingCart sh = new ShoppingCart();
             var idUser = Security.GetIdUser(this);
             var usuario1 = User.Identity.Name;
             var pro = (dynamic)null;
+            var valpromo = Session["PromoCode"];
             if (usuario1 != "")
             {
                 var id = sh.User(usuario1);
+                if (valpromo != null)//Si obtuvo el codigo de promocion desde la url
+                {
+                    sh.ValidatePromoCode(valpromo.ToString(), id);
+                    Session["PromoCode"] = null;
+                }
                 sh.UpdateShoppingCart(id, idUser);
-                pro = sh.ProductsInCart(id);//8eb14cb4-c1d5-4e00-94fd-ca458532ac92
+                pro = sh.ProductsInCart(id);
             }
             else
             {
-                pro = sh.ProductsInCart(idUser);//8eb14cb4-c1d5-4e00-94fd-ca458532ac92
+                if (valpromo != null)//Si obtuvo el codigo de promocion desde la url
+                {
+                    sh.ValidatePromoCode(valpromo.ToString(), idUser);
+                    Session["PromoCode"] = null;
+                }
+                pro = sh.ProductsInCart(idUser);
             }
 
 
@@ -567,19 +578,20 @@ namespace DekkOnlineMVC.Controllers
                     }
                     else
                     {
-                        string pass = users.GeneratePassword();
+                        string pass = users.CreateRandomPassword(6);
 
                         RegisterViewModel model = new RegisterViewModel();
 
-                        model.Email1 = email;
-                        model.Password1 = pass;
+                        model.usuEmail = email;
+                        model.usuPassword = pass;
 
                         AccountController account = new AccountController(this);
-                        await account.Register(model);
+                        await account._RegisterForm(model);
 
 
                         var user = users.userId(email);
                         var usercookie = Security.GetIdUser(this);
+
 
                         bool updateCookieDelevery = shoppingCart.updateDeleveryType(user, usercookie);
 
@@ -592,11 +604,23 @@ namespace DekkOnlineMVC.Controllers
                         }
                         else
                         {
-                            error = true;
-                            noError = 0;
-                            msg = "Error en el metodo updateCookieDelevery";
-                            page = "";
-                        }                       
+                            var result = Workshop.addDeliveryType(1, user, 0, service, 0, dateMapa, timeMapa, commentsMapa, address);
+
+                            if (result == true)
+                            {
+                                error = false;
+                                noError = 0;
+                                msg = "Registro Exitoso";
+                                page = Url.Action("Step3", "ShoppingCart");
+                            }
+                            else
+                            {
+                                error = true;
+                                noError = 0;
+                                msg = "Error en el metodo addDeliveryType";
+                                page = "";
+                            }
+                        }
                     }
                 }
                 else
@@ -608,8 +632,10 @@ namespace DekkOnlineMVC.Controllers
                         if (radio == 1)
                         {
                             bool result = Workshop.addDeliveryType(1, idUser, 0, service, 0, dateMapa, timeMapa, commentsMapa, address);
+                            
                             if (result == true)
                             {
+                                bool updatedelivery = Workshop.updateDeliveryappointmentmap(idUser);
                                 error = false;
                                 noError = 0;
                                 msg = "Registro Exitoso";

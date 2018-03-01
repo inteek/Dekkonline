@@ -69,7 +69,7 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     result = (from pro in db.products
-                              where (pro.proDimensionWidth.HasValue)
+                              where (pro.proDimensionWidth.HasValue) && pro.proInventory != 0
                               select new ResultSize
                               {
                                   Id = pro.proDimensionWidth.Value.ToString(),
@@ -93,7 +93,7 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     result = (from pro in db.products
-                              where (pro.proDimensionProfile.HasValue)
+                              where (pro.proDimensionProfile.HasValue) && pro.proInventory != 0
                               select new ResultSize
                               {
                                   Id = pro.proDimensionProfile.Value.ToString(),
@@ -117,7 +117,7 @@ namespace Framework
                 using (var db = new dekkOnlineEntities())
                 {
                     result = (from pro in db.products
-                              where (pro.proDimensionDiameter.HasValue)
+                              where (pro.proDimensionDiameter.HasValue) && pro.proInventory != 0
                               select new ResultSize
                               {
                                   Id = pro.proDimensionDiameter.Value.ToString(),
@@ -143,7 +143,7 @@ namespace Framework
                 {
                     result = (from pro in db.products
                               where (pro.proStatus == true
-                                    && pro.categoriesDP.cdpStatus == true
+                                    //&& pro.categoriesDP.cdpStatus == true
                                     && (catId == null || pro.catId == catId)
                                     && (width == null || pro.proDimensionWidth == width)
                                     && (profile == null || pro.proDimensionProfile == profile)
@@ -151,6 +151,7 @@ namespace Framework
                                     && (braId.HasValue == false || pro.braId == braId))
                                     && (!pro.proNameDP.ToUpper().Contains("TEST"))
                                     && (!pro.proNameDP.ToUpper().Contains("TESET"))
+                                    //&& pro.catId != null
                               //&& (!pro.proNameDP.Contains("Test"))
                               select new ResultProduct
                               {

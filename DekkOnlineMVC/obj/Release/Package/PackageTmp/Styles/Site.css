@@ -36,6 +36,54 @@ a {
     cursor: pointer;
 }
 
+
+/*botones redes sociales*/
+.mlMember,
+.mlRegister {
+    border-color: #0b395c;
+}
+
+.m-btnLoginNetworks {
+    color: #fff;
+}
+
+.m-btnLoginNetworks:hover,
+.m-btnLoginNetworks:active,
+.m-btnLoginNetworks:focus {
+    color: #ccc;
+}
+
+.m-btnLoginNetworks {
+    display: table-cell;
+    vertical-align: middle;
+    font-weight: bold;
+    border-radius: 1px;
+    padding-top: 15px;
+}
+
+.m-btnLoginNetworks img {
+    float: left;
+    margin-top: -8px;
+}
+
+.mlSocialNetworks {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid;
+}
+
+.m-btnFacebook {
+    background-color: #306ead;
+}
+
+.m-btnGoogle {
+    background-color: #df4b31;
+}
+
+.mlSocialNetworks {
+    border-color: #0b395c;
+}
+
 .btnDefault {
     color: White;
     background-color: #dd0330;

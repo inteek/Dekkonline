@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    datosPersonales();
     localStorage.setItem("Step3", 1);
 
     $(".st2").click(function () {
@@ -107,4 +108,25 @@ function validate() {
     }
     return error;
   
+}
+
+function datosPersonales() {
+    localStorage.setItem("datosPeronales", 0);
+    localStorage.setItem("txtZipCode", 0);
+    localStorage.setItem("Firstname", 0);
+    localStorage.setItem("Lastname", 0);
+    localStorage.setItem("address", 0);
+    localStorage.setItem("email", 0);
+    localStorage.setItem("mobile", 0);
+    localStorage.setItem("direccionMapa", 0);
+
+    localStorage.setItem("dateMap", 0);
+    localStorage.setItem("timeMap", 0);
+    localStorage.setItem("commentsMap", 0);
+
+    localStorage.setItem("radio", 0);
+
+    localStorage.removeItem("search_latitude");
+    localStorage.removeItem("search_longitude");
+
 }

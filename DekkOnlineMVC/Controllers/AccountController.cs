@@ -10,12 +10,17 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DekkOnlineMVC.Models;
 using Framework;
+using DekkOnlineMVC.Models.HelperClasses;
+using Entity;
+using DekkOnlineMVC.Engine;
 
 namespace DekkOnlineMVC.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        DatabaseFunctions db2 = new DatabaseFunctions();
+        dekkOnlineEntities db = new dekkOnlineEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private Controller _ctr;
@@ -77,7 +82,7 @@ namespace DekkOnlineMVC.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult _LoginForm(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -88,40 +93,71 @@ namespace DekkOnlineMVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> _LoginForm(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+            var usr = db.AspNetUsers.Where(s => s.Email == model.usuEmail).FirstOrDefault();
+            if (usr == null)
+            {
+                ModelState.AddModelError(constClass.error, "El usuario o la contraseña son incorrectas.");
+                return PartialView("Account/_LoginForm", model);
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            try
             {
-                case SignInStatus.Success:
-                    Users user = new Users();
-                    ShoppingCart shoppingCart = new ShoppingCart();
-                    string isUser = user.IdUser(model.Email);
-                    System.Web.HttpContext.Current.Session["SessionUser"] = isUser;
-                    var usercookie = Security.GetIdUser(this);
-                    if (usercookie != null || usercookie != "" || usercookie.Length < 1)
-                    {
+                var result = await SignInManager.PasswordSignInAsync(model.usuEmail, model.usuPassword, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        Users user = new Users();
+                        Framework.ShoppingCart shoppingCart = new Framework.ShoppingCart();
+                        string isUser = user.IdUser(model.usuEmail);
+                        System.Web.HttpContext.Current.Session["SessionUser"] = isUser;
+                        var usercookie = Security.GetIdUser(this);
+                        if (usercookie != null || usercookie != "" || usercookie.Length < 1)
+                        {
                             bool updateCookieDelevery = shoppingCart.updateDeleveryType(isUser, usercookie);
-                    }
-                    
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                        }
+                        if (returnUrl != "")
+                            model.scriptJS = "document.location.replace('" + returnUrl + "');";
+                        else
+                            model.scriptJS = "document.location.replace('" + Url.Action("Index", "Home") + "');";
+                        return PartialView("Account/_LoginForm", model);
+                    //return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError(constClass.error, "El usuario o la contraseña son incorrectas.");
+                        return View(model);
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
 
+
+        /// <summary>
+        /// Funcion que valida si hay que redirigir  a alguna pantalla
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        protected object hasReturnUrl(string returnUrl)
+        {
+            if (returnUrl == String.Empty || returnUrl == "" || returnUrl == null)
+                return null;
+            return new { returnUrl = returnUrl };
+        }
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -168,7 +204,7 @@ namespace DekkOnlineMVC.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult _RegisterForm()
         {
             return View();
         }
@@ -178,12 +214,18 @@ namespace DekkOnlineMVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> _RegisterForm(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email1, Email = model.Email1 };
-                var result = await UserManager.CreateAsync(user, model.Password1);
+                var usr = db.AspNetUsers.Where(s => s.Email == model.usuEmail).FirstOrDefault();
+                if (usr != null)
+                {
+                    ModelState.AddModelError(constClass.info, "El correo electrónico ya está registrado. Inicia sesión o recupera la contraseña.");
+                    return PartialView("Account/_RegisterForm", model);
+                }
+                var user = new ApplicationUser { UserName = model.usuEmail, Email = model.usuEmail };
+                var result = await UserManager.CreateAsync(user, model.usuPassword);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -195,13 +237,13 @@ namespace DekkOnlineMVC.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     Users users = new Users();
-                    string idUser = users.IdUser(model.Email1);
+                    string idUser = users.IdUser(model.usuEmail);
                     System.Web.HttpContext.Current.Session["SessionUser"] = idUser;
 
-                    users.EnvioCorreo(model.Email1, model.Password1);
-                    users.UpdateRoleUser(model.Email1);
+                    users.EnvioCorreo(model.usuEmail, model.usuPassword);
+                    users.UpdateRoleUser(model.usuEmail);
                     var promo = users.CreateRandomPromoCode();
-                    bool validatepromo = users.SavePromoCode(promo, model.Email1);
+                    bool validatepromo = users.SavePromoCode(promo, model.usuEmail);
                     if (validatepromo == true)
                     {
 
@@ -211,7 +253,7 @@ namespace DekkOnlineMVC.Controllers
                         while (validatepromo == false)
                         {
                             promo = users.CreateRandomPromoCode();
-                            validatepromo = users.SavePromoCode(promo, model.Email1);
+                            validatepromo = users.SavePromoCode(promo, model.usuEmail);
                         }
                     }
                     return RedirectToAction("Index", "Home");
@@ -222,6 +264,7 @@ namespace DekkOnlineMVC.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -253,7 +296,7 @@ namespace DekkOnlineMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByNameAsync(model.usuEmail);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -322,16 +365,194 @@ namespace DekkOnlineMVC.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/ExternalLogin
+        /// <summary>
+        /// Redirecciona a la página del proveedor de credenciales. (Facebook,etc)
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
+        public ActionResult _LoginFormSocialNetworks(string provider, string returnUrl)
         {
-            // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider, Url.Action("LoginExternalConfirmAsync", "Account", hasReturnUrl(returnUrl)));
         }
+
+        /// <summary>
+        /// Recibe el Callback con la información del proveedor de credenciales.
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public async Task<ActionResult> LoginExternalConfirmAsync(string returnUrl = null)
+        {
+            ExternalLoginInfo loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+                return RedirectToAction("Index", "Home", hasReturnUrl(returnUrl));
+            //Tries to log in and if it has success redirects to admin page.
+            string logInUrl = await externalLoginSignInSync(loginInfo, returnUrl);
+            if (logInUrl != null)
+                return Redirect(logInUrl);
+
+            //Is not registered in the database register claims in the database and try to loggin again
+            var claimName = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var claimEmail = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
+
+            LoginExternalConfirmViewModel model = new LoginExternalConfirmViewModel();
+            splitClaimName(model, claimName);
+            model.usuEmail = claimEmail != null ? claimEmail.Value : String.Empty;
+            model.usuEmailConfirmar = model.usuEmail;
+            model.LoginProvider = loginInfo.Login.LoginProvider;
+
+            if (await externalLoginCreateUser_Provider(model, loginInfo))
+            {
+                logInUrl = await externalLoginSignInSync(loginInfo, returnUrl);
+                if (logInUrl != null)
+                    return Redirect(logInUrl);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// Inicia la sesión del usuario cuando ya esta logeado.
+        /// </summary>
+        /// <param name="loginInfo"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        protected async Task<string> externalLoginSignInSync(ExternalLoginInfo loginInfo, string returnUrl)
+        {
+            // Sign in the user with this external login provider if the user already has a login
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                case SignInStatus.LockedOut:
+                    string userId = db2.getUserIdByProviderKey(loginInfo.Login.LoginProvider, loginInfo.Login.ProviderKey);
+                    var user = db2.getUserById(userId);
+                    if (user != null)
+                    {
+                        if (returnUrl == null)
+                            return Url.Action("Index", "Home", null);
+                        else
+                        {
+                            return Url.Action("Index", "Profile");
+                        }
+                    }
+                    break;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Divide el nombre del usuario que se obtiene del proveedor externo.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="claimName"></param>
+        protected void splitClaimName(LoginExternalConfirmViewModel model, Claim claimName)
+        {
+            string names = claimName != null ? claimName.Value : string.Empty;
+            if (names != string.Empty)
+            {
+                var split = names.Split(new char[] { ' ' });
+                int counter = 0;
+                foreach (string name in split)
+                {
+                    if (counter < 1)
+                        model.usuNombre += " " + name;
+                    else
+                        model.usuApellido += " " + name;
+                    counter++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Crea el usuario si se logea si este no existe en la bd y e inicio sesion desde un proveedor externo
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="loginInfo"></param>
+        /// <returns></returns>
+        protected async Task<bool> externalLoginCreateUser_Provider(LoginExternalConfirmViewModel model, ExternalLoginInfo loginInfo)
+        {
+            //Aqui crear la contraseña
+            Users newpass = new Users();
+            PasswordHasher passhash = new PasswordHasher();
+            
+            string pass = newpass.CreateRandomPassword(7);
+           string pass2 = passhash.HashPassword(pass);
+            ApplicationUser user = new ApplicationUser
+            {
+                UserName = model.usuEmail,
+                Email = model.usuEmail,
+                EmailConfirmed = true,
+                PasswordHash = pass2
+            };
+
+            var userChecked = db.AspNetUsers.Where(s=>s.Email == model.usuEmail).FirstOrDefault();
+            if (userChecked == null)
+            {
+                var result = await UserManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    Users users = new Users();
+                    string idUser = users.IdUser(model.usuEmail);
+                    System.Web.HttpContext.Current.Session["SessionUser"] = idUser;
+
+                    users.EnvioCorreo(model.usuEmail, pass);
+                    users.UpdateRoleUser(model.usuEmail);
+                    var promo = users.CreateRandomPromoCode();
+                    bool validatepromo = users.SavePromoCode(promo, user.Email);
+                    if (validatepromo == true)
+                    {
+
+                    }
+                    else
+                    {
+                        while (validatepromo == false)
+                        {
+                            promo = users.CreateRandomPromoCode();
+                            validatepromo = users.SavePromoCode(promo, model.usuEmail);
+                        }
+                    }
+                    result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                    if (result.Succeeded)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Global_Functions.saveErrors(result.Errors.ToString(), false);
+                        AddErrors(result);
+                    }
+                }
+                else
+                {
+                    Global_Functions.saveErrors(result.Errors.ToString(), false);
+                    AddErrors(result);
+                }
+            }
+            else
+            {
+                user.Id = userChecked.Id;
+                //Inserta en la base de datos para que ese usuario pueda ingresar por ese proveedor con la misma cuenta de correo.
+                var result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                if (result.Succeeded)
+                {
+   
+                    return true;
+                }
+                else
+                {
+                    Global_Functions.saveErrors(result.Errors.ToString(), false);
+                    AddErrors(result);
+                }
+            }
+
+            return false;
+        }
+
 
         //
         // GET: /Account/SendCode

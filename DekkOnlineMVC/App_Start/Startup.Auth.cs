@@ -63,6 +63,15 @@ namespace DekkOnlineMVC
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            app.UseFacebookAuthentication(
+            appId: "174652009985067",
+            appSecret: "58fc55643c6a06bf62d9bba4f96bd870");
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "902038817044-u91vjpsghju8a9m28jot8p5i12p29j8l.apps.googleusercontent.com",
+                ClientSecret = "ZTnD813YdxTtVwvS65OGWcmu"
+            });
         }
     }
 }

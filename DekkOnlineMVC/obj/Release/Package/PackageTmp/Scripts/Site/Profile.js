@@ -78,7 +78,14 @@ $(document).ready(function () {
             success: function (response) {
                 //code after success
                 $(".imagendivprofile").html("");
-                $(".imagendivprofile").append("<img src='" + response+"' style='width: 130px; height: 130px; border: 1px solid #7F8C8D; ' />");
+                $(".imagendivprofile").append("<img src='" + response + "' style='width: 130px; height: 130px; border: 1px solid #7F8C8D; ' />");
+                $(".imagendivprofile2").html("");
+                $(".imagendivprofile2").append("<img src='" + response + "' style='width: 130px; height: 130px; border: 1px solid #7F8C8D; ' />");
+                $(".imagendivprofile3").html("");
+                $(".imagendivprofile3").append("<img src='" + response + "' style='width: 130px; height: 130px; border: 1px solid #7F8C8D; ' />");
+                $(".imagendivprofile4").html("");
+                $(".imagendivprofile4").append("<img src='" + response + "' style='width: 130px; height: 130px; border: 1px solid #7F8C8D; ' />");
+                $('#clearr').click();
             },
             error: function (er) {
                 alert(er);
@@ -109,6 +116,12 @@ $(document).ready(function () {
                 alert("Error send mail")
             }
         });
+    });
+
+    $('#clearr').on('click', function (e) {
+        var $el = $('#UploadImg');
+        $el.wrap('<form>').closest('form').get(0).reset();
+        $el.unwrap();
     });
 
 });
