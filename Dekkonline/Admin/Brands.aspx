@@ -306,6 +306,6 @@
         <ClientSideEvents EndCallback="changeSectionEnd" />
     </dx:ASPxPopupControl>
 
-    <asp:LinqDataSource ID="lnqBrands" runat="server" ContextTypeName="DekkOnline.dbDekkOnlineDataContext" TableName="brands"></asp:LinqDataSource>
+    <asp:LinqDataSource ID="lnqBrands" runat="server" ContextTypeName="DekkOnline.dbDekkOnlineDataContext" TableName="brands" OnSelecting="lnqBrands_Selecting"></asp:LinqDataSource>
 
 </asp:Content>

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.25, 18.375" name="dbDekkOnline">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.25, 17.75" name="dbDekkOnline">
   <DataContextMoniker Name="/dbDekkOnlineDataContext" />
   <nestedChildShapes>
-    <classShape Id="9fc6594b-2f18-4536-aae4-5c9a21f2b7b9" absoluteBounds="6.75, 8.25, 2, 1.3862939453125005">
+    <classShape Id="9fc6594b-2f18-4536-aae4-5c9a21f2b7b9" absoluteBounds="6.5, 7.75, 2, 1.9631982421875005">
       <DataClassMoniker Name="/dbDekkOnlineDataContext/token" />
       <nestedChildShapes>
-        <elementListCompartment Id="e5b96ba1-c949-4e2e-81e9-67815187d3bd" absoluteBounds="6.765, 8.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e5b96ba1-c949-4e2e-81e9-67815187d3bd" absoluteBounds="6.515, 8.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="f6bde3d8-7874-4ddd-af16-907970d79a72" absoluteBounds="0.75, 1.75, 2, 1.1939925130208333">
@@ -45,7 +45,7 @@
         <classShapeMoniker Id="1f35dfe7-237a-42dc-b4c9-d07dbf9e41cb" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 6.9920068359375); (3.125 : 7.3670068359375); (3.125 : 7.24878669586338); (3.50121330413662 : 7.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.75 : 6.9920068359375); (1.75 : 8.41429768880208); (3.5 : 8.41429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/dbDekkOnlineDataContext/AspNetUser/AspNetUser_AspNetUserClaim" />
       <nodes>
         <classShapeMoniker Id="f2df6a17-cab8-432a-b81f-1bfee612ee53" />
@@ -66,10 +66,10 @@
         <classShapeMoniker Id="1f35dfe7-237a-42dc-b4c9-d07dbf9e41cb" />
       </nodes>
     </associationConnector>
-    <classShape Id="284be101-1308-4e85-a7a6-4c1c7ed095d1" absoluteBounds="9.375, 1.375, 2, 2.5401025390625005">
+    <classShape Id="284be101-1308-4e85-a7a6-4c1c7ed095d1" absoluteBounds="9.375, 1.375, 2, 2.7324039713541666">
       <DataClassMoniker Name="/dbDekkOnlineDataContext/categoriesDP" />
       <nestedChildShapes>
-        <elementListCompartment Id="36f94581-a84d-480b-ae32-c40806c05e1a" absoluteBounds="9.39, 1.835, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="36f94581-a84d-480b-ae32-c40806c05e1a" absoluteBounds="9.39, 1.835, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="b6479af5-ae34-45af-896c-55a72708b929" absoluteBounds="7.875, 11.875, 2, 1.7708968098958331">
@@ -91,7 +91,7 @@
         <classShapeMoniker Id="92000866-0964-4809-89dc-893f41959ace" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(10.65625 : 3.9151025390625); (10.65625 : 9.43310099283854); (12 : 9.43310099283854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(10.65625 : 4.10740397135417); (10.65625 : 9.46435349283854); (12 : 9.46435349283854)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/dbDekkOnlineDataContext/categoriesDP/categoriesDP_product" />
       <nodes>
         <classShapeMoniker Id="284be101-1308-4e85-a7a6-4c1c7ed095d1" />
@@ -129,16 +129,16 @@
         <elementListCompartment Id="d7b267bb-c277-4640-9e7a-4fea9204343d" absoluteBounds="3.0149999999999997, 13.335, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d555859a-fb26-4083-aa27-b9945364b810" absoluteBounds="3, 15.875, 2, 1.3862939453125">
-      <DataClassMoniker Name="/dbDekkOnlineDataContext/WorkshopUser" />
+    <classShape Id="57e6477f-a7e5-4f1c-9272-d13e0e99e119" absoluteBounds="6, 1, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/dbDekkOnlineDataContext/bitacoraSync" />
       <nestedChildShapes>
-        <elementListCompartment Id="a86303a1-01f9-419b-a50a-c0192a387548" absoluteBounds="3.0149999999999997, 16.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e68d6bce-7d48-449a-9267-5e0467c719e5" absoluteBounds="6.015, 1.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="56f41d76-790a-4e46-9450-5b95f0126c00" absoluteBounds="0.875, 15, 2, 3.1170068359375">
+    <classShape Id="c6f441d7-4b05-42ca-8df6-ba46ca0ad8c6" absoluteBounds="0.5, 14.375, 2, 3.1170068359375">
       <DataClassMoniker Name="/dbDekkOnlineDataContext/Workshop" />
       <nestedChildShapes>
-        <elementListCompartment Id="afc6ac9e-0312-4a77-a9b4-a1a785d4a644" absoluteBounds="0.89, 15.46, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="82723142-169b-44e8-8fc2-5b59444d8e77" absoluteBounds="0.51500000000000012, 14.835, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

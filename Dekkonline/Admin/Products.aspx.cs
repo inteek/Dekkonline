@@ -64,8 +64,8 @@ namespace DekkOnline.Admin
             string c2 = "";
             if (e.Parameter == "Update")
             {
-                cats = dekkpro.updateData(false);
-                loadProducts(true);
+                cats = dekkpro.updateProducts(false);
+               // loadProducts(true);
             }
 
             if (cats != "")
@@ -81,35 +81,11 @@ namespace DekkOnline.Admin
             xgvProducts.DataSource = Session["dsProducts"];
             xgvProducts.DataBind();
         }
-
-      
-
-
+        
         void loadProducts(bool? status)
         {
-            var products = from pro in db.products
-                           let disc = pro.proDiscount.HasValue ? pro.proDiscount.Value : 0
-                           where (status.HasValue == false || pro.proStatus == status.Value)
-                           && pro.categoriesDP.cdpStatus == true
-                           select new
-                           {
-                               Id = pro.proId,
-                               ImageLink = pro.proImage,
-                               Brand = pro.brand.braName,
-                               TyreSize = pro.proTyreSize,
-                               Type = pro.proName,
-                               LI = pro.proLoadIndex,
-                               SI = pro.proSpeed,
-                               Code = pro.proCode,
-                               OurCategory = pro.category.catName,
-                               Category = pro.categoriesDP.cdpName,
-                               F = pro.proFuel,
-                               W = pro.proWet,
-                               N = pro.proNoise,
-                               SuggestedPrice = (pro.proCoverPrice * ((100 + (pro.brand.braPercent.HasValue ? pro.brand.braPercent.Value : 0)) / 100)) - disc,
-                               Stock = pro.proInventory
-                           };
-            Session["dsProducts"] = products.ToList();
+
+            Session["dsProducts"] = dekkpro.getProductsList(status);
 
         }
 
@@ -134,7 +110,6 @@ namespace DekkOnline.Admin
             }
         }
 
-
         protected void UploadControlM_FileUploadComplete(object sender, FileUploadCompleteEventArgs e)
         {
 
@@ -158,55 +133,7 @@ namespace DekkOnline.Admin
 
         protected string uploadSelectedImage(UploadedFile myFile, string fileName, bool multi = false)
         {
-
-            string posted = "notPosted";
-
-            string sSavePath = "/photos/products/";
-            
-            long nFileLen = myFile.PostedFile.ContentLength;
-
-            byte[] myData = new Byte[nFileLen];
-            myFile.PostedFile.InputStream.Read(myData, 0, int.Parse(nFileLen.ToString()));
-
-            string sFilename = System.IO.Path.GetFileName(myFile.FileName);
-            int file_append = 0;
-            string sFilenameF = "";
-
-            if (multi) sFilenameF = Session["multipleFolder"].ToString() + sFilename.Substring(fileName.LastIndexOf('.'));
-            else sFilenameF = Session["lastProdId"].ToString() + sFilename.Substring(fileName.LastIndexOf('.'));
-
-            while (System.IO.File.Exists(Server.MapPath("~/" + sSavePath + sFilenameF)))
-            {
-                file_append++;
-                sFilenameF = System.IO.Path.GetFileNameWithoutExtension(sFilenameF)
-                                 + file_append.ToString() + sFilenameF.Substring(sFilenameF.LastIndexOf('.'));
-            }
-
-            System.IO.FileStream newFile
-                    = new System.IO.FileStream(Server.MapPath("~/" + sSavePath + sFilenameF),
-                                               System.IO.FileMode.Create);
-
-            newFile.Write(myData, 0, myData.Length);
-
-            using (System.Drawing.Image image = System.Drawing.Image.FromStream(newFile))
-            {
-                int fileWidth = image.Width;
-                int fileHeight = image.Height;
-                if (!((fileWidth <= 4000) && (fileHeight <= 4000)))
-                {
-                    posted = "notPostedCheckResolution";
-                }
-                newFile.Close();
-                if (posted == "notPostedCheckResolution")
-                {
-                    FileInfo imageForDelete = new FileInfo(Server.MapPath("~/" + sSavePath + sFilename));
-                    imageForDelete.Delete();
-                    sFilename = posted;
-                }
-            }
-            posted = sSavePath + sFilenameF;
-
-            return posted;
+            return dekkpro.uploadSelectedImage("/photos/products/", myFile, fileName, Server.MapPath("~/"), Session["lastProdId"].ToString(), multi, Session["multipleFolder"].ToString());   
         }
 
         protected void popProduct_WindowCallback(object source, PopupWindowCallbackArgs e)
@@ -235,8 +162,9 @@ namespace DekkOnline.Admin
                 txtCodeDP.Text = cProd.proCodeDP;
                 spProfileDP.Text = cProd.proDimensionProfileDP.ToString();
                 spWidthDP.Text = cProd.proDimensionWidthDP.ToString();
-                spDiameterDP.Text = cProd.proDimensionDiameterDP.ToString();
-                spLoadIndexDP.Text = cProd.proLoadIndexDP.ToString();
+                try { spDiameterDP.Text = cProd.proDimensionDiameterDP.ToString(); } catch { spDiameterDP.Text = ""; }
+                try { spLoadIndexDP.Text = cProd.proLoadIndexDP.ToString(); } catch { spLoadIndexDP.Text = ""; }
+              
                 txtSpeedDP.Text = cProd.proSpeed;
                 txtFuelDP.Text = cProd.proFuelDP;
                 txtWetDP.Text = cProd.proWetDP;
@@ -248,8 +176,8 @@ namespace DekkOnline.Admin
                 txtCode.Text = cProd.proCode;
                 spProfile.Text = cProd.proDimensionProfile.ToString();
                 spWidth.Text = cProd.proDimensionWidth.ToString();
-                spDiameter.Text = cProd.proDimensionDiameter.ToString();
-                spLoadIndex.Text = cProd.proLoadIndex.ToString();
+                try { spDiameter.Text = cProd.proDimensionDiameter.ToString(); } catch { spDiameter.Text = ""; }
+                try { spLoadIndex.Text = cProd.proLoadIndex.ToString(); } catch { spLoadIndex.Text = ""; }
                 txtSpeed.Text = cProd.proSpeed;
                 txtFuel.Text = cProd.proFuel;
                 txtWet.Text = cProd.proWet;
@@ -504,6 +432,20 @@ namespace DekkOnline.Admin
             db.SubmitChanges();
          
         }
-    
+
+        protected void xcaStock_Callback(object source, CallbackEventArgs e)
+        {
+            int proId = 0;
+            int stock = 0;
+            try
+            {
+                proId = int.Parse(e.Parameter);
+                stock = dekkpro.updateProductStock(proId);
+            }
+            catch { }
+
+            xcaStock.JSProperties.Add("cpId", proId);
+            xcaStock.JSProperties.Add("cpStock", stock);
+        }
     }
 }

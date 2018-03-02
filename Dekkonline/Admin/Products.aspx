@@ -25,10 +25,13 @@
             if (!saved) {
                 txtImgUrl.SetText(s.cpImage);
                 var img = txtImgUrl.GetText();
+                try {
+                    document.getElementById("uploadedImage").src = img;
+                    setElementVisible("uploadedImage", true);
 
-                document.getElementById("uploadedImage").src = img;
-                setElementVisible("uploadedImage", true);
-
+                } catch (ex) {
+                }
+                
                 popProduct.Show();
             } else {
                 txtImgUrl.SetText("");
@@ -155,10 +158,22 @@
             if (s.cpC1 != "") {
                 notify("Products synced: " + s.cpC1 + "<br/>" + "Products added: " + s.cpC2, 1, 10, "#divNotify");
             }
-            cmbCategories.Update();
-            cmbBrands.Update();
+            //cmbCategories.Update();
+            //cmbBrands.Update();
             initPage();
         }
+
+        function xcaStock_EndCallback(s, e) {
+            $("#divStock" + s.cpId).html(s.cpStock);
+            $("#btnStock" + s.cpId).removeAttr("disabled");
+            notify("Product stock updated",1,10,"#divNotify");
+        }
+
+        function updateStock(s,Id) {
+            xcaStock.PerformCallback(Id);
+            $(s).attr("disabled", "disabled");
+        }
+
     </script>
 </asp:Content>
 
@@ -189,7 +204,8 @@
     <dx:ASPxCallbackPanel runat="server" ID="xcpProducts" ClientInstanceName="xcpProducts" OnCallback="xcpProducts_Callback" Width="100%" HideContentOnCallback="true">
         <PanelCollection>
             <dx:PanelContent>
-                <dx:ASPxGridView ID="xgvProducts" ClientInstanceName="xgvProducts" runat="server" Width="100%" Settings-ShowFilterRow="true" SettingsPager-PageSize="50" Settings-AutoFilterCondition="Contains" SettingsBehavior-AllowFocusedRow="true" KeyFieldName="Id">
+                <dx:ASPxGridView ID="xgvProducts" ClientInstanceName="xgvProducts" runat="server" Width="100%" Settings-ShowFilterRow="true"
+                    SettingsPager-PageSize="50" Settings-AutoFilterCondition="Contains" SettingsBehavior-AllowFocusedRow="true" KeyFieldName="Id">
                     <Styles>
                         <Header VerticalAlign="Top" BackColor="#f5f5f5" HorizontalAlign="Center" Paddings-PaddingTop="3px" Font-Bold="true" Font-Size="1em"></Header>
                         <FilterRow BackColor="#f5f5f5"></FilterRow>
@@ -198,6 +214,8 @@
                         <SelectedRow BackColor="White" ForeColor="Black"></SelectedRow>
                     </Styles>
                     <SettingsPager Position="TopAndBottom"></SettingsPager>
+                    <Settings ShowFilterRow="true" />
+                    
                     <Columns>
                         <dx:GridViewCommandColumn ShowSelectCheckbox="true" SelectAllCheckboxMode="AllPages">
                         </dx:GridViewCommandColumn>
@@ -214,7 +232,7 @@
                         <dx:GridViewDataColumn FieldName="Code" Caption="Code"></dx:GridViewDataColumn>
                         <dx:GridViewDataColumn FieldName="LI" Caption="L.I."></dx:GridViewDataColumn>
                         <dx:GridViewDataColumn FieldName="SI" Caption="SI"></dx:GridViewDataColumn>
-                        <dx:GridViewDataColumn FieldName="Code" Caption="Code"></dx:GridViewDataColumn>
+                    <%--    <dx:GridViewDataColumn FieldName="Code" Caption="Code"></dx:GridViewDataColumn>--%>
                         <dx:GridViewDataColumn FieldName="Category" Caption="Category"></dx:GridViewDataColumn>
                         <dx:GridViewDataColumn FieldName="OurCategory" Caption="Section"></dx:GridViewDataColumn>
                         <dx:GridViewDataColumn FieldName="F" Caption="G">
@@ -236,6 +254,20 @@
                             <PropertiesSpinEdit DisplayFormatString="c2"></PropertiesSpinEdit>
                         </dx:GridViewDataSpinEditColumn>
                         <dx:GridViewDataSpinEditColumn FieldName="Stock">
+                            <DataItemTemplate>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div id='divStock<%# Eval("Id") %>'><%# Eval("Stock") %></div>
+                                        </td>
+                                        <td>
+                                            <button id="btnStock<%# Eval("Id") %>" type="button" onclick="updateStock(this,<%# Eval("Id") %>)" class="btnRefresh" ></button>
+                                        </td>
+                                       
+                                    </tr>
+                                </table>
+                                
+                            </DataItemTemplate>
                         </dx:GridViewDataSpinEditColumn>
                     </Columns>
                     <ClientSideEvents RowDblClick="editRow" SelectionChanged="selectRow" />
@@ -901,6 +933,10 @@
         </ContentCollection>
         <ClientSideEvents EndCallback="changeSectionEnd" />
     </dx:ASPxPopupControl>
+
+    <dx:ASPxCallback runat="server" ID="xcaStock" ClientInstanceName="xcaStock" OnCallback="xcaStock_Callback">
+        <ClientSideEvents EndCallback="xcaStock_EndCallback" />
+    </dx:ASPxCallback>
 
     <asp:LinqDataSource ID="lnqOurCategories" runat="server" ContextTypeName="DekkOnline.dbDekkOnlineDataContext" TableName="categories" Where="catStatus=true"></asp:LinqDataSource>
     <asp:LinqDataSource ID="lnqCategories" runat="server" ContextTypeName="DekkOnline.dbDekkOnlineDataContext" TableName="categoriesDPs" Where="cdpStatus=true"></asp:LinqDataSource>

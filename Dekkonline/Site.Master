@@ -423,7 +423,7 @@
 
 
         <div class="">
-            <input type="text" id="txtCZC" style="visibility:hidden" />
+            <input type="text" id="txtCZC" />
         </div>
     </form>
 </body>

@@ -5,6 +5,9 @@
       <Column Name="tokId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="tokDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="tokData" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="tokStockLastUpdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="tokCategoriesLastUpdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="tokBrandsLastUpdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.AspNetRoles" Member="AspNetRoles">
@@ -69,6 +72,7 @@
       <Column Name="cdpParentId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="cdpStatus" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="cdpEdited" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="cdpChangeStatus" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="categoriesDP_product" Member="products" ThisKey="cdpId" OtherKey="cdpId" Type="product" />
     </Type>
   </Table>
@@ -188,11 +192,15 @@
       <Column Name="Image" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.WorkshopUser" Member="WorkshopUser">
-    <Type Name="WorkshopUser">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="idUser" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
-      <Column Name="idWorkshop" Type="System.Int32" DbType="Int" CanBeNull="true" />
+  <Table Name="dbo.bitacoraSyncs" Member="bitacoraSyncs">
+    <Type Name="bitacoraSync">
+      <Column Name="bitDate" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="bitCategoriesUpdated" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bitCategoriesInserted" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bitBrandsUpdated" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bitBrandsInserted" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bitProductsUpdated" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="bitProductsInserted" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Workshop" Member="Workshop">

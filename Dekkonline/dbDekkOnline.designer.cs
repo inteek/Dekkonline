@@ -69,9 +69,9 @@ namespace DekkOnline
     partial void InsertUserAddress(UserAddress instance);
     partial void UpdateUserAddress(UserAddress instance);
     partial void DeleteUserAddress(UserAddress instance);
-    partial void InsertWorkshopUser(WorkshopUser instance);
-    partial void UpdateWorkshopUser(WorkshopUser instance);
-    partial void DeleteWorkshopUser(WorkshopUser instance);
+    partial void InsertbitacoraSync(bitacoraSync instance);
+    partial void UpdatebitacoraSync(bitacoraSync instance);
+    partial void DeletebitacoraSync(bitacoraSync instance);
     partial void InsertWorkshop(Workshop instance);
     partial void UpdateWorkshop(Workshop instance);
     partial void DeleteWorkshop(Workshop instance);
@@ -211,11 +211,11 @@ namespace DekkOnline
 			}
 		}
 		
-		public System.Data.Linq.Table<WorkshopUser> WorkshopUser
+		public System.Data.Linq.Table<bitacoraSync> bitacoraSyncs
 		{
 			get
 			{
-				return this.GetTable<WorkshopUser>();
+				return this.GetTable<bitacoraSync>();
 			}
 		}
 		
@@ -240,6 +240,12 @@ namespace DekkOnline
 		
 		private string _tokData;
 		
+		private System.DateTime _tokStockLastUpdate;
+		
+		private System.DateTime _tokCategoriesLastUpdate;
+		
+		private System.DateTime _tokBrandsLastUpdate;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -250,6 +256,12 @@ namespace DekkOnline
     partial void OntokDateChanged();
     partial void OntokDataChanging(string value);
     partial void OntokDataChanged();
+    partial void OntokStockLastUpdateChanging(System.DateTime value);
+    partial void OntokStockLastUpdateChanged();
+    partial void OntokCategoriesLastUpdateChanging(System.DateTime value);
+    partial void OntokCategoriesLastUpdateChanged();
+    partial void OntokBrandsLastUpdateChanging(System.DateTime value);
+    partial void OntokBrandsLastUpdateChanged();
     #endregion
 		
 		public token()
@@ -313,6 +325,66 @@ namespace DekkOnline
 					this._tokData = value;
 					this.SendPropertyChanged("tokData");
 					this.OntokDataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tokStockLastUpdate", DbType="DateTime NOT NULL")]
+		public System.DateTime tokStockLastUpdate
+		{
+			get
+			{
+				return this._tokStockLastUpdate;
+			}
+			set
+			{
+				if ((this._tokStockLastUpdate != value))
+				{
+					this.OntokStockLastUpdateChanging(value);
+					this.SendPropertyChanging();
+					this._tokStockLastUpdate = value;
+					this.SendPropertyChanged("tokStockLastUpdate");
+					this.OntokStockLastUpdateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tokCategoriesLastUpdate", DbType="DateTime NOT NULL")]
+		public System.DateTime tokCategoriesLastUpdate
+		{
+			get
+			{
+				return this._tokCategoriesLastUpdate;
+			}
+			set
+			{
+				if ((this._tokCategoriesLastUpdate != value))
+				{
+					this.OntokCategoriesLastUpdateChanging(value);
+					this.SendPropertyChanging();
+					this._tokCategoriesLastUpdate = value;
+					this.SendPropertyChanged("tokCategoriesLastUpdate");
+					this.OntokCategoriesLastUpdateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tokBrandsLastUpdate", DbType="DateTime NOT NULL")]
+		public System.DateTime tokBrandsLastUpdate
+		{
+			get
+			{
+				return this._tokBrandsLastUpdate;
+			}
+			set
+			{
+				if ((this._tokBrandsLastUpdate != value))
+				{
+					this.OntokBrandsLastUpdateChanging(value);
+					this.SendPropertyChanging();
+					this._tokBrandsLastUpdate = value;
+					this.SendPropertyChanged("tokBrandsLastUpdate");
+					this.OntokBrandsLastUpdateChanged();
 				}
 			}
 		}
@@ -1380,6 +1452,8 @@ namespace DekkOnline
 		
 		private bool _cdpEdited;
 		
+		private System.DateTime _cdpChangeStatus;
+		
 		private EntitySet<product> _products;
 		
     #region Definiciones de métodos de extensibilidad
@@ -1404,6 +1478,8 @@ namespace DekkOnline
     partial void OncdpStatusChanged();
     partial void OncdpEditedChanging(bool value);
     partial void OncdpEditedChanged();
+    partial void OncdpChangeStatusChanging(System.DateTime value);
+    partial void OncdpChangeStatusChanged();
     #endregion
 		
 		public categoriesDP()
@@ -1588,6 +1664,26 @@ namespace DekkOnline
 					this._cdpEdited = value;
 					this.SendPropertyChanged("cdpEdited");
 					this.OncdpEditedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cdpChangeStatus", DbType="DateTime NOT NULL")]
+		public System.DateTime cdpChangeStatus
+		{
+			get
+			{
+				return this._cdpChangeStatus;
+			}
+			set
+			{
+				if ((this._cdpChangeStatus != value))
+				{
+					this.OncdpChangeStatusChanging(value);
+					this.SendPropertyChanging();
+					this._cdpChangeStatus = value;
+					this.SendPropertyChanged("cdpChangeStatus");
+					this.OncdpChangeStatusChanged();
 				}
 			}
 		}
@@ -4133,91 +4229,187 @@ namespace DekkOnline
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WorkshopUser")]
-	public partial class WorkshopUser : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.bitacoraSyncs")]
+	public partial class bitacoraSync : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _id;
+		private System.DateTime _bitDate;
 		
-		private string _idUser;
+		private int _bitCategoriesUpdated;
 		
-		private System.Nullable<int> _idWorkshop;
+		private int _bitCategoriesInserted;
+		
+		private int _bitBrandsUpdated;
+		
+		private int _bitBrandsInserted;
+		
+		private int _bitProductsUpdated;
+		
+		private int _bitProductsInserted;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnidUserChanging(string value);
-    partial void OnidUserChanged();
-    partial void OnidWorkshopChanging(System.Nullable<int> value);
-    partial void OnidWorkshopChanged();
+    partial void OnbitDateChanging(System.DateTime value);
+    partial void OnbitDateChanged();
+    partial void OnbitCategoriesUpdatedChanging(int value);
+    partial void OnbitCategoriesUpdatedChanged();
+    partial void OnbitCategoriesInsertedChanging(int value);
+    partial void OnbitCategoriesInsertedChanged();
+    partial void OnbitBrandsUpdatedChanging(int value);
+    partial void OnbitBrandsUpdatedChanged();
+    partial void OnbitBrandsInsertedChanging(int value);
+    partial void OnbitBrandsInsertedChanged();
+    partial void OnbitProductsUpdatedChanging(int value);
+    partial void OnbitProductsUpdatedChanged();
+    partial void OnbitProductsInsertedChanging(int value);
+    partial void OnbitProductsInsertedChanged();
     #endregion
 		
-		public WorkshopUser()
+		public bitacoraSync()
 		{
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bitDate", DbType="DateTime NOT NULL", IsPrimaryKey=true)]
+		public System.DateTime bitDate
 		{
 			get
 			{
-				return this._id;
+				return this._bitDate;
 			}
 			set
 			{
-				if ((this._id != value))
+				if ((this._bitDate != value))
 				{
-					this.OnidChanging(value);
+					this.OnbitDateChanging(value);
 					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
+					this._bitDate = value;
+					this.SendPropertyChanged("bitDate");
+					this.OnbitDateChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUser", DbType="NVarChar(128)")]
-		public string idUser
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bitCategoriesUpdated", DbType="Int NOT NULL")]
+		public int bitCategoriesUpdated
 		{
 			get
 			{
-				return this._idUser;
+				return this._bitCategoriesUpdated;
 			}
 			set
 			{
-				if ((this._idUser != value))
+				if ((this._bitCategoriesUpdated != value))
 				{
-					this.OnidUserChanging(value);
+					this.OnbitCategoriesUpdatedChanging(value);
 					this.SendPropertyChanging();
-					this._idUser = value;
-					this.SendPropertyChanged("idUser");
-					this.OnidUserChanged();
+					this._bitCategoriesUpdated = value;
+					this.SendPropertyChanged("bitCategoriesUpdated");
+					this.OnbitCategoriesUpdatedChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idWorkshop", DbType="Int")]
-		public System.Nullable<int> idWorkshop
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bitCategoriesInserted", DbType="Int NOT NULL")]
+		public int bitCategoriesInserted
 		{
 			get
 			{
-				return this._idWorkshop;
+				return this._bitCategoriesInserted;
 			}
 			set
 			{
-				if ((this._idWorkshop != value))
+				if ((this._bitCategoriesInserted != value))
 				{
-					this.OnidWorkshopChanging(value);
+					this.OnbitCategoriesInsertedChanging(value);
 					this.SendPropertyChanging();
-					this._idWorkshop = value;
-					this.SendPropertyChanged("idWorkshop");
-					this.OnidWorkshopChanged();
+					this._bitCategoriesInserted = value;
+					this.SendPropertyChanged("bitCategoriesInserted");
+					this.OnbitCategoriesInsertedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bitBrandsUpdated", DbType="Int NOT NULL")]
+		public int bitBrandsUpdated
+		{
+			get
+			{
+				return this._bitBrandsUpdated;
+			}
+			set
+			{
+				if ((this._bitBrandsUpdated != value))
+				{
+					this.OnbitBrandsUpdatedChanging(value);
+					this.SendPropertyChanging();
+					this._bitBrandsUpdated = value;
+					this.SendPropertyChanged("bitBrandsUpdated");
+					this.OnbitBrandsUpdatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bitBrandsInserted", DbType="Int NOT NULL")]
+		public int bitBrandsInserted
+		{
+			get
+			{
+				return this._bitBrandsInserted;
+			}
+			set
+			{
+				if ((this._bitBrandsInserted != value))
+				{
+					this.OnbitBrandsInsertedChanging(value);
+					this.SendPropertyChanging();
+					this._bitBrandsInserted = value;
+					this.SendPropertyChanged("bitBrandsInserted");
+					this.OnbitBrandsInsertedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bitProductsUpdated", DbType="Int NOT NULL")]
+		public int bitProductsUpdated
+		{
+			get
+			{
+				return this._bitProductsUpdated;
+			}
+			set
+			{
+				if ((this._bitProductsUpdated != value))
+				{
+					this.OnbitProductsUpdatedChanging(value);
+					this.SendPropertyChanging();
+					this._bitProductsUpdated = value;
+					this.SendPropertyChanged("bitProductsUpdated");
+					this.OnbitProductsUpdatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bitProductsInserted", DbType="Int NOT NULL")]
+		public int bitProductsInserted
+		{
+			get
+			{
+				return this._bitProductsInserted;
+			}
+			set
+			{
+				if ((this._bitProductsInserted != value))
+				{
+					this.OnbitProductsInsertedChanging(value);
+					this.SendPropertyChanging();
+					this._bitProductsInserted = value;
+					this.SendPropertyChanged("bitProductsInserted");
+					this.OnbitProductsInsertedChanged();
 				}
 			}
 		}

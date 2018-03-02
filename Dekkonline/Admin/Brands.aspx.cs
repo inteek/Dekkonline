@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using DevExpress.Web;
 using DevExpress.Web.Internal;
+using DekkOnline.engine;
 
 namespace DekkOnline.Admin
 {
@@ -62,7 +63,7 @@ namespace DekkOnline.Admin
             try
             {
 
-                string strBrandsImage = uploadSelectedImage(e.UploadedFile, e.UploadedFile.FileName);
+                string strBrandsImage = dekkpro.uploadSelectedImage("/photos/Brands/", e.UploadedFile, e.UploadedFile.FileName, Server.MapPath("~/"), Session["lastBraId"].ToString());
                 Session["imgBrandsURL"] = strBrandsImage;
                 e.CallbackData = strBrandsImage;
 
@@ -73,54 +74,7 @@ namespace DekkOnline.Admin
             }
         }
 
-        protected string uploadSelectedImage(UploadedFile myFile, string fileName)
-        {
-
-            string posted = "notPosted";
-
-            string sSavePath = "/photos/Brands/";
-
-            long nFileLen = myFile.PostedFile.ContentLength;
-
-            byte[] myData = new Byte[nFileLen];
-            myFile.PostedFile.InputStream.Read(myData, 0, int.Parse(nFileLen.ToString()));
-
-            string sFilename = System.IO.Path.GetFileName(myFile.FileName);
-            int file_append = 0;
-            string sFilenameF = Session["lastBraId"].ToString() + sFilename.Substring(fileName.LastIndexOf('.'));
-            while (System.IO.File.Exists(Server.MapPath("~/" + sSavePath + sFilenameF)))
-            {
-                file_append++;
-                sFilenameF = System.IO.Path.GetFileNameWithoutExtension(sFilenameF)
-                                 + file_append.ToString() + sFilenameF.Substring(sFilenameF.LastIndexOf('.'));
-            }
-
-            System.IO.FileStream newFile
-                    = new System.IO.FileStream(Server.MapPath("~/" + sSavePath + sFilenameF),
-                                               System.IO.FileMode.Create);
-
-            newFile.Write(myData, 0, myData.Length);
-
-            using (System.Drawing.Image image = System.Drawing.Image.FromStream(newFile))
-            {
-                int fileWidth = image.Width;
-                int fileHeight = image.Height;
-                if (!((fileWidth <= 4000) && (fileHeight <= 4000)))
-                {
-                    posted = "notPostedCheckResolution";
-                }
-                newFile.Close();
-                if (posted == "notPostedCheckResolution")
-                {
-                    FileInfo imageForDelete = new FileInfo(Server.MapPath("~/" + sSavePath + sFilename));
-                    imageForDelete.Delete();
-                    sFilename = posted;
-                }
-            }
-            posted = sSavePath + sFilenameF;
-
-            return posted;
-        }
+        
 
         protected void popBrands_WindowCallback(object source, PopupWindowCallbackArgs e)
         {
@@ -182,6 +136,11 @@ namespace DekkOnline.Admin
 
             db.SubmitChanges();
 
+        }
+
+        protected void lnqBrands_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        {
+            e.Result = dekkpro.getBrandList();
         }
     }
 }

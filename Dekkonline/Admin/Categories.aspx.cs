@@ -83,51 +83,7 @@ namespace DekkOnline.Admin
 
         protected string uploadSelectedImage(UploadedFile myFile, string fileName)
         {
-
-            string posted = "notPosted";
-
-            string sSavePath = "/photos/Categories/";
-
-            long nFileLen = myFile.PostedFile.ContentLength;
-
-            byte[] myData = new Byte[nFileLen];
-            myFile.PostedFile.InputStream.Read(myData, 0, int.Parse(nFileLen.ToString()));
-
-            string sFilename = System.IO.Path.GetFileName(myFile.FileName);
-            int file_append = 0;
-            string sFilenameF = Session["lastCdpId"].ToString() + sFilename.Substring(fileName.LastIndexOf('.'));
-            while (System.IO.File.Exists(Server.MapPath("~/" + sSavePath + sFilenameF)))
-            {
-                file_append++;
-                sFilenameF = System.IO.Path.GetFileNameWithoutExtension(sFilenameF)
-                                 + file_append.ToString() + sFilenameF.Substring(sFilenameF.LastIndexOf('.'));
-            }
-
-            System.IO.FileStream newFile
-                    = new System.IO.FileStream(Server.MapPath("~/" + sSavePath + sFilenameF),
-                                               System.IO.FileMode.Create);
-
-            newFile.Write(myData, 0, myData.Length);
-
-            using (System.Drawing.Image image = System.Drawing.Image.FromStream(newFile))
-            {
-                int fileWidth = image.Width;
-                int fileHeight = image.Height;
-                if (!((fileWidth <= 4000) && (fileHeight <= 4000)))
-                {
-                    posted = "notPostedCheckResolution";
-                }
-                newFile.Close();
-                if (posted == "notPostedCheckResolution")
-                {
-                    FileInfo imageForDelete = new FileInfo(Server.MapPath("~/" + sSavePath + sFilename));
-                    imageForDelete.Delete();
-                    sFilename = posted;
-                }
-            }
-            posted = sSavePath + sFilenameF;
-
-            return posted;
+            return dekkpro.uploadSelectedImage("/photos/Categories/", myFile, fileName, Server.MapPath("~/"), Session["lastCdpId"].ToString());
         }
 
         protected void popCategories_WindowCallback(object source, PopupWindowCallbackArgs e)
@@ -168,11 +124,8 @@ namespace DekkOnline.Admin
 
           
             Guid cdpId = Guid.Parse(e.Parameter);
-
-            var cCategorie = db.categoriesDPs.Where(c => c.cdpId == cdpId).FirstOrDefault();
-            cCategorie.cdpStatus = !cCategorie.cdpStatus;
-
-            db.SubmitChanges();
+            dekkpro.changeStatusCategories(cdpId);
+         
             xgvCategories1.DataBind();
             xgvCategories2.DataBind();
 

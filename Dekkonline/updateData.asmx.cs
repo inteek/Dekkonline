@@ -17,38 +17,9 @@ namespace DekkOnline
     // [System.Web.Script.Services.ScriptService]
     public class updateData : System.Web.Services.WebService
     {
-
+        
         [WebMethod]
-        public bool upadateCategories(bool overwrite)
-        {
-            try
-            {
-                dekkpro.updateData(false);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-            
-        }
-
-        [WebMethod]
-        public bool upadateBrands(bool overwrite)
-        {
-            try
-            {
-                dekkpro.updateData(false);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        [WebMethod]
-        public bool upadateProducts(bool overwrite)
+        public bool updateAllData(bool overwrite)
         {
             try
             {

@@ -1886,3 +1886,20 @@ color: #000;
     
     
 }
+
+.btnRefresh {
+    width: 15px;
+    height: 15px;
+    border: none;
+    background-image: url(/Scripts/imgs/refresh.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color:transparent;
+    margin:2px;
+    margin-left:0.5vw;
+}
+
+    .btnRefresh:disabled {
+        opacity: 0.4;
+       
+    }

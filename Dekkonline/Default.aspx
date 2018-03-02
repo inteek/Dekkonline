@@ -131,18 +131,10 @@
                         </div>
                     </div>
 
-                    
-                      <div class="clearfix"></div>
+                    <div class="clearfix"></div>
                     <div class="spacer20"></div>
                     <div class="clearfix"></div>
 
-                    <div class="clearfix"></div>
-                    <div class="spacer20"></div>
-                    <div class="clearfix"></div>
-                    
-                      <div class="clearfix"></div>
-                    <div class="spacer20"></div>
-                    <div class="clearfix"></div>
 
 
                     <div class="clearfix"></div>
