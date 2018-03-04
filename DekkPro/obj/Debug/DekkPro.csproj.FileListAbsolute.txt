@@ -1,4 +1,3 @@
-C:\Productos\Dekkonline\DekkPro\obj\Debug\DekkPro.csprojResolveAssemblyReference.cache
 C:\Productos\Dekkonline\DekkPro\bin\Debug\DevExpress.Web.v16.1.dll
 C:\Productos\Dekkonline\DekkPro\bin\Debug\Newtonsoft.Json.dll
 C:\Productos\Dekkonline\DekkPro\bin\Debug\DevExpress.Data.v16.1.dll
