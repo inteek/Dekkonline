@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkOnline", "DekkOnline\DekkOnline.csproj", "{305A88C2-B7A6-4671-A478-8044B01C9375}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{BF508F5F-D1B9-4E30-AA61-8AB0FB7E1104}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkOnlineMVC", "DekkOnlineMVC\DekkOnlineMVC.csproj", "{1534BD2E-06F1-4D74-96DD-24A860747B70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DekkPro", "DekkPro\DekkPro.csproj", "{CA4F5AA5-D919-46D4-BA3F-8EF08173EC42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1534BD2E-06F1-4D74-96DD-24A860747B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1534BD2E-06F1-4D74-96DD-24A860747B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1534BD2E-06F1-4D74-96DD-24A860747B70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA4F5AA5-D919-46D4-BA3F-8EF08173EC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4F5AA5-D919-46D4-BA3F-8EF08173EC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4F5AA5-D919-46D4-BA3F-8EF08173EC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4F5AA5-D919-46D4-BA3F-8EF08173EC42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,6 +11,12 @@ namespace DekkOnlineMVC.Controllers
     {
        public ActionResult Index()
         {
+
+            DekkOnline2.engine2.dekkpro.updateProductStock(1);
+
+
+
+
             ViewBag.ReturnUrl = "/Profile/Index";
             Articles ar = new Articles();
             ViewBag.BagWidth = ar.loadDimensionWidth();
